@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Habrahabr</string>
+    <string name="posts">Посты</string>
+    <string name="qa">Q&amp;A</string>
+    <string name="blogs">Блоги</string>
+    <string name="events">События</string>
+    <string name="companies">Компании</string>
+    <string name="people">Люди</string>
+    <string name="job">Работа</string>
+    <string name="preferences">Настройки</string>
+    <string name="about">О приложении</string>
+    <string name="nick">Ник</string>
+    <string name="search">Поиск</string>
+    <string name="preferences_base">Общие настройки</string>
+    <string name="preferences_vibrate">Включить вибрацию</string>
+    <string name="loading_people_list">Загрузка списка пользователей</string>
+    <string name="loading_companies_list">Загрузка списка компаний</string>
+    <string name="loading_events_list">Загрузка списка событий</string>
+    <string name="loading_qa_list">Загрузка списка вопросов</string>
+    <string name="loading_blogs_list">Загрузка списка блогов</string>
+    <string name="loading_posts_list">Загрузка списка постов</string>
+    <string name="loading_qa_show">Загрузка вопроса</string>
+    <string name="show_in_browser">Просмотреть в браузере</string>
+    <string name="share">Поделиться</string>
+    <string name="share_link_qa">Вопрос на Habrahabr.ru</string>
+    <string name="share_link_post">Пост на Habrahabr.ru</string>
+    <string name="rate_application">Оценить приложение</string>
+    <string name="version">Версия</string>
+    <string name="preferences_fullscreen">Полноэкранный режим</string>
+    <string name="preferences_keep_screen">Не выключать экран</string>
+    <string name="preferences_fullscreen_summary">Потребуется перезапуск приложения</string>
+    <string name="preferences_fullscreen_summary_1">Для применения этой настройки требуется перезапуск приложения</string>
+    <string name="preferences_personal">Личные данные</string>
+    <string name="preferences_sign_in">Авторизация</string>
+    <string name="preferences_sign_in_1">Попытка авторизации</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="sign_in">Вход</string>
+    <string name="preferences_enable_flash_posts">Включить Flash</string>
+    <string name="loading_man_show">Загрузка данных хабра пользователя</string>
+	<string name="favorites">Закладки</string>
+	<string name="loading_post_show">Загрузка поста</string>
+	<string name="comments">Комментарии</string>
+	<string name="loading_comments">Загрузка комментариев</string>
+</resources>

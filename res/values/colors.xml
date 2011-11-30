@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="base_background">#ffffff</color>
+    <color name="dashboard_text">#000000</color>
+    <color name="actionbar_title">#6da3bd</color>
+    <color name="actionbar_background_start">#e4e4e4</color>
+    <color name="actionbar_background_end">#e1e1e1</color>
+    <color name="actionbar_separator">#ffffff</color>
+    <color name="actionbar_background_item_pressed_start">#ffffff</color>
+    <color name="actionbar_background_item_pressed_end">#dde6eb</color>
+
+</resources>

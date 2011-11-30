@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="net.meiolania.apps.habrahabr"
+    android:versionCode="1"
+    android:versionName="1.0 beta">
+
+    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="10" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Light.NoTitleBar"
+        android:debuggable="true">
+        
+        <activity
+            android:label="@string/app_name"
+            android:name=".activities.Dashboard">
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.dashboard.About" />
+        <activity android:name=".activities.dashboard.Preferences" />
+        
+        <activity android:name=".activities.SignIn" />
+        
+        <activity android:name=".activities.People" />
+        <activity android:name=".activities.PeopleSearch" />
+        
+        <activity android:name=".activities.Companies" />
+        <activity android:name=".activities.CompaniesSearch" />
+        
+        <activity android:name=".activities.Events" />
+        
+        <activity android:name=".activities.QA" />
+        <activity android:name=".activities.QASearch" />
+        <activity android:name=".activities.QAShow" />
+        
+        <activity android:name=".activities.Blogs" />
+        <activity android:name=".activities.BlogsPosts" />
+        
+        <activity android:name=".activities.Posts" />
+        <activity android:name=".activities.PostsShow" />
+        <activity android:name=".activities.FavoritesPosts" />
+        <activity android:name=".activities.PostsCommentsShow" />
+        
+        <activity android:name=".activities.HabrahabrIntentFilter">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"></action>
+                <category android:name="android.intent.category.DEFAULT"></category>
+                <category android:name="android.intent.category.BROWSABLE"></category>
+                <data android:scheme="http" android:pathPattern="/.*" android:host="habrahabr.ru"></data>
+            </intent-filter>
+        </activity>
+        
+    </application>
+
+</manifest>

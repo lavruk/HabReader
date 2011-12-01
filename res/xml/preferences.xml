@@ -35,6 +35,11 @@
             android:key="enable_flash_posts"
             android:title="@string/preferences_enable_flash_posts"
             android:defaultValue="true" />
+            
+        <CheckBoxPreference
+            android:key="use_css_posts"
+            android:title="@string/preferences_use_habrahabr_css_posts"
+            android:defaultValue="true" />  
         
     </PreferenceCategory>
     

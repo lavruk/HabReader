@@ -25,6 +25,7 @@ public class Preferences{
     public static boolean fullscreen;
     public static boolean keepScreen;
     public static boolean enableFlashPosts;
+    public static boolean useCSSPosts;
 
     public static SharedPreferences loadPreferences(Context context){
         PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
@@ -34,6 +35,7 @@ public class Preferences{
         fullscreen = sharedPreferences.getBoolean("fullscreen", true);
         keepScreen = sharedPreferences.getBoolean("keep_screen", false);
         enableFlashPosts = sharedPreferences.getBoolean("enable_flash_posts", true);
+        useCSSPosts = sharedPreferences.getBoolean("use_css_posts", true);
         
         return sharedPreferences;
     }

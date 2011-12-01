@@ -45,4 +45,5 @@
 	<string name="loading_comments">Загрузка комментариев</string>
 	<string name="small_widget">HabReader(маленький)</string>
 	<string name="widget_error">Нет доступного поста. Возникли проблемы с подключением.</string>
+	<string name="preferences_use_habrahabr_css_posts">Использовать при отображении статей CSS стили Habrahabr</string>
 </resources>

@@ -35,7 +35,7 @@ import android.widget.ListView;
 
 import com.markupartist.android.widget.ActionBar;
 
-public class PostsCommentsShow extends ApplicationActivity{
+public class QACommentsShow extends ApplicationActivity{
     private final ArrayList<CommentsData> commentsDataList = new ArrayList<CommentsData>();
     private String link;
 
@@ -67,16 +67,25 @@ public class PostsCommentsShow extends ApplicationActivity{
         protected Void doInBackground(Void... params){
             try{
                 Document document = Jsoup.connect(link).get();
-                Elements comments = document.select("div.comment");
+                Elements comments = document.select("li.comment_holder");
 
                 for(Element comment : comments){
                     CommentsData commentsData = new CommentsData();
+                    Element author = null;
+                    Element message = comment.select("div.entry-content").first();
 
-                    Element userName = comment.select("a.username").first();
-                    Element message = comment.select("div.message").first();
+                    if((author = comment.select("a.url").first()) != null){
+                        commentsData.setAuthor(author.text());
+                        commentsData.setAuthorLink(author.attr("abs:href"));
+                    }else{
+                        author = comment.select("span.fn > a").first();
 
-                    commentsData.setAuthor(userName.text());
-                    commentsData.setAuthorLink(userName.attr("abs:href"));
+                        commentsData.setAuthor(author.text());
+                        commentsData.setAuthorLink(author.attr("abs:href"));
+
+                        message.select("span.fn").first().empty();
+                    }
+
                     commentsData.setText(message.text());
 
                     commentsDataList.add(commentsData);
@@ -90,7 +99,7 @@ public class PostsCommentsShow extends ApplicationActivity{
 
         @Override
         protected void onPreExecute(){
-            progressDialog = new ProgressDialog(PostsCommentsShow.this);
+            progressDialog = new ProgressDialog(QACommentsShow.this);
             progressDialog.setMessage(getString(R.string.loading_comments));
             progressDialog.setCancelable(true);
             progressDialog.show();
@@ -99,8 +108,8 @@ public class PostsCommentsShow extends ApplicationActivity{
         @Override
         protected void onPostExecute(Void result){
             if(!isCancelled()){
-                ListView listView = (ListView) PostsCommentsShow.this.findViewById(R.id.comments_list);
-                listView.setAdapter(new CommentsAdapter(PostsCommentsShow.this, commentsDataList));
+                ListView listView = (ListView) QACommentsShow.this.findViewById(R.id.comments_list);
+                listView.setAdapter(new CommentsAdapter(QACommentsShow.this, commentsDataList));
             }
             progressDialog.dismiss();
         }

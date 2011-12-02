@@ -40,6 +40,7 @@
         <activity android:name=".activities.QA" />
         <activity android:name=".activities.QASearch" />
         <activity android:name=".activities.QAShow" />
+        <activity android:name=".activities.QACommentsShow" />
         
         <activity android:name=".activities.Blogs" />
         <activity android:name=".activities.BlogsPosts" />

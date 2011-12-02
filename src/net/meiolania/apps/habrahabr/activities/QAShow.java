@@ -81,7 +81,22 @@ public class QAShow extends ApplicationActivity{
     private void setActionBar(){
         ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
         actionBar.setTitle(R.string.qa);
+        actionBar.addAction(new ShowCommentsAction());
         actionBar.addAction(new ShareAction());
+    }
+    
+    private class ShowCommentsAction implements Action{
+
+        public int getDrawable(){
+            return R.drawable.actionbar_ic_comments;
+        }
+
+        public void performAction(View view){
+            Intent intent = new Intent(QAShow.this, QACommentsShow.class);
+            intent.putExtra("link", link);
+            startActivity(intent);
+        }
+        
     }
 
     private class ShareAction implements Action{

@@ -46,4 +46,6 @@
 	<string name="small_widget">HabReader(маленький)</string>
 	<string name="widget_error">Нет доступного поста. Возникли проблемы с подключением.</string>
 	<string name="preferences_use_habrahabr_css_posts">Использовать при отображении статей CSS стили Habrahabr</string>
+	<string name="add_to_favorites">Добавить в закладки</string>
+	<string name="other_applications">Другие приложения</string>
 </resources>

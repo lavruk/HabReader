@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.CommentsData;
-import net.meiolania.apps.habrahabr.data.CompaniesData;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +11,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class CommentsPostsAdapter extends BaseAdapter{
+public class CommentsAdapter extends BaseAdapter{
     private Context context;
     private ArrayList<CommentsData> commentsDataList;
 
-    public CommentsPostsAdapter(Context context, ArrayList<CommentsData> commentsDataList){
+    public CommentsAdapter(Context context, ArrayList<CommentsData> commentsDataList){
         this.context = context;
         this.commentsDataList = commentsDataList;
     }
@@ -40,8 +39,14 @@ public class CommentsPostsAdapter extends BaseAdapter{
 
         if(view == null){
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.companies_list_row, null);
+            view = layoutInflater.inflate(R.layout.comments_list_row, null);
         }
+        
+        TextView message = (TextView)view.findViewById(R.id.message);
+        TextView author = (TextView)view.findViewById(R.id.author);
+        
+        message.setText(commentsData.getText());
+        author.setText(commentsData.getAuthor());
 
         return view;
     }

@@ -20,6 +20,7 @@ import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.utils.Vibrate;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -41,9 +42,6 @@ public class Dashboard extends ApplicationActivity{
                 startActivity(new Intent(this, PostsSearch.class));
                 break;
         }
-        /*
-         * FIXME: volume buttons don`t work
-         */
         return super.onKeyDown(keyCode, event);
     }
 
@@ -89,6 +87,11 @@ public class Dashboard extends ApplicationActivity{
                 break;
             case R.id.preferences:
                 startActivity(new Intent(this, net.meiolania.apps.habrahabr.activities.dashboard.Preferences.class));
+                break;
+            case R.id.other_applications:
+                Uri uri = Uri.parse("https://market.android.com/developer?pub=Meiolania.net");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
                 break;
         }
         return true;

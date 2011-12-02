@@ -36,6 +36,7 @@
         <activity android:name=".activities.CompaniesSearch" />
         
         <activity android:name=".activities.Events" />
+        <activity android:name=".activities.EventsShow" />
         
         <activity android:name=".activities.QA" />
         <activity android:name=".activities.QASearch" />

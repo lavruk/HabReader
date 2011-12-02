@@ -139,7 +139,7 @@ public class QAShow extends ApplicationActivity{
                 
                 /*
                  * http://stackoverflow.com/questions/3961589/android-webview-and-loaddata
-                 * If you now how solve this problem another way please sumbit a patch.
+                 * If you now how solve this problem an another way please sumbit a patch.
                  */
                 content = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
                 content += contentElement.outerHtml();

@@ -25,6 +25,7 @@
     <string name="share">Поделиться</string>
     <string name="share_link_qa">Вопрос на Habrahabr.ru</string>
     <string name="share_link_post">Пост на Habrahabr.ru</string>
+    <string name="share_link_event">Мероприятие на Habrahabr.ru</string>
     <string name="rate_application">Оценить приложение</string>
     <string name="version">Версия</string>
     <string name="preferences_fullscreen">Полноэкранный режим</string>
@@ -48,4 +49,5 @@
 	<string name="preferences_use_habrahabr_css_posts">Использовать при отображении статей CSS стили Habrahabr</string>
 	<string name="add_to_favorites">Добавить в закладки</string>
 	<string name="other_applications">Другие приложения</string>
+	<string name="loading_events_show">Загрузка события</string>
 </resources>

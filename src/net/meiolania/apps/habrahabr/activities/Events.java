@@ -29,9 +29,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.markupartist.android.widget.ActionBar;
@@ -106,6 +109,7 @@ public class Events extends ApplicationActivity{
                     
                     eventsData.setTitle(title.text());
                     eventsData.setDetail(detail.text());
+                    eventsData.setLink(title.attr("abs:href"));
                     
                     eventsDataList.add(eventsData);
                 }
@@ -130,6 +134,16 @@ public class Events extends ApplicationActivity{
                 
                 ListView listView = (ListView)Events.this.findViewById(R.id.events_list);
                 listView.setAdapter(eventsAdapter);
+                listView.setOnItemClickListener(new OnItemClickListener(){
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                        EventsData eventsData = eventsDataList.get(position);
+                        
+                        Intent intent = new Intent(Events.this, EventsShow.class);
+                        intent.putExtra("link", eventsData.getLink());
+                        
+                        Events.this.startActivity(intent);
+                    }
+                });
             }else
                 eventsAdapter.notifyDataSetChanged();
             

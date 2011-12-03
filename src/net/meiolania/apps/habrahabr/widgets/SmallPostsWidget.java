@@ -36,7 +36,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.widget.RemoteViews;
 
-public class SmallWidget extends AppWidgetProvider{
+public class SmallPostsWidget extends AppWidgetProvider{
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds){
@@ -49,13 +49,13 @@ public class SmallWidget extends AppWidgetProvider{
         public void onStart(Intent intent, int startId){
             RemoteViews updateViews = buildUpdate(this);
 
-            ComponentName thisWidget = new ComponentName(this, SmallWidget.class);
+            ComponentName thisWidget = new ComponentName(this, SmallPostsWidget.class);
             AppWidgetManager manager = AppWidgetManager.getInstance(this);
             manager.updateAppWidget(thisWidget, updateViews);
         }
 
         public RemoteViews buildUpdate(Context context){
-            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_small);
+            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_small_posts);
             try{
                 Document document = Jsoup.connect("http://habrahabr.ru/blogs").get();
                 Element post = document.select("div.post").first();

@@ -43,6 +43,22 @@
         
     </PreferenceCategory>
     
+    <PreferenceCategory android:title="@string/qa">
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/events">
+        
+    </PreferenceCategory>    
+    
+    <PreferenceCategory android:title="@string/companies">
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/people">
+        
+    </PreferenceCategory>    
+    
     <PreferenceCategory android:title="@string/about">
         
         <Preference

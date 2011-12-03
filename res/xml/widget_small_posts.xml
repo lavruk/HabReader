@@ -3,4 +3,4 @@
     android:minHeight="72dp"
     android:minWidth="292dp"
     android:updatePeriodMillis="1800000"
-    android:initialLayout="@layout/widget_small" />
+    android:initialLayout="@layout/widget_small_posts" />

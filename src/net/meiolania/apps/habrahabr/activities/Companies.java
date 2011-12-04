@@ -39,6 +39,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.markupartist.android.widget.ActionBar;
@@ -134,7 +136,9 @@ public class Companies extends ApplicationActivity{
                     CompaniesData companiesData = new CompaniesData();
                     
                     Element logo = company.getElementsByTag("img").first();
+                    Element link = company.select("dt.corp-name > a").first();
                     
+                    companiesData.setLink(link.attr("abs:href"));
                     companiesData.setLogo(logo.attr("src"));
                     companiesData.setTitle(logo.attr("title"));
                     
@@ -162,6 +166,16 @@ public class Companies extends ApplicationActivity{
                 
                 ListView listView = (ListView)Companies.this.findViewById(R.id.companies_list);
                 listView.setAdapter(companiesAdapter);
+                listView.setOnItemClickListener(new OnItemClickListener(){
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
+                        CompaniesData companiesData = companiesDataList.get(position);
+                        
+                        Intent intent = new Intent(Companies.this, CompaniesShow.class);
+                        intent.putExtra("link", companiesData.getLink());
+                        
+                        startActivity(intent);
+                    }
+                });
             }else
                 companiesAdapter.notifyDataSetChanged();
             

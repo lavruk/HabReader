@@ -27,39 +27,76 @@
                 android:padding="10dp"
                 android:textSize="18sp"
                 android:layout_marginBottom="5dp" />
-
+            
             <TextView
-                android:id="@+id/place_info"
+                android:id="@+id/date"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/textview_with_corners"
                 android:padding="10dp"
                 android:textSize="18sp"
                 android:layout_marginBottom="5dp" />
-
+            
             <TextView
-                android:id="@+id/price_info"
+                android:id="@+id/link"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/textview_with_corners"
                 android:padding="10dp"
                 android:textSize="18sp"
                 android:layout_marginBottom="5dp" />
-
+            
             <TextView
-                android:id="@+id/link_info"
+                android:id="@+id/industry"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/textview_with_corners"
                 android:padding="10dp"
                 android:textSize="18sp"
                 android:layout_marginBottom="5dp" />
-
+            
+            <TextView
+                android:id="@+id/place"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_with_corners"
+                android:padding="10dp"
+                android:textSize="18sp"
+                android:layout_marginBottom="5dp" />
+            
+            <TextView
+                android:id="@+id/staff"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_with_corners"
+                android:padding="10dp"
+                android:textSize="18sp"
+                android:layout_marginBottom="5dp" />
+            
+            <TextView
+                android:id="@+id/about_company"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_with_corners"
+                android:padding="10dp"
+                android:textSize="18sp"
+                android:layout_marginBottom="5dp" />
+            
+            <TextView
+                android:id="@+id/leadership"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_with_corners"
+                android:padding="10dp"
+                android:textSize="18sp"
+                android:layout_marginBottom="5dp" />
+            
             <WebView
-                android:id="@+id/description"
+                android:id="@+id/stages"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp" />
+            
         </LinearLayout>
     </ScrollView>
 

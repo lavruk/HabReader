@@ -26,6 +26,11 @@
             android:key="keep_screen"
             android:title="@string/preferences_keep_screen"
             android:defaultValue="false" />
+        
+        <CheckBoxPreference
+            android:key="use_css"
+            android:title="@string/preferences_use_habrahabr_css"
+            android:defaultValue="true" />
             
     </PreferenceCategory>
     
@@ -35,29 +40,8 @@
             android:key="enable_flash_posts"
             android:title="@string/preferences_enable_flash_posts"
             android:defaultValue="true" />
-            
-        <CheckBoxPreference
-            android:key="use_css_posts"
-            android:title="@string/preferences_use_habrahabr_css_posts"
-            android:defaultValue="true" />  
         
-    </PreferenceCategory>
-    
-    <PreferenceCategory android:title="@string/qa">
-        
-    </PreferenceCategory>
-    
-    <PreferenceCategory android:title="@string/events">
-        
-    </PreferenceCategory>    
-    
-    <PreferenceCategory android:title="@string/companies">
-        
-    </PreferenceCategory>
-    
-    <PreferenceCategory android:title="@string/people">
-        
-    </PreferenceCategory>    
+    </PreferenceCategory>  
     
     <PreferenceCategory android:title="@string/about">
         

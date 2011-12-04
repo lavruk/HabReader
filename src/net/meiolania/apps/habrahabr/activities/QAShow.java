@@ -145,6 +145,8 @@ public class QAShow extends ApplicationActivity{
                  * If you now how solve this problem an another way please sumbit a patch.
                  */
                 content = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
+                if(Preferences.useCSS)
+                    content += "<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />";
                 content += contentElement.outerHtml();
             }
             catch(IOException e){

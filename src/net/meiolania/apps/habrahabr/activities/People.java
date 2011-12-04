@@ -39,6 +39,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.markupartist.android.widget.ActionBar;
@@ -165,6 +167,11 @@ public class People extends ApplicationActivity{
                 
                 ListView listView = (ListView)People.this.findViewById(R.id.people_list);
                 listView.setAdapter(peopleAdapter);
+                listView.setOnItemClickListener(new OnItemClickListener(){
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
+                        
+                    }
+                });
             }else
                 peopleAdapter.notifyDataSetChanged();
             

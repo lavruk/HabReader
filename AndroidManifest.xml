@@ -34,6 +34,7 @@
         
         <activity android:name=".activities.Companies" />
         <activity android:name=".activities.CompaniesSearch" />
+        <activity android:name=".activities.CompaniesShow" />
         
         <activity android:name=".activities.Events" />
         <activity android:name=".activities.EventsShow" />

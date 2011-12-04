@@ -150,6 +150,8 @@ public class EventsShow extends ApplicationActivity{
                  * If you now how solve this problem an another way please sumbit a patch.
                  */
                 description = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
+                if(Preferences.useCSS)
+                    description += "<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />";
                 description += descriptionElement.outerHtml();
             }
             catch(IOException e){

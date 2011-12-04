@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-
+	
+    <item
+        android:id="@+id/to_home"
+        android:title="@string/to_home" />
+    
     <item 
         android:id="@+id/show_in_browser"
         android:title="@string/show_in_browser" />
-    
-    <item
-        android:id="@+id/add_to_favorites"
-        android:title="@string/add_to_favorites" />
 
 </menu>

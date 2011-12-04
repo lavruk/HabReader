@@ -19,9 +19,11 @@ package net.meiolania.apps.habrahabr.activities;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.adapters.CommentsAdapter;
 import net.meiolania.apps.habrahabr.data.CommentsData;
+import net.meiolania.apps.habrahabr.utils.Vibrate;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -29,8 +31,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.markupartist.android.widget.ActionBar;
@@ -49,6 +55,25 @@ public class PostsCommentsShow extends ApplicationActivity{
 
         setActionBar();
         loadComments();
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.posts_comments_show, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(Preferences.vibrate)
+            Vibrate.doVibrate(this);
+        switch(item.getItemId()){
+            case R.id.to_home:
+                startActivity(new Intent(this, Dashboard.class));
+                break;
+        }
+        return true;
     }
 
     private void setActionBar(){

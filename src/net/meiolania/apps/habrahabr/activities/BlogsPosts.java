@@ -71,9 +71,7 @@ public class BlogsPosts extends ApplicationActivity{
         if(Preferences.vibrate)
             Vibrate.doVibrate(this);
         switch(item.getItemId()){
-            case R.id.favorites:
-                startActivity(new Intent(this, FavoritesPosts.class));
-                break;
+            
         }
         return true;
     }

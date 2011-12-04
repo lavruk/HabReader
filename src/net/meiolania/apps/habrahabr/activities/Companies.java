@@ -19,9 +19,11 @@ package net.meiolania.apps.habrahabr.activities;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.adapters.CompaniesAdapter;
 import net.meiolania.apps.habrahabr.data.CompaniesData;
+import net.meiolania.apps.habrahabr.utils.Vibrate;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -33,6 +35,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
@@ -52,6 +57,25 @@ public class Companies extends ApplicationActivity{
 
         setActionBar();
         loadList();
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.companies, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(Preferences.vibrate)
+            Vibrate.doVibrate(this);
+        switch(item.getItemId()){
+            case R.id.to_home:
+                startActivity(new Intent(this, Dashboard.class));
+                break;
+        }
+        return true;
     }
     
     public boolean onKeyDown(int keyCode, KeyEvent event){

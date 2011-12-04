@@ -83,8 +83,8 @@ public class Posts extends ApplicationActivity{
         if(Preferences.vibrate)
             Vibrate.doVibrate(this);
         switch(item.getItemId()){
-            case R.id.favorites:
-                startActivity(new Intent(this, FavoritesPosts.class));
+            case R.id.to_home:
+                startActivity(new Intent(this, Dashboard.class));
                 break;
         }
         return true;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Habrahabr</string>
+    <string name="app_name">HabReader</string>
     <string name="posts">Посты</string>
     <string name="qa">Q&amp;A</string>
     <string name="blogs">Блоги</string>
@@ -40,7 +40,6 @@
     <string name="sign_in">Вход</string>
     <string name="preferences_enable_flash_posts">Включить Flash</string>
     <string name="loading_man_show">Загрузка данных хабра пользователя</string>
-	<string name="favorites">Закладки</string>
 	<string name="loading_post_show">Загрузка поста</string>
 	<string name="comments">Комментарии</string>
 	<string name="loading_comments">Загрузка комментариев</string>
@@ -51,4 +50,5 @@
 	<string name="other_applications">Другие приложения</string>
 	<string name="loading_events_show">Загрузка события</string>
 	<string name="events_widget">HabReader события</string>
+	<string name="to_home">Домой</string>
 </resources>

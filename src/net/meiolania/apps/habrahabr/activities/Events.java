@@ -19,9 +19,11 @@ package net.meiolania.apps.habrahabr.activities;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.adapters.EventsAdapter;
 import net.meiolania.apps.habrahabr.data.EventsData;
+import net.meiolania.apps.habrahabr.utils.Vibrate;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -32,6 +34,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -52,6 +57,25 @@ public class Events extends ApplicationActivity{
         
         setActionBar();
         loadList();
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.events, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(Preferences.vibrate)
+            Vibrate.doVibrate(this);
+        switch(item.getItemId()){
+            case R.id.to_home:
+                startActivity(new Intent(this, Dashboard.class));
+                break;
+        }
+        return true;
     }
     
     private void setActionBar(){

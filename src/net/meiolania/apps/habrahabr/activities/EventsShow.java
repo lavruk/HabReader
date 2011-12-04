@@ -82,6 +82,9 @@ public class EventsShow extends ApplicationActivity{
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
                 break;
+            case R.id.to_home:
+                startActivity(new Intent(this, Dashboard.class));
+                break;    
         }
         return true;
     }

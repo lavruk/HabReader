@@ -52,6 +52,39 @@ public class HabrahabrIntentFilter extends Activity{
                 intent.putExtra("link", uri);
                 startActivity(intent);
             }
+            //Events
+            else if(parts[3].equalsIgnoreCase("events") && parts.length == 3){
+                Log.i(LOG_TAG, "Target: Events.class");
+                intent.setClass(this, Events.class);
+                startActivity(intent);
+            }else if(parts[3].equalsIgnoreCase("events") && parts.length == 4){
+                Log.i(LOG_TAG, "Target: EventsShow.class");
+                intent.setClass(this, EventsShow.class);
+                intent.putExtra("link", uri);
+                startActivity(intent);
+            }
+            //Companies
+            else if(parts[3].equalsIgnoreCase("companies") && parts.length == 3){
+                Log.i(LOG_TAG, "Target: Companies.class");
+                intent.setClass(this, Companies.class);
+                startActivity(intent);
+            }else if(parts[3].equalsIgnoreCase("company") && parts.length == 4){
+                Log.i(LOG_TAG, "Target: CompaniesShow.class");
+                intent.setClass(this, CompaniesShow.class);
+                intent.putExtra("link", uri);
+                startActivity(intent);
+            }
+            //People
+            else if(parts[3].equalsIgnoreCase("people") && parts.length == 3){
+                Log.i(LOG_TAG, "Target: People.class");
+                intent.setClass(this, People.class);
+                startActivity(intent);
+            }else if(parts[3].equalsIgnoreCase("users") && parts.length == 4){
+                Log.i(LOG_TAG, "Target: PeopleShow.class");
+                intent.setClass(this, PeopleShow.class);
+                intent.putExtra("link", uri);
+                startActivity(intent);
+            }
             //Q&A
             else if(parts[3].equalsIgnoreCase("qa") && parts.length == 3){
                 Log.i(LOG_TAG, "Target: QA.class");

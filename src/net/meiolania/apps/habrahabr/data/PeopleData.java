@@ -16,7 +16,7 @@
 
 package net.meiolania.apps.habrahabr.data;
 
-public class UserData{
+public class PeopleData{
     private String name;
     private String karma;
     private String rating;

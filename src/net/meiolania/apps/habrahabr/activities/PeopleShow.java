@@ -3,17 +3,23 @@ package net.meiolania.apps.habrahabr.activities;
 import java.io.IOException;
 import java.util.Formatter;
 
+import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
+import android.widget.TextView;
 
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
@@ -66,6 +72,11 @@ public class PeopleShow extends ApplicationActivity{
     
     private class LoadMan extends AsyncTask<Void, Void, Void>{
         private ProgressDialog progressDialog;
+        private String ratingPlace;
+        private String birthday;
+        private String place;
+        private String summary;
+        private String tags;
         
         @Override
         protected Void doInBackground(Void... params){
@@ -74,7 +85,42 @@ public class PeopleShow extends ApplicationActivity{
                 
                 Document document = Jsoup.connect(link).get();
                 
+                Element userNameElement = document.select("dl.user-name > dt.fn").first();
+                Element ratingPlaceElement = document.select("dl.user-name > dd.rating-place").first();
+                Element birthdayElement = document.select("dd.bday").first();
+                //Place
+                Element countryElement = document.select("a.country-name").first();
+                Element regionElement = document.select("a.region").first();
+                Element cityElement = document.select("city").first();
+                //Others
+                Element summaryElement = document.select("dd.summary").first();
+                Element tagsElement = document.select("ul#people-tags").first();
                 
+                userName = userNameElement.text();
+                ratingPlace = ratingPlaceElement.text();
+                birthday = birthdayElement.text();
+                
+                StringBuilder placeBuilder = new StringBuilder();
+                
+                if(countryElement.hasText()){
+                    placeBuilder.append(countryElement.text());
+                    if(regionElement != null && regionElement.hasText())
+                        placeBuilder.append(", " + regionElement.text());
+                    if(cityElement != null && cityElement.hasText())
+                        placeBuilder.append(", " + cityElement.text());
+                }else
+                    placeBuilder.append(getString(R.string.place_undefined));
+                
+                place = placeBuilder.toString();
+                
+                summary = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
+                if(Preferences.useCSS)
+                    summary += "<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />";
+                summary += summaryElement.outerHtml();
+                
+                if(Preferences.useCSS)
+                    tags = "<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />";
+                tags += tagsElement.outerHtml();
             }
             catch(IOException e){
                 e.printStackTrace();
@@ -92,6 +138,27 @@ public class PeopleShow extends ApplicationActivity{
         
         @Override
         protected void onPostExecute(Void result){
+            if(!isCancelled()){
+                TextView userNameView = (TextView)findViewById(R.id.name);
+                TextView ratingPlaceView = (TextView)findViewById(R.id.rating_place);
+                TextView birthdayView = (TextView)findViewById(R.id.birthday);
+                TextView placeView = (TextView)findViewById(R.id.place);
+                TextView tagsView = (TextView)findViewById(R.id.tags);
+                WebView summaryView = (WebView)findViewById(R.id.summary);
+                
+                userNameView.setText(userName);
+                ratingPlaceView.setText(ratingPlace);
+                birthdayView.setText(birthday);
+                placeView.setText(place);
+                
+                tagsView.setText(Html.fromHtml(tags));
+                tagsView.setMovementMethod(LinkMovementMethod.getInstance());
+                
+                summaryView.getSettings().setPluginsEnabled(true);
+                summaryView.getSettings().setSupportZoom(true);
+                summaryView.getSettings().setBuiltInZoomControls(true);
+                summaryView.loadData(summary, "text/html", "UTF-8");
+            }
             progressDialog.dismiss();
         }
         

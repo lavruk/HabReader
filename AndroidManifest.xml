@@ -31,6 +31,7 @@
         
         <activity android:name=".activities.People" />
         <activity android:name=".activities.PeopleSearch" />
+        <activity android:name=".activities.PeopleShow" />
         
         <activity android:name=".activities.Companies" />
         <activity android:name=".activities.CompaniesSearch" />

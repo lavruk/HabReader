@@ -19,7 +19,7 @@ package net.meiolania.apps.habrahabr.adapters;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.data.UserData;
+import net.meiolania.apps.habrahabr.data.PeopleData;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,19 +29,19 @@ import android.widget.TextView;
 
 public class PeopleAdapter extends BaseAdapter{
     private Context context;
-    private ArrayList<UserData> userDataList;
+    private ArrayList<PeopleData> peopleDataList;
     
-    public PeopleAdapter(Context context, ArrayList<UserData> userDataList){
+    public PeopleAdapter(Context context, ArrayList<PeopleData> peopleDataList){
         this.context = context;
-        this.userDataList = userDataList;
+        this.peopleDataList = peopleDataList;
     }
     
     public int getCount(){
-        return userDataList.size();
+        return peopleDataList.size();
     }
 
-    public UserData getItem(int position){
-        return userDataList.get(position);
+    public PeopleData getItem(int position){
+        return peopleDataList.get(position);
     }
 
     public long getItemId(int position){
@@ -49,7 +49,7 @@ public class PeopleAdapter extends BaseAdapter{
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
-        UserData userData = userDataList.get(position);
+        PeopleData userData = peopleDataList.get(position);
         
         View view = convertView;
         

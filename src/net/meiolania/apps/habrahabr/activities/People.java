@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.adapters.PeopleAdapter;
-import net.meiolania.apps.habrahabr.data.UserData;
+import net.meiolania.apps.habrahabr.data.PeopleData;
 import net.meiolania.apps.habrahabr.utils.Vibrate;
 
 import org.jsoup.Jsoup;
@@ -48,7 +48,7 @@ import com.markupartist.android.widget.ActionBar.Action;
 import com.markupartist.android.widget.ActionBar.IntentAction;
 
 public class People extends ApplicationActivity{
-    private final ArrayList<UserData> userDataList = new ArrayList<UserData>();
+    private final ArrayList<PeopleData> peopleDataList = new ArrayList<PeopleData>();
     private PeopleAdapter peopleAdapter;
     private int page;
     
@@ -133,17 +133,19 @@ public class People extends ApplicationActivity{
                         firstElement = false;
                         continue;
                     }
-                    UserData userData = new UserData();
+                    PeopleData peopleData = new PeopleData();
                     
                     Element userAvatar = user.getElementsByTag("img").first();
                     Element userKarma = user.select("td.userkarma").first();
                     Element userRating = user.select("td.userrating").first();
+                    Element userLink = user.select("div.habrauserava > a").first();
                     
-                    userData.setName(userAvatar.attr("alt"));
-                    userData.setKarma(userKarma.text());
-                    userData.setRating(userRating.text());
+                    peopleData.setName(userAvatar.attr("alt"));
+                    peopleData.setKarma(userKarma.text());
+                    peopleData.setRating(userRating.text());
+                    peopleData.setLink(userLink.attr("abs:href"));
                     
-                    userDataList.add(userData);
+                    peopleDataList.add(peopleData);
                 }
             }
             catch(IOException e){
@@ -163,13 +165,18 @@ public class People extends ApplicationActivity{
         @Override
         protected void onPostExecute(Void result){
             if(!isCancelled() && page == 1){
-                peopleAdapter = new PeopleAdapter(People.this, userDataList);
+                peopleAdapter = new PeopleAdapter(People.this, peopleDataList);
                 
                 ListView listView = (ListView)People.this.findViewById(R.id.people_list);
                 listView.setAdapter(peopleAdapter);
                 listView.setOnItemClickListener(new OnItemClickListener(){
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
+                        PeopleData peopleData = peopleDataList.get(position);
                         
+                        Intent intent = new Intent(People.this, PeopleShow.class);
+                        intent.putExtra("link", peopleData.getLink());
+                        
+                        startActivity(intent);
                     }
                 });
             }else

@@ -34,7 +34,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,7 +44,6 @@ import android.widget.ListView;
 
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
-import com.markupartist.android.widget.ActionBar.IntentAction;
 
 public class Posts extends ApplicationActivity{
     private final ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
@@ -60,15 +58,6 @@ public class Posts extends ApplicationActivity{
 
         setActionBar();
         loadList();
-    }
-
-    public boolean onKeyDown(int keyCode, KeyEvent event){
-        switch(keyCode){
-            case KeyEvent.KEYCODE_SEARCH:
-                startActivity(new Intent(this, PostsSearch.class));
-                break;
-        }
-        return super.onKeyDown(keyCode, event);
     }
     
     @Override
@@ -95,7 +84,6 @@ public class Posts extends ApplicationActivity{
         actionBar.setTitle(R.string.posts);
         actionBar.addAction(new LoadNextPageAction());
         actionBar.addAction(new UpdateAction());
-        actionBar.addAction(new IntentAction(this, new Intent(this, PostsSearch.class), R.drawable.actionbar_ic_search));
     }
 
     private class LoadNextPageAction implements Action{

@@ -34,7 +34,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,7 +44,6 @@ import android.widget.ListView;
 
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
-import com.markupartist.android.widget.ActionBar.IntentAction;
 
 public class People extends ApplicationActivity{
     private final ArrayList<PeopleData> peopleDataList = new ArrayList<PeopleData>();
@@ -80,15 +78,6 @@ public class People extends ApplicationActivity{
         return true;
     }
     
-    public boolean onKeyDown(int keyCode, KeyEvent event){
-        switch(keyCode){
-            case KeyEvent.KEYCODE_SEARCH:
-                startActivity(new Intent(this, PeopleSearch.class));
-                break;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-    
     private void loadList(){
         ++page;
         new LoadPeopleList().execute();
@@ -98,7 +87,6 @@ public class People extends ApplicationActivity{
         ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
         actionBar.setTitle(R.string.people);
         actionBar.addAction(new LoadNextPageAction());
-        actionBar.addAction(new IntentAction(this, new Intent(this, PeopleSearch.class), R.drawable.actionbar_ic_search));
     }
     
     private class LoadNextPageAction implements Action{

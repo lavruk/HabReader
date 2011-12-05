@@ -1,3 +1,19 @@
+/*
+   Copyright (C) 2011 Andrey Zaytsev <a.einsam@gmail.com>
+  
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+  
+        http://www.apache.org/licenses/LICENSE-2.0
+  
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ */
+
 package net.meiolania.apps.habrahabr.activities;
 
 import java.io.IOException;
@@ -18,7 +34,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,7 +44,6 @@ import android.widget.ListView;
 
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
-import com.markupartist.android.widget.ActionBar.IntentAction;
 
 public class BlogsPosts extends ApplicationActivity{
     private final ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
@@ -48,15 +62,6 @@ public class BlogsPosts extends ApplicationActivity{
 
         setActionBar();
         loadList();
-    }
-
-    public boolean onKeyDown(int keyCode, KeyEvent event){
-        switch(keyCode){
-            case KeyEvent.KEYCODE_SEARCH:
-                startActivity(new Intent(this, PostsSearch.class));
-                break;
-        }
-        return super.onKeyDown(keyCode, event);
     }
     
     @Override
@@ -81,7 +86,6 @@ public class BlogsPosts extends ApplicationActivity{
         actionBar.setTitle(R.string.posts);
         actionBar.addAction(new LoadNextPageAction());
         actionBar.addAction(new UpdateAction());
-        actionBar.addAction(new IntentAction(this, new Intent(this, PostsSearch.class), R.drawable.actionbar_ic_search));
     }
 
     private class LoadNextPageAction implements Action{

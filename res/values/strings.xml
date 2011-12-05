@@ -53,4 +53,5 @@
 	<string name="to_home">Домой</string>
 	<string name="loading_companies_show">Загрузка компании</string>
 	<string name="place_undefined">Страна не указана</string>
+	<string name="posts_search">Поиск по постам</string>
 </resources>

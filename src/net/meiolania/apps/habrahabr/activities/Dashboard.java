@@ -22,7 +22,6 @@ import net.meiolania.apps.habrahabr.utils.Vibrate;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,15 +33,6 @@ public class Dashboard extends ApplicationActivity{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
-    }
-    
-    public boolean onKeyDown(int keyCode, KeyEvent event){
-        switch(keyCode){
-            case KeyEvent.KEYCODE_SEARCH:
-                startActivity(new Intent(this, PostsSearch.class));
-                break;
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
     public void clickDashboardButton(View view){

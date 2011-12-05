@@ -34,7 +34,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,7 +44,6 @@ import android.widget.ListView;
 
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
-import com.markupartist.android.widget.ActionBar.IntentAction;
 
 public class QA extends ApplicationActivity{
     private final ArrayList<QAData> qaDataList = new ArrayList<QAData>();
@@ -79,22 +77,12 @@ public class QA extends ApplicationActivity{
         }
         return true;
     }
-    
-    public boolean onKeyDown(int keyCode, KeyEvent event){
-        switch(keyCode){
-            case KeyEvent.KEYCODE_SEARCH:
-                startActivity(new Intent(this, QASearch.class));
-                break;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 
     private void setActionBar(){
         ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
         actionBar.setTitle(R.string.qa);
         actionBar.addAction(new LoadNextPageAction());
         actionBar.addAction(new UpdateAction());
-        actionBar.addAction(new IntentAction(this, new Intent(this, QASearch.class), R.drawable.actionbar_ic_search));
     }
     
     private class LoadNextPageAction implements Action{

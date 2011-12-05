@@ -27,31 +27,31 @@
         <activity android:name=".activities.dashboard.About" />
         <activity android:name=".activities.dashboard.Preferences" />
         
-        <activity android:name=".activities.SignIn" />
+        <activity android:name=".activities.SignIn" android:configChanges="orientation|keyboard|keyboardHidden" />
         
-        <activity android:name=".activities.People" />
-        <activity android:name=".activities.PeopleSearch" />
-        <activity android:name=".activities.PeopleShow" />
+        <activity android:name=".activities.People" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.PeopleSearch" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.PeopleShow" android:configChanges="orientation|keyboard|keyboardHidden" />
         
-        <activity android:name=".activities.Companies" />
-        <activity android:name=".activities.CompaniesSearch" />
-        <activity android:name=".activities.CompaniesShow" />
+        <activity android:name=".activities.Companies" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.CompaniesSearch" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.CompaniesShow" android:configChanges="orientation|keyboard|keyboardHidden" />
         
-        <activity android:name=".activities.Events" />
-        <activity android:name=".activities.EventsShow" />
+        <activity android:name=".activities.Events" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.EventsShow" android:configChanges="orientation|keyboard|keyboardHidden" />
         
-        <activity android:name=".activities.QA" />
-        <activity android:name=".activities.QASearch" />
-        <activity android:name=".activities.QAShow" />
-        <activity android:name=".activities.QACommentsShow" />
+        <activity android:name=".activities.QA" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.QASearch" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.QAShow" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.QACommentsShow" android:configChanges="orientation|keyboard|keyboardHidden" />
         
-        <activity android:name=".activities.Blogs" />
-        <activity android:name=".activities.BlogsPosts" />
+        <activity android:name=".activities.Blogs" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.BlogsPosts" android:configChanges="orientation|keyboard|keyboardHidden" />
         
-        <activity android:name=".activities.Posts" />
-        <activity android:name=".activities.PostsShow" />
-        <activity android:name=".activities.FavoritesPosts" />
-        <activity android:name=".activities.PostsCommentsShow" />
+        <activity android:name=".activities.Posts" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.PostsShow" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.FavoritesPosts" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.PostsCommentsShow" android:configChanges="orientation|keyboard|keyboardHidden" />
         
         <activity android:name=".activities.HabrahabrIntentFilter">
             <intent-filter>

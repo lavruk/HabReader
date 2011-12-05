@@ -5,6 +5,7 @@ import java.util.Formatter;
 
 import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.utils.Vibrate;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,11 +13,15 @@ import org.jsoup.nodes.Element;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -38,6 +43,30 @@ public class PeopleShow extends ApplicationActivity{
         
         setActionBar();
         loadMan();
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.people_show, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(Preferences.vibrate)
+            Vibrate.doVibrate(this);
+        switch(item.getItemId()){
+            case R.id.show_in_browser:
+                Uri uri = Uri.parse(link);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                break;
+            case R.id.to_home:
+                startActivity(new Intent(this, Dashboard.class));
+                break;    
+        }
+        return true;
     }
     
     private void setActionBar(){

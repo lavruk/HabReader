@@ -34,6 +34,20 @@
             
     </PreferenceCategory>
     
+    <PreferenceCategory android:title="@string/preferences_network">
+        
+        <CheckBoxPreference
+            android:key="roaming"
+            android:title="@string/preferences_roaming"
+            android:defaultValue="false" />
+        
+        <CheckBoxPreference
+            android:key="use_3g"
+            android:title="@string/preferences_3g"
+            android:defaultValue="true" />
+        
+    </PreferenceCategory>    
+    
     <PreferenceCategory android:title="@string/posts">
         
         <CheckBoxPreference

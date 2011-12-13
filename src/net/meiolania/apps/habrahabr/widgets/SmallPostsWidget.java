@@ -18,9 +18,11 @@ package net.meiolania.apps.habrahabr.widgets;
 
 import java.io.IOException;
 
+import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.BlogsPosts;
 import net.meiolania.apps.habrahabr.activities.PostsShow;
+import net.meiolania.apps.habrahabr.api.Connection;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -40,6 +42,10 @@ public class SmallPostsWidget extends AppWidgetProvider{
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds){
+        if(!Preferences.use3g && Connection.isMobileNetwork(context))
+            return;
+        if(!Preferences.roaming && Connection.isRoaming(context))
+            return;
         context.startService(new Intent(context, UpdateService.class));
     }
 

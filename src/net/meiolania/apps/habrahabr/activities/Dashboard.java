@@ -18,7 +18,11 @@ package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.api.Connection;
 import net.meiolania.apps.habrahabr.utils.Vibrate;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,6 +37,48 @@ public class Dashboard extends ApplicationActivity{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
+
+        checkMobileInternetPreferences();
+    }
+    
+    private void checkMobileInternetPreferences(){
+        if(!Preferences.use3g){
+            if(Connection.isMobileNetwork(this)){
+                if(!Preferences.roaming && Connection.isRoaming(this)){
+                    AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+                    alertDialog.setTitle(R.string.attention);
+                    alertDialog.setMessage(getString(R.string.attention_roaming));
+                    alertDialog.setButton(getString(R.string.continue_anyway), new OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which){
+                            dialog.dismiss();
+                        }
+                    });
+                    alertDialog.setButton2(getString(R.string.cancel), new OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which){
+                            finish();
+                        }
+                    });
+                    alertDialog.setCancelable(true);
+                    alertDialog.show();
+                }else{
+                    AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+                    alertDialog.setTitle(R.string.attention);
+                    alertDialog.setMessage(getString(R.string.attention_use_3g));
+                    alertDialog.setButton(getString(R.string.continue_anyway), new OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which){
+                            dialog.dismiss();
+                        }
+                    });
+                    alertDialog.setButton2(getString(R.string.cancel), new OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which){
+                            finish();
+                        }
+                    });
+                    alertDialog.setCancelable(true);
+                    alertDialog.show();
+                }
+            }
+        }
     }
 
     public void clickDashboardButton(View view){

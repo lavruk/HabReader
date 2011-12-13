@@ -26,6 +26,8 @@ public class Preferences{
     public static boolean keepScreen;
     public static boolean enableFlashPosts;
     public static boolean useCSS;
+    public static boolean roaming;
+    public static boolean use3g;
 
     public static SharedPreferences loadPreferences(Context context){
         PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
@@ -36,6 +38,8 @@ public class Preferences{
         keepScreen = sharedPreferences.getBoolean("keep_screen", false);
         enableFlashPosts = sharedPreferences.getBoolean("enable_flash_posts", true);
         useCSS = sharedPreferences.getBoolean("use_css", true);
+        roaming = sharedPreferences.getBoolean("roaming", false);
+        use3g = sharedPreferences.getBoolean("use_3g", true);
         
         return sharedPreferences;
     }

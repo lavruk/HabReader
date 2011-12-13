@@ -67,7 +67,7 @@ public class Preferences extends PreferenceActivity{
         rateApplication.setOnPreferenceClickListener(new OnPreferenceClickListener(){
 
             public boolean onPreferenceClick(Preference preference){
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=pname:net.meiolania.apps.habrahabr"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + Preferences.this.getPackageName()));
                 startActivity(intent);
                 return false;
             }

@@ -52,7 +52,7 @@
         <Preference
             android:key="version"
             android:title="@string/version"
-            android:summary="1.0 beta"
+            android:summary="1.0 beta-2"
             android:selectable="false" />
         
     </PreferenceCategory>    

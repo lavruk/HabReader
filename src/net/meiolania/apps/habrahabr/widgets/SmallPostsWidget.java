@@ -20,7 +20,7 @@ import java.io.IOException;
 
 import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.activities.BlogsPosts;
+import net.meiolania.apps.habrahabr.activities.Posts;
 import net.meiolania.apps.habrahabr.activities.PostsShow;
 import net.meiolania.apps.habrahabr.api.Connection;
 
@@ -84,7 +84,7 @@ public class SmallPostsWidget extends AppWidgetProvider{
                     views.setOnClickPendingIntent(R.id.title, pendingIntentPost);
                 
                     /* intent for blog */
-                    Intent intentBlog = new Intent(context.getApplicationContext(), BlogsPosts.class);
+                    Intent intentBlog = new Intent(context.getApplicationContext(), Posts.class);
                     intentBlog.putExtra("link", blog.attr("abs:href"));
                 
                     PendingIntent pendingIntentBlog = PendingIntent.getActivity(context.getApplicationContext(), 

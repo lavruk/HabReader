@@ -50,12 +50,17 @@ public class Posts extends ApplicationActivity{
     private PostsAdapter postsAdapter;
     private int page;
     private Document document;
+    private String link;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.posts);
-
+        
+        Bundle extras = getIntent().getExtras();
+        if(extras.containsKey("link"))
+            link = extras.getString("link");
+        
         setActionBar();
         loadList();
     }
@@ -120,10 +125,16 @@ public class Posts extends ApplicationActivity{
 
         @Override
         protected Void doInBackground(Void... params){
+            Element blogTitle = null;
             try{
-                document = Jsoup.connect("http://habrahabr.ru/blogs/page" + page + "/").get();
+                if(link != null)
+                    document = Jsoup.connect(link + "page" + page + "/").get();
+                else
+                    document = Jsoup.connect("http://habrahabr.ru/blogs/page" + page + "/").get();
 
                 Elements postsList = document.select("div.post");
+                if(link != null)
+                    blogTitle = document.select("a.blog_title").first();
 
                 for(Element post : postsList){
                     PostsData postsData = new PostsData();
@@ -132,7 +143,12 @@ public class Posts extends ApplicationActivity{
                     Element blog = post.select("a.blog_title").first();
 
                     postsData.setTitle(title.text());
-                    postsData.setBlog(blog.text());
+                    
+                    if(link != null)
+                        postsData.setBlog(blogTitle.text());
+                    else
+                        postsData.setBlog(blog.text());
+                    
                     postsData.setLink(title.attr("abs:href"));
 
                     postsDataList.add(postsData);

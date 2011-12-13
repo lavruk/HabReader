@@ -45,10 +45,11 @@ import android.widget.ListView;
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
 
-public class Posts extends ApplicationActivity{
+public class BlogsPosts extends ApplicationActivity{
     private final ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
     private PostsAdapter postsAdapter;
     private int page;
+    private String link;
     private Document document;
 
     @Override
@@ -56,10 +57,13 @@ public class Posts extends ApplicationActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.posts);
 
+        Bundle extras = getIntent().getExtras();
+        link = extras.getString("link");
+
         setActionBar();
         loadList();
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
@@ -72,9 +76,7 @@ public class Posts extends ApplicationActivity{
         if(Preferences.vibrate)
             Vibrate.doVibrate(this);
         switch(item.getItemId()){
-            case R.id.to_home:
-                startActivity(new Intent(this, Dashboard.class));
-                break;
+
         }
         return true;
     }
@@ -120,19 +122,20 @@ public class Posts extends ApplicationActivity{
 
         @Override
         protected Void doInBackground(Void... params){
+            Element blogTitle;
             try{
-                document = Jsoup.connect("http://habrahabr.ru/blogs/page" + page + "/").get();
+                document = Jsoup.connect(link + "page" + page + "/").get();
 
                 Elements postsList = document.select("div.post");
+                blogTitle = document.select("a.blog_title").first();
 
                 for(Element post : postsList){
                     PostsData postsData = new PostsData();
 
                     Element title = post.select("a.post_title").first();
-                    Element blog = post.select("a.blog_title").first();
 
                     postsData.setTitle(title.text());
-                    postsData.setBlog(blog.text());
+                    postsData.setBlog(blogTitle.text());
                     postsData.setLink(title.attr("abs:href"));
 
                     postsDataList.add(postsData);
@@ -146,7 +149,7 @@ public class Posts extends ApplicationActivity{
 
         @Override
         protected void onPreExecute(){
-            progressDialog = new ProgressDialog(Posts.this);
+            progressDialog = new ProgressDialog(BlogsPosts.this);
             progressDialog.setMessage(getString(R.string.loading_posts_list));
             progressDialog.setCancelable(true);
             progressDialog.show();
@@ -155,18 +158,18 @@ public class Posts extends ApplicationActivity{
         @Override
         protected void onPostExecute(Void result){
             if(!isCancelled() && page == 1){
-                postsAdapter = new PostsAdapter(Posts.this, postsDataList);
+                postsAdapter = new PostsAdapter(BlogsPosts.this, postsDataList);
 
-                ListView listView = (ListView) Posts.this.findViewById(R.id.posts_list);
+                ListView listView = (ListView) BlogsPosts.this.findViewById(R.id.posts_list);
                 listView.setAdapter(postsAdapter);
                 listView.setOnItemClickListener(new OnItemClickListener(){
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
                         PostsData postsData = postsDataList.get(position);
 
-                        Intent intent = new Intent(Posts.this, PostsShow.class);
+                        Intent intent = new Intent(BlogsPosts.this, PostsShow.class);
                         intent.putExtra("link", postsData.getLink());
 
-                        Posts.this.startActivity(intent);
+                        BlogsPosts.this.startActivity(intent);
                     }
                 });
             }else

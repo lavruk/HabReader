@@ -1,0 +1,2 @@
+Для запуска исходников Вам потребуется также библиотека Action Bar - https://github.com/johannilsson/android-actionbar
+Подсоедините её к своему Android проекту как библиотеку через меню "Package Explorer" => "Properties" => "Android" => "Library"

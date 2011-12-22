@@ -35,6 +35,9 @@
     <string name="preferences_personal">Личные данные</string>
     <string name="preferences_sign_in">Авторизация</string>
     <string name="preferences_sign_in_1">Попытка авторизации</string>
+    <string name="preferences_send_review">Отправить отзыв</string>
+    <string name="preferences_share">Рассказать друзьям</string>
+    <string name="preferences_share_text">Я использую приложение #HabReader для чтения Habrahabr.ru - %s</string>
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
     <string name="sign_in">Вход</string>

@@ -64,9 +64,17 @@
             android:title="@string/rate_application" />
         
         <Preference
+            android:key="send_review"
+            android:title="@string/preferences_send_review" />
+        
+        <Preference
+            android:key="share"
+            android:title="@string/preferences_share" />
+        
+        <Preference
             android:key="version"
             android:title="@string/version"
-            android:summary="1.0 beta-2"
+            android:summary="1.0 beta-3"
             android:selectable="false" />
         
     </PreferenceCategory>    

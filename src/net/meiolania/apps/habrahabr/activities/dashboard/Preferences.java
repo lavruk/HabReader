@@ -35,43 +35,70 @@ public class Preferences extends PreferenceActivity{
         signIn();
         rateApplication();
         showAttentionForFullscreen();
+        sendReview();
+        share();
+    }
+    
+    private void sendReview(){
+        Preference review = (Preference) findPreference("send_review");
+        review.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+            public boolean onPreferenceClick(Preference preference){
+                //Some problems here. Without it a field to is empty
+                String[] emails = {"support+habreader@meiolania.net", ""};
+                
+                Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                intent.putExtra(android.content.Intent.EXTRA_EMAIL, emails);
+                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                intent.setType("text/plain");
+                startActivity(Intent.createChooser(intent, getString(R.string.preferences_send_review)));
+                return false;
+            }
+        });
+    }
+    
+    private void share(){
+        Preference share = (Preference) findPreference("share");
+        share.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+            public boolean onPreferenceClick(Preference preference){
+                Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                intent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.preferences_share_text, "https://market.android.com/details?id=net.meiolania.apps.habrahabr"));
+                intent.setType("text/plain");
+                startActivity(Intent.createChooser(intent, getString(R.string.preferences_share)));
+                return false;
+            }
+        });
     }
     
     private void signIn(){
         Preference signIn = (Preference) findPreference("sign_in");
         signIn.setOnPreferenceClickListener(new OnPreferenceClickListener(){
-            
             public boolean onPreferenceClick(Preference preference){
                 //startActivity(new Intent(Preferences.this, SignIn.class));
                 Toast.makeText(Preferences.this, "В разработке", Toast.LENGTH_SHORT).show();
                 return false;
             }
-            
         });
     }
     
     private void showAttentionForFullscreen(){
         Preference fullScreen = (Preference) findPreference("fullscreen");
         fullScreen.setOnPreferenceClickListener(new OnPreferenceClickListener(){
-            
             public boolean onPreferenceClick(Preference preference){
                 Toast.makeText(Preferences.this, R.string.preferences_fullscreen_summary_1, Toast.LENGTH_SHORT).show();
                 return false;
             }
-            
         });
     }
 
     private void rateApplication(){
         Preference rateApplication = (Preference) findPreference("rate_application");
         rateApplication.setOnPreferenceClickListener(new OnPreferenceClickListener(){
-
             public boolean onPreferenceClick(Preference preference){
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + Preferences.this.getPackageName()));
                 startActivity(intent);
                 return false;
             }
-
         });
     }
 

@@ -16,6 +16,7 @@
 
 package net.meiolania.apps.habrahabr.activities;
 
+import net.meiolania.apps.habrahabr.Api;
 import net.meiolania.apps.habrahabr.Preferences;
 import android.app.Activity;
 import android.content.Context;
@@ -26,17 +27,19 @@ import android.view.WindowManager;
 
 public abstract class ApplicationActivity extends Activity{
     protected PowerManager.WakeLock powerManagerWakeLock;
+    protected Preferences preferences;
     protected SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        sharedPreferences = Preferences.loadPreferences(this);
+        preferences = new Preferences(this);
+        sharedPreferences = preferences.getSharedPreferences();
 
-        if(Preferences.fullscreen)
+        if(preferences.isFullscreen())
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        if(Preferences.keepScreen){
+        if(preferences.isKeepScreen()){
             PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
             powerManagerWakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
         }
@@ -45,23 +48,29 @@ public abstract class ApplicationActivity extends Activity{
     @Override
     protected void onResume(){
         super.onResume();
-        Preferences.loadPreferences(this);
+        preferences = new Preferences(this);
+        sharedPreferences = preferences.getSharedPreferences();
         
-        if(Preferences.keepScreen){
-            if(powerManagerWakeLock == null){
-                PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-                powerManagerWakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
-            }
-            powerManagerWakeLock.acquire();
-        }    
+        if(preferences.isFullscreen())
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        if(preferences.isKeepScreen()){
+            PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+            powerManagerWakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
+        }  
     }
 
     @Override
     protected void onPause(){
         super.onPause();
         
-        if(Preferences.keepScreen)
+        if(preferences.isKeepScreen())
             powerManagerWakeLock.release();
+    }
+    
+    protected Api getApi(){
+        Api api = new Api(this);
+        return api;
     }
 
 }

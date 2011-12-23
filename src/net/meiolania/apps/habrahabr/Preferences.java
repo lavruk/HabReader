@@ -21,15 +21,22 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class Preferences{
-    public static boolean vibrate;
-    public static boolean fullscreen;
-    public static boolean keepScreen;
-    public static boolean enableFlashPosts;
-    public static boolean useCSS;
-    public static boolean roaming;
-    public static boolean use3g;
-
-    public static SharedPreferences loadPreferences(Context context){
+    private boolean vibrate;
+    private boolean fullscreen;
+    private boolean keepScreen;
+    private boolean enableFlashPosts;
+    private boolean useCSS;
+    private boolean roaming;
+    private boolean use3g;
+    private boolean cache_posts;
+    private String cache_posts_numbers;
+    private SharedPreferences prefs;
+    
+    public Preferences(Context context){
+        loadPreferences(context);
+    }
+    
+    private void loadPreferences(Context context){
         PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -40,8 +47,50 @@ public class Preferences{
         useCSS = sharedPreferences.getBoolean("use_css", true);
         roaming = sharedPreferences.getBoolean("roaming", false);
         use3g = sharedPreferences.getBoolean("use_3g", true);
+        cache_posts = sharedPreferences.getBoolean("cache_posts", false);
+        cache_posts_numbers = sharedPreferences.getString("cache_posts_numbers", "1");
         
-        return sharedPreferences;
+        prefs = sharedPreferences;
+    }
+    
+    public boolean isVibrate(){
+        return vibrate;
+    }
+
+    public boolean isFullscreen(){
+        return fullscreen;
+    }
+
+    public boolean isKeepScreen(){
+        return keepScreen;
+    }
+
+    public boolean isEnableFlashPosts(){
+        return enableFlashPosts;
+    }
+
+    public boolean isUseCSS(){
+        return useCSS;
+    }
+
+    public boolean isRoaming(){
+        return roaming;
+    }
+
+    public boolean isUse3g(){
+        return use3g;
+    }
+
+    public boolean isCachePosts(){
+        return cache_posts;
+    }
+    
+    public int getCachePostsNumbers(){
+        return Integer.valueOf(cache_posts_numbers);
+    }
+    
+    public SharedPreferences getSharedPreferences(){
+        return prefs;
     }
 
 }

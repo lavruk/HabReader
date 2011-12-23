@@ -1,82 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-	
-    <PreferenceCategory android:title="@string/preferences_personal">
-        
+
+    <PreferenceCategory android:title="@string/preferences_personal" >
+
         <Preference
             android:key="sign_in"
             android:title="@string/preferences_sign_in" />
-        
     </PreferenceCategory>
-    
+
     <PreferenceCategory android:title="@string/preferences_base" >
 
         <CheckBoxPreference
+            android:defaultValue="true"
             android:key="vibrate"
-            android:title="@string/preferences_vibrate"
-            android:defaultValue="true" />
-        
+            android:title="@string/preferences_vibrate" />
+
         <CheckBoxPreference
+            android:defaultValue="false"
             android:key="fullscreen"
             android:title="@string/preferences_fullscreen"
-            android:summary="@string/preferences_fullscreen_summary"
-            android:defaultValue="true" />
-        
+            android:summary="@string/preferences_fullscreen_summary" />
+
         <CheckBoxPreference
+            android:defaultValue="false"
             android:key="keep_screen"
-            android:title="@string/preferences_keep_screen"
-            android:defaultValue="false" />
-        
+            android:title="@string/preferences_keep_screen" />
+
         <CheckBoxPreference
+            android:defaultValue="true"
             android:key="use_css"
-            android:title="@string/preferences_use_habrahabr_css"
-            android:defaultValue="true" />
-            
+            android:title="@string/preferences_use_habrahabr_css" />
     </PreferenceCategory>
-    
-    <PreferenceCategory android:title="@string/preferences_network">
-        
+
+    <PreferenceCategory android:title="@string/preferences_network" >
+
         <CheckBoxPreference
+            android:defaultValue="false"
             android:key="roaming"
-            android:title="@string/preferences_roaming"
-            android:defaultValue="false" />
-        
+            android:title="@string/preferences_roaming" />
+
         <CheckBoxPreference
+            android:defaultValue="true"
             android:key="use_3g"
-            android:title="@string/preferences_3g"
-            android:defaultValue="true" />
-        
-    </PreferenceCategory>    
-    
-    <PreferenceCategory android:title="@string/posts">
-        
+            android:title="@string/preferences_3g" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/posts" >
+
         <CheckBoxPreference
+            android:defaultValue="true"
             android:key="enable_flash_posts"
-            android:title="@string/preferences_enable_flash_posts"
-            android:defaultValue="true" />
-        
-    </PreferenceCategory>  
-    
-    <PreferenceCategory android:title="@string/about">
-        
+            android:title="@string/preferences_enable_flash_posts" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="cache_posts"
+            android:title="@string/preferences_cache_posts" />
+
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/cache_posts_numbers"
+            android:entryValues="@array/cache_posts_numbers_values"
+            android:key="cache_posts_numbers"
+            android:title="@string/preferences_cache_posts_nubmers" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/about" >
+
         <Preference
             android:key="rate_application"
             android:title="@string/rate_application" />
-        
+
         <Preference
             android:key="send_review"
             android:title="@string/preferences_send_review" />
-        
+
         <Preference
             android:key="share"
             android:title="@string/preferences_share" />
-        
+
         <Preference
             android:key="version"
-            android:title="@string/version"
+            android:selectable="false"
             android:summary="1.0 beta-3"
-            android:selectable="false" />
-        
-    </PreferenceCategory>    
+            android:title="@string/version" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

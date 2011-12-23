@@ -18,7 +18,6 @@ package net.meiolania.apps.habrahabr.activities;
 
 import java.io.IOException;
 
-import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.utils.Vibrate;
 
@@ -66,7 +65,7 @@ public class CompaniesShow extends ApplicationActivity{
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        if(Preferences.vibrate)
+        if(preferences.isVibrate())
             Vibrate.doVibrate(this);
         switch(item.getItemId()){
             case R.id.show_in_browser:
@@ -148,7 +147,7 @@ public class CompaniesShow extends ApplicationActivity{
                         StringBuilder builder = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
                         Elements stagesElements = info.getElementsByTag("dd");
                         
-                        if(Preferences.useCSS)
+                        if(preferences.isUseCSS())
                             builder.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />");
                         
                         for(Element stage : stagesElements)

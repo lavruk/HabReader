@@ -19,7 +19,6 @@ package net.meiolania.apps.habrahabr.activities;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.adapters.PeopleAdapter;
 import net.meiolania.apps.habrahabr.data.PeopleData;
@@ -68,7 +67,7 @@ public class People extends ApplicationActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        if(Preferences.vibrate)
+        if(preferences.isVibrate())
             Vibrate.doVibrate(this);
         switch(item.getItemId()){
             case R.id.to_home:

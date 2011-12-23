@@ -19,7 +19,6 @@ package net.meiolania.apps.habrahabr.activities;
 import java.io.IOException;
 import java.util.Formatter;
 
-import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.utils.Vibrate;
 
@@ -74,7 +73,7 @@ public class EventsShow extends ApplicationActivity{
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        if(Preferences.vibrate)
+        if(preferences.isVibrate())
             Vibrate.doVibrate(this);
         switch(item.getItemId()){
             case R.id.show_in_browser:
@@ -150,7 +149,7 @@ public class EventsShow extends ApplicationActivity{
                  * If you now how solve this problem an another way please sumbit a patch.
                  */
                 description = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
-                if(Preferences.useCSS)
+                if(preferences.isUseCSS())
                     description += "<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />";
                 description += descriptionElement.outerHtml();
             }

@@ -16,7 +16,6 @@
 
 package net.meiolania.apps.habrahabr.activities;
 
-import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.api.Connection;
 import net.meiolania.apps.habrahabr.utils.Vibrate;
@@ -42,9 +41,9 @@ public class Dashboard extends ApplicationActivity{
     }
     
     private void checkMobileInternetPreferences(){
-        if(!Preferences.use3g){
+        if(!preferences.isUse3g()){
             if(Connection.isMobileNetwork(this)){
-                if(!Preferences.roaming && Connection.isRoaming(this)){
+                if(!preferences.isRoaming() && Connection.isRoaming(this)){
                     AlertDialog alertDialog = new AlertDialog.Builder(this).create();
                     alertDialog.setTitle(R.string.attention);
                     alertDialog.setMessage(getString(R.string.attention_roaming));
@@ -82,7 +81,7 @@ public class Dashboard extends ApplicationActivity{
     }
 
     public void clickDashboardButton(View view){
-        if(Preferences.vibrate)
+        if(preferences.isVibrate())
             Vibrate.doVibrate(this);
         switch(view.getId()){
             case R.id.posts:
@@ -115,7 +114,7 @@ public class Dashboard extends ApplicationActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        if(Preferences.vibrate)
+        if(preferences.isVibrate())
             Vibrate.doVibrate(this);
         switch(item.getItemId()){
             case R.id.about:

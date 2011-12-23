@@ -19,7 +19,6 @@ package net.meiolania.apps.habrahabr.activities;
 import java.io.IOException;
 import java.util.Formatter;
 
-import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.utils.Vibrate;
 
@@ -66,7 +65,7 @@ public class PostsShow extends ApplicationActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        if(Preferences.vibrate)
+        if(preferences.isVibrate())
             Vibrate.doVibrate(this);
         switch(item.getItemId()){
             case R.id.show_in_browser:
@@ -145,7 +144,7 @@ public class PostsShow extends ApplicationActivity{
                  * If you now how solve this problem an another way please sumbit a patch.
                  */
                 content = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
-                if(Preferences.useCSS)
+                if(preferences.isUseCSS())
                     content += "<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />";
                 content += contentElement.outerHtml();
             }
@@ -167,7 +166,7 @@ public class PostsShow extends ApplicationActivity{
         protected void onPostExecute(Void result){
             if(!isCancelled()){
                 WebView webView = (WebView)PostsShow.this.findViewById(R.id.content);
-                webView.getSettings().setPluginsEnabled(Preferences.enableFlashPosts);
+                webView.getSettings().setPluginsEnabled(preferences.isEnableFlashPosts());
                 webView.getSettings().setSupportZoom(true);
                 webView.getSettings().setBuiltInZoomControls(true);
                 webView.loadData(content, "text/html", "UTF-8");

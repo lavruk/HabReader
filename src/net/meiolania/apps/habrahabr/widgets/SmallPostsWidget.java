@@ -42,9 +42,11 @@ public class SmallPostsWidget extends AppWidgetProvider{
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds){
-        if(!Preferences.use3g && Connection.isMobileNetwork(context))
+        Preferences preferences = new Preferences(context);
+        
+        if(!preferences.isUse3g() && Connection.isMobileNetwork(context))
             return;
-        if(!Preferences.roaming && Connection.isRoaming(context))
+        if(!preferences.isRoaming() && Connection.isRoaming(context))
             return;
         context.startService(new Intent(context, UpdateService.class));
     }

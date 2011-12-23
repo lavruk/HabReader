@@ -38,6 +38,8 @@
     <string name="preferences_send_review">Отправить отзыв</string>
     <string name="preferences_share">Рассказать друзьям</string>
     <string name="preferences_share_text">Я использую приложение #HabReader для чтения Habrahabr.ru - %s</string>
+    <string name="preferences_cache_posts">Кешировать посты</string>
+    <string name="preferences_cache_posts_nubmers">Количество постов для кеширования</string>
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
     <string name="sign_in">Вход</string>

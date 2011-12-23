@@ -17,6 +17,7 @@
 package net.meiolania.apps.habrahabr.activities.dashboard;
 
 import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.activities.SignIn;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,8 +34,8 @@ public class Preferences extends PreferenceActivity{
         addPreferencesFromResource(R.xml.preferences);
         
         signIn();
-        rateApplication();
         showAttentionForFullscreen();
+        rateApplication();
         sendReview();
         share();
     }
@@ -74,8 +75,7 @@ public class Preferences extends PreferenceActivity{
         Preference signIn = (Preference) findPreference("sign_in");
         signIn.setOnPreferenceClickListener(new OnPreferenceClickListener(){
             public boolean onPreferenceClick(Preference preference){
-                //startActivity(new Intent(Preferences.this, SignIn.class));
-                Toast.makeText(Preferences.this, "В разработке", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Preferences.this, SignIn.class));
                 return false;
             }
         });

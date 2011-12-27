@@ -48,7 +48,6 @@ public class Posts extends ApplicationActivity{
     private final ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
     private PostsAdapter postsAdapter;
     private int page;
-    private Document document;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -120,7 +119,7 @@ public class Posts extends ApplicationActivity{
         @Override
         protected Void doInBackground(Void... params){
             try{
-                document = Jsoup.connect("http://habrahabr.ru/blogs/page" + page + "/").get();
+                Document document = Jsoup.connect("http://habrahabr.ru/blogs/page" + page + "/").get();
 
                 Elements postsList = document.select("div.post");
 

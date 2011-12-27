@@ -23,6 +23,7 @@ import net.meiolania.apps.habrahabr.api.Connection;
 import net.meiolania.apps.habrahabr.pager.SimplePagerAdapter;
 import net.meiolania.apps.habrahabr.utils.Vibrate;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -34,35 +35,38 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 public class Dashboard extends ApplicationActivity{
+    private ViewPager viewPager;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
-        
-        addScreens();
+
         showTextForUpdates();
         checkMobileInternetPreferences();
+        addScreens();
     }
-    
+
     private void showTextForUpdates(){
-        
+
     }
-    
+
     private void addScreens(){
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         ArrayList<View> pages = new ArrayList<View>();
-        
+
         View page = layoutInflater.inflate(R.layout.dashboard_page1, null);
         pages.add(page);
-        
+
         page = layoutInflater.inflate(R.layout.dashboard_page2, null);
         pages.add(page);
-        
+
         SimplePagerAdapter pagerAdapter = new SimplePagerAdapter(pages);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(pagerAdapter);
     }
 
@@ -154,6 +158,13 @@ public class Dashboard extends ApplicationActivity{
                 break;
             case R.id.preferences:
                 startActivity(new Intent(this, net.meiolania.apps.habrahabr.activities.dashboard.Preferences.class));
+                break;
+            case R.id.search:
+                viewPager.setCurrentItem(1);
+                EditText searchField = (EditText) findViewById(R.id.search_text);
+                searchField.requestFocus();
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.toggleSoftInput(inputMethodManager.SHOW_FORCED, 0);
                 break;
             case R.id.other_applications:
                 Uri uri = Uri.parse("https://market.android.com/developer?pub=Meiolania.net");

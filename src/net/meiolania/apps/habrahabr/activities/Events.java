@@ -48,16 +48,16 @@ public class Events extends ApplicationActivity{
     private final ArrayList<EventsData> eventsDataList = new ArrayList<EventsData>();
     private EventsAdapter eventsAdapter;
     private int page;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.events);
-        
+
         setActionBar();
         loadList();
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
@@ -76,14 +76,14 @@ public class Events extends ApplicationActivity{
         }
         return true;
     }
-    
+
     private void setActionBar(){
         ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
         actionBar.setTitle(R.string.events);
         actionBar.addAction(new LoadNextPageAction());
         actionBar.addAction(new UpdateAction());
     }
-    
+
     private class LoadNextPageAction implements Action{
 
         public int getDrawable(){
@@ -93,9 +93,9 @@ public class Events extends ApplicationActivity{
         public void performAction(View view){
             loadList();
         }
-        
+
     }
-    
+
     private class UpdateAction implements Action{
 
         public int getDrawable(){
@@ -105,43 +105,44 @@ public class Events extends ApplicationActivity{
         public void performAction(View view){
             loadList();
         }
-        
+
     }
-    
+
     private void loadList(){
         ++page;
         new LoadEventsList().execute();
     }
-    
+
     private class LoadEventsList extends AsyncTask<Void, Void, Void>{
         private ProgressDialog progressDialog;
-        
+
         @Override
         protected Void doInBackground(Void... params){
             try{
                 Document document = Jsoup.connect("http://habrahabr.ru/events/coming/page" + page + "/").get();
                 Element eventsList = document.select("div.events_list").first();
-                
+
                 Elements events = eventsList.select("div.event");
-                
+
                 for(Element event : events){
                     EventsData eventsData = new EventsData();
-                    
+
                     Element title = event.getElementsByTag("a").first();
                     Element detail = event.select("div.text").first();
-                    
+
                     eventsData.setTitle(title.text());
                     eventsData.setDetail(detail.text());
                     eventsData.setLink(title.attr("abs:href"));
-                    
+
                     eventsDataList.add(eventsData);
                 }
-            }catch(IOException e){
+            }
+            catch(IOException e){
                 e.printStackTrace();
             }
             return null;
         }
-        
+
         @Override
         protected void onPreExecute(){
             progressDialog = new ProgressDialog(Events.this);
@@ -149,30 +150,30 @@ public class Events extends ApplicationActivity{
             progressDialog.setCancelable(true);
             progressDialog.show();
         }
-        
+
         @Override
         protected void onPostExecute(Void result){
             if(!isCancelled() && page == 1){
                 eventsAdapter = new EventsAdapter(Events.this, eventsDataList);
-                
-                ListView listView = (ListView)Events.this.findViewById(R.id.events_list);
+
+                ListView listView = (ListView) Events.this.findViewById(R.id.events_list);
                 listView.setAdapter(eventsAdapter);
                 listView.setOnItemClickListener(new OnItemClickListener(){
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
                         EventsData eventsData = eventsDataList.get(position);
-                        
+
                         Intent intent = new Intent(Events.this, EventsShow.class);
                         intent.putExtra("link", eventsData.getLink());
-                        
+
                         Events.this.startActivity(intent);
                     }
                 });
             }else
                 eventsAdapter.notifyDataSetChanged();
-            
+
             progressDialog.dismiss();
         }
-        
+
     }
-    
+
 }

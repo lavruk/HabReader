@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/last_post"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="Последний пост"
+        android:textSize="18sp" />
+
+    <net.meiolania.apps.habrahabr.ui.widgets.DashboardLayout
+        android:id="@+id/dashboard_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <Button
+            android:id="@+id/jobs"
+            style="@style/DashboardButton"
+            android:drawableTop="@drawable/dash_ic_posts"
+            android:onClick="clickDashboardButton"
+            android:text="@string/job" />
+
+        <Button
+            android:id="@+id/profile"
+            style="@style/DashboardButton"
+            android:drawableTop="@drawable/dash_ic_posts"
+            android:onClick="clickDashboardButton"
+            android:text="@string/profile" />
+    </net.meiolania.apps.habrahabr.ui.widgets.DashboardLayout>
+
+</LinearLayout>

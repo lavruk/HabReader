@@ -40,6 +40,7 @@
     <string name="preferences_share_text">Я использую приложение #HabReader для чтения Habrahabr.ru - %s</string>
     <string name="preferences_cache_posts">Кешировать посты</string>
     <string name="preferences_cache_posts_nubmers">Количество постов для кеширования</string>
+    <string name="preferences_default_component">Стандартная вкладка</string>
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
     <string name="sign_in">Вход</string>
@@ -67,4 +68,5 @@
 	<string name="continue_anyway">Игнорировать</string>
 	<string name="cancel">Отмена</string>
 	<string name="attention_roaming">Вы запретили приложению использовать мобильный интернет в роуминге</string>
+	<string name="profile">Профиль</string>
 </resources>

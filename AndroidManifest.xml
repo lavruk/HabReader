@@ -53,7 +53,11 @@
         <activity android:name=".activities.PostsShow" android:configChanges="orientation|keyboard|keyboardHidden" />
         <activity android:name=".activities.FavoritesPosts" android:configChanges="orientation|keyboard|keyboardHidden" />
         <activity android:name=".activities.PostsCommentsShow" android:configChanges="orientation|keyboard|keyboardHidden" />
-
+	
+        <activity android:name=".activities.Jobs" android:configChanges="orientation|keyboard|keyboardHidden" />
+        
+        <activity android:name=".activities.Profile" android:configChanges="orientation|keyboard|keyboardHidden" />
+        
         <activity android:name=".activities.HabrahabrIntentFilter">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"></action>

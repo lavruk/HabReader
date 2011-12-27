@@ -35,7 +35,7 @@ public abstract class ApplicationActivity extends Activity{
         super.onCreate(savedInstanceState);
         preferences = new Preferences(this);
         sharedPreferences = preferences.getSharedPreferences();
-
+        
         if(preferences.isFullscreen())
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -50,24 +50,24 @@ public abstract class ApplicationActivity extends Activity{
         super.onResume();
         preferences = new Preferences(this);
         sharedPreferences = preferences.getSharedPreferences();
-        
+
         if(preferences.isFullscreen())
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         if(preferences.isKeepScreen()){
             PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
             powerManagerWakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
-        }  
+        }
     }
 
     @Override
     protected void onPause(){
         super.onPause();
-        
+
         if(preferences.isKeepScreen())
             powerManagerWakeLock.release();
     }
-    
+
     protected Api getApi(){
         Api api = new Api(this);
         return api;

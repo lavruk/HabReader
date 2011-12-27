@@ -48,7 +48,7 @@ public class People extends ApplicationActivity{
     private final ArrayList<PeopleData> peopleDataList = new ArrayList<PeopleData>();
     private PeopleAdapter peopleAdapter;
     private int page;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -57,7 +57,7 @@ public class People extends ApplicationActivity{
         setActionBar();
         loadList();
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
@@ -76,7 +76,7 @@ public class People extends ApplicationActivity{
         }
         return true;
     }
-    
+
     private void loadList(){
         ++page;
         new LoadPeopleList().execute();
@@ -87,7 +87,7 @@ public class People extends ApplicationActivity{
         actionBar.setTitle(R.string.people);
         actionBar.addAction(new LoadNextPageAction());
     }
-    
+
     private class LoadNextPageAction implements Action{
 
         public int getDrawable(){
@@ -97,20 +97,20 @@ public class People extends ApplicationActivity{
         public void performAction(View view){
             loadList();
         }
-        
+
     }
 
     private class LoadPeopleList extends AsyncTask<Void, Void, Void>{
         private ProgressDialog progressDialog;
-        
+
         @Override
         protected Void doInBackground(Void... params){
             try{
                 Document document = Jsoup.connect("http://habrahabr.ru/people/page" + page + "/").get();
                 Element tableUsers = document.select("table.users-list").first();
-                
+
                 Elements dataUsers = tableUsers.getElementsByTag("tr");
-                
+
                 boolean firstElement = true;
                 for(Element user : dataUsers){
                     /*
@@ -121,17 +121,17 @@ public class People extends ApplicationActivity{
                         continue;
                     }
                     PeopleData peopleData = new PeopleData();
-                    
+
                     Element userAvatar = user.getElementsByTag("img").first();
                     Element userKarma = user.select("td.userkarma").first();
                     Element userRating = user.select("td.userrating").first();
                     Element userLink = user.select("div.habrauserava > a").first();
-                    
+
                     peopleData.setName(userAvatar.attr("alt"));
                     peopleData.setKarma(userKarma.text());
                     peopleData.setRating(userRating.text());
                     peopleData.setLink(userLink.attr("abs:href"));
-                    
+
                     peopleDataList.add(peopleData);
                 }
             }
@@ -140,7 +140,7 @@ public class People extends ApplicationActivity{
             }
             return null;
         }
-        
+
         @Override
         protected void onPreExecute(){
             progressDialog = new ProgressDialog(People.this);
@@ -148,27 +148,27 @@ public class People extends ApplicationActivity{
             progressDialog.setCancelable(true);
             progressDialog.show();
         }
-        
+
         @Override
         protected void onPostExecute(Void result){
             if(!isCancelled() && page == 1){
                 peopleAdapter = new PeopleAdapter(People.this, peopleDataList);
-                
-                ListView listView = (ListView)People.this.findViewById(R.id.people_list);
+
+                ListView listView = (ListView) People.this.findViewById(R.id.people_list);
                 listView.setAdapter(peopleAdapter);
                 listView.setOnItemClickListener(new OnItemClickListener(){
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
                         PeopleData peopleData = peopleDataList.get(position);
-                        
+
                         Intent intent = new Intent(People.this, PeopleShow.class);
                         intent.putExtra("link", peopleData.getLink());
-                        
+
                         startActivity(intent);
                     }
                 });
             }else
                 peopleAdapter.notifyDataSetChanged();
-            
+
             progressDialog.dismiss();
         }
 

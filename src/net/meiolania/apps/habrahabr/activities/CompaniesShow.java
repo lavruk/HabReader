@@ -55,14 +55,14 @@ public class CompaniesShow extends ApplicationActivity{
         setActionBar();
         loadCompany();
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.companies_show, menu);
         return true;
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(preferences.isVibrate())
@@ -75,7 +75,7 @@ public class CompaniesShow extends ApplicationActivity{
                 break;
             case R.id.to_home:
                 startActivity(new Intent(this, Dashboard.class));
-                break;    
+                break;
         }
         return true;
     }
@@ -88,8 +88,8 @@ public class CompaniesShow extends ApplicationActivity{
     private void loadCompany(){
         new LoadCompany().execute();
     }
-    
-    //TODO: need to rewrite
+
+    // TODO: need to rewrite
     private class LoadCompany extends AsyncTask<Void, Void, Void>{
         private ProgressDialog progressDialog;
         private String title;
@@ -101,7 +101,7 @@ public class CompaniesShow extends ApplicationActivity{
         private String aboutCompany;
         private String leadership;
         private String stages;
-        //Type of an information
+        // Type of an information
         private final static int INFO_DATE = 1;
         private final static int INFO_LINK = 2;
         private final static int INFO_INDUSTRY = 3;
@@ -115,12 +115,12 @@ public class CompaniesShow extends ApplicationActivity{
         protected Void doInBackground(Void... params){
             try{
                 Document document = Jsoup.connect(link).get();
-                
+
                 Element favicon = document.select("img.favicon").first();
                 Elements companyInfo = document.select("div.userinfo > dl");
-                
+
                 title = favicon.attr("alt");
-                
+
                 int i = 1;
                 for(Element info : companyInfo){
                     if(i == INFO_DATE)
@@ -138,24 +138,24 @@ public class CompaniesShow extends ApplicationActivity{
                     else if(i == INFO_LEADERSHIP){
                         StringBuilder builder = new StringBuilder();
                         Elements leadershipElements = info.getElementsByTag("dd");
-                        
+
                         for(Element leader : leadershipElements)
                             builder.append(leader.outerHtml());
-                        
-                        leadership = builder.toString();        
+
+                        leadership = builder.toString();
                     }else if(i == INFO_STAGES){
                         StringBuilder builder = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
                         Elements stagesElements = info.getElementsByTag("dd");
-                        
+
                         if(preferences.isUseCSS())
                             builder.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />");
-                        
+
                         for(Element stage : stagesElements)
                             builder.append(stage.outerHtml());
-                                
-                        stages = builder.toString();        
+
+                        stages = builder.toString();
                     }
-                        
+
                     i++;
                 }
             }
@@ -176,32 +176,32 @@ public class CompaniesShow extends ApplicationActivity{
         @Override
         protected void onPostExecute(Void result){
             if(!isCancelled()){
-                TextView titleView = (TextView)findViewById(R.id.title);
+                TextView titleView = (TextView) findViewById(R.id.title);
                 titleView.setText(title);
-                
-                TextView dateView = (TextView)findViewById(R.id.date);
+
+                TextView dateView = (TextView) findViewById(R.id.date);
                 dateView.setText(date);
-                
-                TextView linkView = (TextView)findViewById(R.id.link);
+
+                TextView linkView = (TextView) findViewById(R.id.link);
                 linkView.setText(Html.fromHtml(linkToCompany));
                 linkView.setMovementMethod(LinkMovementMethod.getInstance());
-                
-                TextView industryView = (TextView)findViewById(R.id.industry);
+
+                TextView industryView = (TextView) findViewById(R.id.industry);
                 industryView.setText(industry);
-                
-                TextView placeView = (TextView)findViewById(R.id.place);
+
+                TextView placeView = (TextView) findViewById(R.id.place);
                 placeView.setText(place);
-                
-                TextView staffView = (TextView)findViewById(R.id.staff);
+
+                TextView staffView = (TextView) findViewById(R.id.staff);
                 staffView.setText(staff);
-                
-                TextView aboutCompanyView = (TextView)findViewById(R.id.about_company);
+
+                TextView aboutCompanyView = (TextView) findViewById(R.id.about_company);
                 aboutCompanyView.setText(aboutCompany);
-                
-                TextView leadershipView = (TextView)findViewById(R.id.leadership);
+
+                TextView leadershipView = (TextView) findViewById(R.id.leadership);
                 leadershipView.setText(Html.fromHtml(leadership));
-                
-                WebView stagesView = (WebView)findViewById(R.id.stages);
+
+                WebView stagesView = (WebView) findViewById(R.id.stages);
                 stagesView.getSettings().setPluginsEnabled(true);
                 stagesView.getSettings().setSupportZoom(true);
                 stagesView.getSettings().setBuiltInZoomControls(true);

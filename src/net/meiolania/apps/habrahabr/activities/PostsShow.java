@@ -75,7 +75,7 @@ public class PostsShow extends ApplicationActivity{
                 break;
             case R.id.to_home:
                 startActivity(new Intent(this, Dashboard.class));
-                break;    
+                break;
         }
         return true;
     }
@@ -86,7 +86,7 @@ public class PostsShow extends ApplicationActivity{
         actionBar.addAction(new ShowCommentsAction());
         actionBar.addAction(new ShareAction());
     }
-    
+
     private class ShowCommentsAction implements Action{
 
         public int getDrawable(){
@@ -98,7 +98,7 @@ public class PostsShow extends ApplicationActivity{
             intent.putExtra("link", link);
             startActivity(intent);
         }
-        
+
     }
 
     private class ShareAction implements Action{
@@ -128,20 +128,20 @@ public class PostsShow extends ApplicationActivity{
     private class LoadPost extends AsyncTask<Void, Void, Void>{
         private ProgressDialog progressDialog;
         private String content;
-        
+
         @Override
         protected Void doInBackground(Void... params){
             try{
                 Document document = Jsoup.connect(link).get();
-                
+
                 Element contentElement = document.select("div.content").first();
                 Element titleElement = document.select("span.post_title").first();
-                
+
                 title = titleElement.text();
-                
+
                 /*
-                 * http://stackoverflow.com/questions/3961589/android-webview-and-loaddata
-                 * If you now how solve this problem an another way please sumbit a patch.
+                 * http://stackoverflow.com/questions/3961589/android-webview-and-loaddata If you now how solve this problem an another way
+                 * please sumbit a patch.
                  */
                 content = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
                 if(preferences.isUseCSS())
@@ -165,7 +165,7 @@ public class PostsShow extends ApplicationActivity{
         @Override
         protected void onPostExecute(Void result){
             if(!isCancelled()){
-                WebView webView = (WebView)PostsShow.this.findViewById(R.id.content);
+                WebView webView = (WebView) PostsShow.this.findViewById(R.id.content);
                 webView.getSettings().setPluginsEnabled(preferences.isEnableFlashPosts());
                 webView.getSettings().setSupportZoom(true);
                 webView.getSettings().setBuiltInZoomControls(true);

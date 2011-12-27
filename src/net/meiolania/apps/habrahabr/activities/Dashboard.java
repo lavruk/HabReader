@@ -16,8 +16,11 @@
 
 package net.meiolania.apps.habrahabr.activities;
 
+import java.util.ArrayList;
+
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.api.Connection;
+import net.meiolania.apps.habrahabr.pager.SimplePagerAdapter;
 import net.meiolania.apps.habrahabr.utils.Vibrate;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -25,6 +28,8 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,10 +41,31 @@ public class Dashboard extends ApplicationActivity{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
-
+        
+        addScreens();
+        showTextForUpdates();
         checkMobileInternetPreferences();
     }
     
+    private void showTextForUpdates(){
+        
+    }
+    
+    private void addScreens(){
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        ArrayList<View> pages = new ArrayList<View>();
+        
+        View page = layoutInflater.inflate(R.layout.dashboard_page1, null);
+        pages.add(page);
+        
+        page = layoutInflater.inflate(R.layout.dashboard_page2, null);
+        pages.add(page);
+        
+        SimplePagerAdapter pagerAdapter = new SimplePagerAdapter(pages);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPager.setAdapter(pagerAdapter);
+    }
+
     private void checkMobileInternetPreferences(){
         if(!preferences.isUse3g()){
             if(Connection.isMobileNetwork(this)){
@@ -101,6 +127,12 @@ public class Dashboard extends ApplicationActivity{
                 break;
             case R.id.people:
                 startActivity(new Intent(this, People.class));
+                break;
+            case R.id.jobs:
+                startActivity(new Intent(this, Jobs.class));
+                break;
+            case R.id.profile:
+                startActivity(new Intent(this, Profile.class));
                 break;
         }
     }

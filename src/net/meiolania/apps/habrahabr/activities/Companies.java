@@ -48,7 +48,7 @@ public class Companies extends ApplicationActivity{
     private final ArrayList<CompaniesData> companiesDataList = new ArrayList<CompaniesData>();
     private CompaniesAdapter companiesAdapter;
     private int page;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -57,7 +57,7 @@ public class Companies extends ApplicationActivity{
         setActionBar();
         loadList();
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
@@ -82,7 +82,7 @@ public class Companies extends ApplicationActivity{
         actionBar.setTitle(R.string.companies);
         actionBar.addAction(new LoadNextPageAction());
     }
-    
+
     private class LoadNextPageAction implements Action{
 
         public int getDrawable(){
@@ -92,7 +92,7 @@ public class Companies extends ApplicationActivity{
         public void performAction(View view){
             loadList();
         }
-        
+
     }
 
     private void loadList(){
@@ -110,7 +110,7 @@ public class Companies extends ApplicationActivity{
                 Element tableCompanies = document.select("ul.corps-list").first();
 
                 Elements dataCompanies = tableCompanies.select("li");
-                
+
                 boolean firstElement = true;
                 for(Element company : dataCompanies){
                     /*
@@ -121,14 +121,14 @@ public class Companies extends ApplicationActivity{
                         continue;
                     }
                     CompaniesData companiesData = new CompaniesData();
-                    
+
                     Element logo = company.getElementsByTag("img").first();
                     Element link = company.select("dt.corp-name > a").first();
-                    
+
                     companiesData.setLink(link.attr("abs:href"));
                     companiesData.setLogo(logo.attr("src"));
                     companiesData.setTitle(logo.attr("title"));
-                    
+
                     companiesDataList.add(companiesData);
                 }
             }
@@ -150,22 +150,22 @@ public class Companies extends ApplicationActivity{
         protected void onPostExecute(Void result){
             if(!isCancelled() && page == 1){
                 companiesAdapter = new CompaniesAdapter(Companies.this, companiesDataList);
-                
-                ListView listView = (ListView)Companies.this.findViewById(R.id.companies_list);
+
+                ListView listView = (ListView) Companies.this.findViewById(R.id.companies_list);
                 listView.setAdapter(companiesAdapter);
                 listView.setOnItemClickListener(new OnItemClickListener(){
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
                         CompaniesData companiesData = companiesDataList.get(position);
-                        
+
                         Intent intent = new Intent(Companies.this, CompaniesShow.class);
                         intent.putExtra("link", companiesData.getLink());
-                        
+
                         startActivity(intent);
                     }
                 });
             }else
                 companiesAdapter.notifyDataSetChanged();
-            
+
             progressDialog.dismiss();
         }
 

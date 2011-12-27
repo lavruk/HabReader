@@ -75,7 +75,7 @@ public class QAShow extends ApplicationActivity{
                 break;
             case R.id.to_home:
                 startActivity(new Intent(this, Dashboard.class));
-                break;    
+                break;
         }
         return true;
     }
@@ -86,7 +86,7 @@ public class QAShow extends ApplicationActivity{
         actionBar.addAction(new ShowCommentsAction());
         actionBar.addAction(new ShareAction());
     }
-    
+
     private class ShowCommentsAction implements Action{
 
         public int getDrawable(){
@@ -98,7 +98,7 @@ public class QAShow extends ApplicationActivity{
             intent.putExtra("link", link);
             startActivity(intent);
         }
-        
+
     }
 
     private class ShareAction implements Action{
@@ -138,10 +138,10 @@ public class QAShow extends ApplicationActivity{
                 Element titleElement = document.select("span.topic").first();
 
                 title = titleElement.text();
-                
+
                 /*
-                 * http://stackoverflow.com/questions/3961589/android-webview-and-loaddata
-                 * If you now how solve this problem an another way please sumbit a patch.
+                 * http://stackoverflow.com/questions/3961589/android-webview-and-loaddata If you now how solve this problem an another way
+                 * please sumbit a patch.
                  */
                 content = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
                 if(preferences.isUseCSS())
@@ -165,7 +165,7 @@ public class QAShow extends ApplicationActivity{
         @Override
         protected void onPostExecute(Void result){
             if(!isCancelled()){
-                WebView webView = (WebView)QAShow.this.findViewById(R.id.question_text);
+                WebView webView = (WebView) QAShow.this.findViewById(R.id.question_text);
                 webView.getSettings().setPluginsEnabled(true);
                 webView.getSettings().setSupportZoom(true);
                 webView.getSettings().setBuiltInZoomControls(true);

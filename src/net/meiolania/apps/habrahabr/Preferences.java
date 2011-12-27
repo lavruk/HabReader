@@ -30,12 +30,13 @@ public class Preferences{
     private boolean use3g;
     private boolean cache_posts;
     private String cache_posts_numbers;
+    private String default_component;
     private SharedPreferences prefs;
-    
+
     public Preferences(Context context){
         loadPreferences(context);
     }
-    
+
     private void loadPreferences(Context context){
         PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -49,10 +50,11 @@ public class Preferences{
         use3g = sharedPreferences.getBoolean("use_3g", true);
         cache_posts = sharedPreferences.getBoolean("cache_posts", false);
         cache_posts_numbers = sharedPreferences.getString("cache_posts_numbers", "1");
-        
+        default_component = sharedPreferences.getString("default_component", "Dashboard");
+
         prefs = sharedPreferences;
     }
-    
+
     public boolean isVibrate(){
         return vibrate;
     }
@@ -84,11 +86,15 @@ public class Preferences{
     public boolean isCachePosts(){
         return cache_posts;
     }
-    
+
     public int getCachePostsNumbers(){
         return Integer.valueOf(cache_posts_numbers);
     }
-    
+
+    public String getDefaultComponent(){
+        return default_component;
+    }
+
     public SharedPreferences getSharedPreferences(){
         return prefs;
     }

@@ -18,8 +18,8 @@
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="fullscreen"
-            android:title="@string/preferences_fullscreen"
-            android:summary="@string/preferences_fullscreen_summary" />
+            android:summary="@string/preferences_fullscreen_summary"
+            android:title="@string/preferences_fullscreen" />
 
         <CheckBoxPreference
             android:defaultValue="false"
@@ -30,6 +30,13 @@
             android:defaultValue="true"
             android:key="use_css"
             android:title="@string/preferences_use_habrahabr_css" />
+
+        <ListPreference
+            android:defaultValue="Dashboard"
+            android:entries="@array/default_component"
+            android:entryValues="@array/default_component_values"
+            android:key="default_component"
+            android:title="@string/preferences_default_component" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/preferences_network" >

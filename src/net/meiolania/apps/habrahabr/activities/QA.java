@@ -57,7 +57,7 @@ public class QA extends ApplicationActivity{
         setActionBar();
         loadList();
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
@@ -83,7 +83,7 @@ public class QA extends ApplicationActivity{
         actionBar.addAction(new LoadNextPageAction());
         actionBar.addAction(new UpdateAction());
     }
-    
+
     private class LoadNextPageAction implements Action{
 
         public int getDrawable(){
@@ -93,9 +93,9 @@ public class QA extends ApplicationActivity{
         public void performAction(View view){
             loadList();
         }
-        
+
     }
-    
+
     private class UpdateAction implements Action{
 
         public int getDrawable(){
@@ -105,7 +105,7 @@ public class QA extends ApplicationActivity{
         public void performAction(View view){
             loadList();
         }
-        
+
     }
 
     private void loadList(){
@@ -121,18 +121,18 @@ public class QA extends ApplicationActivity{
             try{
                 Document document = Jsoup.connect("http://habrahabr.ru/qa/page" + page + "/").get();
                 Elements qaList = document.select("div.hentry");
-                
+
                 for(Element question : qaList){
                     QAData qaData = new QAData();
-                    
+
                     Element link = question.select("a.topic").first();
                     qaData.setTitle(link.text());
-                    
+
                     qaData.setLink(link.attr("abs:href"));
-                    
+
                     Element tags = question.select("ul.tags").first();
                     qaData.setTags(tags.text());
-                    
+
                     qaDataList.add(qaData);
                 }
             }
@@ -154,22 +154,22 @@ public class QA extends ApplicationActivity{
         protected void onPostExecute(Void result){
             if(!isCancelled() && page == 1){
                 qaAdapter = new QAAdapter(QA.this, qaDataList);
-                
-                ListView listView = (ListView)QA.this.findViewById(R.id.qa_list);
+
+                ListView listView = (ListView) QA.this.findViewById(R.id.qa_list);
                 listView.setAdapter(qaAdapter);
                 listView.setOnItemClickListener(new OnItemClickListener(){
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
                         QAData qaData = qaDataList.get(position);
-                        
+
                         Intent intent = new Intent(QA.this, QAShow.class);
                         intent.putExtra("link", qaData.getLink());
-                        
+
                         QA.this.startActivity(intent);
                     }
                 });
             }else
                 qaAdapter.notifyDataSetChanged();
-            
+
             progressDialog.dismiss();
         }
 

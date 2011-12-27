@@ -23,7 +23,7 @@ import android.util.Log;
 
 public class HabrahabrIntentFilter extends Activity{
     private final static String LOG_TAG = "Meiolania.HabrahabrIntentFilter";
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -31,12 +31,12 @@ public class HabrahabrIntentFilter extends Activity{
         final String uri = getIntent().getDataString();
         final String[] parts = uri.split("/");
         final Intent intent = new Intent();
-        
+
         Log.i(LOG_TAG, "Link: " + uri);
         Log.i(LOG_TAG, "Length: " + parts.length);
-        
+
         if(parts.length >= 3){
-            //Blogs
+            // Blogs
             if(parts[3].equalsIgnoreCase("blogs") && parts.length == 3){
                 Log.i(LOG_TAG, "Target: Posts.class");
                 intent.setClass(this, Posts.class);
@@ -52,7 +52,7 @@ public class HabrahabrIntentFilter extends Activity{
                 intent.putExtra("link", uri);
                 startActivity(intent);
             }
-            //Events
+            // Events
             else if(parts[3].equalsIgnoreCase("events") && parts.length == 3){
                 Log.i(LOG_TAG, "Target: Events.class");
                 intent.setClass(this, Events.class);
@@ -63,7 +63,7 @@ public class HabrahabrIntentFilter extends Activity{
                 intent.putExtra("link", uri);
                 startActivity(intent);
             }
-            //Companies
+            // Companies
             else if(parts[3].equalsIgnoreCase("companies") && parts.length == 3){
                 Log.i(LOG_TAG, "Target: Companies.class");
                 intent.setClass(this, Companies.class);
@@ -74,7 +74,7 @@ public class HabrahabrIntentFilter extends Activity{
                 intent.putExtra("link", uri);
                 startActivity(intent);
             }
-            //People
+            // People
             else if(parts[3].equalsIgnoreCase("people") && parts.length == 3){
                 Log.i(LOG_TAG, "Target: People.class");
                 intent.setClass(this, People.class);
@@ -85,7 +85,7 @@ public class HabrahabrIntentFilter extends Activity{
                 intent.putExtra("link", uri);
                 startActivity(intent);
             }
-            //Q&A
+            // Q&A
             else if(parts[3].equalsIgnoreCase("qa") && parts.length == 3){
                 Log.i(LOG_TAG, "Target: QA.class");
                 intent.setClass(this, QA.class);
@@ -97,7 +97,7 @@ public class HabrahabrIntentFilter extends Activity{
                 startActivity(intent);
             }
         }
-        //No action for this
+        // No action for this
         finish();
     }
 

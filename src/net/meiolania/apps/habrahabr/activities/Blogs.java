@@ -48,16 +48,16 @@ public class Blogs extends ApplicationActivity{
     private final ArrayList<BlogsData> blogsDataList = new ArrayList<BlogsData>();
     private BlogsAdapter blogsAdapter;
     private int page;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.blogs);
-        
+
         setActionBar();
         loadList();
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
@@ -76,13 +76,13 @@ public class Blogs extends ApplicationActivity{
         }
         return true;
     }
-    
+
     private void setActionBar(){
-        ActionBar actionBar = (ActionBar)findViewById(R.id.actionbar);
+        ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
         actionBar.setTitle(R.string.blogs);
         actionBar.addAction(new LoadNextPageAction());
     }
-    
+
     private class LoadNextPageAction implements Action{
 
         public int getDrawable(){
@@ -92,41 +92,42 @@ public class Blogs extends ApplicationActivity{
         public void performAction(View view){
             loadList();
         }
-        
+
     }
-    
+
     private void loadList(){
         ++page;
         new LoadBlogsList().execute();
     }
-    
+
     private class LoadBlogsList extends AsyncTask<Void, Void, Void>{
         private ProgressDialog progressDialog;
-        
+
         @Override
         protected Void doInBackground(Void... params){
             try{
                 Document document = Jsoup.connect("http://habrahabr.ru/bloglist/page" + page + "/").get();
                 Elements blogRows = document.select("li.blog-row");
-                
+
                 for(Element blog : blogRows){
                     BlogsData blogsData = new BlogsData();
-                    
+
                     Element link = blog.select("a.title").first();
                     Element statistics = blog.select("div.stat").first();
-                    
+
                     blogsData.setTitle(link.text());
                     blogsData.setStatistics(statistics.text());
                     blogsData.setLink(link.attr("abs:href"));
-                    
+
                     blogsDataList.add(blogsData);
                 }
-            }catch(IOException e){
+            }
+            catch(IOException e){
                 e.printStackTrace();
             }
             return null;
         }
-        
+
         @Override
         protected void onPreExecute(){
             progressDialog = new ProgressDialog(Blogs.this);
@@ -134,30 +135,30 @@ public class Blogs extends ApplicationActivity{
             progressDialog.setCancelable(true);
             progressDialog.show();
         }
-        
+
         @Override
         protected void onPostExecute(Void result){
             if(!isCancelled() && page == 1){
                 blogsAdapter = new BlogsAdapter(Blogs.this, blogsDataList);
-                
-                ListView listView = (ListView)Blogs.this.findViewById(R.id.blogs_list);
+
+                ListView listView = (ListView) Blogs.this.findViewById(R.id.blogs_list);
                 listView.setAdapter(blogsAdapter);
                 listView.setOnItemClickListener(new OnItemClickListener(){
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
                         BlogsData blogsData = blogsDataList.get(position);
-                        
+
                         Intent intent = new Intent(Blogs.this, BlogsPosts.class);
                         intent.putExtra("link", blogsData.getLink());
-                        
+
                         Blogs.this.startActivity(intent);
                     }
                 });
             }else
                 blogsAdapter.notifyDataSetChanged();
-                
+
             progressDialog.dismiss();
         }
-        
+
     }
-    
+
 }

@@ -47,26 +47,26 @@ import com.markupartist.android.widget.ActionBar.Action;
 public class PeopleShow extends ApplicationActivity{
     private String link;
     private String userName;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.people_show);
-        
+
         Bundle extras = getIntent().getExtras();
         link = extras.getString("link");
-        
+
         setActionBar();
         loadMan();
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.people_show, menu);
         return true;
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(preferences.isVibrate())
@@ -79,17 +79,17 @@ public class PeopleShow extends ApplicationActivity{
                 break;
             case R.id.to_home:
                 startActivity(new Intent(this, Dashboard.class));
-                break;    
+                break;
         }
         return true;
     }
-    
+
     private void setActionBar(){
         ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
         actionBar.setTitle(R.string.people);
         actionBar.addAction(new ShareAction());
     }
-    
+
     private class ShareAction implements Action{
 
         public int getDrawable(){
@@ -109,11 +109,11 @@ public class PeopleShow extends ApplicationActivity{
         }
 
     }
-    
+
     private void loadMan(){
         new LoadMan().execute();
     }
-    
+
     private class LoadMan extends AsyncTask<Void, Void, Void>{
         private ProgressDialog progressDialog;
         private String ratingPlace;
@@ -121,31 +121,31 @@ public class PeopleShow extends ApplicationActivity{
         private String place;
         private String summary;
         private String tags;
-        
+
         @Override
         protected Void doInBackground(Void... params){
             try{
                 Log.d("meiolania", link);
-                
+
                 Document document = Jsoup.connect(link).get();
-                
+
                 Element userNameElement = document.select("dl.user-name > dt.fn").first();
                 Element ratingPlaceElement = document.select("dl.user-name > dd.rating-place").first();
                 Element birthdayElement = document.select("dd.bday").first();
-                //Place
+                // Place
                 Element countryElement = document.select("a.country-name").first();
                 Element regionElement = document.select("a.region").first();
                 Element cityElement = document.select("city").first();
-                //Others
+                // Others
                 Element summaryElement = document.select("dd.summary").first();
                 Element tagsElement = document.select("ul#people-tags").first();
-                
+
                 userName = userNameElement.text();
                 ratingPlace = ratingPlaceElement.text();
                 birthday = birthdayElement.text();
-                
+
                 StringBuilder placeBuilder = new StringBuilder();
-                
+
                 if(countryElement.hasText()){
                     placeBuilder.append(countryElement.text());
                     if(regionElement != null && regionElement.hasText())
@@ -154,14 +154,14 @@ public class PeopleShow extends ApplicationActivity{
                         placeBuilder.append(", " + cityElement.text());
                 }else
                     placeBuilder.append(getString(R.string.place_undefined));
-                
+
                 place = placeBuilder.toString();
-                
+
                 summary = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
                 if(preferences.isVibrate())
                     summary += "<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />";
                 summary += summaryElement.outerHtml();
-                
+
                 if(preferences.isVibrate())
                     tags = "<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />";
                 tags += tagsElement.outerHtml();
@@ -171,7 +171,7 @@ public class PeopleShow extends ApplicationActivity{
             }
             return null;
         }
-        
+
         @Override
         protected void onPreExecute(){
             progressDialog = new ProgressDialog(PeopleShow.this);
@@ -179,25 +179,25 @@ public class PeopleShow extends ApplicationActivity{
             progressDialog.setCancelable(true);
             progressDialog.show();
         }
-        
+
         @Override
         protected void onPostExecute(Void result){
             if(!isCancelled()){
-                TextView userNameView = (TextView)findViewById(R.id.name);
-                TextView ratingPlaceView = (TextView)findViewById(R.id.rating_place);
-                TextView birthdayView = (TextView)findViewById(R.id.birthday);
-                TextView placeView = (TextView)findViewById(R.id.place);
-                TextView tagsView = (TextView)findViewById(R.id.tags);
-                WebView summaryView = (WebView)findViewById(R.id.summary);
-                
+                TextView userNameView = (TextView) findViewById(R.id.name);
+                TextView ratingPlaceView = (TextView) findViewById(R.id.rating_place);
+                TextView birthdayView = (TextView) findViewById(R.id.birthday);
+                TextView placeView = (TextView) findViewById(R.id.place);
+                TextView tagsView = (TextView) findViewById(R.id.tags);
+                WebView summaryView = (WebView) findViewById(R.id.summary);
+
                 userNameView.setText(userName);
                 ratingPlaceView.setText(ratingPlace);
                 birthdayView.setText(birthday);
                 placeView.setText(place);
-                
+
                 tagsView.setText(Html.fromHtml(tags));
                 tagsView.setMovementMethod(LinkMovementMethod.getInstance());
-                
+
                 summaryView.getSettings().setPluginsEnabled(true);
                 summaryView.getSettings().setSupportZoom(true);
                 summaryView.getSettings().setBuiltInZoomControls(true);
@@ -205,7 +205,7 @@ public class PeopleShow extends ApplicationActivity{
             }
             progressDialog.dismiss();
         }
-        
+
     }
-    
+
 }

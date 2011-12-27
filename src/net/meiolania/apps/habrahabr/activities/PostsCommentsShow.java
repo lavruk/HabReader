@@ -55,7 +55,7 @@ public class PostsCommentsShow extends ApplicationActivity{
         setActionBar();
         loadComments();
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();

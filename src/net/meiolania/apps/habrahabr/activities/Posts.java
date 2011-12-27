@@ -58,7 +58,7 @@ public class Posts extends ApplicationActivity{
         setActionBar();
         loadList();
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();

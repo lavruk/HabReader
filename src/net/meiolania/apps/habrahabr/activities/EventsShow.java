@@ -63,14 +63,14 @@ public class EventsShow extends ApplicationActivity{
         setActionBar();
         loadEvent();
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.events_show, menu);
         return true;
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(preferences.isVibrate())
@@ -83,7 +83,7 @@ public class EventsShow extends ApplicationActivity{
                 break;
             case R.id.to_home:
                 startActivity(new Intent(this, Dashboard.class));
-                break;    
+                break;
         }
         return true;
     }
@@ -93,7 +93,7 @@ public class EventsShow extends ApplicationActivity{
         actionBar.setTitle(R.string.events);
         actionBar.addAction(new ShareAction());
     }
-    
+
     private class ShareAction implements Action{
 
         public int getDrawable(){
@@ -141,12 +141,12 @@ public class EventsShow extends ApplicationActivity{
                     }
                     i++;
                 }
-                
+
                 title = titleElement.text();
-                
+
                 /*
-                 * http://stackoverflow.com/questions/3961589/android-webview-and-loaddata
-                 * If you now how solve this problem an another way please sumbit a patch.
+                 * http://stackoverflow.com/questions/3961589/android-webview-and-loaddata If you now how solve this problem an another way
+                 * please sumbit a patch.
                  */
                 description = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
                 if(preferences.isUseCSS())
@@ -170,19 +170,19 @@ public class EventsShow extends ApplicationActivity{
         @Override
         protected void onPostExecute(Void result){
             if(!isCancelled()){
-                TextView titleView = (TextView)findViewById(R.id.title);
-                TextView placeInfoView = (TextView)findViewById(R.id.place_info);
-                TextView priceInfoView = (TextView)findViewById(R.id.price_info);
-                TextView linkInfoView = (TextView)findViewById(R.id.link_info);
-                WebView descriptionView = (WebView)findViewById(R.id.description);
-                
+                TextView titleView = (TextView) findViewById(R.id.title);
+                TextView placeInfoView = (TextView) findViewById(R.id.place_info);
+                TextView priceInfoView = (TextView) findViewById(R.id.price_info);
+                TextView linkInfoView = (TextView) findViewById(R.id.link_info);
+                WebView descriptionView = (WebView) findViewById(R.id.description);
+
                 titleView.setText(title);
                 placeInfoView.setText(placeInfo);
                 priceInfoView.setText(priceInfo);
-                
+
                 linkInfoView.setText(Html.fromHtml(linkInfo));
                 linkInfoView.setMovementMethod(LinkMovementMethod.getInstance());
-                
+
                 descriptionView.getSettings().setPluginsEnabled(true);
                 descriptionView.getSettings().setSupportZoom(true);
                 descriptionView.getSettings().setBuiltInZoomControls(true);

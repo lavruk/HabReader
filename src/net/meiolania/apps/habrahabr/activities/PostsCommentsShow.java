@@ -33,12 +33,15 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import com.markupartist.android.widget.ActionBar;
+import com.markupartist.android.widget.ActionBar.Action;
 
 public class PostsCommentsShow extends ApplicationActivity{
     private final ArrayList<CommentsData> commentsDataList = new ArrayList<CommentsData>();
@@ -78,10 +81,33 @@ public class PostsCommentsShow extends ApplicationActivity{
     private void setActionBar(){
         ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
         actionBar.setTitle(R.string.comments);
+        actionBar.addAction(new UpdateAction());
+    }
+    
+    private class UpdateAction implements Action{
+
+        public int getDrawable(){
+            return R.drawable.actionbar_ic_update;
+        }
+
+        public void performAction(View view){
+            loadComments();
+        }
+
     }
 
     private void loadComments(){
         new LoadComments().execute();
+    }
+    
+    private int parseScore(String score){
+        int commentRating = score.charAt(0) == '–' ? -1 : +1;
+        try{
+            commentRating *= Integer.valueOf(score.substring(1));
+        }catch(NumberFormatException e){
+            commentRating = 0;
+        }
+        return commentRating;
     }
 
     private class LoadComments extends AsyncTask<Void, Void, Void>{
@@ -91,23 +117,28 @@ public class PostsCommentsShow extends ApplicationActivity{
         protected Void doInBackground(Void... params){
             try{
                 Document document = Jsoup.connect(link).get();
-                Elements comments = document.select("div.comment");
+                Elements comments = document.select("div.comment_item");
 
                 for(Element comment : comments){
                     CommentsData commentsData = new CommentsData();
 
                     Element userName = comment.select("a.username").first();
                     Element message = comment.select("div.message").first();
+                    Element score = comment.select("span.score").first();
 
                     commentsData.setAuthor(userName.text());
                     commentsData.setAuthorLink(userName.attr("abs:href"));
                     commentsData.setText(message.text());
+                    commentsData.setScore(parseScore(score.text()));
 
                     commentsDataList.add(commentsData);
                 }
             }
             catch(IOException e){
                 e.printStackTrace();
+            }
+            catch(NumberFormatException e){
+                //ignore it
             }
             return null;
         }
@@ -123,7 +154,7 @@ public class PostsCommentsShow extends ApplicationActivity{
         @Override
         protected void onPostExecute(Void result){
             if(!isCancelled()){
-                ListView listView = (ListView) PostsCommentsShow.this.findViewById(R.id.comments_list);
+                ListView listView = (ListView) findViewById(R.id.comments_list);
                 listView.setAdapter(new CommentsAdapter(PostsCommentsShow.this, commentsDataList));
             }
             progressDialog.dismiss();

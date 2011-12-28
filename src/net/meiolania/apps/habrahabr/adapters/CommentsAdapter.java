@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.CommentsData;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,9 +61,18 @@ public class CommentsAdapter extends BaseAdapter{
         
         TextView message = (TextView)view.findViewById(R.id.message);
         TextView author = (TextView)view.findViewById(R.id.author);
+        TextView score = (TextView)view.findViewById(R.id.score);
         
         message.setText(commentsData.getText());
         author.setText(commentsData.getAuthor());
+        score.setText(String.valueOf(commentsData.getScore()));
+        
+        if(commentsData.getScore() < 0)
+            score.setTextColor(context.getResources().getColor(R.color.score_red));
+        else if(commentsData.getScore() > 0)
+            score.setTextColor(context.getResources().getColor(R.color.score_green));
+        else
+            score.setTextColor(context.getResources().getColor(R.color.score_gray));
 
         return view;
     }

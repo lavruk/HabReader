@@ -132,12 +132,16 @@ public class Dashboard extends ApplicationActivity{
             case R.id.people:
                 startActivity(new Intent(this, People.class));
                 break;
-            case R.id.jobs:
-                startActivity(new Intent(this, Jobs.class));
+            case R.id.search:
+                searchPosts();
                 break;
-            case R.id.profile:
-                startActivity(new Intent(this, Profile.class));
-                break;
+        }
+    }
+    
+    private void searchPosts(){
+        EditText searchField = (EditText) findViewById(R.id.search_text);
+        if(!searchField.getText().equals("")){
+            
         }
     }
 
@@ -158,6 +162,9 @@ public class Dashboard extends ApplicationActivity{
                 break;
             case R.id.preferences:
                 startActivity(new Intent(this, net.meiolania.apps.habrahabr.activities.dashboard.Preferences.class));
+                break;
+            case R.id.profile:
+                startActivity(new Intent(this, Profile.class));
                 break;
             case R.id.search:
                 viewPager.setCurrentItem(1);

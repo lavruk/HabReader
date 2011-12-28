@@ -46,13 +46,8 @@ public class Dashboard extends ApplicationActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
 
-        showTextForUpdates();
         checkMobileInternetPreferences();
         addScreens();
-    }
-
-    private void showTextForUpdates(){
-
     }
 
     private void addScreens(){

@@ -142,11 +142,15 @@ public class PeopleShow extends ApplicationActivity{
 
                 userName = userNameElement.text();
                 ratingPlace = ratingPlaceElement.text();
-                birthday = birthdayElement.text();
+                
+                if(birthdayElement != null && birthdayElement.hasText())
+                    birthday = birthdayElement.text();
+                else
+                    birthday = getString(R.string.people_no_info);
 
                 StringBuilder placeBuilder = new StringBuilder();
 
-                if(countryElement.hasText()){
+                if(countryElement != null && countryElement.hasText()){
                     placeBuilder.append(countryElement.text());
                     if(regionElement != null && regionElement.hasText())
                         placeBuilder.append(", " + regionElement.text());
@@ -160,11 +164,11 @@ public class PeopleShow extends ApplicationActivity{
                 summary = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
                 if(preferences.isVibrate())
                     summary += "<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />";
-                summary += summaryElement.outerHtml();
+                summary += summaryElement != null ? summaryElement.outerHtml() : "";
 
                 if(preferences.isVibrate())
                     tags = "<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />";
-                tags += tagsElement.outerHtml();
+                tags += tagsElement != null ? tagsElement.outerHtml() : "";
             }
             catch(IOException e){
                 e.printStackTrace();

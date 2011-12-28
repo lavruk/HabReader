@@ -48,12 +48,18 @@ public class Posts extends ApplicationActivity{
     private final ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
     private PostsAdapter postsAdapter;
     private int page;
+    private String link;
+    private Bundle extras;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.posts);
-
+        
+        extras = getIntent().getExtras();
+        if(extras != null)
+            link = extras.getString("link");
+        
         setActionBar();
         loadList();
     }
@@ -118,10 +124,17 @@ public class Posts extends ApplicationActivity{
 
         @Override
         protected Void doInBackground(Void... params){
+            Document document = null;
+            Element blogTitle = null;
             try{
-                Document document = Jsoup.connect("http://habrahabr.ru/blogs/page" + page + "/").get();
+                if(extras != null)
+                    document = Jsoup.connect(link + "page" + page + "/").get();
+                else
+                    document = Jsoup.connect("http://habrahabr.ru/blogs/page" + page + "/").get();
 
                 Elements postsList = document.select("div.post");
+                if(extras != null)
+                    blogTitle = document.select("a.blog_title").first();
 
                 for(Element post : postsList){
                     PostsData postsData = new PostsData();
@@ -130,7 +143,12 @@ public class Posts extends ApplicationActivity{
                     Element blog = post.select("a.blog_title").first();
 
                     postsData.setTitle(title.text());
-                    postsData.setBlog(blog.text());
+                    
+                    if(extras != null)
+                        postsData.setBlog(blogTitle.text());
+                    else
+                        postsData.setBlog(blog.text());
+                    
                     postsData.setLink(title.attr("abs:href"));
 
                     postsDataList.add(postsData);

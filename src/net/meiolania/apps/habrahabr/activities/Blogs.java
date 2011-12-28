@@ -147,7 +147,7 @@ public class Blogs extends ApplicationActivity{
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
                         BlogsData blogsData = blogsDataList.get(position);
 
-                        Intent intent = new Intent(Blogs.this, BlogsPosts.class);
+                        Intent intent = new Intent(Blogs.this, Posts.class);
                         intent.putExtra("link", blogsData.getLink());
 
                         Blogs.this.startActivity(intent);

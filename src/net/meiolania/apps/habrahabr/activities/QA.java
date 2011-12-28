@@ -120,12 +120,12 @@ public class QA extends ApplicationActivity{
         protected Void doInBackground(Void... params){
             try{
                 Document document = Jsoup.connect("http://habrahabr.ru/qa/page" + page + "/").get();
-                Elements qaList = document.select("div.hentry");
+                Elements qaList = document.select("div.post");
 
                 for(Element question : qaList){
                     QAData qaData = new QAData();
 
-                    Element link = question.select("a.topic").first();
+                    Element link = question.select("a.post_title").first();
                     qaData.setTitle(link.text());
 
                     qaData.setLink(link.attr("abs:href"));

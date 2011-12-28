@@ -163,9 +163,6 @@ public class Dashboard extends ApplicationActivity{
             case R.id.preferences:
                 startActivity(new Intent(this, net.meiolania.apps.habrahabr.activities.dashboard.Preferences.class));
                 break;
-            case R.id.profile:
-                startActivity(new Intent(this, Profile.class));
-                break;
             case R.id.search:
                 viewPager.setCurrentItem(1);
                 EditText searchField = (EditText) findViewById(R.id.search_text);

@@ -135,7 +135,7 @@ public class QAShow extends ApplicationActivity{
                 Document document = Jsoup.connect(link).get();
 
                 Element contentElement = document.select("div.content").first();
-                Element titleElement = document.select("span.topic").first();
+                Element titleElement = document.select("span.post_title").first();
 
                 title = titleElement.text();
 

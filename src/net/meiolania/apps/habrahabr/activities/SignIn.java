@@ -16,12 +16,14 @@
 
 package net.meiolania.apps.habrahabr.activities;
 
-import com.markupartist.android.widget.ActionBar;
-
 import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+
+import com.markupartist.android.widget.ActionBar;
 
 public class SignIn extends ApplicationActivity{
     
@@ -34,8 +36,17 @@ public class SignIn extends ApplicationActivity{
     }
     
     private void setActionBar(){
-        ActionBar actionBar = (ActionBar)findViewById(R.id.actionbar);
-        actionBar.setTitle(R.string.preferences_sign_in);
+        if(!UIUtils.isHoneycombOrHigher()){
+            ActionBar actionBar = (ActionBar)findViewById(R.id.actionbar);
+            actionBar.setTitle(R.string.sign_in);
+        }else{
+            ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
+            actionBarView.setVisibility(View.GONE);
+            
+            android.app.ActionBar actionBar = getActionBar();
+            actionBar.setTitle(R.string.sign_in);
+            actionBar.setHomeButtonEnabled(true);
+        }
     }
     
     private class DoSignIn extends AsyncTask<String, Void, Void>{

@@ -72,4 +72,7 @@
 	<string name="people_no_info">Нет информации</string>
 	<string name="all_posts">Все посты</string>
 	<string name="new_posts">Новые посты</string>
+	<string name="show_comments">Показать комментарии</string>
+	<string name="share">Поделиться с друзьями</string>
+	<string name="update">Обновить</string>
 </resources>

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.adapters.BlogsAdapter;
 import net.meiolania.apps.habrahabr.data.BlogsData;
-import net.meiolania.apps.habrahabr.utils.VibrateUtils;
+import net.meiolania.apps.habrahabr.utils.UIUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -35,7 +35,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -62,25 +61,26 @@ public class Blogs extends ApplicationActivity{
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.blogs, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        if(preferences.isVibrate())
-            VibrateUtils.doVibrate(this);
-        switch(item.getItemId()){
-            case R.id.to_home:
-                startActivity(new Intent(this, Dashboard.class));
-                break;
-        }
+        
+        if(UIUtils.isHoneycombOrHigher())
+            menu.removeItem(R.id.to_home);
+        
         return true;
     }
 
     private void setActionBar(){
-        ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
-        actionBar.setTitle(R.string.blogs);
-        actionBar.addAction(new LoadNextPageAction());
+        if(!UIUtils.isHoneycombOrHigher()){
+            ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
+            actionBar.setTitle(R.string.blogs);
+            actionBar.addAction(new LoadNextPageAction());
+        }else{
+            ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
+            actionBarView.setVisibility(View.GONE);
+            
+            android.app.ActionBar actionBar = getActionBar();
+            actionBar.setTitle(R.string.blogs);
+            actionBar.setHomeButtonEnabled(true);
+        }
     }
 
     private class LoadNextPageAction implements Action{

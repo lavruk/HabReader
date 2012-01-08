@@ -4,5 +4,11 @@
     <item
         android:id="@+id/to_home"
         android:title="@string/to_home" />
+    
+    <item
+        android:id="@+id/update"
+        android:title="@string/update"
+        android:icon="@drawable/actionbar_ic_update"
+        android:showAsAction="always" />
 
 </menu>

@@ -35,7 +35,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -72,19 +71,6 @@ public class Posts extends ApplicationActivity{
         if(UIUtils.isHoneycombOrHigher())
             menu.removeItem(R.id.to_home);
         
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        super.onOptionsItemSelected(item);
-        switch(item.getItemId()){
-            case R.id.to_home:
-                Intent intent = new Intent(this, Dashboard.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                break;
-        }
         return true;
     }
 

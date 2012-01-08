@@ -18,6 +18,7 @@ package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.Api;
 import net.meiolania.apps.habrahabr.Preferences;
+import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 import android.app.Activity;
@@ -62,10 +63,19 @@ public abstract class ApplicationActivity extends Activity{
                     Intent intent = new Intent(this, Dashboard.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-                    break;
+                    return true;
             }
         }
-        return super.onOptionsItemSelected(item);
+        switch(item.getItemId()){
+            case R.id.to_home:
+                Intent intent = new Intent(this, Dashboard.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        
     }
 
     @Override

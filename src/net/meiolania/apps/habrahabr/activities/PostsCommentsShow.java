@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.adapters.CommentsAdapter;
 import net.meiolania.apps.habrahabr.data.CommentsData;
-import net.meiolania.apps.habrahabr.utils.VibrateUtils;
+import net.meiolania.apps.habrahabr.utils.UIUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -30,10 +30,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -63,25 +61,39 @@ public class PostsCommentsShow extends ApplicationActivity{
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.posts_comments_show, menu);
+        
+        if(UIUtils.isHoneycombOrHigher())
+            menu.removeItem(R.id.to_home);
+        else
+            menu.removeItem(R.id.update);
+        
         return true;
     }
-
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        if(preferences.isVibrate())
-            VibrateUtils.doVibrate(this);
+        super.onOptionsItemSelected(item);
         switch(item.getItemId()){
-            case R.id.to_home:
-                startActivity(new Intent(this, Dashboard.class));
+            case R.id.update:
+                loadComments();
                 break;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     private void setActionBar(){
-        ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
-        actionBar.setTitle(R.string.comments);
-        actionBar.addAction(new UpdateAction());
+        if(!UIUtils.isHoneycombOrHigher()){
+            ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
+            actionBar.setTitle(R.string.comments);
+            actionBar.addAction(new UpdateAction());
+        }else{
+            ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
+            actionBarView.setVisibility(View.GONE);
+            
+            android.app.ActionBar actionBar = getActionBar();
+            actionBar.setTitle(R.string.comments);
+            actionBar.setHomeButtonEnabled(true);
+        }
     }
     
     private class UpdateAction implements Action{

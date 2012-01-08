@@ -22,9 +22,11 @@ import java.io.InputStream;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.ApplicationActivity;
 import net.meiolania.apps.habrahabr.utils.StreamUtils;
+import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.View;
 import android.widget.TextView;
 
 import com.markupartist.android.widget.ActionBar;
@@ -43,8 +45,17 @@ public class About extends ApplicationActivity{
     }
     
     private void setActionBar(){
-        ActionBar actionBar = (ActionBar)findViewById(R.id.actionbar);
-        actionBar.setTitle(R.string.about);
+        if(!UIUtils.isHoneycombOrHigher()){
+            ActionBar actionBar = (ActionBar)findViewById(R.id.actionbar);
+            actionBar.setTitle(R.string.about);
+        }else{
+            ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
+            actionBarView.setVisibility(View.GONE);
+            
+            android.app.ActionBar actionBar = getActionBar();
+            actionBar.setTitle(R.string.about);
+            actionBar.setHomeButtonEnabled(true);
+        }
     }
 
     private void setFormatText(){

@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.Formatter;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.utils.VibrateUtils;
+import net.meiolania.apps.habrahabr.utils.UIUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -60,31 +60,50 @@ public class PostsShow extends ApplicationActivity{
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.posts_show, menu);
+        
+        if(UIUtils.isHoneycombOrHigher())
+            menu.removeItem(R.id.to_home);
+        else{
+            menu.removeItem(R.id.show_comments);
+            menu.removeItem(R.id.share);
+        }
+        
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        if(preferences.isVibrate())
-            VibrateUtils.doVibrate(this);
+        super.onOptionsItemSelected(item);
         switch(item.getItemId()){
             case R.id.show_in_browser:
                 Uri uri = Uri.parse(link);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
                 break;
-            case R.id.to_home:
-                startActivity(new Intent(this, Dashboard.class));
+            case R.id.show_comments:
+                startCommentsActivity();
+                break;
+            case R.id.share:
+                createShareIntent();
                 break;
         }
         return true;
     }
 
     private void setActionBar(){
-        ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
-        actionBar.setTitle(R.string.posts);
-        actionBar.addAction(new ShowCommentsAction());
-        actionBar.addAction(new ShareAction());
+        if(!UIUtils.isHoneycombOrHigher()){
+            ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
+            actionBar.setTitle(R.string.posts);
+            actionBar.addAction(new ShowCommentsAction());
+            actionBar.addAction(new ShareAction());
+        }else{
+            ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
+            actionBarView.setVisibility(View.GONE);
+            
+            android.app.ActionBar actionBar = getActionBar();
+            actionBar.setTitle(R.string.posts);
+            actionBar.setHomeButtonEnabled(true);
+        }
     }
 
     private class ShowCommentsAction implements Action{
@@ -94,11 +113,15 @@ public class PostsShow extends ApplicationActivity{
         }
 
         public void performAction(View view){
-            Intent intent = new Intent(PostsShow.this, PostsCommentsShow.class);
-            intent.putExtra("link", link);
-            startActivity(intent);
+            startCommentsActivity();
         }
 
+    }
+    
+    private void startCommentsActivity(){
+        Intent intent = new Intent(PostsShow.this, PostsCommentsShow.class);
+        intent.putExtra("link", link);
+        startActivity(intent);
     }
 
     private class ShareAction implements Action{
@@ -108,17 +131,21 @@ public class PostsShow extends ApplicationActivity{
         }
 
         public void performAction(View view){
-            final Intent intent = new Intent(Intent.ACTION_SEND);
-            final Formatter formatter = new Formatter();
-            String shareText = formatter.format("%s - %s #HabraHabr #HabReader", title, link).toString();
-
-            intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_link_post));
-            intent.putExtra(Intent.EXTRA_TEXT, shareText);
-
-            startActivity(Intent.createChooser(intent, getString(R.string.share)));
+            createShareIntent();
         }
 
+    }
+    
+    private void createShareIntent(){
+        final Intent intent = new Intent(Intent.ACTION_SEND);
+        final Formatter formatter = new Formatter();
+        String shareText = formatter.format("%s - %s #HabraHabr #HabReader", title, link).toString();
+
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_link_post));
+        intent.putExtra(Intent.EXTRA_TEXT, shareText);
+
+        startActivity(Intent.createChooser(intent, getString(R.string.share)));
     }
 
     private void loadPost(){
@@ -169,7 +196,8 @@ public class PostsShow extends ApplicationActivity{
                 webView.getSettings().setPluginsEnabled(preferences.isEnableFlashPosts());
                 webView.getSettings().setSupportZoom(true);
                 webView.getSettings().setBuiltInZoomControls(true);
-                webView.loadData(content, "text/html", "UTF-8");
+                //webView.loadData(content, "text/html", "UTF-8");
+                webView.loadDataWithBaseURL("", content, "text/html", "UTF-8", null);
             }
             progressDialog.dismiss();
         }

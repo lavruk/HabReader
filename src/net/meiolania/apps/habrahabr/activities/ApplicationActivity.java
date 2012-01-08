@@ -19,11 +19,14 @@ package net.meiolania.apps.habrahabr.activities;
 import net.meiolania.apps.habrahabr.Api;
 import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
+import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.view.MenuItem;
 import android.view.WindowManager;
 
 public abstract class ApplicationActivity extends Activity{
@@ -46,7 +49,23 @@ public abstract class ApplicationActivity extends Activity{
         }
         
         if(UIUtils.isHoneycombOrHigher())
-            setTheme(android.R.style.Theme_Holo);
+            setTheme(android.R.style.Theme_Holo_Light);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(preferences.isVibrate())
+            VibrateUtils.doVibrate(this);
+        if(UIUtils.isHoneycombOrHigher()){
+            switch(item.getItemId()){
+                case android.R.id.home:
+                    Intent intent = new Intent(this, Dashboard.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    break;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.adapters.PostsAdapter;
 import net.meiolania.apps.habrahabr.data.PostsData;
-import net.meiolania.apps.habrahabr.utils.VibrateUtils;
+import net.meiolania.apps.habrahabr.utils.UIUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -68,26 +68,49 @@ public class Posts extends ApplicationActivity{
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.posts, menu);
+        
+        if(UIUtils.isHoneycombOrHigher())
+            menu.removeItem(R.id.to_home);
+        
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        if(preferences.isVibrate())
-            VibrateUtils.doVibrate(this);
+        super.onOptionsItemSelected(item);
         switch(item.getItemId()){
             case R.id.to_home:
-                startActivity(new Intent(this, Dashboard.class));
+                Intent intent = new Intent(this, Dashboard.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
         }
         return true;
     }
 
     private void setActionBar(){
-        ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
-        actionBar.setTitle(R.string.posts);
-        actionBar.addAction(new LoadNextPageAction());
-        actionBar.addAction(new UpdateAction());
+        if(!UIUtils.isHoneycombOrHigher()){
+            ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
+            actionBar.setTitle(R.string.posts);
+            actionBar.addAction(new LoadNextPageAction());
+            actionBar.addAction(new UpdateAction());
+        }else{
+            ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
+            actionBarView.setVisibility(View.GONE);
+            
+            android.app.ActionBar actionBar = getActionBar();
+            
+            /*
+            Tab tab = actionBar.newTab().setText(R.string.all_posts);
+            actionBar.addTab(tab);
+            
+            tab = actionBar.newTab().setText(R.string.new_posts);
+            actionBar.addTab(tab);
+            */
+            
+            actionBar.setTitle(R.string.posts);
+            actionBar.setHomeButtonEnabled(true);
+        }
     }
 
     private class LoadNextPageAction implements Action{

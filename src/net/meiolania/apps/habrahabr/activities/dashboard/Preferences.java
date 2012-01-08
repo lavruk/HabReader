@@ -20,18 +20,27 @@ import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.SignIn;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 public class Preferences extends PreferenceActivity{
-
+    protected net.meiolania.apps.habrahabr.Preferences preferences;
+    protected SharedPreferences sharedPreferences;
+    
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        preferences = new net.meiolania.apps.habrahabr.Preferences(this);
+        sharedPreferences = preferences.getSharedPreferences();
+        
+        if(preferences.isFullscreen())
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
         if(UIUtils.isHoneycombOrHigher())
             setTheme(android.R.style.Theme_Holo_Light);

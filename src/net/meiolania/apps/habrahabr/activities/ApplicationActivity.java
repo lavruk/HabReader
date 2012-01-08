@@ -18,6 +18,7 @@ package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.Api;
 import net.meiolania.apps.habrahabr.Preferences;
+import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -43,6 +44,9 @@ public abstract class ApplicationActivity extends Activity{
             PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
             powerManagerWakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
         }
+        
+        if(UIUtils.isHoneycombOrHigher())
+            setTheme(android.R.style.Theme_Holo);
     }
 
     @Override

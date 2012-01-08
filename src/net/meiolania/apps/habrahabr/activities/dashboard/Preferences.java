@@ -18,6 +18,7 @@ package net.meiolania.apps.habrahabr.activities.dashboard;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.SignIn;
+import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,6 +32,10 @@ public class Preferences extends PreferenceActivity{
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        
+        if(UIUtils.isHoneycombOrHigher())
+            setTheme(android.R.style.Theme_Holo_Light);
+        
         addPreferencesFromResource(R.xml.preferences);
         
         signIn();
@@ -44,7 +49,7 @@ public class Preferences extends PreferenceActivity{
         Preference review = (Preference) findPreference("send_review");
         review.setOnPreferenceClickListener(new OnPreferenceClickListener(){
             public boolean onPreferenceClick(Preference preference){
-                //Some problems here. Without it a field to is empty
+                //Some problems here. Without this a field "to" is empty
                 String[] emails = {"support+habreader@meiolania.net", ""};
                 
                 Intent intent = new Intent(android.content.Intent.ACTION_SEND);

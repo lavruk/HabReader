@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.adapters.QAAdapter;
 import net.meiolania.apps.habrahabr.data.QAData;
-import net.meiolania.apps.habrahabr.utils.Vibrate;
+import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -68,7 +68,7 @@ public class QA extends ApplicationActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(preferences.isVibrate())
-            Vibrate.doVibrate(this);
+            VibrateUtils.doVibrate(this);
         switch(item.getItemId()){
             case R.id.to_home:
                 startActivity(new Intent(this, Dashboard.class));

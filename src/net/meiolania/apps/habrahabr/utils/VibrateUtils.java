@@ -19,7 +19,7 @@ package net.meiolania.apps.habrahabr.utils;
 import android.content.Context;
 import android.os.Vibrator;
 
-public class Vibrate {
+public class VibrateUtils {
 	public final static long DEFAULT_LONG_VIBRATE = 50;
     
 	public static void doVibrate(Context context){

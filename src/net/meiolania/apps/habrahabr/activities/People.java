@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.adapters.PeopleAdapter;
 import net.meiolania.apps.habrahabr.data.PeopleData;
-import net.meiolania.apps.habrahabr.utils.Vibrate;
+import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -68,7 +68,7 @@ public class People extends ApplicationActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(preferences.isVibrate())
-            Vibrate.doVibrate(this);
+            VibrateUtils.doVibrate(this);
         switch(item.getItemId()){
             case R.id.to_home:
                 startActivity(new Intent(this, Dashboard.class));

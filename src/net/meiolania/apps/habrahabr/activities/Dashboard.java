@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.api.Connection;
 import net.meiolania.apps.habrahabr.pager.SimplePagerAdapter;
-import net.meiolania.apps.habrahabr.utils.Vibrate;
+import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -107,7 +107,7 @@ public class Dashboard extends ApplicationActivity{
 
     public void clickDashboardButton(View view){
         if(preferences.isVibrate())
-            Vibrate.doVibrate(this);
+            VibrateUtils.doVibrate(this);
         switch(view.getId()){
             case R.id.posts:
                 startActivity(new Intent(this, Posts.class));
@@ -150,7 +150,7 @@ public class Dashboard extends ApplicationActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(preferences.isVibrate())
-            Vibrate.doVibrate(this);
+            VibrateUtils.doVibrate(this);
         switch(item.getItemId()){
             case R.id.about:
                 startActivity(new Intent(this, net.meiolania.apps.habrahabr.activities.dashboard.About.class));

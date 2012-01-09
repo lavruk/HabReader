@@ -24,12 +24,11 @@ import net.meiolania.apps.habrahabr.activities.People;
 import net.meiolania.apps.habrahabr.activities.Posts;
 import net.meiolania.apps.habrahabr.activities.QA;
 import net.meiolania.apps.habrahabr.ui.fragments.DashboardFragment;
-import net.meiolania.apps.habrahabr.ui.fragments.PostsFragment;
+import net.meiolania.apps.habrahabr.ui.fragments.PostsDashboardFragment;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -44,12 +43,12 @@ public class DashboardActivity extends ApplicationFragmentActivity{
         
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         
-        Fragment dashboard = new DashboardFragment();
+        DashboardFragment dashboard = new DashboardFragment();
         
         fragmentTransaction.replace(R.id.dashboard_fragment, dashboard);
         
         if(UIUtils.isTablet(this) || preferences.isUseTabletDesign()){
-            Fragment posts = new PostsFragment();
+            PostsDashboardFragment posts = new PostsDashboardFragment();
             fragmentTransaction.replace(R.id.posts_fragment, posts);
         }else{
             FrameLayout postsFrameLayout = (FrameLayout)findViewById(R.id.posts_fragment);
@@ -64,7 +63,7 @@ public class DashboardActivity extends ApplicationFragmentActivity{
             VibrateUtils.doVibrate(this);
         switch(view.getId()){
             case R.id.posts:
-                startActivity(new Intent(this, Posts.class));
+                startActivity(new Intent(this, PostsActivity.class));
                 break;
             case R.id.blogs:
                 startActivity(new Intent(this, Blogs.class));

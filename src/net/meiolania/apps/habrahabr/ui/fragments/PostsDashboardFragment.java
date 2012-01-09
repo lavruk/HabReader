@@ -19,11 +19,9 @@ package net.meiolania.apps.habrahabr.ui.fragments;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.PostsShow;
 import net.meiolania.apps.habrahabr.adapters.PostsAdapter;
 import net.meiolania.apps.habrahabr.data.PostsData;
-import net.meiolania.apps.habrahabr.utils.UIUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -33,49 +31,35 @@ import org.jsoup.select.Elements;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.ListView;
 
-public class PostsFragment extends ApplicationListFragment{
+public class PostsDashboardFragment extends ApplicationListFragment{
     private final ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
     private PostsAdapter postsAdapter;
     private int page;
-
+    
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         loadList();
     }
-
+    
     @Override
     public void onListItemClick(ListView list, View view, int position, long id){
         PostsData postsData = postsDataList.get(position);
+
+        Intent intent = new Intent(getActivity(), PostsShow.class);
+        intent.putExtra("link", postsData.getLink());
         
-        if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()){
-            getListView().setItemChecked(position, true);
-            
-            PostsShowFragment postsShowFragment = new PostsShowFragment();
-            postsShowFragment.setLink(postsData.getLink());
-            
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.post_show_fragment, postsShowFragment);
-            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            fragmentTransaction.commit();
-        }else{
-            Intent intent = new Intent(getActivity(), PostsShow.class);
-            intent.putExtra("link", postsData.getLink());
-
-            startActivity(intent);
-        }
+        startActivity(intent);
     }
-
+    
     private void loadList(){
         ++page;
         new LoadPostsList().execute();
     }
-
+    
     private class LoadPostsList extends AsyncTask<Void, Void, Void>{
 
         @Override
@@ -93,7 +77,7 @@ public class PostsFragment extends ApplicationListFragment{
 
                     postsData.setTitle(title.text());
                     postsData.setBlog(blog.text());
-
+                    
                     postsData.setLink(title.attr("abs:href"));
 
                     postsDataList.add(postsData);
@@ -115,5 +99,5 @@ public class PostsFragment extends ApplicationListFragment{
         }
 
     }
-
+    
 }

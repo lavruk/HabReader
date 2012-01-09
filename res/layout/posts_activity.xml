@@ -6,13 +6,13 @@
     android:orientation="horizontal" >
 
     <FrameLayout
-        android:id="@+id/dashboard_fragment"
+        android:id="@+id/posts_list_fragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1" />
     
     <FrameLayout
-        android:id="@+id/posts_fragment"
+        android:id="@+id/post_show_fragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1" />

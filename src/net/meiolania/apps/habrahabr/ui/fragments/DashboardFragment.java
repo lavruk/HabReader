@@ -18,6 +18,8 @@ package net.meiolania.apps.habrahabr.ui.fragments;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.api.Connection;
+import net.meiolania.apps.habrahabr.ui.activities.AboutInfoActivity;
+import net.meiolania.apps.habrahabr.ui.activities.PreferencesActivity;
 import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -61,10 +63,10 @@ public class DashboardFragment extends ApplicationFragment{
             VibrateUtils.doVibrate(getActivity());
         switch(item.getItemId()){
             case R.id.about:
-                startActivity(new Intent(getActivity(), net.meiolania.apps.habrahabr.activities.dashboard.About.class));
+                startActivity(new Intent(getActivity(), AboutInfoActivity.class));
                 break;
             case R.id.preferences:
-                startActivity(new Intent(getActivity(), net.meiolania.apps.habrahabr.activities.dashboard.Preferences.class));
+                startActivity(new Intent(getActivity(), PreferencesActivity.class));
                 break;
             case R.id.other_applications:
                 Uri uri = Uri.parse("https://market.android.com/developer?pub=Meiolania.net");

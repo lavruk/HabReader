@@ -19,7 +19,6 @@ package net.meiolania.apps.habrahabr.ui.fragments;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.PostsShow;
 import net.meiolania.apps.habrahabr.adapters.PostsAdapter;
 import net.meiolania.apps.habrahabr.data.PostsData;
@@ -34,7 +33,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class PostsFragment extends ApplicationListFragment{
     private final ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
@@ -96,13 +94,7 @@ public class PostsFragment extends ApplicationListFragment{
         protected void onPostExecute(Void result){
             if(!isCancelled() && page == 1){
                 postsAdapter = new PostsAdapter(getActivity(), postsDataList);
-                
-                if(postsAdapter.getCount() < 1){
-                    TextView text = new TextView(getActivity());
-                    text.setText(R.string.no_posts);
-                    getActivity().setContentView(text);
-                }else
-                    setListAdapter(postsAdapter);
+                setListAdapter(postsAdapter);
             }else
                 postsAdapter.notifyDataSetChanged();
         }

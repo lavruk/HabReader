@@ -21,22 +21,24 @@ import android.content.res.Configuration;
 import android.os.Build;
 
 public class UIUtils{
-    
+
     public static boolean isHoneycomb(){
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH;
     }
-    
+
     public static boolean isHoneycombOrHigher(){
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
-    
-    public static boolean isTablet(Context context){
-        if(isHoneycombOrHigher()){
-            Configuration configuration = context.getResources().getConfiguration();
-            if((configuration.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE)
-                return true;
-        }
-        return false;
+
+    public static boolean isIceCreamOrHigher(){
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
     }
-    
+
+    /*
+     * http://code.google.com/p/iosched/source/browse/android/src/com/google/android/apps/iosched/util/UIUtils.java#186
+     */
+    public static boolean isTablet(Context context){
+        return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
 }

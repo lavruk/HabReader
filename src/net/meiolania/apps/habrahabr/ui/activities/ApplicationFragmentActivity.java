@@ -38,6 +38,7 @@ public abstract class ApplicationFragmentActivity extends FragmentActivity{
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        
         preferences = new Preferences(this);
         sharedPreferences = preferences.getSharedPreferences();
         

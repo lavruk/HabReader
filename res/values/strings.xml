@@ -38,9 +38,8 @@
     <string name="preferences_send_review">Отправить отзыв</string>
     <string name="preferences_share">Рассказать друзьям</string>
     <string name="preferences_share_text">Я использую приложение #HabReader для чтения Habrahabr.ru - %s</string>
-    <string name="preferences_cache_posts">Кешировать посты</string>
-    <string name="preferences_cache_posts_nubmers">Количество постов для кеширования</string>
-    <string name="preferences_default_component">Стандартная вкладка</string>
+    <string name="preferences_use_tablet_design">Использовать дизайн для планшетов</string>
+    <string name="preferences_use_tablet_design_summary">Настройка работает только на смартфонах</string>
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
     <string name="sign_in">Вход</string>
@@ -75,4 +74,5 @@
 	<string name="show_comments">Показать комментарии</string>
 	<string name="share">Поделиться с друзьями</string>
 	<string name="update">Обновить</string>
+	<string name="no_posts">Постов нет</string>
 </resources>

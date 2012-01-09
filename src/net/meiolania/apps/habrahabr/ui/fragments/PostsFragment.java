@@ -29,12 +29,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class PostsFragment extends ApplicationListFragment{
     private final ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
@@ -64,7 +64,6 @@ public class PostsFragment extends ApplicationListFragment{
     }
     
     private class LoadPostsList extends AsyncTask<Void, Void, Void>{
-        private ProgressDialog progressDialog;
 
         @Override
         protected Void doInBackground(Void... params){
@@ -94,22 +93,18 @@ public class PostsFragment extends ApplicationListFragment{
         }
 
         @Override
-        protected void onPreExecute(){
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage(getString(R.string.loading_posts_list));
-            progressDialog.setCancelable(true);
-            progressDialog.show();
-        }
-
-        @Override
         protected void onPostExecute(Void result){
             if(!isCancelled() && page == 1){
                 postsAdapter = new PostsAdapter(getActivity(), postsDataList);
-                setListAdapter(postsAdapter);
+                
+                if(postsAdapter.getCount() < 1){
+                    TextView text = new TextView(getActivity());
+                    text.setText(R.string.no_posts);
+                    getActivity().setContentView(text);
+                }else
+                    setListAdapter(postsAdapter);
             }else
                 postsAdapter.notifyDataSetChanged();
-
-            progressDialog.dismiss();
         }
 
     }

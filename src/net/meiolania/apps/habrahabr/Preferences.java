@@ -28,9 +28,7 @@ public class Preferences{
     private boolean useCSS;
     private boolean roaming;
     private boolean use3g;
-    private boolean cache_posts;
-    private String cache_posts_numbers;
-    private String default_component;
+    private boolean useTabletDesign;
     private SharedPreferences prefs;
 
     public Preferences(Context context){
@@ -48,11 +46,13 @@ public class Preferences{
         useCSS = sharedPreferences.getBoolean("use_css", true);
         roaming = sharedPreferences.getBoolean("roaming", false);
         use3g = sharedPreferences.getBoolean("use_3g", true);
-        cache_posts = sharedPreferences.getBoolean("cache_posts", false);
-        cache_posts_numbers = sharedPreferences.getString("cache_posts_numbers", "1");
-        default_component = sharedPreferences.getString("default_component", "Dashboard");
+        useTabletDesign = sharedPreferences.getBoolean("use_tablet_design", false);
 
         prefs = sharedPreferences;
+    }
+    
+    public boolean isUseTabletDesign(){
+        return useTabletDesign;
     }
 
     public boolean isVibrate(){
@@ -81,18 +81,6 @@ public class Preferences{
 
     public boolean isUse3g(){
         return use3g;
-    }
-
-    public boolean isCachePosts(){
-        return cache_posts;
-    }
-
-    public int getCachePostsNumbers(){
-        return Integer.valueOf(cache_posts_numbers);
-    }
-
-    public String getDefaultComponent(){
-        return default_component;
     }
 
     public SharedPreferences getSharedPreferences(){

@@ -3,7 +3,7 @@
     style="@style/Base"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="horizontal" >
 
     <FrameLayout
         android:id="@+id/dashboard_fragment"

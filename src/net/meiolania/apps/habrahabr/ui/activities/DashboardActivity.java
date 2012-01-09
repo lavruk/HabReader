@@ -39,18 +39,19 @@ public class DashboardActivity extends ApplicationFragmentActivity{
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.dashboard_activity);
         
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         
         Fragment dashboard = new DashboardFragment();
-        Fragment posts = new PostsFragment();
         
         fragmentTransaction.replace(R.id.dashboard_fragment, dashboard);
         
-        if(UIUtils.isTablet(this))
+        if(UIUtils.isTablet(this) || preferences.isUseTabletDesign()){
+            Fragment posts = new PostsFragment();
             fragmentTransaction.replace(R.id.posts_fragment, posts);
-        else{
+        }else{
             FrameLayout postsFrameLayout = (FrameLayout)findViewById(R.id.posts_fragment);
             postsFrameLayout.setVisibility(View.GONE);
         }

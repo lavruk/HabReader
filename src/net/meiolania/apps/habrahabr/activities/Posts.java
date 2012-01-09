@@ -95,7 +95,9 @@ public class Posts extends ApplicationActivity{
             */
             
             actionBar.setTitle(R.string.posts);
-            actionBar.setHomeButtonEnabled(true);
+            
+            if(UIUtils.isIceCreamOrHigher())
+                actionBar.setHomeButtonEnabled(true);
         }
     }
 

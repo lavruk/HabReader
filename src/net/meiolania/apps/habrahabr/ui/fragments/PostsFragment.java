@@ -19,17 +19,12 @@ package net.meiolania.apps.habrahabr.ui.fragments;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.Api;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.PostsShow;
 import net.meiolania.apps.habrahabr.adapters.PostsAdapter;
 import net.meiolania.apps.habrahabr.data.PostsData;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,7 +33,7 @@ import android.view.View;
 import android.widget.ListView;
 
 public class PostsFragment extends ApplicationListFragment{
-    protected final ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
+    protected ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
     protected PostsAdapter postsAdapter;
     protected int page;
 
@@ -80,23 +75,10 @@ public class PostsFragment extends ApplicationListFragment{
         @Override
         protected Void doInBackground(Void... params){
             try{
-                Document document = Jsoup.connect("http://habrahabr.ru/blogs/page" + page + "/").get();
-
-                Elements postsList = document.select("div.post");
-
-                for(Element post : postsList){
-                    PostsData postsData = new PostsData();
-
-                    Element title = post.select("a.post_title").first();
-                    Element blog = post.select("a.blog_title").first();
-
-                    postsData.setTitle(title.text());
-                    postsData.setBlog(blog.text());
-
-                    postsData.setLink(title.attr("abs:href"));
-
-                    postsDataList.add(postsData);
-                }
+                postsDataList = new Api(getActivity()).getPostsApi().getPosts("http://habrahabr.ru/blogs/page" + page + "/");
+                
+                if(postsDataList.isEmpty())
+                    postsDataList = new Api(getActivity()).getPostsApi().getPosts("http://habrahabr.ru/blogs/page" + page + "/");
             }
             catch(IOException e){
                 e.printStackTrace();

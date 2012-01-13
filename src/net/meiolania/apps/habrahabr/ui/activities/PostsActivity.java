@@ -16,6 +16,8 @@ public class PostsActivity extends ApplicationFragmentActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.posts_activity);
         
+        setActionBar();
+        
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         
         PostsFragment postsFragment = new PostsFragment();
@@ -31,6 +33,10 @@ public class PostsActivity extends ApplicationFragmentActivity{
         }
         
         fragmentTransaction.commit();
+    }
+    
+    private void setActionBar(){
+        
     }
     
 }

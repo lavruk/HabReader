@@ -35,13 +35,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.ListView;
 
 public class PostsFragment extends ApplicationListFragment{
-    private final ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
-    private PostsAdapter postsAdapter;
-    private int page;
+    protected final ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
+    protected PostsAdapter postsAdapter;
+    protected int page;
 
     @Override
     public void onCreate(Bundle savedInstanceState){

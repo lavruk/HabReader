@@ -3,18 +3,28 @@
     style="@style/Base"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
-    <FrameLayout
-        android:id="@+id/posts_list_fragment"
+    <com.markupartist.android.widget.ActionBar
+        android:id="@+id/actionbar"
+        style="@style/ActionBar" />
+
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1" />
-    
-    <FrameLayout
-        android:id="@+id/post_show_fragment"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1" />
+        android:orientation="horizontal" >
+
+        <FrameLayout
+            android:id="@+id/posts_list_fragment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
+
+        <FrameLayout
+            android:id="@+id/post_show_fragment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 </LinearLayout>

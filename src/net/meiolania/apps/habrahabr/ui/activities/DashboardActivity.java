@@ -21,8 +21,8 @@ import net.meiolania.apps.habrahabr.activities.Blogs;
 import net.meiolania.apps.habrahabr.activities.Companies;
 import net.meiolania.apps.habrahabr.activities.Events;
 import net.meiolania.apps.habrahabr.activities.People;
-import net.meiolania.apps.habrahabr.activities.Posts;
 import net.meiolania.apps.habrahabr.activities.QA;
+import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
 import net.meiolania.apps.habrahabr.ui.fragments.DashboardFragment;
 import net.meiolania.apps.habrahabr.ui.fragments.PostsDashboardFragment;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
@@ -33,6 +33,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.markupartist.android.widget.ActionBar;
+
 public class DashboardActivity extends ApplicationFragmentActivity{
     
     @Override
@@ -40,6 +42,8 @@ public class DashboardActivity extends ApplicationFragmentActivity{
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.dashboard_activity);
+        
+        setActionBar();
         
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         
@@ -56,6 +60,23 @@ public class DashboardActivity extends ApplicationFragmentActivity{
         }
         
         fragmentTransaction.commit();
+    }
+    
+    private void setActionBar(){
+        if(!UIUtils.isHoneycombOrHigher()){
+            ActionBar actionBar = (ActionBar)findViewById(R.id.actionbar);
+            actionBar.setTitle(R.string.app_name);
+            actionBar.setHomeAction(new HomeAction(this, true));
+        }else{
+            ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
+            actionBarView.setVisibility(View.GONE);
+            
+            android.app.ActionBar actionBar = getActionBar();
+            actionBar.setTitle(R.string.app_name);
+            
+            if(UIUtils.isIceCreamOrHigher())
+                actionBar.setHomeButtonEnabled(true);
+        }
     }
     
     public void clickDashboardButton(View view){

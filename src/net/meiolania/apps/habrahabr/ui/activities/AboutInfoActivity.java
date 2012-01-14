@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
 import net.meiolania.apps.habrahabr.utils.StreamUtils;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.os.Bundle;
@@ -48,6 +49,7 @@ public class AboutInfoActivity extends ApplicationFragmentActivity{
         if(!UIUtils.isHoneycombOrHigher()){
             ActionBar actionBar = (ActionBar)findViewById(R.id.actionbar);
             actionBar.setTitle(R.string.about);
+            actionBar.setHomeAction(new HomeAction(this));
         }else{
             ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
             actionBarView.setVisibility(View.GONE);

@@ -8,7 +8,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,6 +30,10 @@ public class PostsShowFragment extends ApplicationFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         return inflater.inflate(R.layout.posts_show_fragment, container, false);
+    }
+    
+    public String getTitle(){
+        return title;
     }
     
     public void setLink(String link){
@@ -73,11 +76,13 @@ public class PostsShowFragment extends ApplicationFragment{
         protected void onPostExecute(Void result){
             if(!isCancelled()){
                 WebView webView = (WebView) getActivity().findViewById(R.id.content);
-                webView.getSettings().setPluginsEnabled(preferences.isEnableFlashPosts());
-                webView.getSettings().setSupportZoom(true);
-                webView.getSettings().setBuiltInZoomControls(true);
-                //webView.loadData(content, "text/html", "UTF-8");
-                webView.loadDataWithBaseURL("", content, "text/html", "UTF-8", null);
+                if(webView != null){
+                    webView.getSettings().setPluginsEnabled(preferences.isEnableFlashPosts());
+                    webView.getSettings().setSupportZoom(true);
+                    webView.getSettings().setBuiltInZoomControls(true);
+                    //webView.loadData(content, "text/html", "UTF-8");
+                    webView.loadDataWithBaseURL("", content, "text/html", "UTF-8", null);
+                }
             }
         }
 

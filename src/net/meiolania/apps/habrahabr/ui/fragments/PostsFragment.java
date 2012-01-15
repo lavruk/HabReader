@@ -38,25 +38,37 @@ public class PostsFragment extends ApplicationListFragment{
     protected int page;
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+
         loadList();
+
+        if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
+            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
     @Override
     public void onListItemClick(ListView list, View view, int position, long id){
+        showPost(position);
+    }
+
+    private void showPost(int position){
         PostsData postsData = postsDataList.get(position);
-        
+
         if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()){
             getListView().setItemChecked(position, true);
-            
-            PostsShowFragment postsShowFragment = new PostsShowFragment();
-            postsShowFragment.setLink(postsData.getLink());
-            
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.post_show_fragment, postsShowFragment);
-            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            fragmentTransaction.commit();
+
+            PostsShowFragment postsShowFragment = (PostsShowFragment) getFragmentManager().findFragmentById(R.id.post_show_fragment);
+
+            if(postsShowFragment == null || postsShowFragment.getLink() != postsData.getLink()){
+                postsShowFragment = new PostsShowFragment();
+                postsShowFragment.setLink(postsData.getLink());
+
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.post_show_fragment, postsShowFragment);
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                fragmentTransaction.commit();
+            }
         }else{
             Intent intent = new Intent(getActivity(), PostsShow.class);
             intent.putExtra("link", postsData.getLink());
@@ -76,7 +88,7 @@ public class PostsFragment extends ApplicationListFragment{
         protected Void doInBackground(Void... params){
             try{
                 postsDataList = new Api(getActivity()).getPostsApi().getPosts("http://habrahabr.ru/blogs/page" + page + "/");
-                
+
                 if(postsDataList.isEmpty())
                     postsDataList = new Api(getActivity()).getPostsApi().getPosts("http://habrahabr.ru/blogs/page" + page + "/");
             }
@@ -91,6 +103,9 @@ public class PostsFragment extends ApplicationListFragment{
             if(!isCancelled() && page == 1){
                 postsAdapter = new PostsAdapter(getActivity(), postsDataList);
                 setListAdapter(postsAdapter);
+                
+                if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
+                    showPost(0);
             }else
                 postsAdapter.notifyDataSetChanged();
         }

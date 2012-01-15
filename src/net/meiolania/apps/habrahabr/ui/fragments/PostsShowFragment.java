@@ -1,13 +1,17 @@
 package net.meiolania.apps.habrahabr.ui.fragments;
 
 import java.io.IOException;
+import java.util.Formatter;
 
 import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.activities.PostsCommentsShow;
+import net.meiolania.apps.habrahabr.utils.UIUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,21 +19,75 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
+import com.markupartist.android.widget.ActionBar;
+import com.markupartist.android.widget.ActionBar.Action;
+
 public class PostsShowFragment extends ApplicationFragment{
+    public final static String TAG = "Habrahabr.PostsShowFragment";
     private String link;
     private String title;
     
     @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        if(container == null)
+            return null;
+        
+        View view = inflater.inflate(R.layout.posts_show_fragment, container, false);
         
         if(link != null)
             loadPost();
+        
+        return view;
     }
     
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        return inflater.inflate(R.layout.posts_show_fragment, container, false);
+    public void postsShowOnClick(View view){
+        switch(view.getId()){
+            case R.id.comments:
+                startCommentsActivity();
+                break;
+        }
+    }
+    
+    private class ShowCommentsAction implements Action{
+
+        public int getDrawable(){
+            return R.drawable.actionbar_ic_comments;
+        }
+
+        public void performAction(View view){
+            startCommentsActivity();
+        }
+
+    }
+    
+    private void startCommentsActivity(){
+        Intent intent = new Intent(getActivity(), PostsCommentsShow.class);
+        intent.putExtra("link", link);
+        startActivity(intent);
+    }
+
+    private class ShareAction implements Action{
+
+        public int getDrawable(){
+            return R.drawable.actionbar_ic_share;
+        }
+
+        public void performAction(View view){
+            createShareIntent();
+        }
+
+    }
+    
+    private void createShareIntent(){
+        final Intent intent = new Intent(Intent.ACTION_SEND);
+        final Formatter formatter = new Formatter();
+        String shareText = formatter.format("%s - %s #HabraHabr #HabReader", title, link).toString();
+
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_link_post));
+        intent.putExtra(Intent.EXTRA_TEXT, shareText);
+
+        startActivity(Intent.createChooser(intent, getString(R.string.share)));
     }
     
     public String getTitle(){
@@ -38,6 +96,10 @@ public class PostsShowFragment extends ApplicationFragment{
     
     public void setLink(String link){
         this.link = link;
+    }
+    
+    public String getLink(){
+        return link;
     }
     
     private void loadPost(){

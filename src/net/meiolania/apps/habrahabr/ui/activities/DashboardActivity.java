@@ -65,8 +65,11 @@ public class DashboardActivity extends ApplicationFragmentActivity{
     private void setActionBar(){
         if(!UIUtils.isHoneycombOrHigher()){
             ActionBar actionBar = (ActionBar)findViewById(R.id.actionbar);
-            actionBar.setTitle(R.string.app_name);
-            actionBar.setHomeAction(new HomeAction(this, true));
+            
+            if(actionBar != null){
+                actionBar.setTitle(R.string.app_name);
+                actionBar.setHomeAction(new HomeAction(this, true));
+            }
         }else{
             ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
             actionBarView.setVisibility(View.GONE);

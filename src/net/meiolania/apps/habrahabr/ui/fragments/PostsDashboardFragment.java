@@ -20,9 +20,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.Api;
-import net.meiolania.apps.habrahabr.activities.PostsShow;
 import net.meiolania.apps.habrahabr.adapters.PostsAdapter;
 import net.meiolania.apps.habrahabr.data.PostsData;
+import net.meiolania.apps.habrahabr.ui.activities.PostsShowActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -45,7 +45,7 @@ public class PostsDashboardFragment extends ApplicationListFragment{
     public void onListItemClick(ListView list, View view, int position, long id){
         PostsData postsData = postsDataList.get(position);
 
-        Intent intent = new Intent(getActivity(), PostsShow.class);
+        Intent intent = new Intent(getActivity(), PostsShowActivity.class);
         intent.putExtra("link", postsData.getLink());
 
         startActivity(intent);

@@ -21,9 +21,9 @@ import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.Api;
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.activities.PostsShow;
 import net.meiolania.apps.habrahabr.adapters.PostsAdapter;
 import net.meiolania.apps.habrahabr.data.PostsData;
+import net.meiolania.apps.habrahabr.ui.activities.PostsShowActivity;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -70,7 +70,7 @@ public class PostsFragment extends ApplicationListFragment{
                 fragmentTransaction.commit();
             }
         }else{
-            Intent intent = new Intent(getActivity(), PostsShow.class);
+            Intent intent = new Intent(getActivity(), PostsShowActivity.class);
             intent.putExtra("link", postsData.getLink());
 
             startActivity(intent);

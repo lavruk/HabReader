@@ -52,7 +52,7 @@
         
         <activity android:name=".ui.activities.PostsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         <activity android:name=".ui.activities.PostsShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".ui.activities.PostsCommentsShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".ui.activities.PostsShowCommentsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         
         <activity android:name=".ui.activities.HabrahabrIntentFilter">
             <intent-filter>

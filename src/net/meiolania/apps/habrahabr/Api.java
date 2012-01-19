@@ -1,8 +1,8 @@
 package net.meiolania.apps.habrahabr;
 
-import net.meiolania.apps.habrahabr.api.Login;
-import net.meiolania.apps.habrahabr.api.Posts;
-import net.meiolania.apps.habrahabr.api.PostsComments;
+import net.meiolania.apps.habrahabr.api.LoginApi;
+import net.meiolania.apps.habrahabr.api.PostsApi;
+import net.meiolania.apps.habrahabr.api.PostsCommentsApi;
 import android.content.Context;
 
 public class Api{
@@ -12,16 +12,16 @@ public class Api{
         this.context = context;
     }
     
-    public Posts getPostsApi(){
-        return new Posts();
+    public PostsApi getPostsApi(){
+        return new PostsApi();
     }
     
-    public Login getLoginApi(){
-        return new Login();
+    public LoginApi getLoginApi(){
+        return new LoginApi();
     }
     
-    public PostsComments getPostsCommentsApi(){
-        return new PostsComments();
+    public PostsCommentsApi getPostsCommentsApi(){
+        return new PostsCommentsApi();
     }
     
 }

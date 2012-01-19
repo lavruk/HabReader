@@ -88,7 +88,8 @@ public class PostsFragment extends ApplicationListFragment{
         protected Void doInBackground(Void... params){
             try{
                 postsDataList = new Api(getActivity()).getPostsApi().getPosts("http://habrahabr.ru/blogs/page" + page + "/");
-
+                
+                //Trying to get posts again. Need to rewrite this code
                 if(postsDataList.isEmpty())
                     postsDataList = new Api(getActivity()).getPostsApi().getPosts("http://habrahabr.ru/blogs/page" + page + "/");
             }
@@ -100,6 +101,7 @@ public class PostsFragment extends ApplicationListFragment{
 
         @Override
         protected void onPostExecute(Void result){
+            /*
             if(!isCancelled() && page == 1){
                 postsAdapter = new PostsAdapter(getActivity(), postsDataList);
                 setListAdapter(postsAdapter);
@@ -107,7 +109,14 @@ public class PostsFragment extends ApplicationListFragment{
                 if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
                     showPost(0);
             }else
-                postsAdapter.notifyDataSetChanged();
+            */
+            //postsAdapter.notifyDataSetChanged();
+            
+            postsAdapter = new PostsAdapter(getActivity(), postsDataList);
+            setListAdapter(postsAdapter);
+            
+            if(!isCancelled() && page == 1 && (UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()))
+                    showPost(0);
         }
 
     }

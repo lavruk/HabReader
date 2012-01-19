@@ -10,7 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class Posts{
+public class PostsApi{
 
     public ArrayList<PostsData> getPosts(String link) throws IOException{
         ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();

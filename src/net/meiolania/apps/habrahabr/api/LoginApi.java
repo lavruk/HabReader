@@ -1,5 +1,5 @@
 package net.meiolania.apps.habrahabr.api;
 
-public class Login{
+public class LoginApi{
 
 }

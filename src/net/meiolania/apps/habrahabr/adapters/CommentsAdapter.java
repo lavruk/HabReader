@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.CommentsData;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

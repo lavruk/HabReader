@@ -22,7 +22,7 @@ import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.Posts;
 import net.meiolania.apps.habrahabr.activities.PostsShow;
-import net.meiolania.apps.habrahabr.api.Connection;
+import net.meiolania.apps.habrahabr.api.ConnectionApi;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -44,9 +44,9 @@ public class SmallPostsWidget extends AppWidgetProvider{
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds){
         Preferences preferences = new Preferences(context);
         
-        if(!preferences.isUse3g() && Connection.isMobileNetwork(context))
+        if(!preferences.isUse3g() && ConnectionApi.isMobileNetwork(context))
             return;
-        if(!preferences.isRoaming() && Connection.isRoaming(context))
+        if(!preferences.isRoaming() && ConnectionApi.isRoaming(context))
             return;
         context.startService(new Intent(context, UpdateService.class));
     }

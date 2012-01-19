@@ -19,7 +19,7 @@ package net.meiolania.apps.habrahabr.activities;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.api.Connection;
+import net.meiolania.apps.habrahabr.api.ConnectionApi;
 import net.meiolania.apps.habrahabr.pager.SimplePagerAdapter;
 import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 import android.app.AlertDialog;
@@ -67,8 +67,8 @@ public class Dashboard extends ApplicationActivity{
 
     private void checkMobileInternetPreferences(){
         if(!preferences.isUse3g()){
-            if(Connection.isMobileNetwork(this)){
-                if(!preferences.isRoaming() && Connection.isRoaming(this)){
+            if(ConnectionApi.isMobileNetwork(this)){
+                if(!preferences.isRoaming() && ConnectionApi.isRoaming(this)){
                     AlertDialog alertDialog = new AlertDialog.Builder(this).create();
                     alertDialog.setTitle(R.string.attention);
                     alertDialog.setMessage(getString(R.string.attention_roaming));
@@ -163,10 +163,10 @@ public class Dashboard extends ApplicationActivity{
                 EditText searchField = (EditText) findViewById(R.id.search_text);
                 searchField.requestFocus();
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.toggleSoftInput(inputMethodManager.SHOW_FORCED, 0);
+                inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                 break;
             case R.id.other_applications:
-                Uri uri = Uri.parse("https://market.android.com/developer?pub=Meiolania.net");
+                Uri uri = Uri.parse("https://market.android.com/developer?pub=Meiolania");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
                 break;

@@ -17,7 +17,7 @@
 package net.meiolania.apps.habrahabr.ui.fragments;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.api.Connection;
+import net.meiolania.apps.habrahabr.api.ConnectionApi;
 import net.meiolania.apps.habrahabr.ui.activities.AboutInfoActivity;
 import net.meiolania.apps.habrahabr.ui.activities.PreferencesActivity;
 import net.meiolania.apps.habrahabr.utils.VibrateUtils;
@@ -79,8 +79,8 @@ public class DashboardFragment extends ApplicationFragment{
     
     private void checkMobileInternetPreferences(){
         if(!preferences.isUse3g()){
-            if(Connection.isMobileNetwork(getActivity())){
-                if(!preferences.isRoaming() && Connection.isRoaming(getActivity())){
+            if(ConnectionApi.isMobileNetwork(getActivity())){
+                if(!preferences.isRoaming() && ConnectionApi.isRoaming(getActivity())){
                     AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
                     alertDialog.setTitle(R.string.attention);
                     alertDialog.setMessage(getString(R.string.attention_roaming));

@@ -3,7 +3,7 @@ package net.meiolania.apps.habrahabr.ui.fragments;
 import java.io.IOException;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.activities.PostsCommentsShow;
+import net.meiolania.apps.habrahabr.ui.activities.PostsShowCommentsActivity;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,6 +14,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -36,21 +37,20 @@ public class PostsShowFragment extends ApplicationFragment{
         if(isFullView){
             Button showComments = (Button)view.findViewById(R.id.comments);
             showComments.setVisibility(View.GONE);
+        }else{
+            Button showComments = (Button)view.findViewById(R.id.comments);
+            showComments.setOnClickListener(new OnClickListener(){
+                public void onClick(View v){
+                    startCommentsActivity();
+                }
+            });
         }
         
         return view;
     }
     
-    public void postsShowOnClick(View view){
-        switch(view.getId()){
-            case R.id.comments:
-                startCommentsActivity();
-                break;
-        }
-    }
-    
     private void startCommentsActivity(){
-        Intent intent = new Intent(getActivity(), PostsCommentsShow.class);
+        Intent intent = new Intent(getActivity(), PostsShowCommentsActivity.class);
         intent.putExtra("link", link);
         startActivity(intent);
     }

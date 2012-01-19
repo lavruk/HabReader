@@ -3,14 +3,15 @@ package net.meiolania.apps.habrahabr.ui.activities;
 import java.util.Formatter;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.activities.PostsCommentsShow;
 import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
+import net.meiolania.apps.habrahabr.ui.fragments.PostsCommentsFragment;
 import net.meiolania.apps.habrahabr.ui.fragments.PostsShowFragment;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.Action;
@@ -36,6 +37,17 @@ public class PostsShowActivity extends ApplicationFragmentActivity{
         postsShowFragment.setIsFullView(true);
         
         fragmentTransaction.add(R.id.post_show_fragment, postsShowFragment);
+        
+        if(UIUtils.isTablet(this) || preferences.isUseTabletDesign()){
+            PostsCommentsFragment postsCommentsFragment = new PostsCommentsFragment();
+            postsCommentsFragment.setLink(link);
+            
+            fragmentTransaction.add(R.id.post_show_comments, postsCommentsFragment);
+        }else{
+            FrameLayout postsShowCommentsLayout = (FrameLayout)findViewById(R.id.post_show_comments);
+            postsShowCommentsLayout.setVisibility(View.GONE);
+        }
+        
         fragmentTransaction.commit();
     }
     
@@ -71,7 +83,7 @@ public class PostsShowActivity extends ApplicationFragmentActivity{
     }
     
     private void startCommentsActivity(){
-        Intent intent = new Intent(this, PostsCommentsShow.class);
+        Intent intent = new Intent(this, PostsShowCommentsActivity.class);
         intent.putExtra("link", link);
         startActivity(intent);
     }

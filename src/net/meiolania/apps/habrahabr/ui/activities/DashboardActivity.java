@@ -17,7 +17,6 @@
 package net.meiolania.apps.habrahabr.ui.activities;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.activities.Blogs;
 import net.meiolania.apps.habrahabr.activities.Companies;
 import net.meiolania.apps.habrahabr.activities.Events;
 import net.meiolania.apps.habrahabr.activities.People;
@@ -72,7 +71,9 @@ public class DashboardActivity extends ApplicationFragmentActivity{
             }
         }else{
             ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
-            actionBarView.setVisibility(View.GONE);
+            
+            if(actionBarView != null)
+                actionBarView.setVisibility(View.GONE);
             
             android.app.ActionBar actionBar = getActionBar();
             actionBar.setTitle(R.string.app_name);
@@ -90,7 +91,7 @@ public class DashboardActivity extends ApplicationFragmentActivity{
                 startActivity(new Intent(this, PostsActivity.class));
                 break;
             case R.id.blogs:
-                startActivity(new Intent(this, Blogs.class));
+                startActivity(new Intent(this, BlogsActivity.class));
                 break;
             case R.id.qa:
                 startActivity(new Intent(this, QA.class));

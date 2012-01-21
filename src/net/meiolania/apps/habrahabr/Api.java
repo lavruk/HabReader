@@ -1,5 +1,6 @@
 package net.meiolania.apps.habrahabr;
 
+import net.meiolania.apps.habrahabr.api.BlogsApi;
 import net.meiolania.apps.habrahabr.api.LoginApi;
 import net.meiolania.apps.habrahabr.api.PostsApi;
 import net.meiolania.apps.habrahabr.api.PostsCommentsApi;
@@ -10,6 +11,10 @@ public class Api{
     
     public Api(Context context){
         this.context = context;
+    }
+    
+    public BlogsApi getBlogsApi(){
+        return new BlogsApi();
     }
     
     public PostsApi getPostsApi(){

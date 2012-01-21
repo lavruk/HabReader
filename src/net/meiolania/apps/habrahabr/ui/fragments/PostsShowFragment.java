@@ -23,6 +23,7 @@ public class PostsShowFragment extends ApplicationFragment{
     private String link;
     private String title;
     private boolean isFullView = false;
+    private LoadPost loadPost;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -72,7 +73,8 @@ public class PostsShowFragment extends ApplicationFragment{
     }
     
     private void loadPost(){
-        new LoadPost().execute();
+        loadPost = new LoadPost();
+        loadPost.execute();
     }
 
     private class LoadPost extends AsyncTask<Void, Void, Void>{

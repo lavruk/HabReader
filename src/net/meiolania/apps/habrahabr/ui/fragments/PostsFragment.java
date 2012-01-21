@@ -36,6 +36,7 @@ public class PostsFragment extends ApplicationListFragment{
     protected ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
     protected PostsAdapter postsAdapter;
     protected int page;
+    protected String link;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
@@ -47,12 +48,20 @@ public class PostsFragment extends ApplicationListFragment{
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
+    public void setLink(String link){
+        this.link = link;
+    }
+
+    public String getLink(){
+        return link;
+    }
+
     @Override
     public void onListItemClick(ListView list, View view, int position, long id){
         showPost(position);
     }
 
-    private void showPost(int position){
+    protected void showPost(int position){
         PostsData postsData = postsDataList.get(position);
 
         if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()){
@@ -77,21 +86,21 @@ public class PostsFragment extends ApplicationListFragment{
         }
     }
 
-    private void loadList(){
+    protected void loadList(){
         ++page;
         new LoadPostsList().execute();
     }
 
-    private class LoadPostsList extends AsyncTask<Void, Void, Void>{
+    protected class LoadPostsList extends AsyncTask<Void, Void, Void>{
 
         @Override
         protected Void doInBackground(Void... params){
             try{
-                postsDataList = new Api(getActivity()).getPostsApi().getPosts("http://habrahabr.ru/blogs/page" + page + "/");
-                
-                //Trying to get posts again. Need to rewrite this code
+                postsDataList = new Api(getActivity()).getPostsApi().getPosts(link + "/page" + page + "/");
+
+                // Trying to get posts again. Need to rewrite this code
                 if(postsDataList.isEmpty())
-                    postsDataList = new Api(getActivity()).getPostsApi().getPosts("http://habrahabr.ru/blogs/page" + page + "/");
+                    postsDataList = new Api(getActivity()).getPostsApi().getPosts(link + "/page" + page + "/");
             }
             catch(IOException e){
                 e.printStackTrace();
@@ -101,7 +110,6 @@ public class PostsFragment extends ApplicationListFragment{
 
         @Override
         protected void onPostExecute(Void result){
-            /*
             if(!isCancelled() && page == 1){
                 postsAdapter = new PostsAdapter(getActivity(), postsDataList);
                 setListAdapter(postsAdapter);
@@ -109,14 +117,7 @@ public class PostsFragment extends ApplicationListFragment{
                 if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
                     showPost(0);
             }else
-            */
-            //postsAdapter.notifyDataSetChanged();
-            
-            postsAdapter = new PostsAdapter(getActivity(), postsDataList);
-            setListAdapter(postsAdapter);
-            
-            if(!isCancelled() && page == 1 && (UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()))
-                    showPost(0);
+                postsAdapter.notifyDataSetChanged();
         }
 
     }

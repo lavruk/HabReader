@@ -26,7 +26,7 @@ public class PostsApi{
             Element blog = post.select("a.blog_title").first();
 
             postsData.setTitle(title.text());
-            postsData.setBlog(blog.text());
+            postsData.setBlog((blog != null) ? blog.text() : "");
 
             postsData.setLink(title.attr("abs:href"));
 

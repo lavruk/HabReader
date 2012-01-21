@@ -48,7 +48,6 @@
         <activity android:name=".ui.activities.QaCommentsShow" android:configChanges="orientation|keyboard|keyboardHidden" />
         
         <activity android:name=".ui.activities.BlogsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".ui.activities.BlogsPostsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         
         <activity android:name=".ui.activities.PostsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         <activity android:name=".ui.activities.PostsShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />

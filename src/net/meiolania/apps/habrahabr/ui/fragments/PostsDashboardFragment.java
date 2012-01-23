@@ -25,7 +25,6 @@ import net.meiolania.apps.habrahabr.ui.activities.PostsShowActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -66,7 +65,6 @@ public class PostsDashboardFragment extends ApplicationListFragment implements O
         @Override
         protected ArrayList<PostsData> doInBackground(Void... params){
             try{
-                Log.d("PostsDashboardFragment", String.valueOf(page));
                 getApi().getPostsApi().getPosts(postsDataList, "http://habrahabr.ru/blogs/page" + page + "/");
 
                 if(postsDataList.isEmpty())

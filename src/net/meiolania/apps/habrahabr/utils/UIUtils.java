@@ -40,5 +40,16 @@ public class UIUtils{
     public static boolean isTablet(Context context){
         return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
+    
+    public static int parseCommentsScore(String score){
+        int commentRating = score.charAt(0) == '–' ? -1 : +1;
+        try{
+            commentRating *= Integer.valueOf(score.substring(1));
+        }
+        catch(NumberFormatException e){
+            commentRating = 0;
+        }
+        return commentRating;
+    }
 
 }

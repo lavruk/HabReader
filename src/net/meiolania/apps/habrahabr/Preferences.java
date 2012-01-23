@@ -40,7 +40,7 @@ public class Preferences{
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         vibrate = sharedPreferences.getBoolean("vibrate", true);
-        fullscreen = sharedPreferences.getBoolean("fullscreen", true);
+        fullscreen = sharedPreferences.getBoolean("fullscreen", false);
         keepScreen = sharedPreferences.getBoolean("keep_screen", false);
         enableFlashPosts = sharedPreferences.getBoolean("enable_flash_posts", true);
         useCSS = sharedPreferences.getBoolean("use_css", true);

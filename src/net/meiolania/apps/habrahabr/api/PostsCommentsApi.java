@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.data.CommentsData;
+import net.meiolania.apps.habrahabr.utils.UIUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -28,23 +29,12 @@ public class PostsCommentsApi{
             commentsData.setAuthor(userName.text());
             commentsData.setAuthorLink(userName.attr("abs:href"));
             commentsData.setText(message.text());
-            commentsData.setScore(PostsCommentsApi.parseScore(score.text()));
+            commentsData.setScore(UIUtils.parseCommentsScore(score.text()));
 
             commentsDataList.add(commentsData);
         }
         
         return commentsDataList;
-    }
-    
-    public static int parseScore(String score){
-        int commentRating = score.charAt(0) == '–' ? -1 : +1;
-        try{
-            commentRating *= Integer.valueOf(score.substring(1));
-        }
-        catch(NumberFormatException e){
-            commentRating = 0;
-        }
-        return commentRating;
     }
 
 }

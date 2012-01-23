@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.activities.QAShow;
 import net.meiolania.apps.habrahabr.adapters.QAAdapter;
 import net.meiolania.apps.habrahabr.data.QAData;
+import net.meiolania.apps.habrahabr.ui.activities.QaShowActivity;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -63,7 +63,7 @@ public class QaFragment extends ApplicationListFragment implements OnScrollListe
                 fragmentTransaction.commit();
             }
         }else{
-            Intent intent = new Intent(getActivity(), QAShow.class);
+            Intent intent = new Intent(getActivity(), QaShowActivity.class);
             intent.putExtra("link", qaData.getLink());
 
             startActivity(intent);

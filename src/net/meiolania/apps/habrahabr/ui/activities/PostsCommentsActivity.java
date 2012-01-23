@@ -15,7 +15,7 @@ public class PostsCommentsActivity extends ApplicationFragmentActivity{
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.posts_show_comments_activity);
+        setContentView(R.layout.posts_comments_activity);
         
         setActionBar();
 

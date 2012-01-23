@@ -4,6 +4,8 @@ import net.meiolania.apps.habrahabr.api.BlogsApi;
 import net.meiolania.apps.habrahabr.api.LoginApi;
 import net.meiolania.apps.habrahabr.api.PostsApi;
 import net.meiolania.apps.habrahabr.api.PostsCommentsApi;
+import net.meiolania.apps.habrahabr.api.QaApi;
+import net.meiolania.apps.habrahabr.api.QaCommentsApi;
 import android.content.Context;
 
 public class Api{
@@ -27,6 +29,14 @@ public class Api{
     
     public PostsCommentsApi getPostsCommentsApi(){
         return new PostsCommentsApi();
+    }
+    
+    public QaApi getQaApi(){
+        return new QaApi();
+    }
+    
+    public QaCommentsApi getQaCommentsApi(){
+        return new QaCommentsApi();
     }
     
 }

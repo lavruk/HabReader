@@ -83,7 +83,7 @@ public class PostsShowActivity extends ApplicationFragmentActivity{
     }
     
     private void startCommentsActivity(){
-        Intent intent = new Intent(this, PostsShowCommentsActivity.class);
+        Intent intent = new Intent(this, PostsCommentsActivity.class);
         intent.putExtra("link", link);
         startActivity(intent);
     }

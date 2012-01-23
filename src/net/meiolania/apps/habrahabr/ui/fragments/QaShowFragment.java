@@ -3,11 +3,13 @@ package net.meiolania.apps.habrahabr.ui.fragments;
 import java.io.IOException;
 
 import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.ui.activities.QaShowActivity;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,18 +34,24 @@ public class QaShowFragment extends ApplicationFragment{
             loadQuestion();
         
         if(isFullView){
-            Button showComments = (Button)view.findViewById(R.id.comments);
-            showComments.setVisibility(View.GONE);
+            Button more = (Button)view.findViewById(R.id.more);
+            more.setVisibility(View.GONE);
         }else{
-            Button showComments = (Button)view.findViewById(R.id.comments);
-            showComments.setOnClickListener(new OnClickListener(){
+            Button more = (Button)view.findViewById(R.id.more);
+            more.setOnClickListener(new OnClickListener(){
                 public void onClick(View v){
-                    //startCommentsActivity();
+                    startShowActivity();
                 }
             });
         }
         
         return view;
+    }
+    
+    private void startShowActivity(){
+        Intent intent = new Intent(getActivity(), QaShowActivity.class);
+        intent.putExtra("link", link);
+        startActivity(intent);
     }
     
     private void loadQuestion(){

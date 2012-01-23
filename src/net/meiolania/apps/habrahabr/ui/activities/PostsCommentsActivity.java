@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.markupartist.android.widget.ActionBar;
 
-public class PostsShowCommentsActivity extends ApplicationFragmentActivity{
+public class PostsCommentsActivity extends ApplicationFragmentActivity{
 
     @Override
     public void onCreate(Bundle savedInstanceState){

@@ -5,12 +5,12 @@
     android:orientation="vertical" >
     
     <Button
-        android:id="@+id/comments"
+        android:id="@+id/more"
         android:onClick="qaShowOnClick"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="@string/comments" />
+        android:text="@string/more" />
 
     <WebView
         android:id="@+id/content"

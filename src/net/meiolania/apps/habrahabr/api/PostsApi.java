@@ -12,9 +12,7 @@ import org.jsoup.select.Elements;
 
 public class PostsApi{
 
-    public ArrayList<PostsData> getPosts(String link) throws IOException{
-        ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
-
+    public void getPosts(ArrayList<PostsData> postsDataList, String link) throws IOException{
         Document document = Jsoup.connect(link).get();
 
         Elements postsList = document.select("div.post");
@@ -32,8 +30,6 @@ public class PostsApi{
 
             postsDataList.add(postsData);
         }
-        
-        return postsDataList;
     }
 
 }

@@ -19,7 +19,6 @@ package net.meiolania.apps.habrahabr.ui.fragments;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import net.meiolania.apps.habrahabr.Api;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.adapters.PostsAdapter;
 import net.meiolania.apps.habrahabr.data.PostsData;
@@ -30,18 +29,23 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
-public class PostsFragment extends ApplicationListFragment{
-    protected ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
+public class PostsFragment extends ApplicationListFragment implements OnScrollListener{
+    protected final ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
     protected PostsAdapter postsAdapter;
-    protected int page;
+    protected int page = 0;
     protected String link;
+    protected boolean canLoadingData = true;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-
+        
+        getListView().setOnScrollListener(this);
+        
         loadList();
 
         if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
@@ -96,11 +100,11 @@ public class PostsFragment extends ApplicationListFragment{
         @Override
         protected Void doInBackground(Void... params){
             try{
-                postsDataList = new Api(getActivity()).getPostsApi().getPosts(link + "/page" + page + "/");
+                getApi().getPostsApi().getPosts(postsDataList, link + "/page" + page + "/");
 
                 // Trying to get posts again. Need to rewrite this code
                 if(postsDataList.isEmpty())
-                    postsDataList = new Api(getActivity()).getPostsApi().getPosts(link + "/page" + page + "/");
+                    getApi().getPostsApi().getPosts(postsDataList, link + "/page" + page + "/");
             }
             catch(IOException e){
                 e.printStackTrace();
@@ -118,8 +122,18 @@ public class PostsFragment extends ApplicationListFragment{
                     showPost(0);
             }else
                 postsAdapter.notifyDataSetChanged();
+            canLoadingData = true;
         }
 
     }
+
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
+        if((firstVisibleItem + visibleItemCount) == totalItemCount && page != 0 && canLoadingData){
+            canLoadingData = false;
+            loadList();
+        }    
+    }
+
+    public void onScrollStateChanged(AbsListView view, int scrollState){}
 
 }

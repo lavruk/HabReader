@@ -20,7 +20,6 @@ import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.Companies;
 import net.meiolania.apps.habrahabr.activities.Events;
 import net.meiolania.apps.habrahabr.activities.People;
-import net.meiolania.apps.habrahabr.activities.QA;
 import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
 import net.meiolania.apps.habrahabr.ui.fragments.DashboardFragment;
 import net.meiolania.apps.habrahabr.ui.fragments.PostsDashboardFragment;
@@ -79,7 +78,7 @@ public class DashboardActivity extends ApplicationFragmentActivity{
             actionBar.setTitle(R.string.app_name);
             
             if(UIUtils.isIceCreamOrHigher())
-                actionBar.setHomeButtonEnabled(true);
+                actionBar.setHomeButtonEnabled(false);
         }
     }
     
@@ -94,7 +93,7 @@ public class DashboardActivity extends ApplicationFragmentActivity{
                 startActivity(new Intent(this, BlogsActivity.class));
                 break;
             case R.id.qa:
-                startActivity(new Intent(this, QA.class));
+                startActivity(new Intent(this, QaActivity.class));
                 break;
             case R.id.events:
                 startActivity(new Intent(this, Events.class));

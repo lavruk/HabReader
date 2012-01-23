@@ -69,7 +69,7 @@ public class DashboardFragment extends ApplicationFragment{
                 startActivity(new Intent(getActivity(), PreferencesActivity.class));
                 break;
             case R.id.other_applications:
-                Uri uri = Uri.parse("https://market.android.com/developer?pub=Meiolania.net");
+                Uri uri = Uri.parse("https://market.android.com/developer?pub=Meiolania");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
                 break;

@@ -2,14 +2,14 @@ package net.meiolania.apps.habrahabr.ui.fragments;
 
 import java.io.IOException;
 
-import net.meiolania.apps.habrahabr.Api;
 import net.meiolania.apps.habrahabr.adapters.PostsAdapter;
 import net.meiolania.apps.habrahabr.data.PostsData;
 import net.meiolania.apps.habrahabr.ui.activities.PostsShowActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.widget.AbsListView.OnScrollListener;
 
-public class BlogsPostsFragment extends PostsFragment{
+public class BlogsPostsFragment extends PostsFragment implements OnScrollListener{
     
     @Override
     protected void showPost(int position){
@@ -34,11 +34,11 @@ public class BlogsPostsFragment extends PostsFragment{
         @Override
         protected Void doInBackground(Void... params){
             try{
-                postsDataList = new Api(getActivity()).getPostsApi().getPosts(link + "/page" + page + "/");
+                getApi().getPostsApi().getPosts(postsDataList, link + "/page" + page + "/");
 
                 // Trying to get posts again. Need to rewrite this code
                 if(postsDataList.isEmpty())
-                    postsDataList = new Api(getActivity()).getPostsApi().getPosts(link + "/page" + page + "/");
+                    getApi().getPostsApi().getPosts(postsDataList, link + "/page" + page + "/");
             }
             catch(IOException e){
                 e.printStackTrace();
@@ -53,6 +53,7 @@ public class BlogsPostsFragment extends PostsFragment{
                 setListAdapter(postsAdapter);
             }else
                 postsAdapter.notifyDataSetChanged();
+            canLoadingData = true;
         }
 
     }

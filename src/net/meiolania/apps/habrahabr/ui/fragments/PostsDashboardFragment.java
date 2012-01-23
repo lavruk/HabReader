@@ -19,25 +19,30 @@ package net.meiolania.apps.habrahabr.ui.fragments;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import net.meiolania.apps.habrahabr.Api;
 import net.meiolania.apps.habrahabr.adapters.PostsAdapter;
 import net.meiolania.apps.habrahabr.data.PostsData;
 import net.meiolania.apps.habrahabr.ui.activities.PostsShowActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
-public class PostsDashboardFragment extends ApplicationListFragment{
-    protected ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
+public class PostsDashboardFragment extends ApplicationListFragment implements OnScrollListener{
+    protected final ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
     protected PostsAdapter postsAdapter;
-    protected int page;
+    protected int page = 0;
+    protected boolean canLoadingData = true;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-
+        
+        getListView().setOnScrollListener(this);
+        
         loadList();
     }
 
@@ -56,15 +61,18 @@ public class PostsDashboardFragment extends ApplicationListFragment{
         new LoadPostsList().execute();
     }
 
-    private class LoadPostsList extends AsyncTask<Void, Void, Void>{
+    private class LoadPostsList extends AsyncTask<Void, Void, ArrayList<PostsData>>{
 
         @Override
-        protected Void doInBackground(Void... params){
+        protected ArrayList<PostsData> doInBackground(Void... params){
             try{
-                postsDataList = new Api(getActivity()).getPostsApi().getPosts("http://habrahabr.ru/blogs/page" + page + "/");
+                Log.d("PostsDashboardFragment", String.valueOf(page));
+                getApi().getPostsApi().getPosts(postsDataList, "http://habrahabr.ru/blogs/page" + page + "/");
 
                 if(postsDataList.isEmpty())
-                    postsDataList = new Api(getActivity()).getPostsApi().getPosts("http://habrahabr.ru/blogs/page" + page + "/");
+                    getApi().getPostsApi().getPosts(postsDataList, "http://habrahabr.ru/blogs/page" + page + "/");
+            
+                return postsDataList;
             }
             catch(IOException e){
                 e.printStackTrace();
@@ -73,14 +81,26 @@ public class PostsDashboardFragment extends ApplicationListFragment{
         }
 
         @Override
-        protected void onPostExecute(Void result){
-            if(!isCancelled() && page == 1){
-                postsAdapter = new PostsAdapter(getActivity(), postsDataList);
-                setListAdapter(postsAdapter);
-            }else
-                postsAdapter.notifyDataSetChanged();
+        protected void onPostExecute(ArrayList<PostsData> result){
+            if(result != null){
+                if(!isCancelled() && page == 1){
+                    postsAdapter = new PostsAdapter(getActivity(), result);
+                    setListAdapter(postsAdapter);
+                }else
+                    postsAdapter.notifyDataSetChanged();
+            }
+            canLoadingData = true;
         }
 
     }
+    
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
+        if((firstVisibleItem + visibleItemCount) == totalItemCount && page != 0 && canLoadingData){
+            canLoadingData = false;
+            loadList();
+        }    
+    }
+
+    public void onScrollStateChanged(AbsListView view, int scrollState){}
 
 }

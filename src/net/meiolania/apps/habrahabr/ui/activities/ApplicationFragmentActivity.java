@@ -48,6 +48,7 @@ public abstract class ApplicationFragmentActivity extends FragmentActivity{
         if(preferences.isKeepScreen()){
             PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
             powerManagerWakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
+            powerManagerWakeLock.acquire();
         }
         
         if(UIUtils.isHoneycombOrHigher())
@@ -82,13 +83,9 @@ public abstract class ApplicationFragmentActivity extends FragmentActivity{
     @Override
     protected void onResume(){
         super.onResume();
-        preferences = new Preferences(this);
-        sharedPreferences = preferences.getSharedPreferences();
-
-        if(preferences.isKeepScreen()){
-            PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-            powerManagerWakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
-        }
+        
+        if(preferences.isKeepScreen())
+            powerManagerWakeLock.acquire();
     }
 
     @Override

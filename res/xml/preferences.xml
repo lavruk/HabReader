@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-
+	
+    <!-- 
     <PreferenceCategory android:title="@string/preferences_personal" >
 
         <Preference
             android:key="sign_in"
             android:title="@string/preferences_sign_in" />
     </PreferenceCategory>
+     -->
 
     <PreferenceCategory android:title="@string/preferences_base" >
 

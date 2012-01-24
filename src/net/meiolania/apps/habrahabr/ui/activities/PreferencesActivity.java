@@ -46,7 +46,7 @@ public class PreferencesActivity extends PreferenceActivity{
 
         addPreferencesFromResource(R.xml.preferences);
 
-        signIn();
+        //signIn();
         showAttentionForFullscreen();
         rateApplication();
         sendReview();

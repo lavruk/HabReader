@@ -26,7 +26,7 @@ public class ConnectionApi{
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         
-        return networkInfo.isConnected();
+        return (networkInfo != null) ? networkInfo.isConnected() : false;
     }
     
     public static boolean isWiFi(Context context){

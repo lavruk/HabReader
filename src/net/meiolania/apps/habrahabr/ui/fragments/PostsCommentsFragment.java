@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.adapters.CommentsAdapter;
+import net.meiolania.apps.habrahabr.api.ConnectionApi;
 import net.meiolania.apps.habrahabr.data.CommentsData;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,7 +21,8 @@ public class PostsCommentsFragment extends ApplicationListFragment{
     }
     
     private void loadComments(){
-        new LoadComments().execute();
+        if(ConnectionApi.isConnection(getActivity()))
+            new LoadComments().execute();
     }
     
     public void setLink(String link){

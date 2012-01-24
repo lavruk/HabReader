@@ -40,8 +40,10 @@ public class DashboardFragment extends ApplicationFragment{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         
-        setHasOptionsMenu(true);
         checkMobileInternetPreferences();
+        checkInternetConnection();
+        
+        setHasOptionsMenu(true);
     }
     
     @Override
@@ -75,6 +77,21 @@ public class DashboardFragment extends ApplicationFragment{
                 break;
         }
         return true;
+    }
+    
+    private void checkInternetConnection(){
+        if(!ConnectionApi.isConnection(getActivity())){
+            AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+            alertDialog.setTitle(R.string.attention);
+            alertDialog.setMessage(getString(R.string.attention_no_network_connection));
+            alertDialog.setButton(getString(android.R.string.ok), new OnClickListener(){
+                public void onClick(DialogInterface dialog, int which){
+                    dialog.dismiss();
+                }
+            });
+            alertDialog.setCancelable(true);
+            alertDialog.show();
+        }
     }
     
     private void checkMobileInternetPreferences(){

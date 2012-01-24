@@ -3,6 +3,7 @@ package net.meiolania.apps.habrahabr.ui.fragments;
 import java.io.IOException;
 
 import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.api.ConnectionApi;
 import net.meiolania.apps.habrahabr.ui.activities.PostsShowActivity;
 
 import org.jsoup.Jsoup;
@@ -73,8 +74,10 @@ public class PostsShowFragment extends ApplicationFragment{
     }
     
     private void loadPost(){
-        loadPost = new LoadPost();
-        loadPost.execute();
+        if(ConnectionApi.isConnection(getActivity())){
+            loadPost = new LoadPost();
+            loadPost.execute();
+        }
     }
 
     private class LoadPost extends AsyncTask<Void, Void, Void>{

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.adapters.PostsAdapter;
+import net.meiolania.apps.habrahabr.api.ConnectionApi;
 import net.meiolania.apps.habrahabr.data.PostsData;
 import net.meiolania.apps.habrahabr.ui.activities.PostsShowActivity;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
@@ -91,8 +92,10 @@ public class PostsFragment extends ApplicationListFragment implements OnScrollLi
     }
 
     protected void loadList(){
-        ++page;
-        new LoadPostsList().execute();
+        if(ConnectionApi.isConnection(getActivity())){
+            ++page;
+            new LoadPostsList().execute();
+        }
     }
 
     protected class LoadPostsList extends AsyncTask<Void, Void, Void>{

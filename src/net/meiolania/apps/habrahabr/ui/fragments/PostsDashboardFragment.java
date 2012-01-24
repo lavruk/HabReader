@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.adapters.PostsAdapter;
+import net.meiolania.apps.habrahabr.api.ConnectionApi;
 import net.meiolania.apps.habrahabr.data.PostsData;
 import net.meiolania.apps.habrahabr.ui.activities.PostsShowActivity;
 import android.content.Intent;
@@ -56,8 +57,10 @@ public class PostsDashboardFragment extends ApplicationListFragment implements O
     }
 
     private void loadList(){
-        ++page;
-        new LoadPostsList().execute();
+        if(ConnectionApi.isConnection(getActivity())){
+            ++page;
+            new LoadPostsList().execute();
+        }
     }
 
     private class LoadPostsList extends AsyncTask<Void, Void, ArrayList<PostsData>>{

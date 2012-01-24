@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.adapters.BlogsAdapter;
+import net.meiolania.apps.habrahabr.api.ConnectionApi;
 import net.meiolania.apps.habrahabr.data.BlogsData;
 import net.meiolania.apps.habrahabr.ui.activities.PostsActivity;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
@@ -27,8 +28,10 @@ public class BlogsFragment extends ApplicationListFragment{
     }
 
     private void loadList(){
-        ++page;
-        new LoadBlogsList().execute();
+        if(ConnectionApi.isConnection(getActivity())){
+            ++page;
+            new LoadBlogsList().execute();
+        }
     }
 
     private void showBlog(int position){

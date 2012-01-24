@@ -3,6 +3,7 @@ package net.meiolania.apps.habrahabr.ui.fragments;
 import java.io.IOException;
 
 import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.api.ConnectionApi;
 import net.meiolania.apps.habrahabr.ui.activities.QaShowActivity;
 
 import org.jsoup.Jsoup;
@@ -55,7 +56,8 @@ public class QaShowFragment extends ApplicationFragment{
     }
     
     private void loadQuestion(){
-        new LoadQuestion().execute();
+        if(ConnectionApi.isConnection(getActivity()))
+            new LoadQuestion().execute();
     }
     
     private class LoadQuestion extends AsyncTask<Void, Void, Void>{

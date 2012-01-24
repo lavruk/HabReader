@@ -3,6 +3,7 @@ package net.meiolania.apps.habrahabr.ui.fragments;
 import java.io.IOException;
 
 import net.meiolania.apps.habrahabr.adapters.PostsAdapter;
+import net.meiolania.apps.habrahabr.api.ConnectionApi;
 import net.meiolania.apps.habrahabr.data.PostsData;
 import net.meiolania.apps.habrahabr.ui.activities.PostsShowActivity;
 import android.content.Intent;
@@ -23,7 +24,7 @@ public class BlogsPostsFragment extends PostsFragment implements OnScrollListene
     
     @Override
     protected void loadList(){
-        if(link != null && link.length() > 0){
+        if(link != null && link.length() > 0 && ConnectionApi.isConnection(getActivity())){
             ++page;
             new LoadPostsList().execute();
         }

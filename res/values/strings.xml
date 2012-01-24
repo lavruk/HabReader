@@ -76,4 +76,5 @@
 	<string name="update">Обновить</string>
 	<string name="no_posts">Постов нет</string>
 	<string name="more">Подробнее</string>
+	<string name="attention_no_network_connection">Отсутствует подключение к сети.</string>
 </resources>

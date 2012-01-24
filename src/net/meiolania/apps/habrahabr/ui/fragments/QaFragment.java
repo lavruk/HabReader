@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.adapters.QAAdapter;
+import net.meiolania.apps.habrahabr.api.ConnectionApi;
 import net.meiolania.apps.habrahabr.data.QAData;
 import net.meiolania.apps.habrahabr.ui.activities.QaShowActivity;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
@@ -36,8 +37,10 @@ public class QaFragment extends ApplicationListFragment implements OnScrollListe
     }
 
     protected void loadList(){
-        ++page;
-        new LoadQAList().execute();
+        if(ConnectionApi.isConnection(getActivity())){
+            ++page;
+            new LoadQAList().execute();
+        }
     }
 
     @Override

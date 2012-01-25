@@ -16,6 +16,13 @@
 
 package net.meiolania.apps.habrahabr.activities;
 
+import net.meiolania.apps.habrahabr.ui.activities.CompaniesActivity;
+import net.meiolania.apps.habrahabr.ui.activities.EventsActivity;
+import net.meiolania.apps.habrahabr.ui.activities.EventsShowActivity;
+import net.meiolania.apps.habrahabr.ui.activities.PostsActivity;
+import net.meiolania.apps.habrahabr.ui.activities.PostsShowActivity;
+import net.meiolania.apps.habrahabr.ui.activities.QaActivity;
+import net.meiolania.apps.habrahabr.ui.activities.QaShowActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,35 +45,35 @@ public class HabrahabrIntentFilter extends Activity{
         if(parts.length >= 3){
             // Blogs
             if(parts[3].equalsIgnoreCase("blogs") && parts.length == 3){
-                Log.i(LOG_TAG, "Target: Posts.class");
-                intent.setClass(this, Posts.class);
+                Log.i(LOG_TAG, "Target: PostsActivity.class");
+                intent.setClass(this, PostsActivity.class);
                 startActivity(intent);
             }else if(parts[3].equalsIgnoreCase("blogs") && parts.length == 4){
-                Log.i(LOG_TAG, "Target: BlogsPosts.class");
-                intent.setClass(this, Posts.class);
+                Log.i(LOG_TAG, "Target: PostsActivity.class");
+                intent.setClass(this, PostsActivity.class);
                 intent.putExtra("link", uri);
                 startActivity(intent);
             }else if(parts[3].equals("blogs") && parts.length == 6){
-                Log.i(LOG_TAG, "Target: PostsShow.class");
-                intent.setClass(this, PostsShow.class);
+                Log.i(LOG_TAG, "Target: PostsShowActivity.class");
+                intent.setClass(this, PostsShowActivity.class);
                 intent.putExtra("link", uri);
                 startActivity(intent);
             }
             // Events
             else if(parts[3].equalsIgnoreCase("events") && parts.length == 3){
-                Log.i(LOG_TAG, "Target: Events.class");
-                intent.setClass(this, Events.class);
+                Log.i(LOG_TAG, "Target: EventsActivity.class");
+                intent.setClass(this, EventsActivity.class);
                 startActivity(intent);
             }else if(parts[3].equalsIgnoreCase("events") && parts.length == 4){
-                Log.i(LOG_TAG, "Target: EventsShow.class");
-                intent.setClass(this, EventsShow.class);
+                Log.i(LOG_TAG, "Target: EventsShowActivity.class");
+                intent.setClass(this, EventsShowActivity.class);
                 intent.putExtra("link", uri);
                 startActivity(intent);
             }
             // Companies
             else if(parts[3].equalsIgnoreCase("companies") && parts.length == 3){
-                Log.i(LOG_TAG, "Target: Companies.class");
-                intent.setClass(this, Companies.class);
+                Log.i(LOG_TAG, "Target: CompaniesActivity.class");
+                intent.setClass(this, CompaniesActivity.class);
                 startActivity(intent);
             }else if(parts[3].equalsIgnoreCase("company") && parts.length == 4){
                 Log.i(LOG_TAG, "Target: CompaniesShow.class");
@@ -88,11 +95,11 @@ public class HabrahabrIntentFilter extends Activity{
             // Q&A
             else if(parts[3].equalsIgnoreCase("qa") && parts.length == 3){
                 Log.i(LOG_TAG, "Target: QA.class");
-                intent.setClass(this, QA.class);
+                intent.setClass(this, QaActivity.class);
                 startActivity(intent);
             }else if(parts[3].equalsIgnoreCase("qa") && parts.length == 4){
                 Log.i(LOG_TAG, "Target: QAShow.class");
-                intent.setClass(this, QAShow.class);
+                intent.setClass(this, QaShowActivity.class);
                 intent.putExtra("link", uri);
                 startActivity(intent);
             }

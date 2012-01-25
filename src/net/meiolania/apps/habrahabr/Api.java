@@ -1,6 +1,7 @@
 package net.meiolania.apps.habrahabr;
 
 import net.meiolania.apps.habrahabr.api.BlogsApi;
+import net.meiolania.apps.habrahabr.api.EventsApi;
 import net.meiolania.apps.habrahabr.api.LoginApi;
 import net.meiolania.apps.habrahabr.api.PostsApi;
 import net.meiolania.apps.habrahabr.api.PostsCommentsApi;
@@ -37,6 +38,10 @@ public class Api{
     
     public QaCommentsApi getQaCommentsApi(){
         return new QaCommentsApi();
+    }
+    
+    public EventsApi getEventsApi(){
+        return new EventsApi();
     }
     
 }

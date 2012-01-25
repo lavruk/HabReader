@@ -54,7 +54,6 @@
 	<string name="add_to_favorites">Добавить в закладки</string>
 	<string name="other_applications">Другие приложения</string>
 	<string name="loading_events_show">Загрузка события</string>
-	<string name="events_widget">HabReader события</string>
 	<string name="to_home">Домой</string>
 	<string name="loading_companies_show">Загрузка компании</string>
 	<string name="place_undefined">Страна не указана</string>

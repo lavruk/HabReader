@@ -17,7 +17,8 @@ public class PostsCommentsFragment extends ApplicationListFragment{
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         
-        loadComments();
+        if(link != null && !link.isEmpty())
+            loadComments();
     }
     
     private void loadComments(){

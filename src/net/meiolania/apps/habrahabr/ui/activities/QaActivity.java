@@ -3,15 +3,13 @@ package net.meiolania.apps.habrahabr.ui.activities;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
 import net.meiolania.apps.habrahabr.ui.fragments.QaFragment;
-import net.meiolania.apps.habrahabr.ui.fragments.QaShowFragment;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
-
-import com.markupartist.android.widget.ActionBar;
-
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
+
+import com.markupartist.android.widget.ActionBar;
 
 public class QaActivity extends ApplicationFragmentActivity{
     
@@ -28,10 +26,7 @@ public class QaActivity extends ApplicationFragmentActivity{
         
         fragmentTransaction.add(R.id.qa_list_fragment, qaFragment);
         
-        if(UIUtils.isTablet(this) || preferences.isUseTabletDesign()){
-            QaShowFragment qaShowFragment = new QaShowFragment();
-            fragmentTransaction.add(R.id.qa_show_fragment, qaShowFragment);
-        }else{
+        if(!UIUtils.isTablet(this) && !preferences.isUseTabletDesign()){
             FrameLayout qaShowFrameLayout = (FrameLayout) findViewById(R.id.qa_show_fragment);
             qaShowFrameLayout.setVisibility(View.GONE);
         }

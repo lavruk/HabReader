@@ -24,7 +24,7 @@ public class BlogsPostsFragment extends PostsFragment implements OnScrollListene
     
     @Override
     protected void loadList(){
-        if(link != null && link.length() > 0 && ConnectionApi.isConnection(getActivity())){
+        if(link != null && !link.isEmpty() && ConnectionApi.isConnection(getActivity())){
             ++page;
             new LoadPostsList().execute();
         }

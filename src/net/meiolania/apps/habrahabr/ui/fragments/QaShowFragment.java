@@ -31,7 +31,7 @@ public class QaShowFragment extends ApplicationFragment{
         
         View view = inflater.inflate(R.layout.qa_show_fragment, container, false);
         
-        if(link != null)
+        if(link != null && !link.isEmpty())
             loadQuestion();
         
         if(isFullView){
@@ -89,11 +89,13 @@ public class QaShowFragment extends ApplicationFragment{
         protected void onPostExecute(Void result){
             if(!isCancelled()){
                 WebView webView = (WebView) getActivity().findViewById(R.id.content);
-                webView.getSettings().setPluginsEnabled(true);
-                webView.getSettings().setSupportZoom(true);
-                webView.getSettings().setBuiltInZoomControls(true);
-                //webView.loadData(content, "text/html", "UTF-8");
-                webView.loadDataWithBaseURL("", content, "text/html", "UTF-8", null);
+                if(webView != null){
+                    webView.getSettings().setPluginsEnabled(true);
+                    webView.getSettings().setSupportZoom(true);
+                    webView.getSettings().setBuiltInZoomControls(true);
+                    //webView.loadData(content, "text/html", "UTF-8");
+                    webView.loadDataWithBaseURL("", content, "text/html", "UTF-8", null); 
+                }
             }
         }
 

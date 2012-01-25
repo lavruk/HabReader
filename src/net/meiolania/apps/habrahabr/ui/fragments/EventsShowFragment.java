@@ -22,25 +22,25 @@ import android.widget.TextView;
 
 public class EventsShowFragment extends ApplicationFragment{
     private String link;
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         if(container == null)
             return null;
-        
+
         View view = inflater.inflate(R.layout.events_show_fragment, container, false);
-        
-        if(!link.isEmpty())
+
+        if(link != null && !link.isEmpty())
             loadEvent();
-        
+
         return view;
     }
-    
+
     private void loadEvent(){
         if(ConnectionApi.isConnection(getActivity()))
             new LoadEvent().execute();
     }
-    
+
     private class LoadEvent extends AsyncTask<Void, Void, Void>{
         private String title;
         private String description;
@@ -90,33 +90,35 @@ public class EventsShowFragment extends ApplicationFragment{
         protected void onPostExecute(Void result){
             if(!isCancelled()){
                 TextView titleView = (TextView) getActivity().findViewById(R.id.title);
-                TextView placeInfoView = (TextView) getActivity().findViewById(R.id.place_info);
-                TextView priceInfoView = (TextView) getActivity().findViewById(R.id.price_info);
-                TextView linkInfoView = (TextView) getActivity().findViewById(R.id.link_info);
-                WebView descriptionView = (WebView) getActivity().findViewById(R.id.description);
+                if(titleView != null){
+                    TextView placeInfoView = (TextView) getActivity().findViewById(R.id.place_info);
+                    TextView priceInfoView = (TextView) getActivity().findViewById(R.id.price_info);
+                    TextView linkInfoView = (TextView) getActivity().findViewById(R.id.link_info);
+                    WebView descriptionView = (WebView) getActivity().findViewById(R.id.description);
 
-                titleView.setText(title);
-                placeInfoView.setText(placeInfo);
-                priceInfoView.setText(priceInfo);
+                    titleView.setText(title);
+                    placeInfoView.setText(placeInfo);
+                    priceInfoView.setText(priceInfo);
 
-                linkInfoView.setText(Html.fromHtml(linkInfo));
-                linkInfoView.setMovementMethod(LinkMovementMethod.getInstance());
+                    linkInfoView.setText(Html.fromHtml(linkInfo));
+                    linkInfoView.setMovementMethod(LinkMovementMethod.getInstance());
 
-                descriptionView.getSettings().setPluginsEnabled(true);
-                descriptionView.getSettings().setSupportZoom(true);
-                descriptionView.getSettings().setBuiltInZoomControls(true);
-                descriptionView.loadDataWithBaseURL("", description, "text/html", "UTF-8", null);
+                    descriptionView.getSettings().setPluginsEnabled(true);
+                    descriptionView.getSettings().setSupportZoom(true);
+                    descriptionView.getSettings().setBuiltInZoomControls(true);
+                    descriptionView.loadDataWithBaseURL("", description, "text/html", "UTF-8", null);
+                }
             }
         }
 
     }
-    
+
     public void setLink(String link){
         this.link = link;
     }
-    
+
     public String getLink(){
         return link;
     }
-    
+
 }

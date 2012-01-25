@@ -47,7 +47,8 @@ public class PostsFragment extends ApplicationListFragment implements OnScrollLi
         
         getListView().setOnScrollListener(this);
         
-        loadList();
+        if(link != null && !link.isEmpty())
+            loadList();
 
         if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -110,7 +111,7 @@ public class PostsFragment extends ApplicationListFragment implements OnScrollLi
                     getApi().getPostsApi().getPosts(postsDataList, link + "/page" + page + "/");
             }
             catch(IOException e){
-                e.printStackTrace();
+                
             }
             return null;
         }

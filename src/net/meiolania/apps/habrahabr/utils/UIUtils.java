@@ -38,7 +38,13 @@ public class UIUtils{
      * http://code.google.com/p/iosched/source/browse/android/src/com/google/android/apps/iosched/util/UIUtils.java#186
      */
     public static boolean isTablet(Context context){
-        return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+        boolean result;
+        try{
+            result = (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+        }catch(NullPointerException e){
+            result = false;
+        }
+        return result;
     }
     
     public static int parseCommentsScore(String score){

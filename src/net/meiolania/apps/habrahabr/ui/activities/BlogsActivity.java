@@ -3,7 +3,6 @@ package net.meiolania.apps.habrahabr.ui.activities;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
 import net.meiolania.apps.habrahabr.ui.fragments.BlogsFragment;
-import net.meiolania.apps.habrahabr.ui.fragments.BlogsPostsFragment;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -27,10 +26,7 @@ public class BlogsActivity extends ApplicationFragmentActivity{
 
         fragmentTransaction.add(R.id.blogs_list_fragment, blogsFragment);
 
-        if(UIUtils.isTablet(this) || preferences.isUseTabletDesign()){
-            BlogsPostsFragment blogsPostsFragment = new BlogsPostsFragment();
-            fragmentTransaction.add(R.id.posts_list_fragment, blogsPostsFragment);
-        }else{
+        if(!UIUtils.isTablet(this) && !preferences.isUseTabletDesign()){
             FrameLayout postsFrameLayout = (FrameLayout) findViewById(R.id.posts_list_fragment);
             postsFrameLayout.setVisibility(View.GONE);
         }

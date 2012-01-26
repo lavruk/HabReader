@@ -46,7 +46,7 @@ public class EventsShowFragment extends ApplicationFragment{
 
         View view = inflater.inflate(R.layout.events_show_fragment, container, false);
 
-        if(link != null && !link.isEmpty())
+        if(link != null && link.length() > 0)
             loadEvent();
 
         return view;

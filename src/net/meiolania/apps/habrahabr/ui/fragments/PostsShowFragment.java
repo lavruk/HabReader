@@ -56,7 +56,7 @@ public class PostsShowFragment extends ApplicationFragment{
         
         View view = inflater.inflate(R.layout.posts_show_fragment, container, false);
 
-        if(link != null && !link.isEmpty())
+        if(link != null && link.length() > 0)
             loadPost();
 
         if(isFullView){

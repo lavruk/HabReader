@@ -45,7 +45,7 @@ public class CompaniesShowFragment extends ApplicationFragment{
         if(container == null)
             return null;
 
-        if(link != null && !link.isEmpty())
+        if(link != null && link.length() > 0)
             loadCompany();
 
         return inflater.inflate(R.layout.companies_show_fragment, container, false);

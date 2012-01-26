@@ -33,7 +33,7 @@ public class QaCommentsFragment extends ApplicationListFragment{
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         
-        if(link != null && !link.isEmpty())
+        if(link != null && link.length() > 0)
             loadComments();
     }
 

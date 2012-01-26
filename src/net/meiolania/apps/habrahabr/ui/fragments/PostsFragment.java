@@ -47,7 +47,7 @@ public class PostsFragment extends ApplicationListFragment implements OnScrollLi
         
         getListView().setOnScrollListener(this);
         
-        if(link != null && !link.isEmpty())
+        if(link != null && link.length() > 0)
             loadList();
 
         if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())

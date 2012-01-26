@@ -44,7 +44,7 @@ public class PeopleShowFragment extends ApplicationFragment{
         if(container == null)
             return null;
 
-        if(link != null && !link.isEmpty())
+        if(link != null && link.length() > 0)
             loadUser();
 
         return inflater.inflate(R.layout.people_show_fragment, container, false);

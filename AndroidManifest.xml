@@ -31,7 +31,6 @@
         <activity android:name=".ui.activities.PreferencesActivity" />
         
         <activity android:name=".ui.activities.SignInActivity" />
-        <activity android:name=".ui.activities.ProfileActivity" />
         
         <activity android:name=".ui.activities.PeopleActivity" />
         <activity android:name=".ui.activities.PeopleShowActivity" />

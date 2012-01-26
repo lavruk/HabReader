@@ -30,12 +30,12 @@ import android.widget.TextView;
 public class PeopleAdapter extends BaseAdapter{
     private Context context;
     private ArrayList<PeopleData> peopleDataList;
-    
+
     public PeopleAdapter(Context context, ArrayList<PeopleData> peopleDataList){
         this.context = context;
         this.peopleDataList = peopleDataList;
     }
-    
+
     public int getCount(){
         return peopleDataList.size();
     }
@@ -50,20 +50,18 @@ public class PeopleAdapter extends BaseAdapter{
 
     public View getView(int position, View convertView, ViewGroup parent){
         PeopleData userData = peopleDataList.get(position);
-        
+
         View view = convertView;
-        
+
         if(view == null){
-            LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.people_list_row, null);
         }
-        
-        TextView name = (TextView)view.findViewById(R.id.name);
+
+        TextView name = (TextView) view.findViewById(R.id.list_name);
         name.setText(userData.getName());
-        
+
         return view;
     }
-    
-    
-    
+
 }

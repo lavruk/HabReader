@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/textview_with_corners"
+            android:padding="10dp"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/rating_place"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/textview_with_corners"
+            android:padding="10dp"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/birthday"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/textview_with_corners"
+            android:padding="10dp"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/place"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/textview_with_corners"
+            android:padding="10dp"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tags"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/textview_with_corners"
+            android:padding="10dp"
+            android:textSize="18sp" />
+
+        <WebView
+            android:id="@+id/summary"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</ScrollView>

@@ -64,58 +64,56 @@ public class CompaniesShowFragment extends ApplicationFragment{
         @Override
         protected Void doInBackground(Void... params){
             try{
-                try{
-                    Document document = Jsoup.connect(link).get();
+                Document document = Jsoup.connect(link).get();
 
-                    Element favicon = document.select("img.favicon").first();
-                    Elements companyInfo = document.select("div.userinfo > dl");
+                Element favicon = document.select("img.favicon").first();
+                Elements companyInfo = document.select("div.userinfo > dl");
 
-                    title = favicon.attr("alt");
+                title = favicon.attr("alt");
 
-                    int i = 1;
-                    for(Element info : companyInfo){
-                        if(i == INFO_DATE)
-                            date = info.getElementsByTag("dd").first().text();
-                        else if(i == INFO_LINK)
-                            linkToCompany = info.select("dd.url").first().outerHtml();
-                        else if(i == INFO_INDUSTRY)
-                            industry = info.getElementsByTag("dd").first().text();
-                        else if(i == INFO_PLACE)
-                            place = info.getElementsByTag("dd").first().text();
-                        else if(i == INFO_STAFF)
-                            staff = info.getElementsByTag("dd").first().text();
-                        else if(i == INFO_ABOUT_COMPANY)
-                            aboutCompany = info.select("dd.summary").first().text();
-                        else if(i == INFO_LEADERSHIP){
-                            StringBuilder builder = new StringBuilder();
-                            Elements leadershipElements = info.getElementsByTag("dd");
+                int i = 1;
+                for(Element info : companyInfo){
+                    if(i == INFO_DATE)
+                        date = info.getElementsByTag("dd").first().text();
+                    else if(i == INFO_LINK)
+                        linkToCompany = info.select("dd.url").first().outerHtml();
+                    else if(i == INFO_INDUSTRY)
+                        industry = info.getElementsByTag("dd").first().text();
+                    else if(i == INFO_PLACE)
+                        place = info.getElementsByTag("dd").first().text();
+                    else if(i == INFO_STAFF)
+                        staff = info.getElementsByTag("dd").first().text();
+                    else if(i == INFO_ABOUT_COMPANY)
+                        aboutCompany = info.select("dd.summary").first().text();
+                    else if(i == INFO_LEADERSHIP){
+                        StringBuilder builder = new StringBuilder();
+                        Elements leadershipElements = info.getElementsByTag("dd");
 
-                            for(Element leader : leadershipElements)
-                                builder.append(leader.outerHtml());
+                        for(Element leader : leadershipElements)
+                            builder.append(leader.outerHtml());
 
-                            leadership = builder.toString();
-                        }else if(i == INFO_STAGES){
-                            StringBuilder builder = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
-                            Elements stagesElements = info.getElementsByTag("dd");
+                        leadership = builder.toString();
+                    }else if(i == INFO_STAGES){
+                        StringBuilder builder = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
+                        Elements stagesElements = info.getElementsByTag("dd");
 
-                            if(preferences.isUseCSS())
-                                builder.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />");
+                        if(preferences.isUseCSS())
+                            builder.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />");
 
-                            for(Element stage : stagesElements)
-                                builder.append(stage.outerHtml());
+                        for(Element stage : stagesElements)
+                            builder.append(stage.outerHtml());
 
-                            stages = builder.toString();
-                        }
-
-                        i++;
+                        stages = builder.toString();
                     }
-                }
-                catch(NullPointerException e){
 
+                    i++;
                 }
             }
             catch(IOException e){
-                e.printStackTrace();
+                
+            }
+            catch(NullPointerException e){
+
             }
             return null;
         }
@@ -125,7 +123,7 @@ public class CompaniesShowFragment extends ApplicationFragment{
             if(!isCancelled()){
                 TextView titleView = (TextView) getActivity().findViewById(R.id.title);
                 titleView.setText(title);
-                
+
                 Log.d("CompaniesShowFragment", title);
 
                 TextView dateView = (TextView) getActivity().findViewById(R.id.date);

@@ -4,6 +4,7 @@ import net.meiolania.apps.habrahabr.api.BlogsApi;
 import net.meiolania.apps.habrahabr.api.CompaniesApi;
 import net.meiolania.apps.habrahabr.api.EventsApi;
 import net.meiolania.apps.habrahabr.api.LoginApi;
+import net.meiolania.apps.habrahabr.api.PeopleApi;
 import net.meiolania.apps.habrahabr.api.PostsApi;
 import net.meiolania.apps.habrahabr.api.PostsCommentsApi;
 import net.meiolania.apps.habrahabr.api.QaApi;
@@ -47,6 +48,10 @@ public class Api{
     
     public CompaniesApi getCompaniesApi(){
         return new CompaniesApi();
+    }
+    
+    public PeopleApi getPeopleApi(){
+        return new PeopleApi();
     }
     
 }

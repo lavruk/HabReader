@@ -17,7 +17,6 @@
 package net.meiolania.apps.habrahabr.ui.activities;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.activities.People;
 import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
 import net.meiolania.apps.habrahabr.ui.fragments.DashboardFragment;
 import net.meiolania.apps.habrahabr.ui.fragments.PostsDashboardFragment;
@@ -100,7 +99,7 @@ public class DashboardActivity extends ApplicationFragmentActivity{
                 startActivity(new Intent(this, CompaniesActivity.class));
                 break;
             case R.id.people:
-                startActivity(new Intent(this, People.class));
+                startActivity(new Intent(this, PeopleActivity.class));
                 break;
         }
     }

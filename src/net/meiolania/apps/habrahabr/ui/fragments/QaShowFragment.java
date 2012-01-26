@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.api.ConnectionApi;
+import net.meiolania.apps.habrahabr.ui.activities.QaCommentsActivity;
 import net.meiolania.apps.habrahabr.ui.activities.QaShowActivity;
+import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,6 +16,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -28,6 +33,8 @@ public class QaShowFragment extends ApplicationFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         if(container == null)
             return null;
+        
+        setHasOptionsMenu(true);
         
         View view = inflater.inflate(R.layout.qa_show_fragment, container, false);
         
@@ -47,6 +54,29 @@ public class QaShowFragment extends ApplicationFragment{
         }
         
         return view;
+    }
+    
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        inflater.inflate(R.menu.qa_show_fragment, menu);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(preferences.isVibrate())
+            VibrateUtils.doVibrate(getActivity());
+        switch(item.getItemId()){
+            case R.id.show_comments:
+                startCommentsActivity();
+                break;
+        }
+        return true;
+    }
+    
+    private void startCommentsActivity(){
+        Intent intent = new Intent(getActivity(), QaCommentsActivity.class);
+        intent.putExtra("link", link);
+        startActivity(intent);
     }
     
     private void startShowActivity(){

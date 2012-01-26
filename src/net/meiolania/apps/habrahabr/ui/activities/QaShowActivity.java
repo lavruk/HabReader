@@ -5,12 +5,14 @@ import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
 import net.meiolania.apps.habrahabr.ui.fragments.QaCommentsFragment;
 import net.meiolania.apps.habrahabr.ui.fragments.QaShowFragment;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.markupartist.android.widget.ActionBar;
+import com.markupartist.android.widget.ActionBar.Action;
 
 public class QaShowActivity extends ApplicationFragmentActivity{
     private String link;
@@ -52,6 +54,7 @@ public class QaShowActivity extends ApplicationFragmentActivity{
             ActionBar actionBar = (ActionBar)findViewById(R.id.actionbar);
             actionBar.setTitle(R.string.qa);
             actionBar.setHomeAction(new HomeAction(this));
+            actionBar.addAction(new ShowCommentsAction());
         }else{
             ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
             actionBarView.setVisibility(View.GONE);
@@ -62,6 +65,24 @@ public class QaShowActivity extends ApplicationFragmentActivity{
             if(UIUtils.isIceCreamOrHigher())
                 actionBar.setHomeButtonEnabled(true);
         }
+    }
+    
+    private class ShowCommentsAction implements Action{
+
+        public int getDrawable(){
+            return R.drawable.actionbar_ic_comments;
+        }
+
+        public void performAction(View view){
+            startCommentsActivity();
+        }
+
+    }
+    
+    private void startCommentsActivity(){
+        Intent intent = new Intent(this, QaCommentsActivity.class);
+        intent.putExtra("link", link);
+        startActivity(intent);
     }
     
 }

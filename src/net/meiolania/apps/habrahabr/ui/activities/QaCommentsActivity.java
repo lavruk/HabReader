@@ -2,7 +2,7 @@ package net.meiolania.apps.habrahabr.ui.activities;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
-import net.meiolania.apps.habrahabr.ui.fragments.QaShowFragment;
+import net.meiolania.apps.habrahabr.ui.fragments.QaCommentsFragment;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -24,9 +24,9 @@ public class QaCommentsActivity extends ApplicationFragmentActivity{
         
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-        QaShowFragment qaShowFragment = new QaShowFragment();
-        qaShowFragment.setLink(link);
-        fragmentTransaction.add(R.id.qa_show_comments, qaShowFragment);
+        QaCommentsFragment qaCommentsFragment = new QaCommentsFragment();
+        qaCommentsFragment.setLink(link);
+        fragmentTransaction.add(R.id.qa_show_comments, qaCommentsFragment);
 
         fragmentTransaction.commit();
     }

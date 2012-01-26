@@ -66,6 +66,7 @@
 	<string name="attention_roaming">Вы запретили приложению использовать мобильный интернет в роуминге</string>
 	<string name="profile">Профиль</string>
 	<string name="people_no_info">Нет информации</string>
+	<string name="no_info">Нет информации</string>
 	<string name="all_posts">Все посты</string>
 	<string name="new_posts">Новые посты</string>
 	<string name="show_comments">Показать комментарии</string>

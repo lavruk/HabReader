@@ -6,7 +6,7 @@
     android:padding="10dp" >
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/list_title"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:textSize="18sp" />

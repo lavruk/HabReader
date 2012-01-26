@@ -58,7 +58,7 @@ public class BlogsAdapter extends BaseAdapter{
             view = layoutInflater.inflate(R.layout.blogs_list_row, null);
         }
 
-        TextView title = (TextView) view.findViewById(R.id.title);
+        TextView title = (TextView) view.findViewById(R.id.list_title);
         title.setText(blogsData.getTitle());
 
         TextView statistics = (TextView) view.findViewById(R.id.statistics);

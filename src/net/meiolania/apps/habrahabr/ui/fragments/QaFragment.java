@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.adapters.QAAdapter;
+import net.meiolania.apps.habrahabr.adapters.QaAdapter;
 import net.meiolania.apps.habrahabr.api.ConnectionApi;
 import net.meiolania.apps.habrahabr.data.QAData;
 import net.meiolania.apps.habrahabr.ui.activities.QaShowActivity;
@@ -20,7 +20,7 @@ import android.widget.ListView;
 
 public class QaFragment extends ApplicationListFragment implements OnScrollListener{
     protected final ArrayList<QAData> qaDataList = new ArrayList<QAData>();
-    protected QAAdapter qaAdapter;
+    protected QaAdapter qaAdapter;
     protected int page;
     protected boolean canLoadingData = true;
 
@@ -89,7 +89,7 @@ public class QaFragment extends ApplicationListFragment implements OnScrollListe
         @Override
         protected void onPostExecute(Void result){
             if(!isCancelled() && page == 1){
-                qaAdapter = new QAAdapter(getActivity(), qaDataList);
+                qaAdapter = new QaAdapter(getActivity(), qaDataList);
                 setListAdapter(qaAdapter);
 
                 if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())

@@ -27,11 +27,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class QAAdapter extends BaseAdapter{
+public class QaAdapter extends BaseAdapter{
     private Context context;
     private ArrayList<QAData> qaDataList;
 
-    public QAAdapter(Context context, ArrayList<QAData> qaDataList){
+    public QaAdapter(Context context, ArrayList<QAData> qaDataList){
         this.context = context;
         this.qaDataList = qaDataList;
     }
@@ -58,7 +58,7 @@ public class QAAdapter extends BaseAdapter{
             view = layoutInflater.inflate(R.layout.qa_list_row, null);
         }
 
-        TextView title = (TextView) view.findViewById(R.id.title);
+        TextView title = (TextView) view.findViewById(R.id.list_title);
         title.setText(qaData.getTitle());
 
         TextView tags = (TextView) view.findViewById(R.id.tags);

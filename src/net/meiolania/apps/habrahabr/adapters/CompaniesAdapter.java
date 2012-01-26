@@ -58,7 +58,7 @@ public class CompaniesAdapter extends BaseAdapter{
             view = layoutInflater.inflate(R.layout.companies_list_row, null);
         }
 
-        TextView title = (TextView) view.findViewById(R.id.title);
+        TextView title = (TextView) view.findViewById(R.id.list_title);
         title.setText(companiesData.getTitle());
 
         return view;

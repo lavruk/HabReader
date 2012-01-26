@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.adapters.QAAdapter;
+import net.meiolania.apps.habrahabr.adapters.QaAdapter;
 import net.meiolania.apps.habrahabr.data.QAData;
 import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 
@@ -46,7 +46,7 @@ import com.markupartist.android.widget.ActionBar.Action;
 
 public class QA extends ApplicationActivity{
     private final ArrayList<QAData> qaDataList = new ArrayList<QAData>();
-    private QAAdapter qaAdapter;
+    private QaAdapter qaAdapter;
     private int page;
 
     @Override
@@ -153,7 +153,7 @@ public class QA extends ApplicationActivity{
         @Override
         protected void onPostExecute(Void result){
             if(!isCancelled() && page == 1){
-                qaAdapter = new QAAdapter(QA.this, qaDataList);
+                qaAdapter = new QaAdapter(QA.this, qaDataList);
 
                 ListView listView = (ListView) QA.this.findViewById(R.id.qa_list);
                 listView.setAdapter(qaAdapter);

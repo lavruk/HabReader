@@ -38,7 +38,7 @@ public class AboutInfoActivity extends ApplicationFragmentActivity{
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.about);
+        setContentView(R.layout.about_activity);
         
         setActionBar();
         loadAboutText();

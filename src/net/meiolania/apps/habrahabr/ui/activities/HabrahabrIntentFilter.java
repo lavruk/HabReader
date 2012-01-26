@@ -16,16 +16,6 @@
 
 package net.meiolania.apps.habrahabr.ui.activities;
 
-import net.meiolania.apps.habrahabr.activities.Companies;
-import net.meiolania.apps.habrahabr.activities.CompaniesShow;
-import net.meiolania.apps.habrahabr.activities.Events;
-import net.meiolania.apps.habrahabr.activities.EventsShow;
-import net.meiolania.apps.habrahabr.activities.People;
-import net.meiolania.apps.habrahabr.activities.PeopleShow;
-import net.meiolania.apps.habrahabr.activities.Posts;
-import net.meiolania.apps.habrahabr.activities.PostsShow;
-import net.meiolania.apps.habrahabr.activities.QA;
-import net.meiolania.apps.habrahabr.activities.QAShow;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,61 +38,65 @@ public class HabrahabrIntentFilter extends Activity{
         if(parts.length >= 3){
             // Blogs
             if(parts[3].equalsIgnoreCase("blogs") && parts.length == 3){
-                Log.i(LOG_TAG, "Target: Posts.class");
-                intent.setClass(this, Posts.class);
+                Log.i(LOG_TAG, "Target: PostsActivity.class");
+                intent.setClass(this, PostsActivity.class);
                 startActivity(intent);
-            }else if(parts[3].equalsIgnoreCase("blogs") && parts.length == 4){
+            }
+            /*
+            else if(parts[3].equalsIgnoreCase("blogs") && parts.length == 4){
                 Log.i(LOG_TAG, "Target: BlogsPosts.class");
-                intent.setClass(this, Posts.class);
+                intent.setClass(this, PostsActivity.class);
                 intent.putExtra("link", uri);
                 startActivity(intent);
-            }else if(parts[3].equals("blogs") && parts.length == 6){
-                Log.i(LOG_TAG, "Target: PostsShow.class");
-                intent.setClass(this, PostsShow.class);
+            }
+            */
+            else if(parts[3].equals("blogs") && parts.length == 6){
+                Log.i(LOG_TAG, "Target: PostsShowActivity.class");
+                intent.setClass(this, PostsShowActivity.class);
                 intent.putExtra("link", uri);
                 startActivity(intent);
             }
             // Events
             else if(parts[3].equalsIgnoreCase("events") && parts.length == 3){
-                Log.i(LOG_TAG, "Target: Events.class");
-                intent.setClass(this, Events.class);
+                Log.i(LOG_TAG, "Target: EventsActivity.class");
+                intent.setClass(this, EventsActivity.class);
                 startActivity(intent);
             }else if(parts[3].equalsIgnoreCase("events") && parts.length == 4){
-                Log.i(LOG_TAG, "Target: EventsShow.class");
-                intent.setClass(this, EventsShow.class);
+                Log.i(LOG_TAG, "Target: EventsShowActivity.class");
+                intent.setClass(this, EventsShowActivity.class);
                 intent.putExtra("link", uri);
                 startActivity(intent);
             }
             // Companies
             else if(parts[3].equalsIgnoreCase("companies") && parts.length == 3){
-                Log.i(LOG_TAG, "Target: Companies.class");
-                intent.setClass(this, Companies.class);
+                Log.i(LOG_TAG, "Target: CompaniesActivity.class");
+                intent.setClass(this, CompaniesActivity.class);
                 startActivity(intent);
             }else if(parts[3].equalsIgnoreCase("company") && parts.length == 4){
-                Log.i(LOG_TAG, "Target: CompaniesShow.class");
-                intent.setClass(this, CompaniesShow.class);
+                Log.i(LOG_TAG, "Target: CompaniesShowActivity.class");
+                intent.setClass(this, CompaniesShowActivity.class);
                 intent.putExtra("link", uri);
                 startActivity(intent);
             }
             // People
             else if(parts[3].equalsIgnoreCase("people") && parts.length == 3){
-                Log.i(LOG_TAG, "Target: People.class");
-                intent.setClass(this, People.class);
+                Log.i(LOG_TAG, "Target: PeopleActivity.class");
+                intent.setClass(this, PeopleActivity.class);
                 startActivity(intent);
             }else if(parts[3].equalsIgnoreCase("users") && parts.length == 4){
-                Log.i(LOG_TAG, "Target: PeopleShow.class");
-                intent.setClass(this, PeopleShow.class);
+                Log.i(LOG_TAG, "Target: PeopleShowActivity.class");
+                intent.setClass(this, PeopleShowActivity.class);
                 intent.putExtra("link", uri);
                 startActivity(intent);
             }
             // Q&A
             else if(parts[3].equalsIgnoreCase("qa") && parts.length == 3){
-                Log.i(LOG_TAG, "Target: QA.class");
-                intent.setClass(this, QA.class);
+                Log.i(LOG_TAG, "Target: QaActivity.class");
+                intent.setClass(this, QaActivity.class);
                 startActivity(intent);
             }else if(parts[3].equalsIgnoreCase("qa") && parts.length == 4){
-                Log.i(LOG_TAG, "Target: QAShow.class");
-                intent.setClass(this, QAShow.class);
+                Log.i(LOG_TAG, "Target: QaShowActivity.class");
+                intent.setClass(this, QaShowActivity.class);
                 intent.putExtra("link", uri);
                 startActivity(intent);
             }

@@ -1,10 +1,13 @@
 package net.meiolania.apps.habrahabr.ui.fragments;
 
 import java.io.IOException;
+import java.util.Formatter;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.api.ConnectionApi;
+import net.meiolania.apps.habrahabr.ui.activities.PostsCommentsActivity;
 import net.meiolania.apps.habrahabr.ui.activities.PostsShowActivity;
+import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,6 +17,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -24,12 +30,14 @@ public class PostsShowFragment extends ApplicationFragment{
     private String link;
     private String title;
     private boolean isFullView = false;
-
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         if(container == null)
             return null;
-
+        
+        setHasOptionsMenu(true);
+        
         View view = inflater.inflate(R.layout.posts_show_fragment, container, false);
 
         if(link != null && !link.isEmpty())
@@ -48,6 +56,44 @@ public class PostsShowFragment extends ApplicationFragment{
         }
 
         return view;
+    }
+    
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        inflater.inflate(R.menu.posts_show_fragment, menu);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(preferences.isVibrate())
+            VibrateUtils.doVibrate(getActivity());
+        switch(item.getItemId()){
+            case R.id.show_comments:
+                startCommentsActivity();
+                break;
+            case R.id.share:
+                createShareIntent();
+                break;
+        }
+        return true;
+    }
+    
+    private void startCommentsActivity(){
+        Intent intent = new Intent(getActivity(), PostsCommentsActivity.class);
+        intent.putExtra("link", link);
+        startActivity(intent);
+    }
+    
+    private void createShareIntent(){
+        final Intent intent = new Intent(Intent.ACTION_SEND);
+        final Formatter formatter = new Formatter();
+        String shareText = formatter.format("%s - %s #HabraHabr #HabReader", title, link).toString();
+
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_link_post));
+        intent.putExtra(Intent.EXTRA_TEXT, shareText);
+
+        startActivity(Intent.createChooser(intent, getString(R.string.share)));
     }
 
     private void startShowActivity(){

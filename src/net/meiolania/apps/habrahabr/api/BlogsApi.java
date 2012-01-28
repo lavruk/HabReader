@@ -28,9 +28,7 @@ import net.meiolania.apps.habrahabr.data.BlogsData;
 
 public class BlogsApi{
     
-    public ArrayList<BlogsData> getBlogs(int page) throws IOException{
-        ArrayList<BlogsData> blogsDataList = new ArrayList<BlogsData>();
-        
+    public ArrayList<BlogsData> getBlogs(ArrayList<BlogsData> blogsDataList, int page) throws IOException{
         Document document = Jsoup.connect("http://habrahabr.ru/bloglist/page" + page + "/").get();
         Elements blogRows = document.select("li.blog-row");
 

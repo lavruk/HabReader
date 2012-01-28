@@ -9,6 +9,8 @@
     <color name="actionbar_separator">#ffffff</color>
     <color name="actionbar_background_item_pressed_start">#e4e4e4</color>
     <color name="actionbar_background_item_pressed_end">#e1e1e1</color>
+    <color name="text_corners_start">#e4e4e4</color>
+    <color name="text_corners_end">#e1e1e1</color>
     <color name="score_red">#f04e51</color>
     <color name="score_green">#53f02e</color>
     <color name="score_gray">#bbbbbb</color>

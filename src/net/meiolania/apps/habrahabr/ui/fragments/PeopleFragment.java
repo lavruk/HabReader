@@ -37,7 +37,7 @@ import android.widget.ListView;
 public class PeopleFragment extends ApplicationListFragment implements OnScrollListener{
     protected final ArrayList<PeopleData> peopleDataList = new ArrayList<PeopleData>();
     protected PeopleAdapter peopleAdapter;
-    protected int page;
+    protected int page = 0;
     protected boolean canLoadingData = true;
 
     @Override

@@ -105,10 +105,6 @@ public class PostsFragment extends ApplicationListFragment implements OnScrollLi
         protected Void doInBackground(Void... params){
             try{
                 getApi().getPostsApi().getPosts(postsDataList, link + "/page" + page + "/");
-
-                // Trying to get posts again. Need to rewrite this code
-                if(postsDataList.isEmpty())
-                    getApi().getPostsApi().getPosts(postsDataList, link + "/page" + page + "/");
             }
             catch(IOException e){
                 

@@ -30,17 +30,26 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.AbsListView.OnScrollListener;
 
-public class BlogsFragment extends ApplicationListFragment{
-    private ArrayList<BlogsData> blogsDataList;
-    private BlogsAdapter blogsAdapter;
-    private int page;
+public class BlogsFragment extends ApplicationListFragment implements OnScrollListener{
+    protected final ArrayList<BlogsData> blogsDataList = new ArrayList<BlogsData>();
+    protected BlogsAdapter blogsAdapter;
+    protected int page = 0;
+    protected boolean canLoadingData = true;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
+        
+        getListView().setOnScrollListener(this);
+        
         loadList();
+        
+        if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
+            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
     private void loadList(){
@@ -80,10 +89,10 @@ public class BlogsFragment extends ApplicationListFragment{
         @Override
         protected Void doInBackground(Void... params){
             try{
-                blogsDataList = getApi().getBlogsApi().getBlogs(page);
+                getApi().getBlogsApi().getBlogs(blogsDataList, page);
             }
             catch(IOException e){
-                e.printStackTrace();
+                
             }
             return null;
         }
@@ -98,6 +107,7 @@ public class BlogsFragment extends ApplicationListFragment{
                     showBlog(0);
             }else
                 blogsAdapter.notifyDataSetChanged();
+            canLoadingData = true;
         }
 
     }
@@ -106,5 +116,14 @@ public class BlogsFragment extends ApplicationListFragment{
     public void onListItemClick(ListView list, View view, int position, long id){
         showBlog(position);
     }
+
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
+        if((firstVisibleItem + visibleItemCount) == totalItemCount && page != 0 && canLoadingData){
+            canLoadingData = false;
+            loadList();
+        }
+    }
+
+    public void onScrollStateChanged(AbsListView view, int scrollState){}
 
 }

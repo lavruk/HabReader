@@ -10,7 +10,7 @@
 
     <gradient
         android:angle="-90"
-        android:endColor="@color/actionbar_background_end"
-        android:startColor="@color/actionbar_background_start" />
+        android:endColor="@color/text_corners_end"
+        android:startColor="@color/text_corners_start" />
 
 </shape>

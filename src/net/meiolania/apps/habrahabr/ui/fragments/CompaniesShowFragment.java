@@ -172,15 +172,13 @@ public class CompaniesShowFragment extends ApplicationFragment{
         protected void onPostExecute(Void result){
             if(!isCancelled()){
                 TextView titleView = (TextView) getActivity().findViewById(R.id.title);
-                titleView.setText(title);
-
-                Log.d("CompaniesShowFragment", title);
+                titleView.setText((title != null) ? title : getString(R.string.no_info));
 
                 TextView dateView = (TextView) getActivity().findViewById(R.id.date);
-                dateView.setText(date);
+                dateView.setText((date != null) ? date : getString(R.string.no_info));
 
                 TextView linkView = (TextView) getActivity().findViewById(R.id.link);
-                linkView.setText(Html.fromHtml(linkToCompany));
+                linkView.setText((linkToCompany != null) ? Html.fromHtml(linkToCompany) : getString(R.string.no_info));
                 linkView.setMovementMethod(LinkMovementMethod.getInstance());
 
                 TextView industryView = (TextView) getActivity().findViewById(R.id.industry);

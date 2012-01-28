@@ -106,7 +106,7 @@ public class DashboardFragment extends ApplicationFragment{
                             dialog.dismiss();
                         }
                     });
-                    alertDialog.setButton2(getString(R.string.cancel), new OnClickListener(){
+                    alertDialog.setButton2(getString(android.R.string.cancel), new OnClickListener(){
                         public void onClick(DialogInterface dialog, int which){
                             getActivity().finish();
                         }
@@ -122,7 +122,7 @@ public class DashboardFragment extends ApplicationFragment{
                             dialog.dismiss();
                         }
                     });
-                    alertDialog.setButton2(getString(R.string.cancel), new OnClickListener(){
+                    alertDialog.setButton2(getString(android.R.string.cancel), new OnClickListener(){
                         public void onClick(DialogInterface dialog, int which){
                             getActivity().finish();
                         }

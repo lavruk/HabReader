@@ -18,6 +18,7 @@ package net.meiolania.apps.habrahabr.ui.activities;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
+import net.meiolania.apps.habrahabr.ui.fragments.BlogsPostsFragment;
 import net.meiolania.apps.habrahabr.ui.fragments.PostsFragment;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.os.Bundle;
@@ -34,14 +35,26 @@ public class PostsActivity extends ApplicationFragmentActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.posts_activity);
         
+        String link = null;
+        Bundle extras = getIntent().getExtras();
+        if(extras != null)
+            link = extras.getString("link");
+        
         setActionBar();
         
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         
-        PostsFragment postsFragment = new PostsFragment();
-        postsFragment.setLink("http://habrahabr.ru/blogs");
-        
-        fragmentTransaction.add(R.id.posts_list_fragment, postsFragment);
+        if(link != null){
+            BlogsPostsFragment blogsPostsFragment = new BlogsPostsFragment();
+            blogsPostsFragment.setLink(link);
+            
+            fragmentTransaction.add(R.id.posts_list_fragment, blogsPostsFragment);
+        }else{
+            PostsFragment postsFragment = new PostsFragment();
+            postsFragment.setLink("http://habrahabr.ru/blogs");
+            
+            fragmentTransaction.add(R.id.posts_list_fragment, postsFragment);
+        }
         
         if(!UIUtils.isTablet(this) && !preferences.isUseTabletDesign()){
             FrameLayout postsShowFrameLayout = (FrameLayout)findViewById(R.id.post_show_fragment);

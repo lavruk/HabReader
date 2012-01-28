@@ -11,7 +11,6 @@
     <string name="preferences">Настройки</string>
     <string name="about">О приложении</string>
     <string name="nick">Ник</string>
-    <string name="search">Поиск</string>
     <string name="preferences_base">Общие настройки</string>
     <string name="preferences_vibrate">Включить вибрацию</string>
     <string name="loading_people_list">Загрузка списка пользователей</string>
@@ -55,24 +54,17 @@
 	<string name="to_home">Домой</string>
 	<string name="loading_companies_show">Загрузка компании</string>
 	<string name="place_undefined">Страна не указана</string>
-	<string name="posts_search">Поиск по постам</string>
 	<string name="preferences_roaming">Разрешить работу в роуминге</string>
 	<string name="preferences_3g">Разрешить использование мобильного интернета</string>
 	<string name="preferences_network">Сеть</string>
 	<string name="attention">Внимание</string>
 	<string name="attention_use_3g">Вы запретили приложению использовать мобильный интернет</string>
 	<string name="continue_anyway">Игнорировать</string>
-	<string name="cancel">Отмена</string>
 	<string name="attention_roaming">Вы запретили приложению использовать мобильный интернет в роуминге</string>
 	<string name="profile">Профиль</string>
-	<string name="people_no_info">Нет информации</string>
 	<string name="no_info">Нет информации</string>
-	<string name="all_posts">Все посты</string>
-	<string name="new_posts">Новые посты</string>
 	<string name="show_comments">Показать комментарии</string>
 	<string name="share">Поделиться с друзьями</string>
-	<string name="update">Обновить</string>
-	<string name="no_posts">Постов нет</string>
 	<string name="more">Подробнее</string>
 	<string name="attention_no_network_connection">Отсутствует подключение к сети.</string>
 </resources>

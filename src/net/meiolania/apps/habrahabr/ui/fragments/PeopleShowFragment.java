@@ -84,10 +84,7 @@ public class PeopleShowFragment extends ApplicationFragment{
                 userName = userNameElement.text();
                 ratingPlace = ratingPlaceElement.text();
                 
-                if(birthdayElement != null && birthdayElement.hasText())
-                    birthday = birthdayElement.text();
-                else
-                    birthday = getString(R.string.people_no_info);
+                birthday = birthdayElement.text();
 
                 StringBuilder placeBuilder = new StringBuilder();
 

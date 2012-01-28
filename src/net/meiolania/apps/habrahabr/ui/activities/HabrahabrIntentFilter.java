@@ -42,14 +42,12 @@ public class HabrahabrIntentFilter extends Activity{
                 intent.setClass(this, PostsActivity.class);
                 startActivity(intent);
             }
-            /*
             else if(parts[3].equalsIgnoreCase("blogs") && parts.length == 4){
-                Log.i(LOG_TAG, "Target: BlogsPosts.class");
+                Log.i(LOG_TAG, "Target: PostsActivity.class");
                 intent.setClass(this, PostsActivity.class);
                 intent.putExtra("link", uri);
                 startActivity(intent);
             }
-            */
             else if(parts[3].equals("blogs") && parts.length == 6){
                 Log.i(LOG_TAG, "Target: PostsShowActivity.class");
                 intent.setClass(this, PostsShowActivity.class);

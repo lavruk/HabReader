@@ -39,6 +39,9 @@
     <string name="preferences_share_text">Я использую приложение #HabReader для чтения Habrahabr.ru - %s</string>
     <string name="preferences_use_tablet_design">Использовать дизайн для планшетов</string>
     <string name="preferences_use_tablet_design_summary">Настройка работает только на смартфонах</string>
+    <string name="preferences_donate">Помощь приложению</string>
+    <string name="preferences_donate_thanks">Спасибо Вам!</string>
+    <string name="preferences_donate_thanks_summary">Вы позволяете сохранять HabReader бесплатным и без рекламы!</string>
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
     <string name="sign_in">Вход</string>

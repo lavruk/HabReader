@@ -71,7 +71,7 @@ public class AboutInfoActivity extends ApplicationFragmentActivity{
             viewAbout.setMovementMethod(LinkMovementMethod.getInstance());
         }
         catch(IOException e){
-            e.printStackTrace();
+            
         }
     }
 
@@ -80,7 +80,7 @@ public class AboutInfoActivity extends ApplicationFragmentActivity{
             aboutTextIS = getAssets().open("about");
         }
         catch(IOException e){
-            e.printStackTrace();
+            
         }
     }
     

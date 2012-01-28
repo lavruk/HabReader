@@ -63,7 +63,11 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/about" >
-
+	
+        <Preference
+            android:key="donate"
+            android:title="@string/preferences_donate" />
+        
         <Preference
             android:key="rate_application"
             android:title="@string/rate_application" />

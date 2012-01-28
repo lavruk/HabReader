@@ -18,39 +18,91 @@ package net.meiolania.apps.habrahabr.ui.activities;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
+import net.robotmedia.billing.BillingController;
+import net.robotmedia.billing.BillingController.IConfiguration;
+import net.robotmedia.billing.BillingRequest.ResponseCode;
+import net.robotmedia.billing.helper.AbstractBillingObserver;
+import net.robotmedia.billing.model.Transaction.PurchaseState;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 public class PreferencesActivity extends PreferenceActivity{
-    protected net.meiolania.apps.habrahabr.Preferences preferences;
-    protected SharedPreferences sharedPreferences;
+    public final static String ANDROID_DONATE_ITEM = "donate.1dollar";
+    private AbstractBillingObserver billingObserver;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        preferences = new net.meiolania.apps.habrahabr.Preferences(this);
-        sharedPreferences = preferences.getSharedPreferences();
-
-        if(preferences.isFullscreen())
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         if(UIUtils.isHoneycombOrHigher())
             setTheme(android.R.style.Theme_Holo_Light);
 
         addPreferencesFromResource(R.xml.preferences);
 
-        //signIn();
+        // signIn();
         showAttentionForFullscreen();
         rateApplication();
         sendReview();
         share();
+        donate();
+    }
+
+    private void donate(){
+        final Preference donate = (Preference) findPreference("donate");
+
+        billingObserver = new AbstractBillingObserver(this){
+
+            public void onRequestPurchaseResponse(String itemId, ResponseCode response){}
+
+            public void onPurchaseStateChanged(String itemId, PurchaseState state){}
+
+            public void onBillingChecked(boolean supported){
+                if(!supported)
+                    donate.setEnabled(false);
+                else if(!billingObserver.isTransactionsRestored())
+                        BillingController.restoreTransactions(PreferencesActivity.this);
+            }
+        };
+
+        //BillingController.setDebug(true);
+        BillingController.setConfiguration(new IConfiguration(){
+
+            public String getPublicKey(){
+                return "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+ZiahGZpgCRnvogALUM15bEIwTFjcXCIrsbwE8DdEocJGH5FHkwIdceXTSowUhIOaukOLmG1+R+2PqEnRnYsEdqBcCmSnYxT/LRGhoKWU2BDlOUCtm0KRGBFywV4BavgN21GLRNgm5jl67LjEy6jwKfBFddLi0T/jzySoHtJkLhVwvuPNpmv99il1sQJArgDWIa/grS7rOH69I7BJRYugNk9smONONamsgtN3JUvH0qqIF371En9nMJlFdLLIq4UwSZ7IhqVvwexFpvx6J5k63YXfB5uanrfGXJ6sv9GOCFoqfHkmS1016I60hbIH16ye0b65gfxFd1XVRQrIhW3QIDAQAB";
+            }
+
+            public byte[] getObfuscationSalt(){
+                return new byte[]{ 41, -90, -116, -41, 66, -53, 122, -110, -127, -96, -88, 77, 127, 115, 1, 73, 57, 110, 48, -116 };
+            }
+
+        });
+        BillingController.registerObserver(billingObserver);
+        BillingController.checkBillingSupported(this);
+
+        donate.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+            public boolean onPreferenceClick(Preference preference){
+                BillingController.requestPurchase(PreferencesActivity.this, ANDROID_DONATE_ITEM, true);
+                return false;
+            }
+        });
+
+        boolean purchased = BillingController.isPurchased(this, ANDROID_DONATE_ITEM);
+        if(purchased){
+            donate.setTitle(R.string.preferences_donate_thanks);
+            donate.setSummary(R.string.preferences_donate_thanks_summary);
+            donate.setEnabled(false);
+        }
+    }
+
+    @Override
+    protected void onDestroy(){
+        BillingController.unregisterObserver(billingObserver);
+        super.onDestroy();
     }
 
     private void sendReview(){

@@ -42,6 +42,7 @@ public class EventsShowActivity extends ApplicationFragmentActivity{
         
         EventsShowFragment eventsShowFragment = new EventsShowFragment();
         eventsShowFragment.setLink(link);
+        eventsShowFragment.setIsFullView(true);
         
         fragmentTransaction.add(R.id.events_show_fragment, eventsShowFragment);
         

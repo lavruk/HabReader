@@ -42,6 +42,7 @@ public class CompaniesShowActivity extends ApplicationFragmentActivity{
         
         CompaniesShowFragment companiesShowFragment = new CompaniesShowFragment();
         companiesShowFragment.setLink(link);
+        companiesShowFragment.setIsFullView(true);
         
         fragmentTransaction.add(R.id.companies_show_fragment, companiesShowFragment);
         

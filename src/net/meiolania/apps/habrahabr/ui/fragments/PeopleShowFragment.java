@@ -25,6 +25,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -38,24 +39,47 @@ import android.widget.TextView;
 
 public class PeopleShowFragment extends ApplicationFragment{
     private String link;
+    private boolean isFullView = false;
+    private LoadUser loadUser;
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        
+        if(link != null && link.length() > 0)
+            loadUser();
+    }
+    
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        
+        if(loadUser != null)
+            loadUser.cancel(true);
+    }
+    
+    public void setIsFullView(boolean isFullView){
+        this.isFullView = isFullView;
+    }
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         if(container == null)
             return null;
 
-        if(link != null && link.length() > 0)
-            loadUser();
-
         return inflater.inflate(R.layout.people_show_fragment, container, false);
     }
     
     private void loadUser(){
-        if(ConnectionApi.isConnection(getActivity()))
-            new LoadUser().execute();
+        if(ConnectionApi.isConnection(getActivity())){
+            loadUser = new LoadUser();
+            loadUser.execute();
+        }
     }
     
     private class LoadUser extends AsyncTask<Void, Void, Void>{
+        private ProgressDialog progressDialog;
+        //Data
         private String userName;
         private String ratingPlace;
         private String birthday;
@@ -116,6 +140,16 @@ public class PeopleShowFragment extends ApplicationFragment{
             }
             return null;
         }
+        
+        @Override
+        protected void onPreExecute(){
+            if(isFullView){
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setMessage(getString(R.string.loading_man_show));
+                progressDialog.setCancelable(true);
+                progressDialog.show();
+            }
+        }
 
         @Override
         protected void onPostExecute(Void result){
@@ -140,6 +174,8 @@ public class PeopleShowFragment extends ApplicationFragment{
                 summaryView.getSettings().setBuiltInZoomControls(true);
                 summaryView.loadDataWithBaseURL("", summary, "text/html", "UTF-8", null);
             }
+            if(isFullView)
+                progressDialog.dismiss();
         }
 
     }

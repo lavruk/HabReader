@@ -28,6 +28,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -44,18 +45,32 @@ import android.widget.Button;
 public class QaShowFragment extends ApplicationFragment{
     private String link;
     private boolean isFullView = false;
+    private LoadQuestion loadQuestion;
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        
+        setHasOptionsMenu(true);
+        
+        if(link != null && link.length() > 0)
+            loadQuestion();
+    }
+    
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        
+        if(loadQuestion != null)
+            loadQuestion.cancel(true);
+    }
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         if(container == null)
             return null;
         
-        setHasOptionsMenu(true);
-        
         View view = inflater.inflate(R.layout.qa_show_fragment, container, false);
-        
-        if(link != null && link.length() > 0)
-            loadQuestion();
         
         if(isFullView){
             Button more = (Button)view.findViewById(R.id.more);
@@ -102,11 +117,14 @@ public class QaShowFragment extends ApplicationFragment{
     }
     
     private void loadQuestion(){
-        if(ConnectionApi.isConnection(getActivity()))
-            new LoadQuestion().execute();
+        if(ConnectionApi.isConnection(getActivity())){
+            loadQuestion = new LoadQuestion();
+            loadQuestion.execute();
+        }
     }
     
     private class LoadQuestion extends AsyncTask<Void, Void, Void>{
+        private ProgressDialog progressDialog;
         private String content;
 
         @Override
@@ -126,9 +144,19 @@ public class QaShowFragment extends ApplicationFragment{
                 content += contentElement.outerHtml();
             }
             catch(IOException e){
-                e.printStackTrace();
+                
             }
             return null;
+        }
+        
+        @Override
+        protected void onPreExecute(){
+            if(isFullView){
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setMessage(getString(R.string.loading_qa_show));
+                progressDialog.setCancelable(true);
+                progressDialog.show();
+            }
         }
 
         @Override
@@ -143,6 +171,8 @@ public class QaShowFragment extends ApplicationFragment{
                     webView.loadDataWithBaseURL("", content, "text/html", "UTF-8", null); 
                 }
             }
+            if(isFullView)
+                progressDialog.dismiss();
         }
 
     }

@@ -26,6 +26,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -39,25 +40,48 @@ import android.widget.TextView;
 
 public class CompaniesShowFragment extends ApplicationFragment{
     private String link;
-
+    private boolean isFullView = false;
+    private LoadCompany loadCompany;
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        
+        if(link != null && link.length() > 0)
+            loadCompany();
+    }
+    
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        
+        if(loadCompany != null)
+            loadCompany.cancel(true);
+    }
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         if(container == null)
             return null;
 
-        if(link != null && link.length() > 0)
-            loadCompany();
-
         return inflater.inflate(R.layout.companies_show_fragment, container, false);
+    }
+    
+    public void setIsFullView(boolean isFullView){
+        this.isFullView = isFullView;
     }
 
     private void loadCompany(){
-        if(ConnectionApi.isConnection(getActivity()))
-            new LoadCompany().execute();
+        if(ConnectionApi.isConnection(getActivity())){
+            loadCompany = new LoadCompany();
+            loadCompany.execute();
+        }    
     }
 
     // TODO: need to rewrite
     private class LoadCompany extends AsyncTask<Void, Void, Void>{
+        private ProgressDialog progressDialog;
+        //Data
         private String title;
         private String date;
         private String linkToCompany;
@@ -133,6 +157,16 @@ public class CompaniesShowFragment extends ApplicationFragment{
             }
             return null;
         }
+        
+        @Override
+        protected void onPreExecute(){
+            if(isFullView){
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setMessage(getString(R.string.loading_companies_show));
+                progressDialog.setCancelable(true);
+                progressDialog.show();
+            }
+        }
 
         @Override
         protected void onPostExecute(Void result){
@@ -170,6 +204,8 @@ public class CompaniesShowFragment extends ApplicationFragment{
                 stagesView.getSettings().setBuiltInZoomControls(true);
                 stagesView.loadDataWithBaseURL("", stages, "text/html", "UTF-8", null);
             }
+            if(isFullView)
+                progressDialog.dismiss();
         }
 
     }

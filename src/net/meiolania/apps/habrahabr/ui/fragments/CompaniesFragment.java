@@ -37,7 +37,7 @@ import android.widget.ListView;
 public class CompaniesFragment extends ApplicationListFragment implements OnScrollListener{
     protected final ArrayList<CompaniesData> companiesDataList = new ArrayList<CompaniesData>();
     protected CompaniesAdapter companiesAdapter;
-    protected int page;
+    protected int page = 0;
     protected boolean canLoadingData = true;
     
     @Override

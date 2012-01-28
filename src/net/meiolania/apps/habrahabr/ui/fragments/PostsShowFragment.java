@@ -29,6 +29,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,18 +47,32 @@ public class PostsShowFragment extends ApplicationFragment{
     private String link;
     private String title;
     private boolean isFullView = false;
+    private LoadPost loadPost;
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        
+        setHasOptionsMenu(true);
+        
+        if(link != null && link.length() > 0)
+            loadPost();
+    }
+    
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        
+        if(loadPost != null)
+            loadPost.cancel(true);
+    }
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         if(container == null)
             return null;
         
-        setHasOptionsMenu(true);
-        
         View view = inflater.inflate(R.layout.posts_show_fragment, container, false);
-
-        if(link != null && link.length() > 0)
-            loadPost();
 
         if(isFullView){
             Button more = (Button) view.findViewById(R.id.more);
@@ -135,11 +150,14 @@ public class PostsShowFragment extends ApplicationFragment{
     }
 
     private void loadPost(){
-        if(ConnectionApi.isConnection(getActivity()))
-            new LoadPost().execute();
+        if(ConnectionApi.isConnection(getActivity())){
+            loadPost = new LoadPost();
+            loadPost.execute();
+        }
     }
 
     private class LoadPost extends AsyncTask<Void, Void, Void>{
+        private ProgressDialog progressDialog;
         private String content;
 
         @Override
@@ -166,6 +184,16 @@ public class PostsShowFragment extends ApplicationFragment{
             }
             return null;
         }
+        
+        @Override
+        protected void onPreExecute(){
+            if(isFullView){
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setMessage(getString(R.string.loading_post_show));
+                progressDialog.setCancelable(true);
+                progressDialog.show();
+            }
+        }
 
         @Override
         protected void onPostExecute(Void result){
@@ -179,6 +207,8 @@ public class PostsShowFragment extends ApplicationFragment{
                     webView.loadDataWithBaseURL("", content, "text/html", "UTF-8", null);
                 }catch(NullPointerException e){}
             }
+            if(isFullView)
+                progressDialog.dismiss();
         }
 
     }

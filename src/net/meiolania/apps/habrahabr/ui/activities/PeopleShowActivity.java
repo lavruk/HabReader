@@ -42,6 +42,7 @@ public class PeopleShowActivity extends ApplicationFragmentActivity{
         
         PeopleShowFragment peopleShowFragment = new PeopleShowFragment();
         peopleShowFragment.setLink(link);
+        peopleShowFragment.setIsFullView(true);
         
         fragmentTransaction.add(R.id.people_show_fragment, peopleShowFragment);
         

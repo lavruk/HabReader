@@ -26,6 +26,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -38,26 +39,47 @@ import android.widget.TextView;
 
 public class EventsShowFragment extends ApplicationFragment{
     private String link;
+    private boolean isFullView = false;
+    private LoadEvent loadEvent;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        
+        if(link != null && link.length() > 0)
+            loadEvent();
+    }
+    
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        
+        if(loadEvent != null)
+            loadEvent.cancel(true);
+    }
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         if(container == null)
             return null;
 
-        View view = inflater.inflate(R.layout.events_show_fragment, container, false);
-
-        if(link != null && link.length() > 0)
-            loadEvent();
-
-        return view;
+        return inflater.inflate(R.layout.events_show_fragment, container, false);
+    }
+    
+    public void setIsFullView(boolean isFullView){
+        this.isFullView = isFullView;
     }
 
     private void loadEvent(){
-        if(ConnectionApi.isConnection(getActivity()))
-            new LoadEvent().execute();
+        if(ConnectionApi.isConnection(getActivity())){
+            loadEvent = new LoadEvent();
+            loadEvent.execute();
+        }
     }
 
     private class LoadEvent extends AsyncTask<Void, Void, Void>{
+        private ProgressDialog progressDialog;
+        //Data
         private String title;
         private String description;
         private String placeInfo;
@@ -97,9 +119,22 @@ public class EventsShowFragment extends ApplicationFragment{
                 description += descriptionElement.outerHtml();
             }
             catch(IOException e){
-                e.printStackTrace();
+                
+            }
+            catch(NullPointerException e){
+                
             }
             return null;
+        }
+        
+        @Override
+        protected void onPreExecute(){
+            if(isFullView){
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setMessage(getString(R.string.loading_events_show));
+                progressDialog.setCancelable(true);
+                progressDialog.show();
+            }
         }
 
         @Override
@@ -112,11 +147,11 @@ public class EventsShowFragment extends ApplicationFragment{
                     TextView linkInfoView = (TextView) getActivity().findViewById(R.id.link_info);
                     WebView descriptionView = (WebView) getActivity().findViewById(R.id.description);
 
-                    titleView.setText(title);
-                    placeInfoView.setText(placeInfo);
-                    priceInfoView.setText(priceInfo);
+                    titleView.setText((title != null) ? title : getString(R.string.no_info));
+                    placeInfoView.setText((placeInfo != null) ? placeInfo : getString(R.string.no_info));
+                    priceInfoView.setText((priceInfo != null) ? priceInfo : getString(R.string.no_info));
 
-                    linkInfoView.setText(Html.fromHtml(linkInfo));
+                    linkInfoView.setText((linkInfo != null) ? Html.fromHtml(linkInfo) : getString(R.string.no_info));
                     linkInfoView.setMovementMethod(LinkMovementMethod.getInstance());
 
                     descriptionView.getSettings().setPluginsEnabled(true);
@@ -125,6 +160,8 @@ public class EventsShowFragment extends ApplicationFragment{
                     descriptionView.loadDataWithBaseURL("", description, "text/html", "UTF-8", null);
                 }
             }
+            if(isFullView)
+                progressDialog.dismiss();
         }
 
     }

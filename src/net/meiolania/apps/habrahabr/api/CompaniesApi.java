@@ -27,7 +27,18 @@ import org.jsoup.select.Elements;
 import net.meiolania.apps.habrahabr.data.CompaniesData;
 
 public class CompaniesApi{
-    
+    protected static CompaniesApi companiesApiInstance = null;
+
+    protected CompaniesApi(){
+    }
+
+    public static CompaniesApi getInstance(){
+        if(companiesApiInstance == null)
+            return(companiesApiInstance = new CompaniesApi());
+        else
+            return companiesApiInstance;
+    }
+
     public void getCompanies(ArrayList<CompaniesData> companiesDataList, int page) throws IOException{
         Document document = Jsoup.connect("http://habrahabr.ru/companies/page" + page + "/").get();
         Element tableCompanies = document.select("ul.corps-list").first();
@@ -52,5 +63,5 @@ public class CompaniesApi{
             companiesDataList.add(companiesData);
         }
     }
-    
+
 }

@@ -23,6 +23,9 @@ import android.net.NetworkInfo;
 public class ConnectionApi{
     
     public static boolean isConnection(Context context){
+        if(context == null)
+            return false;
+        
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         
@@ -30,6 +33,9 @@ public class ConnectionApi{
     }
     
     public static boolean isWiFi(Context context){
+        if(context == null)
+            return false;
+        
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         
@@ -57,6 +63,9 @@ public class ConnectionApi{
     }
     
     public static boolean isRoaming(Context context){
+        if(context == null)
+            return false;
+        
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         

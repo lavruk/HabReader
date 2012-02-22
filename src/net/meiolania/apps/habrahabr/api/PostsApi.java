@@ -27,6 +27,17 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class PostsApi{
+    protected static PostsApi postsApiInstance = null;
+
+    protected PostsApi(){
+    }
+
+    public static PostsApi getInstance(){
+        if(postsApiInstance == null)
+            return(postsApiInstance = new PostsApi());
+        else
+            return postsApiInstance;
+    }
 
     public void getPosts(ArrayList<PostsData> postsDataList, String link) throws IOException{
         Document document = Jsoup.connect(link).get();

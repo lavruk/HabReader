@@ -33,6 +33,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,6 +45,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 
 public class PostsShowFragment extends ApplicationFragment{
+    public final static String LOG_TAG = "PostsShowFragment.HabReader";
     private String link;
     private String title;
     private boolean isFullView = false;
@@ -57,6 +59,10 @@ public class PostsShowFragment extends ApplicationFragment{
         
         if(link != null && link.length() > 0)
             loadPost();
+        else{
+            Log.e(LOG_TAG, "Can't display a post: " + ((link != null) ? link : "no link"));
+            getActivity().finish();
+        }    
     }
     
     @Override
@@ -205,6 +211,8 @@ public class PostsShowFragment extends ApplicationFragment{
                     webView.getSettings().setBuiltInZoomControls(true);
                     // webView.loadData(content, "text/html", "UTF-8");
                     webView.loadDataWithBaseURL("", content, "text/html", "UTF-8", null);
+                    
+                    //TODO: save post to read in the offline
                 }catch(NullPointerException e){}
             }
             if(isFullView)

@@ -27,7 +27,18 @@ import org.jsoup.select.Elements;
 import net.meiolania.apps.habrahabr.data.BlogsData;
 
 public class BlogsApi{
-    
+    protected static BlogsApi blogsApiInstance = null;
+
+    protected BlogsApi(){
+    }
+
+    public static BlogsApi getInstance(){
+        if(blogsApiInstance == null)
+            return(blogsApiInstance = new BlogsApi());
+        else
+            return blogsApiInstance;
+    }
+
     public ArrayList<BlogsData> getBlogs(ArrayList<BlogsData> blogsDataList, int page) throws IOException{
         Document document = Jsoup.connect("http://habrahabr.ru/bloglist/page" + page + "/").get();
         Elements blogRows = document.select("li.blog-row");
@@ -44,8 +55,8 @@ public class BlogsApi{
 
             blogsDataList.add(blogsData);
         }
-        
+
         return blogsDataList;
     }
-    
+
 }

@@ -22,6 +22,7 @@ import net.meiolania.apps.habrahabr.ui.activities.AboutInfoActivity;
 import net.meiolania.apps.habrahabr.ui.activities.PreferencesActivity;
 import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -35,30 +36,30 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class DashboardFragment extends ApplicationFragment{
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        
+
         checkMobileInternetPreferences();
         checkInternetConnection();
-        
+
         setHasOptionsMenu(true);
     }
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        if (container == null) 
+        if(container == null)
             return null;
-        
+
         return inflater.inflate(R.layout.dashboard_fragment, container, false);
     }
-    
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         inflater.inflate(R.menu.dashboard, menu);
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(preferences.isVibrate())
@@ -71,14 +72,18 @@ public class DashboardFragment extends ApplicationFragment{
                 startActivity(new Intent(getActivity(), PreferencesActivity.class));
                 break;
             case R.id.other_applications:
-                Uri uri = Uri.parse("https://market.android.com/developer?pub=Meiolania");
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                try{
+                    Uri uri = Uri.parse("https://market.android.com/developer?pub=Meiolania");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
+                catch(ActivityNotFoundException e){
+                }
                 break;
         }
         return true;
     }
-    
+
     private void checkInternetConnection(){
         if(!ConnectionApi.isConnection(getActivity())){
             AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
@@ -93,7 +98,7 @@ public class DashboardFragment extends ApplicationFragment{
             alertDialog.show();
         }
     }
-    
+
     private void checkMobileInternetPreferences(){
         if(!preferences.isUse3g()){
             if(ConnectionApi.isMobileNetwork(getActivity())){

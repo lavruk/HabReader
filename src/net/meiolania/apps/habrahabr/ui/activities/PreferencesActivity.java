@@ -23,6 +23,7 @@ import net.robotmedia.billing.BillingController.IConfiguration;
 import net.robotmedia.billing.BillingRequest.ResponseCode;
 import net.robotmedia.billing.helper.AbstractBillingObserver;
 import net.robotmedia.billing.model.Transaction.PurchaseState;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -44,7 +45,7 @@ public class PreferencesActivity extends PreferenceActivity{
 
         addPreferencesFromResource(R.xml.preferences);
 
-        // signIn();
+        signIn();
         showAttentionForFullscreen();
         rateApplication();
         sendReview();
@@ -57,19 +58,21 @@ public class PreferencesActivity extends PreferenceActivity{
 
         billingObserver = new AbstractBillingObserver(this){
 
-            public void onRequestPurchaseResponse(String itemId, ResponseCode response){}
+            public void onRequestPurchaseResponse(String itemId, ResponseCode response){
+            }
 
-            public void onPurchaseStateChanged(String itemId, PurchaseState state){}
+            public void onPurchaseStateChanged(String itemId, PurchaseState state){
+            }
 
             public void onBillingChecked(boolean supported){
                 if(!supported)
                     donate.setEnabled(false);
                 else if(!billingObserver.isTransactionsRestored())
-                        BillingController.restoreTransactions(PreferencesActivity.this);
+                    BillingController.restoreTransactions(PreferencesActivity.this);
             }
         };
 
-        //BillingController.setDebug(true);
+        // BillingController.setDebug(true);
         BillingController.setConfiguration(new IConfiguration(){
 
             public String getPublicKey(){
@@ -106,7 +109,7 @@ public class PreferencesActivity extends PreferenceActivity{
     }
 
     private void sendReview(){
-        Preference review = (Preference) findPreference("send_review");
+        final Preference review = (Preference) findPreference("send_review");
         review.setOnPreferenceClickListener(new OnPreferenceClickListener(){
             public boolean onPreferenceClick(Preference preference){
                 // Some problems here. Without this a field "to" is empty
@@ -123,7 +126,7 @@ public class PreferencesActivity extends PreferenceActivity{
     }
 
     private void share(){
-        Preference share = (Preference) findPreference("share");
+        final Preference share = (Preference) findPreference("share");
         share.setOnPreferenceClickListener(new OnPreferenceClickListener(){
             public boolean onPreferenceClick(Preference preference){
                 Intent intent = new Intent(android.content.Intent.ACTION_SEND);
@@ -138,17 +141,20 @@ public class PreferencesActivity extends PreferenceActivity{
     }
 
     private void signIn(){
-        Preference signIn = (Preference) findPreference("sign_in");
+        //TODO: show later, when sign in will be completed
+        /*
+        final Preference signIn = (Preference) findPreference("sign_in");
         signIn.setOnPreferenceClickListener(new OnPreferenceClickListener(){
             public boolean onPreferenceClick(Preference preference){
                 startActivity(new Intent(PreferencesActivity.this, SignInActivity.class));
                 return false;
             }
         });
+        */
     }
 
     private void showAttentionForFullscreen(){
-        Preference fullScreen = (Preference) findPreference("fullscreen");
+        final Preference fullScreen = (Preference) findPreference("fullscreen");
         fullScreen.setOnPreferenceClickListener(new OnPreferenceClickListener(){
             public boolean onPreferenceClick(Preference preference){
                 Toast.makeText(PreferencesActivity.this, R.string.preferences_fullscreen_summary_1, Toast.LENGTH_SHORT).show();
@@ -158,11 +164,15 @@ public class PreferencesActivity extends PreferenceActivity{
     }
 
     private void rateApplication(){
-        Preference rateApplication = (Preference) findPreference("rate_application");
+        final Preference rateApplication = (Preference) findPreference("rate_application");
         rateApplication.setOnPreferenceClickListener(new OnPreferenceClickListener(){
             public boolean onPreferenceClick(Preference preference){
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=net.meiolania.apps.habrahabr"));
-                startActivity(intent);
+                try{
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=net.meiolania.apps.habrahabr"));
+                    startActivity(intent);
+                }
+                catch(ActivityNotFoundException e){
+                }
                 return false;
             }
         });

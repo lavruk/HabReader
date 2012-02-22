@@ -27,6 +27,17 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class PeopleApi{
+    protected static PeopleApi peopleApiInstance = null;
+
+    protected PeopleApi(){
+    }
+
+    public static PeopleApi getInstance(){
+        if(peopleApiInstance == null)
+            return(peopleApiInstance = new PeopleApi());
+        else
+            return peopleApiInstance;
+    }
 
     public void getPeople(ArrayList<PeopleData> peopleDataList, int page) throws IOException{
         Document document = Jsoup.connect("http://habrahabr.ru/people/page" + page + "/").get();

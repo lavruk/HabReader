@@ -25,21 +25,23 @@ import net.meiolania.apps.habrahabr.api.PostsApi;
 import net.meiolania.apps.habrahabr.api.PostsCommentsApi;
 import net.meiolania.apps.habrahabr.api.QaApi;
 import net.meiolania.apps.habrahabr.api.QaCommentsApi;
-import android.content.Context;
 
-public class Api{
-    private Context context;
+public final class Api{
+    private static Api apiInstance = null;
     
-    public Api(Context context){
-        this.context = context;
+    public static Api getInstance(){
+        if(apiInstance == null)
+            return (apiInstance = new Api());
+        else
+            return apiInstance;
     }
     
     public BlogsApi getBlogsApi(){
-        return new BlogsApi();
+        return BlogsApi.getInstance();
     }
     
     public PostsApi getPostsApi(){
-        return new PostsApi();
+        return PostsApi.getInstance();
     }
     
     public LoginApi getLoginApi(){
@@ -47,27 +49,27 @@ public class Api{
     }
     
     public PostsCommentsApi getPostsCommentsApi(){
-        return new PostsCommentsApi();
+        return PostsCommentsApi.getInstance();
     }
     
     public QaApi getQaApi(){
-        return new QaApi();
+        return QaApi.getInstance();
     }
     
     public QaCommentsApi getQaCommentsApi(){
-        return new QaCommentsApi();
+        return QaCommentsApi.getInstance();
     }
     
     public EventsApi getEventsApi(){
-        return new EventsApi();
+        return EventsApi.getInstance();
     }
     
     public CompaniesApi getCompaniesApi(){
-        return new CompaniesApi();
+        return CompaniesApi.getInstance();
     }
     
     public PeopleApi getPeopleApi(){
-        return new PeopleApi();
+        return PeopleApi.getInstance();
     }
     
 }

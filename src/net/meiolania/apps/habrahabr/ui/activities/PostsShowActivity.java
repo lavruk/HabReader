@@ -51,12 +51,14 @@ public class PostsShowActivity extends ApplicationFragmentActivity{
         postsShowFragment = new PostsShowFragment();
         postsShowFragment.setLink(link);
         postsShowFragment.setIsFullView(true);
+        postsShowFragment.setRetainInstance(true);
         
         fragmentTransaction.add(R.id.post_show_fragment, postsShowFragment);
         
         if(UIUtils.isTablet(this) || preferences.isUseTabletDesign()){
             PostsCommentsFragment postsCommentsFragment = new PostsCommentsFragment();
             postsCommentsFragment.setLink(link);
+            postsCommentsFragment.setRetainInstance(true);
             
             fragmentTransaction.add(R.id.post_show_comments, postsCommentsFragment);
         }else{

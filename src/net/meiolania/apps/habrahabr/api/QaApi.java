@@ -27,6 +27,16 @@ import org.jsoup.select.Elements;
 import net.meiolania.apps.habrahabr.data.QAData;
 
 public class QaApi{
+    protected static QaApi qaApiInstance = null;
+    
+    protected QaApi(){}
+    
+    public static QaApi getInstance(){
+        if(qaApiInstance == null)
+            return (qaApiInstance = new QaApi());
+        else
+            return qaApiInstance;
+    }
     
     public void getQa(ArrayList<QAData> qaDataList, int page) throws IOException{
         Document document = Jsoup.connect("http://habrahabr.ru/qa/page" + page + "/").get();

@@ -28,10 +28,21 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class PostsCommentsApi{
-    
+    protected static PostsCommentsApi postsCommentsApiInstance = null;
+
+    protected PostsCommentsApi(){
+    }
+
+    public static PostsCommentsApi getInstance(){
+        if(postsCommentsApiInstance == null)
+            return(postsCommentsApiInstance = new PostsCommentsApi());
+        else
+            return postsCommentsApiInstance;
+    }
+
     public ArrayList<CommentsData> getComments(String link) throws IOException{
         ArrayList<CommentsData> commentsDataList = new ArrayList<CommentsData>();
-        
+
         Document document = Jsoup.connect(link).get();
         Elements comments = document.select("div.comment_item");
 
@@ -49,7 +60,7 @@ public class PostsCommentsApi{
 
             commentsDataList.add(commentsData);
         }
-        
+
         return commentsDataList;
     }
 

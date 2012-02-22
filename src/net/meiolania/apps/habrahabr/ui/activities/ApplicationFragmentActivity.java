@@ -50,6 +50,7 @@ public abstract class ApplicationFragmentActivity extends FragmentActivity{
             powerManagerWakeLock.acquire();
         }
         
+        //TODO: make a new style
         if(UIUtils.isHoneycombOrHigher())
             setTheme(android.R.style.Theme_Holo_Light);
     }
@@ -88,8 +89,7 @@ public abstract class ApplicationFragmentActivity extends FragmentActivity{
     }
 
     protected Api getApi(){
-        Api api = new Api(this);
-        return api;
+        return Api.getInstance();
     }
     
 }

@@ -35,8 +35,7 @@ public abstract class ApplicationFragment extends Fragment{
     }
     
     protected Api getApi(){
-        Api api = new Api(getActivity());
-        return api;
+        return Api.getInstance();
     }
     
 }

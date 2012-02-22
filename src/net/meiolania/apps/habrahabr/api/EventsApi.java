@@ -27,7 +27,18 @@ import org.jsoup.select.Elements;
 import net.meiolania.apps.habrahabr.data.EventsData;
 
 public class EventsApi{
-    
+    protected static EventsApi eventsApiInstance = null;
+
+    protected EventsApi(){
+    }
+
+    public static EventsApi getInstance(){
+        if(eventsApiInstance == null)
+            return(eventsApiInstance = new EventsApi());
+        else
+            return eventsApiInstance;
+    }
+
     public void getEvents(ArrayList<EventsData> eventsDataList, int page) throws IOException{
         Document document = Jsoup.connect("http://habrahabr.ru/events/coming/page" + page + "/").get();
         Element eventsList = document.select("div.events_list").first();
@@ -47,5 +58,5 @@ public class EventsApi{
             eventsDataList.add(eventsData);
         }
     }
-    
+
 }

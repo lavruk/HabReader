@@ -28,6 +28,16 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class QaCommentsApi{
+    protected static QaCommentsApi qaCommentsApiInstance = null;
+    
+    protected QaCommentsApi(){}
+    
+    public static QaCommentsApi getInstance(){
+        if(qaCommentsApiInstance == null)
+            return (qaCommentsApiInstance = new QaCommentsApi());
+        else
+            return qaCommentsApiInstance;
+    }
     
     public ArrayList<CommentsData> getComments(String link) throws IOException{
         ArrayList<CommentsData> commentsDataList = new ArrayList<CommentsData>();

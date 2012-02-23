@@ -19,12 +19,12 @@ package net.meiolania.apps.habrahabr.api;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.ui.companies.CompaniesData;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import net.meiolania.apps.habrahabr.ui.companies.CompaniesData;
 
 public class CompaniesApi{
     protected static CompaniesApi companiesApiInstance = null;
@@ -55,9 +55,9 @@ public class CompaniesApi{
 
             Element logo = company.getElementsByTag("img").first();
             Element link = company.select("dt.corp-name > a").first();
-
+            
             companiesData.setLink(link.attr("abs:href"));
-            companiesData.setLogo(logo.attr("src"));
+            companiesData.setLogo("http://habrahabr.ru" + logo.attr("src"));
             companiesData.setTitle(logo.attr("title"));
 
             companiesDataList.add(companiesData);

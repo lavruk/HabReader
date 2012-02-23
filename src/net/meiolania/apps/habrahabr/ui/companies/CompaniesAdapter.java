@@ -24,7 +24,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class CompaniesAdapter extends BaseAdapter{
     private Context context;
@@ -59,6 +63,11 @@ public class CompaniesAdapter extends BaseAdapter{
 
         TextView title = (TextView) view.findViewById(R.id.list_title);
         title.setText(companiesData.getTitle());
+        
+        ImageView logo = (ImageView) view.findViewById(R.id.list_logo);
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+        imageLoader.displayImage(companiesData.getLogo(), logo);
 
         return view;
     }

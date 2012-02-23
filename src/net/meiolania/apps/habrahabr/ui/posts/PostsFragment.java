@@ -14,84 +14,103 @@
    limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.ui.fragments;
+package net.meiolania.apps.habrahabr.ui.posts;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.api.ConnectionApi;
-import net.meiolania.apps.habrahabr.ui.qa.QAData;
-import net.meiolania.apps.habrahabr.ui.qa.QaAdapter;
-import net.meiolania.apps.habrahabr.ui.qa.QaShowActivity;
+import net.meiolania.apps.habrahabr.ui.fragments.ApplicationListFragment;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
-public class QaFragment extends ApplicationListFragment implements OnScrollListener{
-    protected final ArrayList<QAData> qaDataList = new ArrayList<QAData>();
-    protected QaAdapter qaAdapter;
-    protected int page;
-    protected boolean canLoadingData = true;
+public class PostsFragment extends ApplicationListFragment implements OnScrollListener{
+    protected final ArrayList<PostsData> postsDataList = new ArrayList<PostsData>();
+    protected PostsAdapter postsAdapter;
+    protected int page = 0;
+    protected String link;
+    protected boolean canLoadingData;
     
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        loadList();
+        
+        setHasOptionsMenu(true);
+        
+        if(link != null && link.length() > 0)
+            loadList();
+    }
+    
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.posts, menu);
     }
 
-    protected void loadList(){
-        if(ConnectionApi.isConnection(getActivity())){
-            ++page;
-            new LoadQAList().execute();
-        }
+    public void setLink(String link){
+        this.link = link;
+    }
+
+    public String getLink(){
+        return link;
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id){
-        showQa(position);
+    public void onListItemClick(ListView list, View view, int position, long id){
+        showPost(position);
     }
 
-    protected void showQa(int position){
-        QAData qaData = qaDataList.get(position);
+    protected void showPost(int position){
+        PostsData postsData = postsDataList.get(position);
 
         if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()){
             getListView().setItemChecked(position, true);
 
-            QaShowFragment qaShowFragment = (QaShowFragment) getFragmentManager().findFragmentById(R.id.qa_show_fragment);
+            PostsShowFragment postsShowFragment = (PostsShowFragment) getFragmentManager().findFragmentById(R.id.post_show_fragment);
 
-            if(qaShowFragment == null || qaShowFragment.getLink() != qaData.getLink()){
-                qaShowFragment = new QaShowFragment();
-                qaShowFragment.setLink(qaData.getLink());
+            if(postsShowFragment == null || postsShowFragment.getLink() != postsData.getLink()){
+                postsShowFragment = new PostsShowFragment();
+                postsShowFragment.setLink(postsData.getLink());
 
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.qa_show_fragment, qaShowFragment);
+                fragmentTransaction.replace(R.id.post_show_fragment, postsShowFragment);
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 fragmentTransaction.commit();
             }
         }else{
-            Intent intent = new Intent(getActivity(), QaShowActivity.class);
-            intent.putExtra("link", qaData.getLink());
+            Intent intent = new Intent(getActivity(), PostsShowActivity.class);
+            intent.putExtra("link", postsData.getLink());
 
             startActivity(intent);
         }
     }
 
-    protected class LoadQAList extends AsyncTask<Void, Void, Void>{
+    protected void loadList(){
+        if(ConnectionApi.isConnection(getActivity())){
+            ++page;
+            new LoadPostsList().execute();
+        }
+    }
+
+    protected class LoadPostsList extends AsyncTask<Void, Void, Void>{
 
         @Override
         protected Void doInBackground(Void... params){
             try{
-                getApi().getQaApi().getQa(qaDataList, page);
+                getApi().getPostsApi().getPosts(postsDataList, link + "/page" + page + "/");
             }
             catch(IOException e){
-                e.printStackTrace();
+                
             }
             return null;
         }
@@ -99,17 +118,17 @@ public class QaFragment extends ApplicationListFragment implements OnScrollListe
         @Override
         protected void onPostExecute(Void result){
             if(!isCancelled() && page == 1){
-                qaAdapter = new QaAdapter(getActivity(), qaDataList);
-                setListAdapter(qaAdapter);
+                postsAdapter = new PostsAdapter(getActivity(), postsDataList);
+                setListAdapter(postsAdapter);
                 
                 if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()){
                     getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-                    showQa(0);
-                }    
+                    showPost(0);
+                }
                 
-                getListView().setOnScrollListener(QaFragment.this);
+                getListView().setOnScrollListener(PostsFragment.this);
             }else
-                qaAdapter.notifyDataSetChanged();
+                postsAdapter.notifyDataSetChanged();
             canLoadingData = true;
         }
 

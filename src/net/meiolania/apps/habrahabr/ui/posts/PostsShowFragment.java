@@ -14,14 +14,14 @@
    limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.ui.fragments;
+package net.meiolania.apps.habrahabr.ui.posts;
 
 import java.io.IOException;
+import java.util.Formatter;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.api.ConnectionApi;
-import net.meiolania.apps.habrahabr.ui.qa.QaCommentsActivity;
-import net.meiolania.apps.habrahabr.ui.qa.QaShowActivity;
+import net.meiolania.apps.habrahabr.ui.fragments.ApplicationFragment;
 import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 
 import org.jsoup.Jsoup;
@@ -32,6 +32,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,56 +43,64 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
 
-public class QaShowFragment extends ApplicationFragment{
+public class PostsShowFragment extends ApplicationFragment{
+    public final static String LOG_TAG = "PostsShowFragment.HabReader";
     private String link;
+    private String title;
     private boolean isFullView = false;
-    private LoadQuestion loadQuestion;
-    
+    private LoadPost loadPost;
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        
+
+        setRetainInstance(true);
         setHasOptionsMenu(true);
-        
+
         if(link != null && link.length() > 0)
-            loadQuestion();
+            loadPost();
+        else{
+            Log.e(LOG_TAG, "Can't display a post: " + ((link != null) ? link : "no link"));
+            getActivity().finish();
+        }
     }
-    
+
     @Override
     public void onDestroy(){
         super.onDestroy();
-        
-        if(loadQuestion != null)
-            loadQuestion.cancel(true);
+
+        if(loadPost != null)
+            loadPost.cancel(true);
     }
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         if(container == null)
             return null;
-        
-        View view = inflater.inflate(R.layout.qa_show_fragment, container, false);
-        
+
+        View view = inflater.inflate(R.layout.posts_show_fragment, container, false);
+
         if(isFullView){
-            Button more = (Button)view.findViewById(R.id.more);
+            Button more = (Button) view.findViewById(R.id.more);
             more.setVisibility(View.GONE);
         }else{
-            Button more = (Button)view.findViewById(R.id.more);
+            Button more = (Button) view.findViewById(R.id.more);
             more.setOnClickListener(new OnClickListener(){
                 public void onClick(View v){
                     startShowActivity();
                 }
             });
         }
-        
+
         return view;
     }
-    
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
-        inflater.inflate(R.menu.qa_show_fragment, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.posts_show_fragment, menu);
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(preferences.isVibrate())
@@ -100,30 +109,61 @@ public class QaShowFragment extends ApplicationFragment{
             case R.id.show_comments:
                 startCommentsActivity();
                 break;
+            case R.id.share:
+                createShareIntent();
+                break;
         }
         return true;
     }
-    
+
     private void startCommentsActivity(){
-        Intent intent = new Intent(getActivity(), QaCommentsActivity.class);
+        Intent intent = new Intent(getActivity(), PostsCommentsActivity.class);
         intent.putExtra("link", link);
         startActivity(intent);
     }
-    
+
+    private void createShareIntent(){
+        final Intent intent = new Intent(Intent.ACTION_SEND);
+        final Formatter formatter = new Formatter();
+        String shareText = formatter.format("%s - %s #HabraHabr #HabReader", title, link).toString();
+
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_link_post));
+        intent.putExtra(Intent.EXTRA_TEXT, shareText);
+
+        startActivity(Intent.createChooser(intent, getString(R.string.share)));
+    }
+
     private void startShowActivity(){
-        Intent intent = new Intent(getActivity(), QaShowActivity.class);
+        Intent intent = new Intent(getActivity(), PostsShowActivity.class);
         intent.putExtra("link", link);
         startActivity(intent);
     }
-    
-    private void loadQuestion(){
+
+    public void setIsFullView(boolean isFullView){
+        this.isFullView = isFullView;
+    }
+
+    public String getTitle(){
+        return title;
+    }
+
+    public void setLink(String link){
+        this.link = link;
+    }
+
+    public String getLink(){
+        return link;
+    }
+
+    private void loadPost(){
         if(ConnectionApi.isConnection(getActivity())){
-            loadQuestion = new LoadQuestion();
-            loadQuestion.execute();
+            loadPost = new LoadPost();
+            loadPost.execute();
         }
     }
-    
-    private class LoadQuestion extends AsyncTask<Void, Void, Void>{
+
+    private class LoadPost extends AsyncTask<Void, Void, Void>{
         private ProgressDialog progressDialog;
         private String content;
 
@@ -133,6 +173,9 @@ public class QaShowFragment extends ApplicationFragment{
                 Document document = Jsoup.connect(link).get();
 
                 Element contentElement = document.select("div.content").first();
+                Element titleElement = document.select("span.post_title").first();
+
+                title = titleElement.text();
 
                 /*
                  * http://stackoverflow.com/questions/3961589/android-webview-and-loaddata If you now how solve this problem an another way
@@ -144,16 +187,16 @@ public class QaShowFragment extends ApplicationFragment{
                 content += contentElement.outerHtml();
             }
             catch(IOException e){
-                
+
             }
             return null;
         }
-        
+
         @Override
         protected void onPreExecute(){
             if(isFullView){
                 progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setMessage(getString(R.string.loading_qa_show));
+                progressDialog.setMessage(getString(R.string.loading_post_show));
                 progressDialog.setCancelable(true);
                 progressDialog.show();
             }
@@ -162,13 +205,17 @@ public class QaShowFragment extends ApplicationFragment{
         @Override
         protected void onPostExecute(Void result){
             if(!isCancelled()){
-                WebView webView = (WebView) getActivity().findViewById(R.id.content);
-                if(webView != null){
-                    webView.getSettings().setPluginsEnabled(true);
+                try{
+                    WebView webView = (WebView) getActivity().findViewById(R.id.content);
+                    webView.getSettings().setPluginsEnabled(preferences.isEnableFlashPosts());
                     webView.getSettings().setSupportZoom(true);
                     webView.getSettings().setBuiltInZoomControls(true);
-                    //webView.loadData(content, "text/html", "UTF-8");
-                    webView.loadDataWithBaseURL("", content, "text/html", "UTF-8", null); 
+                    // webView.loadData(content, "text/html", "UTF-8");
+                    webView.loadDataWithBaseURL("", content, "text/html", "UTF-8", null);
+
+                    // TODO: save post to read in the offline
+                }
+                catch(NullPointerException e){
                 }
             }
             if(isFullView)
@@ -176,17 +223,5 @@ public class QaShowFragment extends ApplicationFragment{
         }
 
     }
-    
-    public void setIsFullView(boolean isFullView){
-        this.isFullView = isFullView;
-    }
-    
-    public String getLink(){
-        return link;
-    }
-    
-    public void setLink(String link){
-        this.link = link;
-    }
-    
+
 }

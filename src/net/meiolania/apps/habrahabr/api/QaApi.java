@@ -24,7 +24,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import net.meiolania.apps.habrahabr.data.QAData;
+import net.meiolania.apps.habrahabr.ui.qa.QAData;
 
 public class QaApi{
     protected static QaApi qaApiInstance = null;

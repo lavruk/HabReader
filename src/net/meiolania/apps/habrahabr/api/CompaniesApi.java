@@ -24,7 +24,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import net.meiolania.apps.habrahabr.data.CompaniesData;
+import net.meiolania.apps.habrahabr.ui.companies.CompaniesData;
 
 public class CompaniesApi{
     protected static CompaniesApi companiesApiInstance = null;

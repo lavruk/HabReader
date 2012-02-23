@@ -50,7 +50,6 @@
 	<string name="comments">Комментарии</string>
 	<string name="loading_comments">Загрузка комментариев</string>
 	<string name="preferences_use_habrahabr_css">Использовать CSS стили Habrahabr</string>
-	<string name="add_to_favorites">Добавить в закладки</string>
 	<string name="other_applications">Другие приложения</string>
 	<string name="loading_events_show">Загрузка события</string>
 	<string name="to_home">Домой</string>

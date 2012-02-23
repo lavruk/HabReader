@@ -24,7 +24,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import net.meiolania.apps.habrahabr.data.EventsData;
+import net.meiolania.apps.habrahabr.ui.events.EventsData;
 
 public class EventsApi{
     protected static EventsApi eventsApiInstance = null;

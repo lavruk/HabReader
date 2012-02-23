@@ -14,16 +14,15 @@
    limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.ui.fragments;
+package net.meiolania.apps.habrahabr.ui.blogs;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.api.ConnectionApi;
-import net.meiolania.apps.habrahabr.ui.qa.QAData;
-import net.meiolania.apps.habrahabr.ui.qa.QaAdapter;
-import net.meiolania.apps.habrahabr.ui.qa.QaShowActivity;
+import net.meiolania.apps.habrahabr.ui.fragments.ApplicationListFragment;
+import net.meiolania.apps.habrahabr.ui.posts.PostsActivity;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -31,13 +30,13 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
+import android.widget.AbsListView.OnScrollListener;
 
-public class QaFragment extends ApplicationListFragment implements OnScrollListener{
-    protected final ArrayList<QAData> qaDataList = new ArrayList<QAData>();
-    protected QaAdapter qaAdapter;
-    protected int page;
+public class BlogsFragment extends ApplicationListFragment implements OnScrollListener{
+    protected final ArrayList<BlogsData> blogsDataList = new ArrayList<BlogsData>();
+    protected BlogsAdapter blogsAdapter;
+    protected int page = 0;
     protected boolean canLoadingData = true;
     
     @Override
@@ -46,52 +45,47 @@ public class QaFragment extends ApplicationListFragment implements OnScrollListe
         loadList();
     }
 
-    protected void loadList(){
+    private void loadList(){
         if(ConnectionApi.isConnection(getActivity())){
             ++page;
-            new LoadQAList().execute();
+            new LoadBlogsList().execute();
         }
     }
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id){
-        showQa(position);
-    }
-
-    protected void showQa(int position){
-        QAData qaData = qaDataList.get(position);
+    private void showBlog(int position){
+        BlogsData blogsData = blogsDataList.get(position);
 
         if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()){
             getListView().setItemChecked(position, true);
 
-            QaShowFragment qaShowFragment = (QaShowFragment) getFragmentManager().findFragmentById(R.id.qa_show_fragment);
+            BlogsPostsFragment blogsPostsFragment = (BlogsPostsFragment) getFragmentManager().findFragmentById(R.id.posts_list_fragment);
 
-            if(qaShowFragment == null || qaShowFragment.getLink() != qaData.getLink()){
-                qaShowFragment = new QaShowFragment();
-                qaShowFragment.setLink(qaData.getLink());
+            if(blogsPostsFragment == null || blogsPostsFragment.getLink() != blogsData.getLink()){
+                blogsPostsFragment = new BlogsPostsFragment();
+                blogsPostsFragment.setLink(blogsData.getLink());
 
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.qa_show_fragment, qaShowFragment);
+                fragmentTransaction.replace(R.id.posts_list_fragment, blogsPostsFragment);
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 fragmentTransaction.commit();
             }
         }else{
-            Intent intent = new Intent(getActivity(), QaShowActivity.class);
-            intent.putExtra("link", qaData.getLink());
+            Intent intent = new Intent(getActivity(), PostsActivity.class);
+            intent.putExtra("link", blogsData.getLink());
 
             startActivity(intent);
         }
     }
 
-    protected class LoadQAList extends AsyncTask<Void, Void, Void>{
+    private class LoadBlogsList extends AsyncTask<Void, Void, Void>{
 
         @Override
         protected Void doInBackground(Void... params){
             try{
-                getApi().getQaApi().getQa(qaDataList, page);
+                getApi().getBlogsApi().getBlogs(blogsDataList, page);
             }
             catch(IOException e){
-                e.printStackTrace();
+                
             }
             return null;
         }
@@ -99,27 +93,32 @@ public class QaFragment extends ApplicationListFragment implements OnScrollListe
         @Override
         protected void onPostExecute(Void result){
             if(!isCancelled() && page == 1){
-                qaAdapter = new QaAdapter(getActivity(), qaDataList);
-                setListAdapter(qaAdapter);
+                blogsAdapter = new BlogsAdapter(getActivity(), blogsDataList);
+                setListAdapter(blogsAdapter);
                 
                 if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()){
                     getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-                    showQa(0);
+                    showBlog(0);
                 }    
                 
-                getListView().setOnScrollListener(QaFragment.this);
+                getListView().setOnScrollListener(BlogsFragment.this);
             }else
-                qaAdapter.notifyDataSetChanged();
+                blogsAdapter.notifyDataSetChanged();
             canLoadingData = true;
         }
 
+    }
+
+    @Override
+    public void onListItemClick(ListView list, View view, int position, long id){
+        showBlog(position);
     }
 
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
         if((firstVisibleItem + visibleItemCount) == totalItemCount && page != 0 && canLoadingData){
             canLoadingData = false;
             loadList();
-        }    
+        }
     }
 
     public void onScrollStateChanged(AbsListView view, int scrollState){}

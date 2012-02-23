@@ -17,7 +17,7 @@
 package net.meiolania.apps.habrahabr.ui.actions;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.ui.activities.DashboardActivity;
+import net.meiolania.apps.habrahabr.ui.dashboard.DashboardActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;

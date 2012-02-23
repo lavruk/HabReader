@@ -24,7 +24,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import net.meiolania.apps.habrahabr.data.BlogsData;
+import net.meiolania.apps.habrahabr.ui.blogs.BlogsData;
 
 public class BlogsApi{
     protected static BlogsApi blogsApiInstance = null;

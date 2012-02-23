@@ -23,40 +23,40 @@
         
         <activity
             android:label="@string/app_name"
-            android:name=".ui.activities.DashboardActivity"
+            android:name=".ui.dashboard.DashboardActivity"
             android:configChanges="orientation|keyboard|keyboardHidden">
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.AboutInfoActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".ui.activities.PreferencesActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".ui.dashboard.AboutInfoActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".ui.dashboard.PreferencesActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         
-        <activity android:name=".ui.activities.SignInActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".ui.dashboard.SignInActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         
-        <activity android:name=".ui.activities.PeopleActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".ui.activities.PeopleShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".ui.people.PeopleActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".ui.people.PeopleShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         
-        <activity android:name=".ui.activities.CompaniesActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".ui.activities.CompaniesShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".ui.companies.CompaniesActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".ui.companies.CompaniesShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         
-        <activity android:name=".ui.activities.EventsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".ui.activities.EventsShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".ui.events.EventsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".ui.events.EventsShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         
-        <activity android:name=".ui.activities.QaActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".ui.activities.QaShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".ui.activities.QaCommentsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".ui.qa.QaActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".ui.qa.QaShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".ui.qa.QaCommentsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         
-        <activity android:name=".ui.activities.BlogsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".ui.blogs.BlogsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         
-        <activity android:name=".ui.activities.PostsActivity"
+        <activity android:name=".ui.posts.PostsActivity"
             android:uiOptions="splitActionBarWhenNarrow"
             android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".ui.activities.PostsShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".ui.activities.PostsCommentsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".ui.posts.PostsShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".ui.posts.PostsCommentsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         
-        <activity android:name=".ui.activities.HabrahabrIntentFilter">
+        <activity android:name=".ui.dashboard.HabrahabrIntentFilter">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"></action>
                 <category android:name="android.intent.category.DEFAULT"></category>

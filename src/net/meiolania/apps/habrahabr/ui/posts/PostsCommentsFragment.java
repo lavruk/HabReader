@@ -14,7 +14,7 @@
    limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.ui.fragments;
+package net.meiolania.apps.habrahabr.ui.posts;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,32 +22,40 @@ import java.util.ArrayList;
 import net.meiolania.apps.habrahabr.api.ConnectionApi;
 import net.meiolania.apps.habrahabr.data.CommentsData;
 import net.meiolania.apps.habrahabr.ui.comments.CommentsAdapter;
+import net.meiolania.apps.habrahabr.ui.fragments.ApplicationListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-public class QaCommentsFragment extends ApplicationListFragment{
-    protected ArrayList<CommentsData> commentsDataList;
-    protected String link;
-
+public class PostsCommentsFragment extends ApplicationListFragment{
+    private ArrayList<CommentsData> commentsDataList;
+    private String link;
+    
+    
     @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        
+        setRetainInstance(true);
         
         if(link != null && link.length() > 0)
             loadComments();
     }
-
+    
     private void loadComments(){
         if(ConnectionApi.isConnection(getActivity()))
             new LoadComments().execute();
     }
-
+    
+    public void setLink(String link){
+        this.link = link;
+    }
+    
     private class LoadComments extends AsyncTask<Void, Void, Void>{
 
         @Override
         protected Void doInBackground(Void... params){
             try{
-                commentsDataList = getApi().getQaCommentsApi().getComments(link);
+                commentsDataList = getApi().getPostsCommentsApi().getComments(link);
             }
             catch(IOException e){
                 e.printStackTrace();
@@ -62,9 +70,5 @@ public class QaCommentsFragment extends ApplicationListFragment{
         }
 
     }
-
-    public void setLink(String link){
-        this.link = link;
-    }
-
+    
 }

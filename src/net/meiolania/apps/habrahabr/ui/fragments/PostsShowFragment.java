@@ -50,34 +50,35 @@ public class PostsShowFragment extends ApplicationFragment{
     private String title;
     private boolean isFullView = false;
     private LoadPost loadPost;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        
+
+        setRetainInstance(true);
         setHasOptionsMenu(true);
-        
+
         if(link != null && link.length() > 0)
             loadPost();
         else{
             Log.e(LOG_TAG, "Can't display a post: " + ((link != null) ? link : "no link"));
             getActivity().finish();
-        }    
+        }
     }
-    
+
     @Override
     public void onDestroy(){
         super.onDestroy();
-        
+
         if(loadPost != null)
             loadPost.cancel(true);
     }
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         if(container == null)
             return null;
-        
+
         View view = inflater.inflate(R.layout.posts_show_fragment, container, false);
 
         if(isFullView){
@@ -94,12 +95,12 @@ public class PostsShowFragment extends ApplicationFragment{
 
         return view;
     }
-    
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         inflater.inflate(R.menu.posts_show_fragment, menu);
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(preferences.isVibrate())
@@ -114,13 +115,13 @@ public class PostsShowFragment extends ApplicationFragment{
         }
         return true;
     }
-    
+
     private void startCommentsActivity(){
         Intent intent = new Intent(getActivity(), PostsCommentsActivity.class);
         intent.putExtra("link", link);
         startActivity(intent);
     }
-    
+
     private void createShareIntent(){
         final Intent intent = new Intent(Intent.ACTION_SEND);
         final Formatter formatter = new Formatter();
@@ -186,11 +187,11 @@ public class PostsShowFragment extends ApplicationFragment{
                 content += contentElement.outerHtml();
             }
             catch(IOException e){
-                
+
             }
             return null;
         }
-        
+
         @Override
         protected void onPreExecute(){
             if(isFullView){
@@ -211,9 +212,11 @@ public class PostsShowFragment extends ApplicationFragment{
                     webView.getSettings().setBuiltInZoomControls(true);
                     // webView.loadData(content, "text/html", "UTF-8");
                     webView.loadDataWithBaseURL("", content, "text/html", "UTF-8", null);
-                    
-                    //TODO: save post to read in the offline
-                }catch(NullPointerException e){}
+
+                    // TODO: save post to read in the offline
+                }
+                catch(NullPointerException e){
+                }
             }
             if(isFullView)
                 progressDialog.dismiss();

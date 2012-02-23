@@ -39,17 +39,11 @@ public class QaFragment extends ApplicationListFragment implements OnScrollListe
     protected QaAdapter qaAdapter;
     protected int page;
     protected boolean canLoadingData = true;
-
+    
     @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-        
-        getListView().setOnScrollListener(this);
-        
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
         loadList();
-
-        if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
-            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
     protected void loadList(){
@@ -107,9 +101,13 @@ public class QaFragment extends ApplicationListFragment implements OnScrollListe
             if(!isCancelled() && page == 1){
                 qaAdapter = new QaAdapter(getActivity(), qaDataList);
                 setListAdapter(qaAdapter);
-
-                if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
+                
+                if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()){
+                    getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
                     showQa(0);
+                }    
+                
+                getListView().setOnScrollListener(QaFragment.this);
             }else
                 qaAdapter.notifyDataSetChanged();
             canLoadingData = true;

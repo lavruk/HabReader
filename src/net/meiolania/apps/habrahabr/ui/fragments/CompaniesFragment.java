@@ -41,15 +41,9 @@ public class CompaniesFragment extends ApplicationListFragment implements OnScro
     protected boolean canLoadingData = true;
     
     @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-        
-        getListView().setOnScrollListener(this);
-        
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
         loadList();
-        
-        if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
-            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
     
     @Override
@@ -108,8 +102,12 @@ public class CompaniesFragment extends ApplicationListFragment implements OnScro
                 companiesAdapter = new CompaniesAdapter(getActivity(), companiesDataList);
                 setListAdapter(companiesAdapter);
                 
-                if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
+                if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()){
+                    getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
                     showCompany(0);
+                }    
+                
+                getListView().setOnScrollListener(CompaniesFragment.this);
             }else
                 companiesAdapter.notifyDataSetChanged();
             canLoadingData = true;

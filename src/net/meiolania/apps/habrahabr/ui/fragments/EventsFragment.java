@@ -41,15 +41,9 @@ public class EventsFragment extends ApplicationListFragment implements OnScrollL
     protected boolean canLoadingData = true;
     
     @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-        
-        getListView().setOnScrollListener(this);
-        
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
         loadList();
-
-        if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
-            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
     
     @Override
@@ -107,8 +101,12 @@ public class EventsFragment extends ApplicationListFragment implements OnScrollL
                 eventsAdapter = new EventsAdapter(getActivity(), eventsDataList);
                 setListAdapter(eventsAdapter);
                 
-                if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
+                if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()){
+                    getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
                     showEvent(0);
+                }    
+                
+                getListView().setOnScrollListener(EventsFragment.this);
             }else
                 eventsAdapter.notifyDataSetChanged();
             canLoadingData = true;

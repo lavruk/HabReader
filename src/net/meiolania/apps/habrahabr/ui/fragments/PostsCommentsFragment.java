@@ -29,9 +29,12 @@ public class PostsCommentsFragment extends ApplicationListFragment{
     private ArrayList<CommentsData> commentsDataList;
     private String link;
     
+    
     @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        
+        setRetainInstance(true);
         
         if(link != null && link.length() > 0)
             loadComments();

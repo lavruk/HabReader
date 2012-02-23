@@ -39,17 +39,11 @@ public class PeopleFragment extends ApplicationListFragment implements OnScrollL
     protected PeopleAdapter peopleAdapter;
     protected int page = 0;
     protected boolean canLoadingData = true;
-
+    
     @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-
-        getListView().setOnScrollListener(this);
-
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
         loadList();
-
-        if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
-            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
     @Override
@@ -108,8 +102,12 @@ public class PeopleFragment extends ApplicationListFragment implements OnScrollL
                 peopleAdapter = new PeopleAdapter(getActivity(), peopleDataList);
                 setListAdapter(peopleAdapter);
                 
-                if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
+                if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()){
+                    getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
                     showUser(0);
+                }   
+                
+                getListView().setOnScrollListener(PeopleFragment.this);
             }else
                 peopleAdapter.notifyDataSetChanged();
             canLoadingData = true;

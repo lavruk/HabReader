@@ -40,18 +40,15 @@ public class PostsFragment extends ApplicationListFragment implements OnScrollLi
     protected int page = 0;
     protected String link;
     protected boolean canLoadingData = true;
-
+    
     @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
         
-        getListView().setOnScrollListener(this);
+        setRetainInstance(true);
         
         if(link != null && link.length() > 0)
             loadList();
-
-        if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
-            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
     public void setLink(String link){
@@ -118,8 +115,12 @@ public class PostsFragment extends ApplicationListFragment implements OnScrollLi
                 postsAdapter = new PostsAdapter(getActivity(), postsDataList);
                 setListAdapter(postsAdapter);
                 
-                if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
+                if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()){
+                    getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
                     showPost(0);
+                }    
+                
+                getListView().setOnScrollListener(PostsFragment.this);
             }else
                 postsAdapter.notifyDataSetChanged();
             canLoadingData = true;

@@ -35,43 +35,41 @@ import com.markupartist.android.widget.ActionBar.Action;
 public class PostsShowActivity extends ApplicationFragmentActivity{
     private String link;
     private PostsShowFragment postsShowFragment;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.posts_show_activity);
-        
+
+        setActionBar();
+
         Bundle extras = getIntent().getExtras();
         link = extras.getString("link");
-        
-        setActionBar();
-        
+
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        
+
         postsShowFragment = new PostsShowFragment();
         postsShowFragment.setLink(link);
         postsShowFragment.setIsFullView(true);
-        postsShowFragment.setRetainInstance(true);
-        
+
         fragmentTransaction.add(R.id.post_show_fragment, postsShowFragment);
-        
+
         if(UIUtils.isTablet(this) || preferences.isUseTabletDesign()){
             PostsCommentsFragment postsCommentsFragment = new PostsCommentsFragment();
             postsCommentsFragment.setLink(link);
-            postsCommentsFragment.setRetainInstance(true);
-            
+
             fragmentTransaction.add(R.id.post_show_comments, postsCommentsFragment);
         }else{
-            FrameLayout postsShowCommentsLayout = (FrameLayout)findViewById(R.id.post_show_comments);
+            FrameLayout postsShowCommentsLayout = (FrameLayout) findViewById(R.id.post_show_comments);
             postsShowCommentsLayout.setVisibility(View.GONE);
         }
-        
+
         fragmentTransaction.commit();
     }
-    
+
     private void setActionBar(){
         if(!UIUtils.isHoneycombOrHigher()){
-            ActionBar actionBar = (ActionBar)findViewById(R.id.actionbar);
+            ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
             actionBar.setTitle(R.string.posts);
             actionBar.setHomeAction(new HomeAction(this));
             actionBar.addAction(new ShowCommentsAction());
@@ -79,23 +77,23 @@ public class PostsShowActivity extends ApplicationFragmentActivity{
         }else{
             ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
             actionBarView.setVisibility(View.GONE);
-            
+
             android.app.ActionBar actionBar = getActionBar();
             actionBar.setTitle(R.string.posts);
-            
+
             actionBar.setDisplayHomeAsUpEnabled(true);
             if(UIUtils.isIceCreamOrHigher())
                 actionBar.setHomeButtonEnabled(true);
         }
     }
-    
+
     @Override
     protected Intent getActionBarIntent(){
         final Intent intent = new Intent(this, PostsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         return intent;
     }
-    
+
     private class ShowCommentsAction implements Action{
 
         public int getDrawable(){
@@ -107,7 +105,7 @@ public class PostsShowActivity extends ApplicationFragmentActivity{
         }
 
     }
-    
+
     private void startCommentsActivity(){
         Intent intent = new Intent(this, PostsCommentsActivity.class);
         intent.putExtra("link", link);
@@ -125,7 +123,7 @@ public class PostsShowActivity extends ApplicationFragmentActivity{
         }
 
     }
-    
+
     private void createShareIntent(){
         final Intent intent = new Intent(Intent.ACTION_SEND);
         final Formatter formatter = new Formatter();
@@ -137,5 +135,5 @@ public class PostsShowActivity extends ApplicationFragmentActivity{
 
         startActivity(Intent.createChooser(intent, getString(R.string.share)));
     }
-    
+
 }

@@ -30,64 +30,66 @@ import android.widget.FrameLayout;
 import com.markupartist.android.widget.ActionBar;
 
 public class PostsActivity extends ApplicationFragmentActivity{
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.posts_activity);
-        
-        String link = null;
-        Bundle extras = getIntent().getExtras();
-        if(extras != null)
-            link = extras.getString("link");
-        
+
         setActionBar();
         
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        
-        if(link != null){
-            BlogsPostsFragment blogsPostsFragment = new BlogsPostsFragment();
-            blogsPostsFragment.setLink(link);
+        if(savedInstanceState == null){
+            String link = null;
+            Bundle extras = getIntent().getExtras();
+            if(extras != null)
+                link = extras.getString("link");
             
-            fragmentTransaction.add(R.id.posts_list_fragment, blogsPostsFragment);
-        }else{
-            PostsFragment postsFragment = new PostsFragment();
-            postsFragment.setLink("http://habrahabr.ru/blogs");
-            
-            fragmentTransaction.add(R.id.posts_list_fragment, postsFragment);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+            if(link != null){
+                BlogsPostsFragment blogsPostsFragment = new BlogsPostsFragment();
+                blogsPostsFragment.setLink(link);
+
+                fragmentTransaction.add(R.id.posts_list_fragment, blogsPostsFragment);
+            }else{
+                PostsFragment postsFragment = new PostsFragment();
+                postsFragment.setLink("http://habrahabr.ru/blogs");
+
+                fragmentTransaction.add(R.id.posts_list_fragment, postsFragment);
+            }
+
+            fragmentTransaction.commit();
         }
         
         if(!UIUtils.isTablet(this) && !preferences.isUseTabletDesign()){
-            FrameLayout postsShowFrameLayout = (FrameLayout)findViewById(R.id.post_show_fragment);
+            FrameLayout postsShowFrameLayout = (FrameLayout) findViewById(R.id.post_show_fragment);
             postsShowFrameLayout.setVisibility(View.GONE);
         }
-        
-        fragmentTransaction.commit();
     }
-    
+
     private void setActionBar(){
         if(!UIUtils.isHoneycombOrHigher()){
-            ActionBar actionBar = (ActionBar)findViewById(R.id.actionbar);
+            ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
             actionBar.setTitle(R.string.posts);
             actionBar.setHomeAction(new HomeAction(this));
         }else{
             ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
             actionBarView.setVisibility(View.GONE);
-            
+
             android.app.ActionBar actionBar = getActionBar();
             actionBar.setTitle(R.string.posts);
-            
+
             actionBar.setDisplayHomeAsUpEnabled(true);
             if(UIUtils.isIceCreamOrHigher())
                 actionBar.setHomeButtonEnabled(true);
         }
     }
-    
+
     @Override
     protected Intent getActionBarIntent(){
         final Intent intent = new Intent(this, DashboardActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         return intent;
     }
-    
+
 }

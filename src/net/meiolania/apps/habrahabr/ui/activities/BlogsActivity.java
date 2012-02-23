@@ -37,18 +37,20 @@ public class BlogsActivity extends ApplicationFragmentActivity{
 
         setActionBar();
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        if(savedInstanceState == null){
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-        BlogsFragment blogsFragment = new BlogsFragment();
+            BlogsFragment blogsFragment = new BlogsFragment();
 
-        fragmentTransaction.add(R.id.blogs_list_fragment, blogsFragment);
+            fragmentTransaction.add(R.id.blogs_list_fragment, blogsFragment);
+
+            fragmentTransaction.commit();
+        }
 
         if(!UIUtils.isTablet(this) && !preferences.isUseTabletDesign()){
             FrameLayout postsFrameLayout = (FrameLayout) findViewById(R.id.posts_list_fragment);
             postsFrameLayout.setVisibility(View.GONE);
         }
-
-        fragmentTransaction.commit();
     }
 
     private void setActionBar(){
@@ -62,13 +64,13 @@ public class BlogsActivity extends ApplicationFragmentActivity{
 
             android.app.ActionBar actionBar = getActionBar();
             actionBar.setTitle(R.string.blogs);
-            
+
             actionBar.setDisplayHomeAsUpEnabled(true);
             if(UIUtils.isIceCreamOrHigher())
                 actionBar.setHomeButtonEnabled(true);
         }
     }
-    
+
     @Override
     protected Intent getActionBarIntent(){
         final Intent intent = new Intent(this, DashboardActivity.class);

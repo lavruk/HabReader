@@ -39,17 +39,11 @@ public class BlogsFragment extends ApplicationListFragment implements OnScrollLi
     protected BlogsAdapter blogsAdapter;
     protected int page = 0;
     protected boolean canLoadingData = true;
-
+    
     @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-        
-        getListView().setOnScrollListener(this);
-        
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
         loadList();
-        
-        if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
-            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
     private void loadList(){
@@ -103,8 +97,12 @@ public class BlogsFragment extends ApplicationListFragment implements OnScrollLi
                 blogsAdapter = new BlogsAdapter(getActivity(), blogsDataList);
                 setListAdapter(blogsAdapter);
                 
-                if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign())
+                if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()){
+                    getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
                     showBlog(0);
+                }    
+                
+                getListView().setOnScrollListener(BlogsFragment.this);
             }else
                 blogsAdapter.notifyDataSetChanged();
             canLoadingData = true;

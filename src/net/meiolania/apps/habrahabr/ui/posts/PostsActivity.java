@@ -19,7 +19,6 @@ package net.meiolania.apps.habrahabr.ui.posts;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
 import net.meiolania.apps.habrahabr.ui.activities.ApplicationFragmentActivity;
-import net.meiolania.apps.habrahabr.ui.blogs.BlogsPostsFragment;
 import net.meiolania.apps.habrahabr.ui.dashboard.DashboardActivity;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.content.Intent;
@@ -31,32 +30,28 @@ import android.widget.FrameLayout;
 import com.markupartist.android.widget.ActionBar;
 
 public class PostsActivity extends ApplicationFragmentActivity{
+    public final static String LINK_MAIN = "http://habrahabr.ru/blogs/";
+    public final static String LINK_NEW = "http://habrahabr.ru/new/";
+    public final static String LINK_BEST = "http://habrahabr.ru/top/";
+    private String link = "http://habrahabr.ru/blogs/";
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.posts_activity);
 
-        setActionBar();
-
-        String link = null;
         Bundle extras = getIntent().getExtras();
         if(extras != null)
             link = extras.getString("link");
+        
+        setActionBar();
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-        if(link != null){
-            BlogsPostsFragment blogsPostsFragment = new BlogsPostsFragment();
-            blogsPostsFragment.setLink(link);
+        PostsFragment postsFragment = new PostsFragment();
+        postsFragment.setLink(link);
 
-            fragmentTransaction.add(R.id.posts_list_fragment, blogsPostsFragment);
-        }else{
-            PostsFragment postsFragment = new PostsFragment();
-            postsFragment.setLink("http://habrahabr.ru/blogs");
-
-            fragmentTransaction.add(R.id.posts_list_fragment, postsFragment);
-        }
+        fragmentTransaction.add(R.id.posts_list_fragment, postsFragment);
 
         fragmentTransaction.commit();
 
@@ -76,7 +71,15 @@ public class PostsActivity extends ApplicationFragmentActivity{
             actionBarView.setVisibility(View.GONE);
 
             android.app.ActionBar actionBar = getActionBar();
-            actionBar.setTitle(R.string.posts);
+            
+            if(link.equals(LINK_MAIN))
+                actionBar.setTitle(R.string.main_posts);
+            else if(link.equals(LINK_NEW))
+                actionBar.setTitle(R.string.new_posts);
+            else if(link.equals(LINK_BEST))
+                actionBar.setTitle(R.string.best_posts);
+            else
+                actionBar.setTitle(R.string.posts);
 
             actionBar.setDisplayHomeAsUpEnabled(true);
             if(UIUtils.isIceCreamOrHigher())

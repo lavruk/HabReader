@@ -23,12 +23,14 @@ import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.api.ConnectionApi;
 import net.meiolania.apps.habrahabr.ui.fragments.ApplicationListFragment;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
+import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -55,6 +57,33 @@ public class PostsFragment extends ApplicationListFragment implements OnScrollLi
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.posts, menu);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent intent = null;
+        
+        if(preferences.isVibrate())
+            VibrateUtils.doVibrate(getActivity());
+        
+        switch(item.getItemId()){
+            case R.id.main_posts:
+                intent = new Intent(getActivity(), PostsActivity.class);
+                intent.putExtra("link", PostsActivity.LINK_MAIN);
+                getActivity().startActivity(intent);
+                break;
+            case R.id.new_posts:
+                intent = new Intent(getActivity(), PostsActivity.class);
+                intent.putExtra("link", PostsActivity.LINK_NEW);
+                getActivity().startActivity(intent);
+                break;
+            case R.id.best_posts:
+                intent = new Intent(getActivity(), PostsActivity.class);
+                intent.putExtra("link", PostsActivity.LINK_BEST);
+                getActivity().startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void setLink(String link){

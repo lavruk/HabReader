@@ -16,12 +16,8 @@
 
 package net.meiolania.apps.habrahabr.ui.activities;
 
-import com.markupartist.android.widget.ActionBar;
-
 import net.meiolania.apps.habrahabr.Api;
 import net.meiolania.apps.habrahabr.Preferences;
-import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 import android.content.Context;
@@ -31,7 +27,6 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 
 public abstract class ApplicationFragmentActivity extends FragmentActivity{

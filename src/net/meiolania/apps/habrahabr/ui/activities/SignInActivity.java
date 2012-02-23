@@ -20,6 +20,7 @@ import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -48,9 +49,17 @@ public class SignInActivity extends ApplicationFragmentActivity{
             android.app.ActionBar actionBar = getActionBar();
             actionBar.setTitle(R.string.sign_in);
             
+            actionBar.setDisplayHomeAsUpEnabled(true);
             if(UIUtils.isIceCreamOrHigher())
                 actionBar.setHomeButtonEnabled(true);
         }
+    }
+    
+    @Override
+    protected Intent getActionBarIntent(){
+        final Intent intent = new Intent(this, PreferencesActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        return intent;
     }
     
     private class DoSignIn extends AsyncTask<String, Void, Void>{

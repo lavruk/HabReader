@@ -16,8 +16,12 @@
 
 package net.meiolania.apps.habrahabr.ui.activities;
 
+import com.markupartist.android.widget.ActionBar;
+
 import net.meiolania.apps.habrahabr.Api;
 import net.meiolania.apps.habrahabr.Preferences;
+import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 import android.content.Context;
@@ -27,6 +31,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 
 public abstract class ApplicationFragmentActivity extends FragmentActivity{
@@ -49,10 +54,6 @@ public abstract class ApplicationFragmentActivity extends FragmentActivity{
             powerManagerWakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
             powerManagerWakeLock.acquire();
         }
-        
-        //TODO: make a new style
-        if(UIUtils.isHoneycombOrHigher())
-            setTheme(android.R.style.Theme_Holo_Light);
     }
     
     @Override
@@ -62,21 +63,25 @@ public abstract class ApplicationFragmentActivity extends FragmentActivity{
         if(UIUtils.isHoneycombOrHigher()){
             switch(item.getItemId()){
                 case android.R.id.home:
-                    Intent intent = new Intent(this, DashboardActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    final Intent intent = getActionBarIntent();
+                    if(intent != null)
+                        startActivity(intent);
+                    else
+                        finish();
                     return true;
             }
         }
         return super.onOptionsItemSelected(item);
         
     }
+    
+    protected abstract Intent getActionBarIntent();
 
     @Override
     protected void onResume(){
         super.onResume();
         
-        if(preferences.isKeepScreen())
+        if(preferences.isKeepScreen() && powerManagerWakeLock != null)
             powerManagerWakeLock.acquire();
     }
 
@@ -84,8 +89,8 @@ public abstract class ApplicationFragmentActivity extends FragmentActivity{
     protected void onPause(){
         super.onPause();
 
-        if(preferences.isKeepScreen())
-            powerManagerWakeLock.release();
+        if(preferences.isKeepScreen() && powerManagerWakeLock != null)
+            powerManagerWakeLock.acquire();
     }
 
     protected Api getApi(){

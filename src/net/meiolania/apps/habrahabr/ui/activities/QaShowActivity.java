@@ -78,9 +78,17 @@ public class QaShowActivity extends ApplicationFragmentActivity{
             android.app.ActionBar actionBar = getActionBar();
             actionBar.setTitle(R.string.qa);
             
+            actionBar.setDisplayHomeAsUpEnabled(true);
             if(UIUtils.isIceCreamOrHigher())
                 actionBar.setHomeButtonEnabled(true);
         }
+    }
+    
+    @Override
+    protected Intent getActionBarIntent(){
+        final Intent intent = new Intent(this, QaActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        return intent;
     }
     
     private class ShowCommentsAction implements Action{

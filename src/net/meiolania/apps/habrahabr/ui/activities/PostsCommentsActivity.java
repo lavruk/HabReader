@@ -20,6 +20,7 @@ import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
 import net.meiolania.apps.habrahabr.ui.fragments.PostsCommentsFragment;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -58,10 +59,16 @@ public class PostsCommentsActivity extends ApplicationFragmentActivity{
 
             android.app.ActionBar actionBar = getActionBar();
             actionBar.setTitle(R.string.comments);
-
+            
+            actionBar.setDisplayHomeAsUpEnabled(true);
             if(UIUtils.isIceCreamOrHigher())
                 actionBar.setHomeButtonEnabled(true);
         }
+    }
+    
+    @Override
+    protected Intent getActionBarIntent(){
+        return null;
     }
 
 }

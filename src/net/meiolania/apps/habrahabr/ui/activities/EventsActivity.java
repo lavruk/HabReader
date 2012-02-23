@@ -20,6 +20,7 @@ import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
 import net.meiolania.apps.habrahabr.ui.fragments.EventsFragment;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -60,10 +61,18 @@ public class EventsActivity extends ApplicationFragmentActivity{
 
             android.app.ActionBar actionBar = getActionBar();
             actionBar.setTitle(R.string.events);
-
+            
+            actionBar.setDisplayHomeAsUpEnabled(true);
             if(UIUtils.isIceCreamOrHigher())
                 actionBar.setHomeButtonEnabled(true);
         }
+    }
+    
+    @Override
+    protected Intent getActionBarIntent(){
+        final Intent intent = new Intent(this, DashboardActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        return intent;
     }
     
 }

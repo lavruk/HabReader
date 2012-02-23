@@ -79,6 +79,11 @@ public class DashboardActivity extends ApplicationFragmentActivity{
         }
     }
     
+    @Override
+    protected Intent getActionBarIntent(){
+        return null;
+    }
+    
     public void clickDashboardButton(View view){
         if(preferences.isVibrate())
             VibrateUtils.doVibrate(this);

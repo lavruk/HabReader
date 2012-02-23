@@ -23,6 +23,7 @@ import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
 import net.meiolania.apps.habrahabr.utils.StreamUtils;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -57,9 +58,17 @@ public class AboutInfoActivity extends ApplicationFragmentActivity{
             android.app.ActionBar actionBar = getActionBar();
             actionBar.setTitle(R.string.about);
             
+            actionBar.setDisplayHomeAsUpEnabled(true);
             if(UIUtils.isIceCreamOrHigher())
                 actionBar.setHomeButtonEnabled(true);
         }
+    }
+    
+    @Override
+    protected Intent getActionBarIntent(){
+        final Intent intent = new Intent(this, DashboardActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        return intent;
     }
 
     private void setFormatText(){

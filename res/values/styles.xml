@@ -3,10 +3,6 @@
 
     <style name="Theme" parent="@android:style/Theme.Light.NoTitleBar"></style>
 
-    <style name="Base">
-        <item name="android:background">@color/base_background</item>
-    </style>
-
     <style name="DashboardButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

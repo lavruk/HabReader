@@ -83,9 +83,17 @@ public class PostsShowActivity extends ApplicationFragmentActivity{
             android.app.ActionBar actionBar = getActionBar();
             actionBar.setTitle(R.string.posts);
             
+            actionBar.setDisplayHomeAsUpEnabled(true);
             if(UIUtils.isIceCreamOrHigher())
                 actionBar.setHomeButtonEnabled(true);
         }
+    }
+    
+    @Override
+    protected Intent getActionBarIntent(){
+        final Intent intent = new Intent(this, PostsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        return intent;
     }
     
     private class ShowCommentsAction implements Action{

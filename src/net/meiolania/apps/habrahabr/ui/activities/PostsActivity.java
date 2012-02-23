@@ -21,6 +21,7 @@ import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
 import net.meiolania.apps.habrahabr.ui.fragments.BlogsPostsFragment;
 import net.meiolania.apps.habrahabr.ui.fragments.PostsFragment;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -76,9 +77,17 @@ public class PostsActivity extends ApplicationFragmentActivity{
             android.app.ActionBar actionBar = getActionBar();
             actionBar.setTitle(R.string.posts);
             
+            actionBar.setDisplayHomeAsUpEnabled(true);
             if(UIUtils.isIceCreamOrHigher())
                 actionBar.setHomeButtonEnabled(true);
         }
+    }
+    
+    @Override
+    protected Intent getActionBarIntent(){
+        final Intent intent = new Intent(this, DashboardActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        return intent;
     }
     
 }

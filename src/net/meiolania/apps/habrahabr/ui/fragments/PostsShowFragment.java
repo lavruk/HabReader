@@ -98,6 +98,7 @@ public class PostsShowFragment extends ApplicationFragment{
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.posts_show_fragment, menu);
     }
 

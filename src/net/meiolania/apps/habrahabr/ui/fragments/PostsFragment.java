@@ -29,6 +29,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -39,16 +41,22 @@ public class PostsFragment extends ApplicationListFragment implements OnScrollLi
     protected PostsAdapter postsAdapter;
     protected int page = 0;
     protected String link;
-    protected boolean canLoadingData = true;
+    protected boolean canLoadingData;
     
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         
-        setRetainInstance(true);
+        setHasOptionsMenu(true);
         
         if(link != null && link.length() > 0)
             loadList();
+    }
+    
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.posts, menu);
     }
 
     public void setLink(String link){
@@ -118,7 +126,7 @@ public class PostsFragment extends ApplicationListFragment implements OnScrollLi
                 if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()){
                     getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
                     showPost(0);
-                }    
+                }
                 
                 getListView().setOnScrollListener(PostsFragment.this);
             }else

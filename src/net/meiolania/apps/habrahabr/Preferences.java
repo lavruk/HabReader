@@ -37,7 +37,7 @@ public class Preferences{
 
     private void loadPreferences(Context context){
         PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         vibrate = sharedPreferences.getBoolean("vibrate", true);
         fullscreen = sharedPreferences.getBoolean("fullscreen", false);

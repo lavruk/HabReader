@@ -7,7 +7,6 @@
     <string name="events">События</string>
     <string name="companies">Компании</string>
     <string name="people">Люди</string>
-    <string name="job">Работа</string>
     <string name="preferences">Настройки</string>
     <string name="about">О приложении</string>
     <string name="nick">Ник</string>
@@ -70,4 +69,7 @@
 	<string name="share">Поделиться с друзьями</string>
 	<string name="more">Подробнее</string>
 	<string name="attention_no_network_connection">Отсутствует подключение к сети.</string>
+	<string name="new_posts">Новые</string>
+	<string name="main_posts">Захабренные</string>
+	<string name="best_posts">Лучшие</string>
 </resources>

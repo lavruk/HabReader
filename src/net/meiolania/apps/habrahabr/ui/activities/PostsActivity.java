@@ -38,12 +38,12 @@ public class PostsActivity extends ApplicationFragmentActivity{
 
         setActionBar();
         
+        String link = null;
+        Bundle extras = getIntent().getExtras();
+        if(extras != null)
+            link = extras.getString("link");
+        
         if(savedInstanceState == null){
-            String link = null;
-            Bundle extras = getIntent().getExtras();
-            if(extras != null)
-                link = extras.getString("link");
-            
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
             if(link != null){
@@ -59,6 +59,14 @@ public class PostsActivity extends ApplicationFragmentActivity{
             }
 
             fragmentTransaction.commit();
+        }else{
+            if(link != null){
+                BlogsPostsFragment blogsPostsFragment = (BlogsPostsFragment)getSupportFragmentManager().findFragmentById(R.id.posts_list_fragment);
+                blogsPostsFragment.setLink(link);
+            }else{
+                PostsFragment postsFragment = (PostsFragment)getSupportFragmentManager().findFragmentById(R.id.posts_list_fragment);
+                postsFragment.setLink("http://habrahabr.ru/blogs");
+            }
         }
         
         if(!UIUtils.isTablet(this) && !preferences.isUseTabletDesign()){
@@ -78,7 +86,7 @@ public class PostsActivity extends ApplicationFragmentActivity{
 
             android.app.ActionBar actionBar = getActionBar();
             actionBar.setTitle(R.string.posts);
-
+            
             actionBar.setDisplayHomeAsUpEnabled(true);
             if(UIUtils.isIceCreamOrHigher())
                 actionBar.setHomeButtonEnabled(true);

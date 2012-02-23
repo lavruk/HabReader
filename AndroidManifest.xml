@@ -50,7 +50,9 @@
         
         <activity android:name=".ui.activities.BlogsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         
-        <activity android:name=".ui.activities.PostsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".ui.activities.PostsActivity"
+            android:uiOptions="splitActionBarWhenNarrow"
+            android:configChanges="orientation|keyboard|keyboardHidden" />
         <activity android:name=".ui.activities.PostsShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         <activity android:name=".ui.activities.PostsCommentsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         

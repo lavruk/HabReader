@@ -24,7 +24,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class PeopleAdapter extends BaseAdapter{
     private Context context;
@@ -48,7 +52,7 @@ public class PeopleAdapter extends BaseAdapter{
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
-        PeopleData userData = peopleDataList.get(position);
+        PeopleData peopleData = peopleDataList.get(position);
 
         View view = convertView;
 
@@ -58,7 +62,12 @@ public class PeopleAdapter extends BaseAdapter{
         }
 
         TextView name = (TextView) view.findViewById(R.id.list_name);
-        name.setText(userData.getName());
+        name.setText(peopleData.getName());
+        
+        ImageView avatar = (ImageView) view.findViewById(R.id.list_avatar);
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+        imageLoader.displayImage(peopleData.getAvatar(), avatar);
 
         return view;
     }

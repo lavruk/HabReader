@@ -47,17 +47,21 @@ public class PeopleApi{
 
         boolean firstElement = true;
         for(Element user : dataUsers){
+            /*
+             * Need to skip an empty block
+             */
             if(firstElement){
                 firstElement = false;
                 continue;
             }
             PeopleData peopleData = new PeopleData();
 
-            Element userAvatar = user.getElementsByTag("img").first();
             Element userKarma = user.select("td.userkarma").first();
             Element userRating = user.select("td.userrating").first();
             Element userLink = user.select("div.habrauserava > a").first();
-
+            Element userAvatar = user.getElementsByTag("img").first();
+            
+            peopleData.setAvatar(userAvatar.attr("src"));
             peopleData.setName(userAvatar.attr("alt"));
             peopleData.setKarma(userKarma.text());
             peopleData.setRating(userRating.text());

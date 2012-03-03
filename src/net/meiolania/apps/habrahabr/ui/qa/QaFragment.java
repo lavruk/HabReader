@@ -14,16 +14,14 @@
    limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.ui.fragments;
+package net.meiolania.apps.habrahabr.ui.qa;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.api.ConnectionApi;
-import net.meiolania.apps.habrahabr.ui.qa.QAData;
-import net.meiolania.apps.habrahabr.ui.qa.QaAdapter;
-import net.meiolania.apps.habrahabr.ui.qa.QaShowActivity;
+import net.meiolania.apps.habrahabr.ui.fragments.ApplicationListFragment;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.content.Intent;
 import android.os.AsyncTask;

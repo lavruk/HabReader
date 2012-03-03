@@ -19,7 +19,6 @@ package net.meiolania.apps.habrahabr.ui.comments;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.data.CommentsData;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

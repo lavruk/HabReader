@@ -14,7 +14,7 @@
    limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.data;
+package net.meiolania.apps.habrahabr.ui.comments;
 
 public class CommentsData{
     private String author;

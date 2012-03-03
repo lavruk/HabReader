@@ -54,7 +54,7 @@ public class PeopleShowActivity extends ApplicationFragmentActivity{
         if(!UIUtils.isHoneycombOrHigher()){
             ActionBar actionBar = (ActionBar)findViewById(R.id.actionbar);
             actionBar.setTitle(R.string.people);
-            actionBar.setHomeAction(new HomeAction(this));
+            actionBar.setHomeAction(new HomeAction(this, preferences));
         }else{
             ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
             actionBarView.setVisibility(View.GONE);

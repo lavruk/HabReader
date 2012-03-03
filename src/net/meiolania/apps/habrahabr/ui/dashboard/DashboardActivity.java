@@ -68,7 +68,7 @@ public class DashboardActivity extends ApplicationFragmentActivity{
             
             if(actionBar != null){
                 actionBar.setTitle(R.string.app_name);
-                actionBar.setHomeAction(new HomeAction(this, true));
+                actionBar.setHomeAction(new HomeAction(this, preferences, true));
             }
         }else{
             ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);

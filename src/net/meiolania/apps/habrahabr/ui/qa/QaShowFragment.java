@@ -14,14 +14,13 @@
    limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.ui.fragments;
+package net.meiolania.apps.habrahabr.ui.qa;
 
 import java.io.IOException;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.api.ConnectionApi;
-import net.meiolania.apps.habrahabr.ui.qa.QaCommentsActivity;
-import net.meiolania.apps.habrahabr.ui.qa.QaShowActivity;
+import net.meiolania.apps.habrahabr.ui.fragments.ApplicationFragment;
 import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 
 import org.jsoup.Jsoup;

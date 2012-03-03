@@ -19,7 +19,7 @@ package net.meiolania.apps.habrahabr.api;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import net.meiolania.apps.habrahabr.data.CommentsData;
+import net.meiolania.apps.habrahabr.ui.comments.CommentsData;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 
 import org.jsoup.Jsoup;

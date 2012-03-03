@@ -19,7 +19,6 @@ package net.meiolania.apps.habrahabr.ui.qa;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
 import net.meiolania.apps.habrahabr.ui.activities.ApplicationFragmentActivity;
-import net.meiolania.apps.habrahabr.ui.fragments.QaCommentsFragment;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.content.Intent;
 import android.os.Bundle;
@@ -53,7 +52,7 @@ public class QaCommentsActivity extends ApplicationFragmentActivity{
         if(!UIUtils.isHoneycombOrHigher()){
             ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
             actionBar.setTitle(R.string.comments);
-            actionBar.setHomeAction(new HomeAction(this));
+            actionBar.setHomeAction(new HomeAction(this, preferences));
         }else{
             ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
             actionBarView.setVisibility(View.GONE);

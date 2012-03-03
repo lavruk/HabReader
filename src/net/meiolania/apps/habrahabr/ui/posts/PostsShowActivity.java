@@ -70,7 +70,7 @@ public class PostsShowActivity extends ApplicationFragmentActivity{
         if(!UIUtils.isHoneycombOrHigher()){
             ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
             actionBar.setTitle(R.string.posts);
-            actionBar.setHomeAction(new HomeAction(this));
+            actionBar.setHomeAction(new HomeAction(this, preferences));
             actionBar.addAction(new ShowCommentsAction());
             actionBar.addAction(new ShareAction());
         }else{

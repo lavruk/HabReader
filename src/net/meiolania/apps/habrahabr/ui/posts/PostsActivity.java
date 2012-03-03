@@ -45,7 +45,7 @@ public class PostsActivity extends ApplicationFragmentActivity{
             link = extras.getString("link");
         
         setActionBar();
-
+        
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         PostsFragment postsFragment = new PostsFragment();
@@ -64,8 +64,17 @@ public class PostsActivity extends ApplicationFragmentActivity{
     private void setActionBar(){
         if(!UIUtils.isHoneycombOrHigher()){
             ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
-            actionBar.setTitle(R.string.posts);
-            actionBar.setHomeAction(new HomeAction(this));
+            
+            if(link.equals(LINK_MAIN))
+                actionBar.setTitle(R.string.main_posts);
+            else if(link.equals(LINK_NEW))
+                actionBar.setTitle(R.string.new_posts);
+            else if(link.equals(LINK_BEST))
+                actionBar.setTitle(R.string.best_posts);
+            else
+                actionBar.setTitle(R.string.posts);
+            
+            actionBar.setHomeAction(new HomeAction(this, preferences));
         }else{
             ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
             actionBarView.setVisibility(View.GONE);

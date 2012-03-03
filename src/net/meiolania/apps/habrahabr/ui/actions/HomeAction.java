@@ -16,8 +16,10 @@
 
 package net.meiolania.apps.habrahabr.ui.actions;
 
+import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.ui.dashboard.DashboardActivity;
+import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -27,13 +29,15 @@ import com.markupartist.android.widget.ActionBar.Action;
 public class HomeAction implements Action{
     private Context context;
     private boolean noPerformAction = false;
+    private Preferences preferences;
     
-    public HomeAction(Context context){
+    public HomeAction(Context context, Preferences preferences){
         this.context = context;
+        this.preferences = preferences;
     }
     
-    public HomeAction(Context context, boolean noPerformAction){
-        this(context);
+    public HomeAction(Context context, Preferences preferences, boolean noPerformAction){
+        this(context, preferences);
         this.noPerformAction = noPerformAction;
     }
     
@@ -43,6 +47,8 @@ public class HomeAction implements Action{
 
     public void performAction(View view){
         if(!noPerformAction){
+            if(preferences.isVibrate())
+                VibrateUtils.doVibrate(context);
             Intent intent = new Intent(context, DashboardActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             context.startActivity(intent);

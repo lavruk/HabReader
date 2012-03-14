@@ -14,7 +14,7 @@
    limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.ui.blogs;
+package net.meiolania.apps.habrahabr.ui.hubs;
 
 import java.io.IOException;
 
@@ -27,7 +27,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.AbsListView.OnScrollListener;
 
-public class BlogsPostsFragment extends PostsFragment implements OnScrollListener{
+public class HubsPostsFragment extends PostsFragment implements OnScrollListener{
     
     @Override
     protected void showPost(int position){
@@ -53,10 +53,6 @@ public class BlogsPostsFragment extends PostsFragment implements OnScrollListene
         protected Void doInBackground(Void... params){
             try{
                 getApi().getPostsApi().getPosts(postsDataList, link + "/page" + page + "/");
-
-                // Trying to get posts again. Need to rewrite this code
-                if(postsDataList.isEmpty())
-                    getApi().getPostsApi().getPosts(postsDataList, link + "/page" + page + "/");
             }
             catch(IOException e){
                 e.printStackTrace();

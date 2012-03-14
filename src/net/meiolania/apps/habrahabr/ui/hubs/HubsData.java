@@ -14,9 +14,9 @@
    limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.ui.blogs;
+package net.meiolania.apps.habrahabr.ui.hubs;
 
-public class BlogsData{
+public class HubsData{
     private String title;
     private String statistics;
     private String link;

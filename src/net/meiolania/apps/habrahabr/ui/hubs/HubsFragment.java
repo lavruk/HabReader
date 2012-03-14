@@ -14,7 +14,7 @@
    limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.ui.blogs;
+package net.meiolania.apps.habrahabr.ui.hubs;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,9 +33,9 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
 
-public class BlogsFragment extends ApplicationListFragment implements OnScrollListener{
-    protected final ArrayList<BlogsData> blogsDataList = new ArrayList<BlogsData>();
-    protected BlogsAdapter blogsAdapter;
+public class HubsFragment extends ApplicationListFragment implements OnScrollListener{
+    protected final ArrayList<HubsData> blogsDataList = new ArrayList<HubsData>();
+    protected HubsAdapter blogsAdapter;
     protected int page = 0;
     protected boolean canLoadingData = true;
     
@@ -53,15 +53,15 @@ public class BlogsFragment extends ApplicationListFragment implements OnScrollLi
     }
 
     private void showBlog(int position){
-        BlogsData blogsData = blogsDataList.get(position);
+        HubsData blogsData = blogsDataList.get(position);
 
         if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()){
             getListView().setItemChecked(position, true);
 
-            BlogsPostsFragment blogsPostsFragment = (BlogsPostsFragment) getFragmentManager().findFragmentById(R.id.posts_list_fragment);
+            HubsPostsFragment blogsPostsFragment = (HubsPostsFragment) getFragmentManager().findFragmentById(R.id.posts_list_fragment);
 
             if(blogsPostsFragment == null || blogsPostsFragment.getLink() != blogsData.getLink()){
-                blogsPostsFragment = new BlogsPostsFragment();
+                blogsPostsFragment = new HubsPostsFragment();
                 blogsPostsFragment.setLink(blogsData.getLink());
 
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -93,7 +93,7 @@ public class BlogsFragment extends ApplicationListFragment implements OnScrollLi
         @Override
         protected void onPostExecute(Void result){
             if(!isCancelled() && page == 1){
-                blogsAdapter = new BlogsAdapter(getActivity(), blogsDataList);
+                blogsAdapter = new HubsAdapter(getActivity(), blogsDataList);
                 setListAdapter(blogsAdapter);
                 
                 if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()){
@@ -101,7 +101,7 @@ public class BlogsFragment extends ApplicationListFragment implements OnScrollLi
                     showBlog(0);
                 }    
                 
-                getListView().setOnScrollListener(BlogsFragment.this);
+                getListView().setOnScrollListener(HubsFragment.this);
             }else
                 blogsAdapter.notifyDataSetChanged();
             canLoadingData = true;

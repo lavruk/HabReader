@@ -19,9 +19,9 @@ package net.meiolania.apps.habrahabr.ui.dashboard;
 import net.meiolania.apps.habrahabr.ApplicationFragmentActivity;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
-import net.meiolania.apps.habrahabr.ui.blogs.BlogsActivity;
 import net.meiolania.apps.habrahabr.ui.companies.CompaniesActivity;
 import net.meiolania.apps.habrahabr.ui.events.EventsActivity;
+import net.meiolania.apps.habrahabr.ui.hubs.HubsActivity;
 import net.meiolania.apps.habrahabr.ui.people.PeopleActivity;
 import net.meiolania.apps.habrahabr.ui.posts.PostsActivity;
 import net.meiolania.apps.habrahabr.ui.qa.QaActivity;
@@ -96,8 +96,8 @@ public class DashboardActivity extends ApplicationFragmentActivity{
             case R.id.posts:
                 startActivity(new Intent(this, PostsActivity.class));
                 break;
-            case R.id.blogs:
-                startActivity(new Intent(this, BlogsActivity.class));
+            case R.id.hubs:
+                startActivity(new Intent(this, HubsActivity.class));
                 break;
             case R.id.qa:
                 startActivity(new Intent(this, QaActivity.class));

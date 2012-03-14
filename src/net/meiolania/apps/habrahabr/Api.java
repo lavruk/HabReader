@@ -16,7 +16,7 @@
 
 package net.meiolania.apps.habrahabr;
 
-import net.meiolania.apps.habrahabr.api.BlogsApi;
+import net.meiolania.apps.habrahabr.api.HubsApi;
 import net.meiolania.apps.habrahabr.api.CompaniesApi;
 import net.meiolania.apps.habrahabr.api.EventsApi;
 import net.meiolania.apps.habrahabr.api.LoginApi;
@@ -36,8 +36,8 @@ public final class Api{
             return apiInstance;
     }
     
-    public BlogsApi getBlogsApi(){
-        return BlogsApi.getInstance();
+    public HubsApi getBlogsApi(){
+        return HubsApi.getInstance();
     }
     
     public PostsApi getPostsApi(){

@@ -14,7 +14,7 @@
    limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.ui.blogs;
+package net.meiolania.apps.habrahabr.ui.hubs;
 
 import net.meiolania.apps.habrahabr.ApplicationFragmentActivity;
 import net.meiolania.apps.habrahabr.R;
@@ -29,19 +29,19 @@ import android.widget.FrameLayout;
 
 import com.markupartist.android.widget.ActionBar;
 
-public class BlogsActivity extends ApplicationFragmentActivity{
+public class HubsActivity extends ApplicationFragmentActivity{
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.blogs_activity);
+        setContentView(R.layout.hubs_activity);
 
         setActionBar();
 
         if(savedInstanceState == null){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-            BlogsFragment blogsFragment = new BlogsFragment();
+            HubsFragment blogsFragment = new HubsFragment();
 
             fragmentTransaction.add(R.id.blogs_list_fragment, blogsFragment);
 
@@ -57,14 +57,14 @@ public class BlogsActivity extends ApplicationFragmentActivity{
     private void setActionBar(){
         if(!UIUtils.isHoneycombOrHigher()){
             ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
-            actionBar.setTitle(R.string.blogs);
+            actionBar.setTitle(R.string.hubs);
             actionBar.setHomeAction(new HomeAction(this, preferences));
         }else{
             ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
             actionBarView.setVisibility(View.GONE);
 
             android.app.ActionBar actionBar = getActionBar();
-            actionBar.setTitle(R.string.blogs);
+            actionBar.setTitle(R.string.hubs);
 
             actionBar.setDisplayHomeAsUpEnabled(true);
             if(UIUtils.isIceCreamOrHigher())

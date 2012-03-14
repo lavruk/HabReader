@@ -6,7 +6,7 @@
     android:versionName="1.0 beta-4"
     android:installLocation="auto">
 
-    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="15" />
+    <uses-sdk android:minSdkVersion="4" />
     
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -48,7 +48,7 @@
         <activity android:name=".ui.qa.QaShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         <activity android:name=".ui.qa.QaCommentsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         
-        <activity android:name=".ui.blogs.BlogsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".ui.hubs.HubsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         
         <activity android:name=".ui.posts.PostsActivity"
             android:uiOptions="splitActionBarWhenNarrow"

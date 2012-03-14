@@ -14,7 +14,7 @@
    limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.ui.blogs;
+package net.meiolania.apps.habrahabr.ui.hubs;
 
 import java.util.ArrayList;
 
@@ -26,11 +26,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class BlogsAdapter extends BaseAdapter{
+public class HubsAdapter extends BaseAdapter{
     private Context context;
-    private ArrayList<BlogsData> blogsDataList;
+    private ArrayList<HubsData> blogsDataList;
 
-    public BlogsAdapter(Context context, ArrayList<BlogsData> blogsDataList){
+    public HubsAdapter(Context context, ArrayList<HubsData> blogsDataList){
         this.context = context;
         this.blogsDataList = blogsDataList;
     }
@@ -39,7 +39,7 @@ public class BlogsAdapter extends BaseAdapter{
         return blogsDataList.size();
     }
 
-    public BlogsData getItem(int position){
+    public HubsData getItem(int position){
         return blogsDataList.get(position);
     }
 
@@ -48,13 +48,13 @@ public class BlogsAdapter extends BaseAdapter{
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
-        BlogsData blogsData = blogsDataList.get(position);
+        HubsData blogsData = blogsDataList.get(position);
 
         View view = convertView;
 
         if(view == null){
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.blogs_list_row, null);
+            view = layoutInflater.inflate(R.layout.hubs_list_row, null);
         }
 
         TextView title = (TextView) view.findViewById(R.id.list_title);

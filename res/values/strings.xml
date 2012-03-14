@@ -3,7 +3,7 @@
     <string name="app_name">HabReader</string>
     <string name="posts">Посты</string>
     <string name="qa">Q&amp;A</string>
-    <string name="blogs">Блоги</string>
+    <string name="hubs">Хабы</string>
     <string name="events">События</string>
     <string name="companies">Компании</string>
     <string name="people">Люди</string>
@@ -16,7 +16,7 @@
     <string name="loading_companies_list">Загрузка списка компаний</string>
     <string name="loading_events_list">Загрузка списка событий</string>
     <string name="loading_qa_list">Загрузка списка вопросов</string>
-    <string name="loading_blogs_list">Загрузка списка блогов</string>
+    <string name="loading_habs_list">Загрузка списка блогов</string>
     <string name="loading_posts_list">Загрузка списка постов</string>
     <string name="loading_qa_show">Загрузка вопроса</string>
     <string name="show_in_browser">Просмотреть в браузере</string>
@@ -25,7 +25,6 @@
     <string name="share_link_post">Пост на Habrahabr.ru</string>
     <string name="share_link_event">Мероприятие на Habrahabr.ru</string>
     <string name="rate_application">Оценить приложение</string>
-    <string name="version">Версия</string>
     <string name="preferences_fullscreen">Полноэкранный режим</string>
     <string name="preferences_keep_screen">Не выключать экран</string>
     <string name="preferences_fullscreen_summary">Потребуется перезапуск приложения</string>
@@ -52,7 +51,6 @@
 	<string name="preferences_use_habrahabr_css">Использовать CSS стили Habrahabr</string>
 	<string name="other_applications">Другие приложения</string>
 	<string name="loading_events_show">Загрузка события</string>
-	<string name="to_home">Домой</string>
 	<string name="loading_companies_show">Загрузка компании</string>
 	<string name="place_undefined">Страна не указана</string>
 	<string name="preferences_roaming">Разрешить работу в роуминге</string>

@@ -16,9 +16,9 @@
 
 package net.meiolania.apps.habrahabr.ui.dashboard;
 
+import net.meiolania.apps.habrahabr.ApplicationFragmentActivity;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
-import net.meiolania.apps.habrahabr.ui.activities.ApplicationFragmentActivity;
 import net.meiolania.apps.habrahabr.ui.blogs.BlogsActivity;
 import net.meiolania.apps.habrahabr.ui.companies.CompaniesActivity;
 import net.meiolania.apps.habrahabr.ui.events.EventsActivity;

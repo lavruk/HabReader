@@ -19,9 +19,9 @@ package net.meiolania.apps.habrahabr.ui.dashboard;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.meiolania.apps.habrahabr.ApplicationFragmentActivity;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
-import net.meiolania.apps.habrahabr.ui.activities.ApplicationFragmentActivity;
 import net.meiolania.apps.habrahabr.utils.StreamUtils;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.content.Intent;

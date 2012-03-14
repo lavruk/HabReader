@@ -19,8 +19,8 @@ package net.meiolania.apps.habrahabr.ui.dashboard;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.ApplicationListFragment;
 import net.meiolania.apps.habrahabr.api.ConnectionApi;
-import net.meiolania.apps.habrahabr.ui.fragments.ApplicationListFragment;
 import net.meiolania.apps.habrahabr.ui.posts.PostsAdapter;
 import net.meiolania.apps.habrahabr.ui.posts.PostsData;
 import net.meiolania.apps.habrahabr.ui.posts.PostsShowActivity;

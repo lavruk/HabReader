@@ -14,10 +14,8 @@
    limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.ui.activities;
+package net.meiolania.apps.habrahabr;
 
-import net.meiolania.apps.habrahabr.Api;
-import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 import android.content.Context;

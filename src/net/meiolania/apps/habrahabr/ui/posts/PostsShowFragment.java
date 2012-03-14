@@ -19,9 +19,9 @@ package net.meiolania.apps.habrahabr.ui.posts;
 import java.io.IOException;
 import java.util.Formatter;
 
+import net.meiolania.apps.habrahabr.ApplicationFragment;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.api.ConnectionApi;
-import net.meiolania.apps.habrahabr.ui.fragments.ApplicationFragment;
 import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 
 import org.jsoup.Jsoup;

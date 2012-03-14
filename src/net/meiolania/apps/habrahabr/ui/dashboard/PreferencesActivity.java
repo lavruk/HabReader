@@ -114,7 +114,8 @@ public class PreferencesActivity extends PreferenceActivity{
                 Intent intent = new Intent(android.content.Intent.ACTION_SEND);
                 intent.putExtra(android.content.Intent.EXTRA_EMAIL, emails);
                 intent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                intent.setType("text/plain");
+                intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
+                intent.setType("text/html");
                 startActivity(Intent.createChooser(intent, getString(R.string.preferences_send_review)));
                 return false;
             }
@@ -127,8 +128,7 @@ public class PreferencesActivity extends PreferenceActivity{
             public boolean onPreferenceClick(Preference preference){
                 Intent intent = new Intent(android.content.Intent.ACTION_SEND);
                 intent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                intent.putExtra(android.content.Intent.EXTRA_TEXT,
-                        getString(R.string.preferences_share_text, "https://market.android.com/details?id=net.meiolania.apps.habrahabr"));
+                intent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.preferences_share_text, "https://market.android.com/details?id=net.meiolania.apps.habrahabr"));
                 intent.setType("text/plain");
                 startActivity(Intent.createChooser(intent, getString(R.string.preferences_share)));
                 return false;

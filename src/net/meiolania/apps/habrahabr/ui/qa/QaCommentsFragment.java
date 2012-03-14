@@ -19,10 +19,10 @@ package net.meiolania.apps.habrahabr.ui.qa;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.ApplicationListFragment;
 import net.meiolania.apps.habrahabr.api.ConnectionApi;
 import net.meiolania.apps.habrahabr.ui.comments.CommentsAdapter;
 import net.meiolania.apps.habrahabr.ui.comments.CommentsData;
-import net.meiolania.apps.habrahabr.ui.fragments.ApplicationListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 

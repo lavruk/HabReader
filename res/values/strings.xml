@@ -71,4 +71,5 @@
 	<string name="new_posts">Новые</string>
 	<string name="main_posts">Захабренные</string>
 	<string name="best_posts">Лучшие</string>
+	<string name="preferences_send_review_summary">Отправить предложение об улучшении нам на email</string>
 </resources>

@@ -18,9 +18,9 @@ package net.meiolania.apps.habrahabr.ui.events;
 
 import java.io.IOException;
 
+import net.meiolania.apps.habrahabr.ApplicationFragment;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.api.ConnectionApi;
-import net.meiolania.apps.habrahabr.ui.fragments.ApplicationFragment;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

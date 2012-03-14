@@ -74,17 +74,12 @@
 
         <Preference
             android:key="send_review"
-            android:title="@string/preferences_send_review" />
+            android:title="@string/preferences_send_review"
+            android:summary="@string/preferences_send_review_summary" />
 
         <Preference
             android:key="share"
             android:title="@string/preferences_share" />
-
-        <Preference
-            android:key="version"
-            android:selectable="false"
-            android:summary="1.0 beta-4"
-            android:title="@string/version" />
     </PreferenceCategory>
 
 </PreferenceScreen>

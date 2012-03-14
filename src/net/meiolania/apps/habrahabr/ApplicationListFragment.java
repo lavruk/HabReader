@@ -14,15 +14,13 @@
    limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.ui.fragments;
+package net.meiolania.apps.habrahabr;
 
-import net.meiolania.apps.habrahabr.Api;
-import net.meiolania.apps.habrahabr.Preferences;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 
-public abstract class ApplicationFragment extends Fragment{
+public abstract class ApplicationListFragment extends ListFragment{
     protected Preferences preferences;
     protected SharedPreferences sharedPreferences;
     

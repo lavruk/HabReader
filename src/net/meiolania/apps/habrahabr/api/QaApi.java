@@ -41,18 +41,17 @@ public class QaApi{
     public void getQa(ArrayList<QAData> qaDataList, int page) throws IOException{
         Document document = Jsoup.connect("http://habrahabr.ru/qa/page" + page + "/").get();
         Elements qaList = document.select("div.post");
-
-        for(Element question : qaList){
+        
+        for(Element qa : qaList){
             QAData qaData = new QAData();
-
-            Element link = question.select("a.post_title").first();
-            qaData.setTitle(link.text());
-
-            qaData.setLink(link.attr("abs:href"));
-
-            Element tags = question.select("ul.tags").first();
-            qaData.setTags(tags.text());
-
+            
+            Element title = qa.select("a.post_title").first();
+            Element hubs = qa.select("div.hubs").first();
+            
+            qaData.setLink(title.attr("abs:href"));
+            qaData.setTitle(title.text());
+            qaData.setTags(hubs.text());
+            
             qaDataList.add(qaData);
         }
     }

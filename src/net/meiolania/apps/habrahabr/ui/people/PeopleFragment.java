@@ -103,7 +103,7 @@ public class PeopleFragment extends ApplicationListFragment implements OnScrollL
                 if(UIUtils.isTablet(getActivity()) || preferences.isUseTabletDesign()){
                     getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
                     showUser(0);
-                }   
+                }
                 
                 getListView().setOnScrollListener(PeopleFragment.this);
             }else

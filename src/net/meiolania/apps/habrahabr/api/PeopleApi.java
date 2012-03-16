@@ -41,32 +41,23 @@ public class PeopleApi{
 
     public void getPeople(ArrayList<PeopleData> peopleDataList, int page) throws IOException{
         Document document = Jsoup.connect("http://habrahabr.ru/people/page" + page + "/").get();
-        Element tableUsers = document.select("table.users-list").first();
-
-        Elements dataUsers = tableUsers.getElementsByTag("tr");
-
-        boolean firstElement = true;
-        for(Element user : dataUsers){
-            /*
-             * Need to skip an empty block
-             */
-            if(firstElement){
-                firstElement = false;
-                continue;
-            }
+        Elements users = document.select("div.user");
+        
+        for(Element user : users){
             PeopleData peopleData = new PeopleData();
-
-            Element userKarma = user.select("td.userkarma").first();
-            Element userRating = user.select("td.userrating").first();
-            Element userLink = user.select("div.habrauserava > a").first();
-            Element userAvatar = user.getElementsByTag("img").first();
             
-            peopleData.setAvatar(userAvatar.attr("src"));
-            peopleData.setName(userAvatar.attr("alt"));
-            peopleData.setKarma(userKarma.text());
-            peopleData.setRating(userRating.text());
+            Element userLink = user.select("div.avatar > a").first();
+            Element userAvatar = user.select("div.avatar > a > img").first();
+            Element userRating = user.select("div.rating").first();
+            Element userKarma = user.select("div.karma").first();
+            Element userName = user.select("div.username > a").first();
+            
             peopleData.setLink(userLink.attr("abs:href"));
-
+            peopleData.setAvatar(userAvatar.attr("src"));
+            peopleData.setRating(userRating.text());
+            peopleData.setKarma(userKarma.text());
+            peopleData.setName(userName.text());
+            
             peopleDataList.add(peopleData);
         }
     }

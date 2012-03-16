@@ -41,25 +41,18 @@ public class CompaniesApi{
 
     public void getCompanies(ArrayList<CompaniesData> companiesDataList, int page) throws IOException{
         Document document = Jsoup.connect("http://habrahabr.ru/companies/page" + page + "/").get();
-        Element tableCompanies = document.select("ul.corps-list").first();
-
-        Elements dataCompanies = tableCompanies.select("li");
-
-        boolean firstElement = true;
-        for(Element company : dataCompanies){
-            if(firstElement){
-                firstElement = false;
-                continue;
-            }
+        Elements companies = document.select("div.company");
+        
+        for(Element company : companies){
             CompaniesData companiesData = new CompaniesData();
-
-            Element logo = company.getElementsByTag("img").first();
-            Element link = company.select("dt.corp-name > a").first();
             
-            companiesData.setLink(link.attr("abs:href"));
-            companiesData.setLogo("http://habrahabr.ru" + logo.attr("src"));
-            companiesData.setTitle(logo.attr("title"));
-
+            Element companyTitle = company.select("div.name > a").first();
+            Element companyLogo = company.select("div.icon > img").first();
+            
+            companiesData.setLink(companyTitle.attr("abs:href"));
+            companiesData.setTitle(companyTitle.text());
+            companiesData.setLogo(companyLogo.attr("src"));
+            
             companiesDataList.add(companiesData);
         }
     }

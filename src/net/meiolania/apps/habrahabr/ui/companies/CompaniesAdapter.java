@@ -18,6 +18,7 @@ package net.meiolania.apps.habrahabr.ui.companies;
 
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.Api;
 import net.meiolania.apps.habrahabr.R;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -67,7 +68,7 @@ public class CompaniesAdapter extends BaseAdapter{
         ImageView logo = (ImageView) view.findViewById(R.id.list_logo);
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(context));
-        imageLoader.displayImage(companiesData.getLogo(), logo);
+        imageLoader.displayImage(Api.MAIN_PAGE + companiesData.getLogo(), logo);
 
         return view;
     }

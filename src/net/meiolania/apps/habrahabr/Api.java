@@ -27,6 +27,7 @@ import net.meiolania.apps.habrahabr.api.QaApi;
 import net.meiolania.apps.habrahabr.api.QaCommentsApi;
 
 public final class Api{
+    public final static String MAIN_PAGE = "http://habrahabr.ru";
     private static Api apiInstance = null;
     
     public static Api getInstance(){

@@ -20,8 +20,8 @@ import com.markupartist.android.widget.ActionBar;
 
 import net.meiolania.apps.habrahabr.ApplicationFragmentActivity;
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
 import net.meiolania.apps.habrahabr.ui.dashboard.DashboardActivity;
+import net.meiolania.apps.habrahabr.ui.widgets.ActionBarHomeAction;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.content.Intent;
 import android.os.Bundle;
@@ -57,7 +57,7 @@ public class CompaniesActivity extends ApplicationFragmentActivity{
         if(!UIUtils.isHoneycombOrHigher()){
             ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
             actionBar.setTitle(R.string.companies);
-            actionBar.setHomeAction(new HomeAction(this, preferences));
+            actionBar.setHomeAction(new ActionBarHomeAction(this, preferences));
         }else{
             ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
             actionBarView.setVisibility(View.GONE);

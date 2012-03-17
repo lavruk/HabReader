@@ -14,7 +14,7 @@
    limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.ui.actions;
+package net.meiolania.apps.habrahabr.ui.widgets;
 
 import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
@@ -26,17 +26,17 @@ import android.view.View;
 
 import com.markupartist.android.widget.ActionBar.Action;
 
-public class HomeAction implements Action{
+public class ActionBarHomeAction implements Action{
     private Context context;
     private boolean noPerformAction = false;
     private Preferences preferences;
     
-    public HomeAction(Context context, Preferences preferences){
+    public ActionBarHomeAction(Context context, Preferences preferences){
         this.context = context;
         this.preferences = preferences;
     }
     
-    public HomeAction(Context context, Preferences preferences, boolean noPerformAction){
+    public ActionBarHomeAction(Context context, Preferences preferences, boolean noPerformAction){
         this(context, preferences);
         this.noPerformAction = noPerformAction;
     }

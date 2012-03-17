@@ -100,16 +100,20 @@ public class CompaniesShowFragment extends ApplicationFragment{
         private final static int INFO_ABOUT_COMPANY = 6;
         private final static int INFO_LEADERSHIP = 7;
         private final static int INFO_STAGES = 8;
-
+        
         @Override
         protected Void doInBackground(Void... params){
             try{
                 Document document = Jsoup.connect(link).get();
+                
+                /*
+                 * TODO: The code below must be rewrite!
+                 */
+                
+                Element titleElement = document.select("div.name > a").first();
+                Elements companyInfo = document.select("div.company_profile > dl");
 
-                Element favicon = document.select("img.favicon").first();
-                Elements companyInfo = document.select("div.userinfo > dl");
-
-                title = favicon.attr("alt");
+                title = titleElement.text();
 
                 int i = 1;
                 for(Element info : companyInfo){

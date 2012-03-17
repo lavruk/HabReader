@@ -18,7 +18,7 @@ package net.meiolania.apps.habrahabr.ui.dashboard;
 
 import net.meiolania.apps.habrahabr.ApplicationFragmentActivity;
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
+import net.meiolania.apps.habrahabr.ui.widgets.ActionBarHomeAction;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -42,7 +42,7 @@ public class SignInActivity extends ApplicationFragmentActivity{
         if(!UIUtils.isHoneycombOrHigher()){
             ActionBar actionBar = (ActionBar)findViewById(R.id.actionbar);
             actionBar.setTitle(R.string.sign_in);
-            actionBar.setHomeAction(new HomeAction(this, preferences));
+            actionBar.setHomeAction(new ActionBarHomeAction(this, preferences));
         }else{
             ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);
             actionBarView.setVisibility(View.GONE);

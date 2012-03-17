@@ -18,13 +18,13 @@ package net.meiolania.apps.habrahabr.ui.dashboard;
 
 import net.meiolania.apps.habrahabr.ApplicationFragmentActivity;
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.ui.actions.HomeAction;
 import net.meiolania.apps.habrahabr.ui.companies.CompaniesActivity;
 import net.meiolania.apps.habrahabr.ui.events.EventsActivity;
 import net.meiolania.apps.habrahabr.ui.hubs.HubsActivity;
 import net.meiolania.apps.habrahabr.ui.people.PeopleActivity;
 import net.meiolania.apps.habrahabr.ui.posts.PostsActivity;
 import net.meiolania.apps.habrahabr.ui.qa.QaActivity;
+import net.meiolania.apps.habrahabr.ui.widgets.ActionBarHomeAction;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import net.meiolania.apps.habrahabr.utils.VibrateUtils;
 import android.content.Intent;
@@ -68,7 +68,7 @@ public class DashboardActivity extends ApplicationFragmentActivity{
             
             if(actionBar != null){
                 actionBar.setTitle(R.string.app_name);
-                actionBar.setHomeAction(new HomeAction(this, preferences, true));
+                actionBar.setHomeAction(new ActionBarHomeAction(this, preferences, true));
             }
         }else{
             ActionBar actionBarView = (ActionBar) findViewById(R.id.actionbar);

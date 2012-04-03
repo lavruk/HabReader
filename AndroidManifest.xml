@@ -2,8 +2,8 @@
 <manifest 
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.meiolania.apps.habrahabr"
-    android:versionCode="4"
-    android:versionName="1.0 beta-4"
+    android:versionCode="5"
+    android:versionName="1.0"
     android:installLocation="auto">
 
     <uses-sdk android:minSdkVersion="4" />
@@ -17,51 +17,14 @@
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme"
+        android:theme="@style/Theme.Styled"
         android:hardwareAccelerated="true"
         android:debuggable="true">
         
-        <activity
-            android:label="@string/app_name"
-            android:name=".ui.dashboard.DashboardActivity"
-            android:configChanges="orientation|keyboard|keyboardHidden">
-            <intent-filter >
+        <activity android:name=".activities.MainActivity">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".ui.dashboard.AboutInfoActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".ui.dashboard.PreferencesActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        
-        <activity android:name=".ui.dashboard.SignInActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        
-        <activity android:name=".ui.people.PeopleActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".ui.people.PeopleShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        
-        <activity android:name=".ui.companies.CompaniesActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".ui.companies.CompaniesShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        
-        <activity android:name=".ui.events.EventsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".ui.events.EventsShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        
-        <activity android:name=".ui.qa.QaActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".ui.qa.QaShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".ui.qa.QaCommentsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        
-        <activity android:name=".ui.hubs.HubsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        
-        <activity android:name=".ui.posts.PostsActivity"
-            android:uiOptions="splitActionBarWhenNarrow"
-            android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".ui.posts.PostsShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".ui.posts.PostsCommentsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        
-        <activity android:name=".ui.dashboard.HabrahabrIntentFilter">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
-                <category android:name="android.intent.category.BROWSABLE"></category>
-                <data android:scheme="http" android:pathPattern="/.*" android:host="habrahabr.ru"></data>
             </intent-filter>
         </activity>
         

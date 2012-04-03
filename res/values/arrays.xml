@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Navigation -->
+	<string-array name="navigation_titles">
+	    <item>Посты</item>
+	    <item>Q&amp;A</item>
+	    <item>События</item>
+	    <item>Хабы</item>
+	    <item>Компании</item>
+	    <item>Пользователи</item>
+	</string-array>
+</resources>

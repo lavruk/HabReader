@@ -6,7 +6,7 @@
     android:versionName="1.0"
     android:installLocation="auto">
 
-    <uses-sdk android:minSdkVersion="4" />
+    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="14" />
     
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -30,9 +30,13 @@
         
         <activity android:name=".activities.PreferencesActivity">
             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.PREFERENCE" />
             </intent-filter>
         </activity>
+        
+        <!-- Posts -->
+        <activity android:name=".activities.PostsActivity" />
         
         <service android:name="net.robotmedia.billing.BillingService" />
 		<receiver android:name="net.robotmedia.billing.BillingReceiver">

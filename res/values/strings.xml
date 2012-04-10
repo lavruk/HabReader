@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">HabReader</string>
-	<string name="preferences">Настройки</string>
-	<string name="about_application">О приложении</string>
-	<string name="more_applications">Другие приложения</string>
+	<!-- Dashboard titles -->
 	<string name="posts">Посты</string>
 	<string name="qa">Q&amp;A</string>
 	<string name="events">События</string>
 	<string name="hubs">Хабы</string>
 	<string name="companies">Компании</string>
 	<string name="users">Пользователи</string>
-	<string name="best">Лучшие</string>
-	<string name="thematic">Тематические</string>
-	<string name="corporate">Корпоративные</string>
+	<!-- Dashboard menus -->
+	<string name="preferences">Настройки</string>
+	<string name="more_applications">Другие приложения</string>
+	<string name="search">Поиск</string>
+	<!-- Preferences -->
+	<string name="base_preferences">Основные настройки</string>
+	<string name="posts_preferences">Посты</string>
+	<string name="additional_preferences">Дополнительная информация</string>
+	<string name="version">Версия приложения</string>
+	<string name="donate_preferences">Помочь разработке</string>
+	<string name="donate_thanks_preferences">Спасибо за поддержку приложения!</string>
+	<string name="about_application_preferences">О приложении</string>
 </resources>

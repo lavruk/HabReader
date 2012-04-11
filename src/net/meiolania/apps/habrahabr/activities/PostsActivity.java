@@ -4,41 +4,49 @@ import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.BestPostsFragment;
 import net.meiolania.apps.habrahabr.fragments.CorporatePostsFragment;
 import net.meiolania.apps.habrahabr.fragments.ThematicPostsFragment;
-import net.meiolania.apps.habrahabr.ui.TabManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TabHost;
+import android.support.v4.app.FragmentTransaction;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.Tab;
+import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class PostsActivity extends SherlockFragmentActivity{
+public class PostsActivity extends SherlockFragmentActivity implements TabListener{
     
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tabs);
         showActionBar();
-        setupTabs();
     }
-    
+
     private void showActionBar(){
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.posts);
-    }
-    
-    private void setupTabs(){
-        final TabHost tabHost = (TabHost) findViewById(android.R.id.tabhost);
-        tabHost.setup();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        Tab tab = actionBar.newTab().setText(R.string.best).setTag("best").setTabListener(this);
+        actionBar.addTab(tab);
         
-        final TabManager tabManager = new TabManager(this, tabHost, R.id.realtabcontent);
-        tabManager.addTab(tabHost.newTabSpec("best").setIndicator(getString(R.string.best)), BestPostsFragment.class, null);
-        tabManager.addTab(tabHost.newTabSpec("thematic").setIndicator(getString(R.string.thematic)), ThematicPostsFragment.class, null);
-        tabManager.addTab(tabHost.newTabSpec("corporate").setIndicator(getString(R.string.corporate)), CorporatePostsFragment.class, null);
+        tab = actionBar.newTab().setText(R.string.thematic).setTag("thematic").setTabListener(this);
+        actionBar.addTab(tab);
+        
+        tab = actionBar.newTab().setText(R.string.corporate).setTag("corporate").setTabListener(this);
+        actionBar.addTab(tab);
     }
     
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater menuInflater = getSupportMenuInflater();
+        menuInflater.inflate(R.menu.posts_activity, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
@@ -50,5 +58,26 @@ public class PostsActivity extends SherlockFragmentActivity{
         }
         return super.onOptionsItemSelected(item);
     }
-    
+
+    public void onTabSelected(Tab tab, FragmentTransaction ft){
+        if(tab.getTag().equals("best")){
+            BestPostsFragment bestPostsFragment = new BestPostsFragment();
+            ft.replace(android.R.id.content, bestPostsFragment);
+        }else if(tab.getTag().equals("thematic")){
+            ThematicPostsFragment thematicPostsFragment = new ThematicPostsFragment();
+            ft.replace(android.R.id.content, thematicPostsFragment);
+        }else if(tab.getTag().equals("corporate")){
+            CorporatePostsFragment corporatePostsFragment = new CorporatePostsFragment();
+            ft.replace(android.R.id.content, corporatePostsFragment);
+        }
+    }
+
+    public void onTabUnselected(Tab tab, FragmentTransaction ft){
+        
+    }
+
+    public void onTabReselected(Tab tab, FragmentTransaction ft){
+        
+    }
+
 }

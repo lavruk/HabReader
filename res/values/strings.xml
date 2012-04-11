@@ -15,7 +15,7 @@
 	<!-- Posts -->
 	<string name="best">Лучшие</string>
 	<string name="thematic">Тематические</string>
-	<string name="corporate">Корпоративные</string>
+	<string name="corporate">Корпоратив...</string>
 	<!-- Preferences -->
 	<string name="base_preferences">Основные настройки</string>
 	<string name="posts_preferences">Посты</string>

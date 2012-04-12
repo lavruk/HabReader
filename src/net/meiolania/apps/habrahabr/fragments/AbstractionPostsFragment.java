@@ -3,6 +3,7 @@ package net.meiolania.apps.habrahabr.fragments;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.activities.PostsShowActivity;
 import net.meiolania.apps.habrahabr.adapters.PostsAdapter;
 import net.meiolania.apps.habrahabr.data.PostsData;
 
@@ -11,11 +12,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
@@ -38,7 +42,7 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
         ++page;
         getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
         new LoadPosts().execute();
-    }    
+    }
 
     protected abstract String getUrl();
 
@@ -47,7 +51,7 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
         @Override
         protected Void doInBackground(Void... params){
             try{
-                //getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+                // getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
                 Log.d(LOG_TAG, "Loading " + String.format(getUrl(), page));
 
                 Document document = Jsoup.connect(String.format(getUrl(), page)).get();
@@ -81,9 +85,9 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
             if(!isCancelled())
                 postsAdapter.notifyDataSetChanged();
             loadMoreData = true;
-            //getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
+            // getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
             /*
-             * Okay, that's work. But I'm not sure that's a good solution.
+             * Okay, that works. But I'm not sure that's a good solution.
              */
             getSherlockActivity().runOnUiThread(new Runnable(){
                 public void run(){
@@ -92,6 +96,18 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
             });
         }
 
+    }
+
+    @Override
+    public void onListItemClick(ListView list, View view, int position, long id){
+        showPost(position);
+    }
+
+    protected void showPost(int position){
+        PostsData postsData = postsDatas.get(position);
+        final Intent intent = new Intent(getSherlockActivity(), PostsShowActivity.class);
+        intent.putExtra(PostsShowActivity.EXTRA_URL, postsData.getUrl());
+        startActivity(intent);
     }
 
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){

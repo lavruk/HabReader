@@ -3,6 +3,14 @@
     
     <PreferenceScreen android:title="@string/base_preferences">
         
+        <CheckBoxPreference
+            android:key="fullscreen"
+            android:title="@string/fullscreen_preferences" />
+        
+        <CheckBoxPreference
+            android:key="vibrate"
+            android:title="@string/vibrate_preferences" />
+        
     </PreferenceScreen>
     
     <PreferenceScreen android:title="@string/posts_preferences">

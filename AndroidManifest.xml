@@ -36,6 +36,7 @@
         
         <!-- Posts -->
         <activity android:name=".activities.PostsActivity" />
+        <activity android:name=".activities.PostsShowActivity" />
         
         <service android:name="net.robotmedia.billing.BillingService" />
 		<receiver android:name="net.robotmedia.billing.BillingReceiver">

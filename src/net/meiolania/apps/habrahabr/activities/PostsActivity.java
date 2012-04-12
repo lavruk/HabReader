@@ -7,6 +7,7 @@ import net.meiolania.apps.habrahabr.fragments.ThematicPostsFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Window;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -20,6 +21,7 @@ public class PostsActivity extends SherlockFragmentActivity implements TabListen
     
     @Override
     protected void onCreate(Bundle savedInstanceState){
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
         showActionBar();
     }

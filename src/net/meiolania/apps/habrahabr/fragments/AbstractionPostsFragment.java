@@ -13,29 +13,32 @@ import org.jsoup.select.Elements;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
 public abstract class AbstractionPostsFragment extends SherlockListFragment implements OnScrollListener{
+    public final static String LOG_TAG = "PostsFragment";
     protected final ArrayList<PostsData> postsDatas = new ArrayList<PostsData>();
     protected PostsAdapter postsAdapter;
     protected int page = 0;
+    protected boolean loadMoreData = true;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         postsAdapter = new PostsAdapter(getActivity(), postsDatas);
         setListAdapter(postsAdapter);
-        loadList();
         getListView().setOnScrollListener(this);
     }
 
     protected void loadList(){
         ++page;
+        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
         new LoadPosts().execute();
-    }
+    }    
 
     protected abstract String getUrl();
 
@@ -44,7 +47,8 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
         @Override
         protected Void doInBackground(Void... params){
             try{
-                // getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+                //getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+                Log.d(LOG_TAG, "Loading " + String.format(getUrl(), page));
 
                 Document document = Jsoup.connect(String.format(getUrl(), page)).get();
                 Elements posts = document.select("div.post");
@@ -76,18 +80,30 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
         protected void onPostExecute(Void result){
             if(!isCancelled())
                 postsAdapter.notifyDataSetChanged();
-            // getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
+            loadMoreData = true;
+            //getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
+            /*
+             * Okay, that's work. But I'm not sure that's a good solution.
+             */
+            getSherlockActivity().runOnUiThread(new Runnable(){
+                public void run(){
+                    getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
+                }
+            });
         }
 
     }
 
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
-        if((firstVisibleItem + visibleItemCount) == totalItemCount && page != 0)
+        if((firstVisibleItem + visibleItemCount) == totalItemCount && loadMoreData){
+            loadMoreData = false;
             loadList();
+            Log.i(LOG_TAG, "Loading " + page + " page");
+        }
     }
 
     public void onScrollStateChanged(AbsListView view, int scrollState){
-        
+
     }
 
 }

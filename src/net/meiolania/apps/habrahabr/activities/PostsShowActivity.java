@@ -15,10 +15,12 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class PostsShowActivity extends SherlockFragmentActivity implements TabListener{
     public final static String EXTRA_URL = "url";
+    private String url;
     
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        url = getIntent().getStringExtra(EXTRA_URL);
         showActionBar();
     }
     
@@ -48,7 +50,7 @@ public class PostsShowActivity extends SherlockFragmentActivity implements TabLi
 
     public void onTabSelected(Tab tab, FragmentTransaction ft){
         if(tab.getTag().equals("post")){
-            ShowPostFragment showPostFragment = new ShowPostFragment();
+            ShowPostFragment showPostFragment = new ShowPostFragment(url);
             ft.replace(android.R.id.content, showPostFragment);
         }else if(tab.getTag().equals("comments")){
             ShowCommentsFragment showCommentsFragment = new ShowCommentsFragment();

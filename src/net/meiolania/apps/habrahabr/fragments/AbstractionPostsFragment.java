@@ -29,7 +29,7 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
     protected PostsAdapter postsAdapter;
     protected int page = 0;
     protected boolean loadMoreData = true;
-
+    
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);

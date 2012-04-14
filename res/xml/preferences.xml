@@ -11,6 +11,10 @@
             android:key="vibrate"
             android:title="@string/vibrate_preferences" />
         
+        <CheckBoxPreference
+            android:key="keepscreen"
+            android:title="@string/keepscreen_preferences" />
+        
     </PreferenceScreen>
     
     <PreferenceScreen android:title="@string/posts_preferences">
@@ -28,7 +32,7 @@
             android:title="@string/about_application_preferences" />
         
         <Preference
-            android:title="@string/version"
+            android:title="@string/version_preferences"
             android:summary="1.0" />
         
     </PreferenceScreen>

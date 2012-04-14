@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">HabReader</string>
+	<!-- Base -->
+	<string name="loading">Загрузка</string>
+	<string name="share">Поделиться</string>
 	<!-- Dashboard titles -->
 	<string name="posts">Посты</string>
 	<string name="qa">Q&amp;A</string>
@@ -18,14 +21,16 @@
 	<string name="corporate">Корпоративные</string>
 	<string name="post">Пост</string>
 	<string name="comments">Комментарии</string>
+	<string name="loading_post">Загрузка поста</string>
 	<!-- Preferences -->
 	<string name="base_preferences">Основные настройки</string>
 	<string name="posts_preferences">Посты</string>
 	<string name="additional_preferences">Дополнительная информация</string>
-	<string name="version">Версия приложения</string>
+	<string name="version_preferences">Версия приложения</string>
 	<string name="donate_preferences">Помочь разработке</string>
 	<string name="donate_thanks_preferences">Спасибо за поддержку приложения!</string>
 	<string name="about_application_preferences">О приложении</string>
 	<string name="fullscreen_preferences">Полноэкранный режим</string>
 	<string name="vibrate_preferences">Включить вибрацию</string>
+	<string name="keepscreen_preferences">Не выключать экран</string>
 </resources>

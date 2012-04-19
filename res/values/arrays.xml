@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	
+    <string-array name="hubs_list">
+        <item>Все хабы</item>
+        <item>API</item>
+        <item>Администрирование</item>
+        <item>Базы данных</item>
+        <item>Безопасность</item>
+        <item>Дизайн, графика, звук</item>
+        <item>Железо и гаджеты</item>
+        <item>Компании и сервисы</item>
+        <item>Менеджмент</item>
+        <item>Программирование</item>
+        <item>Программное обеспечение</item>
+        <item>Телекоммуникации</item>
+        <item>Фреймворки и CMS</item>
+        <item>Фронтэнд</item>
+        <item>Разное</item>
+    </string-array>
+    
+</resources>

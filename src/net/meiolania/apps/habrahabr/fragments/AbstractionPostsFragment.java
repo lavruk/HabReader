@@ -82,15 +82,15 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
 
         @Override
         protected void onPostExecute(Void result){
-            if(!isCancelled())
-                postsAdapter.notifyDataSetChanged();
-            loadMoreData = true;
             // getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
             /*
              * Okay, that works. But I'm not sure that's a good solution.
              */
             getSherlockActivity().runOnUiThread(new Runnable(){
                 public void run(){
+                    if(!isCancelled())
+                        postsAdapter.notifyDataSetChanged();
+                    loadMoreData = true;
                     getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
                 }
             });

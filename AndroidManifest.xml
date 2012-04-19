@@ -38,6 +38,9 @@
         <activity android:name=".activities.PostsActivity" />
         <activity android:name=".activities.PostsShowActivity" />
         
+        <!-- Hubs -->
+        <activity android:name=".activities.HubsActivity" />
+        
         <service android:name="net.robotmedia.billing.BillingService" />
 		<receiver android:name="net.robotmedia.billing.BillingReceiver">
 			<intent-filter>

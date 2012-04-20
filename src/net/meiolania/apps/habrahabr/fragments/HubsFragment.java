@@ -3,6 +3,7 @@ package net.meiolania.apps.habrahabr.fragments;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.activities.HubsShowActivity;
 import net.meiolania.apps.habrahabr.adapters.HubsAdapter;
 import net.meiolania.apps.habrahabr.data.HubsData;
 
@@ -11,10 +12,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.AbsListView;
+import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
 
 import com.actionbarsherlock.app.SherlockListFragment;
@@ -97,6 +101,19 @@ public class HubsFragment extends SherlockListFragment implements OnScrollListen
             });
         }
 
+    }
+    
+    @Override
+    public void onListItemClick(ListView list, View view, int position, long id){
+        showHub(position);
+    }
+    
+    protected void showHub(int position){
+        HubsData hubsData = hubsDatas.get(position);
+        final Intent intent = new Intent(getSherlockActivity(), HubsShowActivity.class);
+        intent.putExtra(HubsShowActivity.EXTRA_URL, hubsData.getUrl());
+        intent.putExtra(HubsShowActivity.EXTRA_TITLE, hubsData.getTitle());
+        startActivity(intent);
     }
 
     public void setUrl(String url){

@@ -52,7 +52,7 @@ public class DashboardActivity extends SherlockActivity implements OnClickListen
                 startActivity(new Intent(this, HubsActivity.class));
                 break;
             case R.id.qa:
-                
+                startActivity(new Intent(this, QaActivity.class));
                 break;
             case R.id.events:
                 

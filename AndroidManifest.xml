@@ -42,6 +42,9 @@
         <activity android:name=".activities.HubsActivity" />
         <activity android:name=".activities.HubsShowActivity" />
         
+        <!-- Q&A -->
+        <activity android:name=".activities.QaActivity" />
+        
         <service android:name="net.robotmedia.billing.BillingService" />
 		<receiver android:name="net.robotmedia.billing.BillingReceiver">
 			<intent-filter>

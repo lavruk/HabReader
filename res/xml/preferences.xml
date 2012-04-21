@@ -8,10 +8,6 @@
             android:title="@string/fullscreen_preferences" />
         
         <CheckBoxPreference
-            android:key="vibrate"
-            android:title="@string/vibrate_preferences" />
-        
-        <CheckBoxPreference
             android:key="keepscreen"
             android:title="@string/keepscreen_preferences" />
         

@@ -4,11 +4,11 @@ import android.content.Context;
 import android.os.Vibrator;
 
 public class VibrateUtils{
-    public final static long DEFAULT_LONG_VIBRATE = 50;
+    public final static long DEFAULT_VIBRATE = 50;
 
     public static void doVibrate(Context context){
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(DEFAULT_LONG_VIBRATE);
+        vibrator.vibrate(DEFAULT_VIBRATE);
     }
 
     public static void doVibrate(Context context, long milliseconds){

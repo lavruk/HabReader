@@ -4,6 +4,10 @@
 	<!-- Base -->
 	<string name="loading">Загрузка</string>
 	<string name="share">Поделиться</string>
+	<string name="inbox">Входящие</string>
+	<string name="hot">Горячие</string>
+	<string name="popular">Популярные</string>
+	<string name="unanswered">Без ответа</string>
 	<!-- Dashboard titles -->
 	<string name="posts">Посты</string>
 	<string name="qa">Q&amp;A</string>
@@ -31,6 +35,5 @@
 	<string name="donate_thanks_preferences">Спасибо за поддержку приложения!</string>
 	<string name="about_application_preferences">О приложении</string>
 	<string name="fullscreen_preferences">Полноэкранный режим</string>
-	<string name="vibrate_preferences">Включить вибрацию</string>
 	<string name="keepscreen_preferences">Не выключать экран</string>
 </resources>

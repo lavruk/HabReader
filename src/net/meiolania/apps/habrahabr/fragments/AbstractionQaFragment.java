@@ -3,6 +3,7 @@ package net.meiolania.apps.habrahabr.fragments;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.activities.QaShowActivity;
 import net.meiolania.apps.habrahabr.adapters.QaAdapter;
 import net.meiolania.apps.habrahabr.data.QaData;
 
@@ -11,11 +12,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
@@ -87,6 +91,19 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
             });
         }
 
+    }
+    
+    @Override
+    public void onListItemClick(ListView list, View view, int position, long id){
+        showQa(position);
+    }
+    
+    protected void showQa(int position){
+        QaData qaData = qaDatas.get(position);
+        final Intent intent = new Intent(getSherlockActivity(), QaShowActivity.class);
+        intent.putExtra(QaShowActivity.EXTRA_URL, qaData.getUrl());
+        intent.putExtra(QaShowActivity.EXTRA_TITLE, qaData.getTitle());
+        startActivity(intent);
     }
 
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){

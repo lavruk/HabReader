@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
@@ -44,7 +43,7 @@ public class ShowPostFragment extends SherlockFragment{
         super.onActivityCreated(savedInstanceState);
         loadPost();
     }
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         return inflater.inflate(R.layout.posts_show_activity, container, false);
@@ -78,7 +77,7 @@ public class ShowPostFragment extends SherlockFragment{
                 Element content = document.select("div.content").first();
                 Element date = document.select("div.published").first();
                 Element author = document.select("div.author > a").first();
-                
+
                 postsFullData.setUrl(url);
                 postsFullData.setTitle(title.text());
                 postsFullData.setHubs(hubs.text());
@@ -104,9 +103,7 @@ public class ShowPostFragment extends SherlockFragment{
         protected void onPostExecute(final PostsFullData result){
             getSherlockActivity().runOnUiThread(new Runnable(){
                 public void run(){
-                    getSherlockActivity().getSupportActionBar().setTitle(result.getTitle());
-                    
-                    WebView content = (WebView)getSherlockActivity().findViewById(R.id.content);
+                    WebView content = (WebView) getSherlockActivity().findViewById(R.id.content);
                     content.getSettings().setPluginsEnabled(true);
                     content.getSettings().setSupportZoom(true);
                     content.getSettings().setBuiltInZoomControls(true);

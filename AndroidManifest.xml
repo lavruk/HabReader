@@ -44,6 +44,7 @@
         
         <!-- Q&A -->
         <activity android:name=".activities.QaActivity" />
+        <activity android:name=".activities.QaShowActivity" />
         
         <service android:name="net.robotmedia.billing.BillingService" />
 		<receiver android:name="net.robotmedia.billing.BillingReceiver">

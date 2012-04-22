@@ -7,7 +7,6 @@
 	<string name="inbox">Входящие</string>
 	<string name="hot">Горячие</string>
 	<string name="popular">Популярные</string>
-	<string name="unanswered">Без ответа</string>
 	<!-- Dashboard titles -->
 	<string name="posts">Посты</string>
 	<string name="qa">Q&amp;A</string>
@@ -26,6 +25,9 @@
 	<string name="post">Пост</string>
 	<string name="comments">Комментарии</string>
 	<string name="loading_post">Загрузка поста</string>
+	<!-- Q&A -->
+	<string name="question">Вопрос</string>
+	<string name="unanswered">Без ответа</string>
 	<!-- Preferences -->
 	<string name="base_preferences">Основные настройки</string>
 	<string name="posts_preferences">Посты</string>

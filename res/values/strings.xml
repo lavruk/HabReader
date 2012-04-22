@@ -28,6 +28,10 @@
 	<!-- Q&A -->
 	<string name="question">Вопрос</string>
 	<string name="unanswered">Без ответа</string>
+	<!-- Events -->
+	<string name="coming">Предстоящие</string>
+	<string name="current">Текущие</string>
+	<string name="past">Прошедшие</string>
 	<!-- Preferences -->
 	<string name="base_preferences">Основные настройки</string>
 	<string name="posts_preferences">Посты</string>

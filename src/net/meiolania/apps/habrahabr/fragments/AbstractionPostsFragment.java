@@ -51,7 +51,6 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
         @Override
         protected Void doInBackground(Void... params){
             try{
-                // getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
                 Log.d(LOG_TAG, "Loading " + String.format(getUrl(), page));
 
                 Document document = Jsoup.connect(String.format(getUrl(), page)).get();

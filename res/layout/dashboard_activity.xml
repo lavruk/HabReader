@@ -40,10 +40,10 @@
         android:text="@string/companies" />
 
     <Button
-        android:id="@+id/users"
+        android:id="@+id/people"
         style="@style/DashboardButton"
-        android:drawableTop="@drawable/ic_db_users"
+        android:drawableTop="@drawable/ic_db_people"
         android:onClick="onClick"
-        android:text="@string/users" />
+        android:text="@string/people" />
 
 </net.meiolania.apps.habrahabr.ui.DashboardLayout>

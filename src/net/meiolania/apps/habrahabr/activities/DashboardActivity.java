@@ -60,8 +60,8 @@ public class DashboardActivity extends SherlockActivity implements OnClickListen
             case R.id.companies:
                 startActivity(new Intent(this, CompaniesActivity.class));
                 break;
-            case R.id.users:
-                
+            case R.id.people:
+                startActivity(new Intent(this, PeopleActivity.class));
                 break;
         }
     }

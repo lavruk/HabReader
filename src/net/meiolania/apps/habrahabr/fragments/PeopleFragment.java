@@ -3,8 +3,8 @@ package net.meiolania.apps.habrahabr.fragments;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import net.meiolania.apps.habrahabr.adapters.CompaniesAdapter;
-import net.meiolania.apps.habrahabr.data.CompaniesData;
+import net.meiolania.apps.habrahabr.adapters.PeopleAdapter;
+import net.meiolania.apps.habrahabr.data.PeopleData;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -21,52 +21,54 @@ import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
-public class CompaniesFragment extends SherlockListFragment implements OnScrollListener{
-    public final static String LOG_TAG = "CompaniesFragment";
-    public final static String URL = "http://habrahabr.ru/companies/page%d/";
-    protected final ArrayList<CompaniesData> companiesDatas = new ArrayList<CompaniesData>();
-    protected CompaniesAdapter companiesAdapter;
+public class PeopleFragment extends SherlockListFragment implements OnScrollListener{
+    public final static String LOG_TAG = "PeopleFragment";
+    public final static String URL = "http://habrahabr.ru/people/page%d/";
+    protected final ArrayList<PeopleData> peopleDatas = new ArrayList<PeopleData>();
     protected boolean loadMoreData = true;
+    protected PeopleAdapter peopleAdapter;
     protected int page = 0;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        companiesAdapter = new CompaniesAdapter(getSherlockActivity(), companiesDatas);
-        setListAdapter(companiesAdapter);
+        peopleAdapter = new PeopleAdapter(getSherlockActivity(), peopleDatas);
+        setListAdapter(peopleAdapter);
         getListView().setOnScrollListener(this);
     }
 
     protected void loadList(){
         ++page;
         getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-        new LoadCompanies().execute();
+        new LoadPeople().execute();
     }
 
-    protected final class LoadCompanies extends AsyncTask<Void, Void, Void>{
+    protected final class LoadPeople extends AsyncTask<Void, Void, Void>{
 
         @Override
         protected Void doInBackground(Void... params){
             try{
                 Log.i(LOG_TAG, "Loading " + String.format(URL, page));
-                
+
                 Document document = Jsoup.connect(String.format(URL, page)).get();
-                Elements companies = document.select("div.company");
-                for(Element company : companies){
-                    CompaniesData companiesData = new CompaniesData();
+                Elements users = document.select("div.user");
+                for(Element user : users){
+                    PeopleData peopleData = new PeopleData();
                     
-                    Element icon = company.select("div.icon > img").first();
-                    Element index = company.select("div.habraindex").first();
-                    Element title = company.select("div.description > div.name > a").first();
-                    Element description = company.select("div.description > p").first();
+                    Element rating = user.select("div.rating").first();
+                    Element karma = user.select("div.karma").first();
+                    Element avatar = user.select("div.avatar > img").first();
+                    Element name = user.select("div.info > div.username > a").first();
+                    Element lifetime = user.select("div.info > div.lifetime").first();
                     
-                    companiesData.setTitle(title.text());
-                    companiesData.setUrl(title.attr("abs:href"));
-                    companiesData.setIcon(icon.attr("abs:href"));
-                    companiesData.setIndex(index.text());
-                    companiesData.setDescription(description.text());
+                    peopleData.setName(name.text());
+                    peopleData.setUrl(name.attr("abs:href"));
+                    peopleData.setRating(rating.text());
+                    peopleData.setKarma(karma.text());
+                    //peopleData.setAvatar(avatar.attr("src"));
+                    peopleData.setLifetime(lifetime.text());
                     
-                    companiesDatas.add(companiesData);
+                    peopleDatas.add(peopleData);
                 }
             }
             catch(IOException e){
@@ -79,7 +81,7 @@ public class CompaniesFragment extends SherlockListFragment implements OnScrollL
             getSherlockActivity().runOnUiThread(new Runnable(){
                 public void run(){
                     if(!isCancelled())
-                        companiesAdapter.notifyDataSetChanged();
+                        peopleAdapter.notifyDataSetChanged();
                     loadMoreData = true;
                     getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
                 }
@@ -87,13 +89,13 @@ public class CompaniesFragment extends SherlockListFragment implements OnScrollL
         }
 
     }
-    
+
     @Override
     public void onListItemClick(ListView list, View view, int position, long id){
-        showCompany(position);
+        showUser(position);
     }
 
-    protected void showCompany(int position){
+    protected void showUser(int position){
 
     }
 

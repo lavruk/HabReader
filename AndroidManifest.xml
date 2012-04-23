@@ -49,6 +49,9 @@
         <!-- Events -->
         <activity android:name=".activities.EventsActivity" />
         
+        <!-- Companies -->
+        <activity android:name=".activities.CompaniesActivity" />
+        
         <service android:name="net.robotmedia.billing.BillingService" />
 		<receiver android:name="net.robotmedia.billing.BillingReceiver">
 			<intent-filter>

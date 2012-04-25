@@ -32,6 +32,8 @@
 	<string name="coming">Предстоящие</string>
 	<string name="current">Текущие</string>
 	<string name="past">Прошедшие</string>
+	<!-- People -->
+	<string name="loading_profile_info">Загрузка профиля</string>
 	<!-- Preferences -->
 	<string name="base_preferences">Основные настройки</string>
 	<string name="posts_preferences">Посты</string>

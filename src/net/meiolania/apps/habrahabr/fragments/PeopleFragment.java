@@ -3,6 +3,7 @@ package net.meiolania.apps.habrahabr.fragments;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.activities.PeopleShowActivity;
 import net.meiolania.apps.habrahabr.adapters.PeopleAdapter;
 import net.meiolania.apps.habrahabr.data.PeopleData;
 
@@ -11,6 +12,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -96,7 +98,11 @@ public class PeopleFragment extends SherlockListFragment implements OnScrollList
     }
 
     protected void showUser(int position){
-
+        PeopleData peopleData = peopleDatas.get(position);
+        Intent intent = new Intent(getSherlockActivity(), PeopleShowActivity.class);
+        intent.putExtra(PeopleShowActivity.EXTRA_NAME, peopleData.getName());
+        intent.putExtra(PeopleShowActivity.EXTRA_URL, peopleData.getUrl());
+        startActivity(intent);
     }
 
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){

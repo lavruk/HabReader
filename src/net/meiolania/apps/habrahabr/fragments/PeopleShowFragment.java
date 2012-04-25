@@ -111,6 +111,8 @@ public class PeopleShowFragment extends SherlockFragment{
             getSherlockActivity().runOnUiThread(new Runnable(){
                 public void run(){
                     if(!isCancelled()){
+                        //TODO: need to redesign the layout.
+                        
                         SherlockFragmentActivity activity = getSherlockActivity();
 
                         TextView fullname = (TextView) activity.findViewById(R.id.fullname);

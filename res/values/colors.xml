@@ -2,5 +2,6 @@
 <resources>
 	
     <color name="dashboard_text">#000000</color>
+    <color name="dashboard_button_bg_pressed">#a6cee1</color>
     
 </resources>

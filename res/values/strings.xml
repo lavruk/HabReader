@@ -28,6 +28,7 @@
 	<!-- Q&A -->
 	<string name="question">Вопрос</string>
 	<string name="unanswered">Без ответа</string>
+	<string name="loading_question">Загрузка вопроса</string>
 	<!-- Events -->
 	<string name="coming">Предстоящие</string>
 	<string name="current">Текущие</string>

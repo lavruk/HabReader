@@ -100,7 +100,7 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
     
     protected void showQa(int position){
         QaData qaData = qaDatas.get(position);
-        final Intent intent = new Intent(getSherlockActivity(), QaShowActivity.class);
+        Intent intent = new Intent(getSherlockActivity(), QaShowActivity.class);
         intent.putExtra(QaShowActivity.EXTRA_URL, qaData.getUrl());
         intent.putExtra(QaShowActivity.EXTRA_TITLE, qaData.getTitle());
         startActivity(intent);

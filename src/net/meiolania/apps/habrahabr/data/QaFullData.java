@@ -1,15 +1,15 @@
 package net.meiolania.apps.habrahabr.data;
 
 public class QaFullData extends QaData{
-    protected String context;
+    protected String content;
     protected String tags;
 
-    public String getContext(){
-        return context;
+    public String getContent(){
+        return content;
     }
 
-    public void setContext(String context){
-        this.context = context;
+    public void setContent(String content){
+        this.content = content;
     }
 
     public String getTags(){

@@ -104,7 +104,7 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
 
     protected void showPost(int position){
         PostsData postsData = postsDatas.get(position);
-        final Intent intent = new Intent(getSherlockActivity(), PostsShowActivity.class);
+        Intent intent = new Intent(getSherlockActivity(), PostsShowActivity.class);
         intent.putExtra(PostsShowActivity.EXTRA_URL, postsData.getUrl());
         intent.putExtra(PostsShowActivity.EXTRA_TITLE, postsData.getTitle());
         startActivity(intent);

@@ -48,9 +48,11 @@
         
         <!-- Events -->
         <activity android:name=".activities.EventsActivity" />
+        <activity android:name=".activities.EventsShowActivity" />
         
         <!-- Companies -->
         <activity android:name=".activities.CompaniesActivity" />
+        <activity android:name=".activities.CompaniesShowActivity" />
         
         <!-- People -->
         <activity android:name=".activities.PeopleActivity" />

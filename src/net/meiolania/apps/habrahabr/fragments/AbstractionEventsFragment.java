@@ -3,6 +3,7 @@ package net.meiolania.apps.habrahabr.fragments;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.activities.EventsShowActivity;
 import net.meiolania.apps.habrahabr.adapters.EventsAdapter;
 import net.meiolania.apps.habrahabr.data.EventsData;
 
@@ -11,6 +12,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,7 +58,7 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
                 for(Element event : events){
                     EventsData eventsData = new EventsData();
                     
-                    Element title = event.select("h1.title").first();
+                    Element title = event.select("h1.title > a").first();
                     Element detail = event.select("div.detail").first();
                     Element text = event.select("div.text").first();
                     
@@ -93,7 +95,11 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
     }
 
     protected void showEvent(int position){
-
+        EventsData eventsData = eventsDatas.get(position);
+        Intent intent = new Intent(getSherlockActivity(), EventsShowActivity.class);
+        intent.putExtra(EventsShowActivity.EXTRA_TITLE, eventsData.getTitle());
+        intent.putExtra(EventsShowActivity.EXTRA_URL, eventsData.getUrl());
+        startActivity(intent);
     }
 
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){

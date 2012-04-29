@@ -22,13 +22,13 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class ShowPostFragment extends SherlockFragment{
+public class PostShowFragment extends SherlockFragment{
     protected String url;
 
-    public ShowPostFragment(){
+    public PostShowFragment(){
     }
 
-    public ShowPostFragment(String url){
+    public PostShowFragment(String url){
         this.url = url;
     }
 

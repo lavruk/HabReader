@@ -3,9 +3,11 @@ package net.meiolania.apps.habrahabr.fragments;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.PeopleShowActivity;
 import net.meiolania.apps.habrahabr.adapters.PeopleAdapter;
 import net.meiolania.apps.habrahabr.data.PeopleData;
+import net.meiolania.apps.habrahabr.utils.UIUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,6 +22,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
@@ -59,6 +62,7 @@ public class PeopleFragment extends SherlockListFragment implements OnScrollList
                     
                     Element rating = user.select("div.rating").first();
                     Element karma = user.select("div.karma").first();
+                    //TODO: null pointer exception. Need to fix.(Below)
                     Element avatar = user.select("div.avatar > img").first();
                     Element name = user.select("div.info > div.username > a").first();
                     Element lifetime = user.select("div.info > div.lifetime").first();
@@ -110,6 +114,9 @@ public class PeopleFragment extends SherlockListFragment implements OnScrollList
             loadMoreData = false;
             loadList();
             Log.i(LOG_TAG, "Loading " + page + " page");
+            //TODO: need to find a better way to display a notification for devices with Android < 3.0
+            if(!UIUtils.isHoneycombOrHigher())
+                Toast.makeText(getSherlockActivity(), getString(R.string.loading_page, page), Toast.LENGTH_SHORT).show();
         }
     }
 

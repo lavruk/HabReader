@@ -3,9 +3,11 @@ package net.meiolania.apps.habrahabr.fragments;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.HubsShowActivity;
 import net.meiolania.apps.habrahabr.adapters.HubsAdapter;
 import net.meiolania.apps.habrahabr.data.HubsData;
+import net.meiolania.apps.habrahabr.utils.UIUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,8 +20,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
@@ -129,6 +132,9 @@ public class HubsFragment extends SherlockListFragment implements OnScrollListen
             loadMoreData = false;
             loadList();
             Log.i(LOG_TAG, "Loading " + page + " page");
+            //TODO: need to find a better way to display a notification for devices with Android < 3.0
+            if(!UIUtils.isHoneycombOrHigher())
+                Toast.makeText(getSherlockActivity(), getString(R.string.loading_page, page), Toast.LENGTH_SHORT).show();
         }
     }
 

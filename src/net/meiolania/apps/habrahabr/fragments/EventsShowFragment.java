@@ -128,8 +128,6 @@ public class EventsShowFragment extends SherlockFragment{
             getSherlockActivity().runOnUiThread(new Runnable(){
                 public void run(){
                     if(!isCancelled()){
-                        //TODO: redesign the layout
-                        
                         SherlockFragmentActivity activity = getSherlockActivity();
                         
                         TextView title = (TextView)activity.findViewById(R.id.event_title);

@@ -13,7 +13,36 @@
         
     </PreferenceCategory>
     
-    <PreferenceCategory android:title="@string/posts_preferences" >
+    <PreferenceCategory android:title="@string/posts" >
+        
+        <ListPreference 
+            android:key="posts_default_tab"
+            android:title="@string/default_tab_preferences"
+            android:entries="@array/posts_tabs"
+            android:entryValues="@array/posts_tabs_values"
+            android:defaultValue="1" />
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/qa">
+        
+        <ListPreference 
+            android:key="qa_default_tab"
+            android:title="@string/default_tab_preferences"
+            android:entries="@array/qa_tabs"
+            android:entryValues="@array/qa_tabs_values"
+            android:defaultValue="0" />
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/events">
+        
+        <ListPreference 
+            android:key="events_default_tab"
+            android:title="@string/default_tab_preferences"
+            android:entries="@array/events_tabs"
+            android:entryValues="@array/events_tabs_values"
+            android:defaultValue="0" />
         
     </PreferenceCategory>
     

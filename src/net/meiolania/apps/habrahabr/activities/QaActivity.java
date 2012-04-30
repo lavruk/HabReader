@@ -1,5 +1,6 @@
 package net.meiolania.apps.habrahabr.activities;
 
+import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.HotQaFragment;
 import net.meiolania.apps.habrahabr.fragments.InboxQaFragment;
@@ -33,17 +34,20 @@ public class QaActivity extends SherlockFragmentActivity implements TabListener{
         actionBar.setTitle(R.string.qa);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         
+        Preferences preferences = Preferences.getInstance(this);
+        int selectedTab = preferences.getQaDefaultTab();
+        
         Tab tab = actionBar.newTab().setText(R.string.inbox).setTag("inbox").setTabListener(this);
-        actionBar.addTab(tab);
+        actionBar.addTab(tab, (selectedTab == 0 ? true : false));
         
         tab = actionBar.newTab().setText(R.string.hot).setTag("hot").setTabListener(this);
-        actionBar.addTab(tab);
+        actionBar.addTab(tab, (selectedTab == 1 ? true : false));
         
         tab = actionBar.newTab().setText(R.string.popular).setTag("popular").setTabListener(this);
-        actionBar.addTab(tab);
+        actionBar.addTab(tab, (selectedTab == 2 ? true : false));
         
         tab = actionBar.newTab().setText(R.string.unanswered).setTag("unanswered").setTabListener(this);
-        actionBar.addTab(tab);
+        actionBar.addTab(tab, (selectedTab == 3 ? true : false));
     }
     
     @Override

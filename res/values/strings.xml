@@ -42,7 +42,6 @@
 	<string name="loading_profile_info">Загрузка профиля</string>
 	<!-- Preferences -->
 	<string name="base_preferences">Основные настройки</string>
-	<string name="posts_preferences">Посты</string>
 	<string name="additional_preferences">Дополнительная информация</string>
 	<string name="version_preferences">Версия приложения</string>
 	<string name="donate_preferences">Помочь разработке</string>
@@ -51,4 +50,5 @@
 	<string name="fullscreen_preferences">Полноэкранный режим</string>
 	<string name="keepscreen_preferences">Не выключать экран</string>
 	<string name="source_code_preferences">Исходный код</string>
+	<string name="default_tab_preferences">Вкладка по умолчанию</string>
 </resources>

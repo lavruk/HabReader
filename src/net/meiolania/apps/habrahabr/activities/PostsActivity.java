@@ -1,5 +1,6 @@
 package net.meiolania.apps.habrahabr.activities;
 
+import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.BestPostsFragment;
 import net.meiolania.apps.habrahabr.fragments.CorporatePostsFragment;
@@ -31,15 +32,18 @@ public class PostsActivity extends SherlockFragmentActivity implements TabListen
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.posts);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        
+        Preferences preferences = Preferences.getInstance(this);
+        int selectedTab = preferences.getPostsDefaultTab();
 
         Tab tab = actionBar.newTab().setText(R.string.best).setTag("best").setTabListener(this);
-        actionBar.addTab(tab);
+        actionBar.addTab(tab, (selectedTab == 0 ? true : false));
         
         tab = actionBar.newTab().setText(R.string.thematic).setTag("thematic").setTabListener(this);
-        actionBar.addTab(tab);
+        actionBar.addTab(tab, (selectedTab == 1 ? true : false));
         
         tab = actionBar.newTab().setText(R.string.corporate).setTag("corporate").setTabListener(this);
-        actionBar.addTab(tab);
+        actionBar.addTab(tab, (selectedTab == 2 ? true : false));
     }
     
     @Override

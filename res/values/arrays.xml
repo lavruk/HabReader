@@ -19,4 +19,42 @@
         <item>Разное</item>
     </string-array>
     
+    <string-array name="posts_tabs">
+        <item>@string/best</item>
+        <item>@string/thematic</item>
+        <item>@string/corporate</item>
+    </string-array>
+    
+    <string-array name="posts_tabs_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    
+    <string-array name="events_tabs">
+        <item>@string/coming</item>
+        <item>@string/current</item>
+        <item>@string/past</item>
+    </string-array>
+    
+    <string-array name="events_tabs_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    
+    <string-array name="qa_tabs">
+        <item>@string/inbox</item>
+        <item>@string/hot</item>
+        <item>@string/popular</item>
+        <item>@string/unanswered</item>
+    </string-array>
+    
+    <string-array name="qa_tabs_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    
 </resources>

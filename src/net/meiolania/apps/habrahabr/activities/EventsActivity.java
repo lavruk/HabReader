@@ -1,5 +1,6 @@
 package net.meiolania.apps.habrahabr.activities;
 
+import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.ComingEventFragment;
 import net.meiolania.apps.habrahabr.fragments.CurrentEventFragment;
@@ -30,14 +31,17 @@ public class EventsActivity extends SherlockFragmentActivity implements TabListe
         actionBar.setTitle(R.string.events);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         
+        Preferences preferences = Preferences.getInstance(this);
+        int selectedTab = preferences.getEventsDefaultTab();
+        
         Tab tab = actionBar.newTab().setText(R.string.coming).setTag("coming").setTabListener(this);
-        actionBar.addTab(tab);
+        actionBar.addTab(tab, (selectedTab == 0 ? true : false));
         
         tab = actionBar.newTab().setText(R.string.current).setTag("current").setTabListener(this);
-        actionBar.addTab(tab);
+        actionBar.addTab(tab, (selectedTab == 1 ? true : false));
         
         tab = actionBar.newTab().setText(R.string.past).setTag("past").setTabListener(this);
-        actionBar.addTab(tab);
+        actionBar.addTab(tab, (selectedTab == 2 ? true : false));
     }
     
     @Override

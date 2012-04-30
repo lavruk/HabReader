@@ -35,6 +35,8 @@
 	<string name="current">Текущие</string>
 	<string name="past">Прошедшие</string>
 	<string name="loading_event">Загрузка события</string>
+	<!-- Companies -->
+	<string name="loading_company">Загрузка данных о компании</string>
 	<!-- People -->
 	<string name="loading_profile_info">Загрузка профиля</string>
 	<!-- Preferences -->

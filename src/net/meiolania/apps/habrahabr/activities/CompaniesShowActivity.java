@@ -1,7 +1,9 @@
 package net.meiolania.apps.habrahabr.activities;
 
+import net.meiolania.apps.habrahabr.fragments.CompaniesShowFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -45,7 +47,10 @@ public class CompaniesShowActivity extends SherlockFragmentActivity{
     }
     
     private void loadInfo(){
-        
+        CompaniesShowFragment companiesShowFragment = new CompaniesShowFragment(url);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(android.R.id.content, companiesShowFragment);
+        fragmentTransaction.commit();
     }
     
 }

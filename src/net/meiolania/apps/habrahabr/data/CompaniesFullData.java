@@ -6,8 +6,17 @@ public class CompaniesFullData extends CompaniesData{
     protected String industries;
     protected String location;
     protected String summary;
+    protected String quantity;
     protected String management;
     protected String developmentStages;
+
+    public String getQuantity(){
+        return quantity;
+    }
+
+    public void setQuantity(String quantity){
+        this.quantity = quantity;
+    }
 
     public String getCompanyUrl(){
         return companyUrl;

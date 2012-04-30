@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.activities.CompaniesShowActivity;
 import net.meiolania.apps.habrahabr.adapters.CompaniesAdapter;
 import net.meiolania.apps.habrahabr.data.CompaniesData;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
@@ -13,6 +14,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -97,7 +99,11 @@ public class CompaniesFragment extends SherlockListFragment implements OnScrollL
     }
 
     protected void showCompany(int position){
-
+        CompaniesData companiesData = companiesDatas.get(position);
+        Intent intent = new Intent(getSherlockActivity(), CompaniesShowActivity.class);
+        intent.putExtra(CompaniesShowActivity.EXTRA_TITLE, companiesData.getTitle());
+        intent.putExtra(CompaniesShowActivity.EXTRA_URL, companiesData.getUrl());
+        startActivity(intent);
     }
 
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){

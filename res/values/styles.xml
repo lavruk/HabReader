@@ -13,5 +13,13 @@
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:textColor">@color/dashboard_text</item>
     </style>
+    
+    <style name="DataFields">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:background">@drawable/data_fields</item>
+    </style>
 
 </resources>

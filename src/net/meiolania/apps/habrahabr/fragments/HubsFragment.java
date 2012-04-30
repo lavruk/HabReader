@@ -64,12 +64,21 @@ public class HubsFragment extends SherlockListFragment implements OnScrollListen
                 Log.i(LOG_TAG, "Loading " + String.format(url, page));
 
                 Document document = Jsoup.connect(String.format(url, page)).get();
-                
-                Element pageNavigation = document.select("div.page-nav").first();
-                if(pageNavigation == null)
-                    noMorePages = true;
-                
                 Elements hubs = document.select("div.hub");
+                
+                if(hubs.size() <= 0 && page > 1){
+                    noMorePages = true;
+                    /*
+                     * It's a solve for:
+                     * java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()
+                     */
+                    getSherlockActivity().runOnUiThread(new Runnable(){
+                        public void run(){
+                            Toast.makeText(getSherlockActivity(), R.string.no_more_pages, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                
                 for(Element hub : hubs){
                     HubsData hubsData = new HubsData();
                     

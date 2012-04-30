@@ -32,6 +32,7 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
     protected QaAdapter qaAdapter;
     protected boolean loadMoreData = true;
     protected int page = 0;
+    protected boolean noMorePages = false;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
@@ -58,6 +59,20 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
 
                 Document document = Jsoup.connect(String.format(getUrl(), page)).get();
                 Elements qaList = document.select("div.post");
+                
+                if(qaList.size() <= 0){
+                    noMorePages = true;
+                    /*
+                     * It's a solve for:
+                     * java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()
+                     */
+                    getSherlockActivity().runOnUiThread(new Runnable(){
+                        public void run(){
+                            Toast.makeText(getSherlockActivity(), R.string.no_more_pages, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                
                 for(Element qa : qaList){
                     QaData qaData = new QaData();
                     
@@ -110,7 +125,7 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
     }
 
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
-        if((firstVisibleItem + visibleItemCount) == totalItemCount && loadMoreData){
+        if((firstVisibleItem + visibleItemCount) == totalItemCount && loadMoreData && !noMorePages){
             loadMoreData = false;
             loadList();
             Log.i(LOG_TAG, "Loading " + page + " page");

@@ -8,6 +8,7 @@
 	<string name="hot">Горячие</string>
 	<string name="popular">Популярные</string>
 	<string name="loading_page">Загрузка страницы %d</string>
+	<string name="no_more_pages">Нет страниц для загрузки</string>
 	<!-- Dashboard titles -->
 	<string name="posts">Посты</string>
 	<string name="qa">Q&amp;A</string>

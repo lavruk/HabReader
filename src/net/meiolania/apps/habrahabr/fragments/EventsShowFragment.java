@@ -145,9 +145,9 @@ public class EventsShowFragment extends SherlockFragment{
                         TextView description = (TextView)activity.findViewById(R.id.event_description);
                         description.setText(result.getText());
                     }
+                    progressDialog.dismiss();
                 }
             });
-            progressDialog.dismiss();
         }
 
     }

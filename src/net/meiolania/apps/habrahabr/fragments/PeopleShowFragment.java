@@ -131,9 +131,9 @@ public class PeopleShowFragment extends SherlockFragment{
                         TextView summary = (TextView) activity.findViewById(R.id.summary);
                         summary.setText(result.getSummary());
                     }
+                    progressDialog.dismiss();
                 }
             });
-            progressDialog.dismiss();
         }
 
     }

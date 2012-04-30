@@ -50,4 +50,5 @@
 	<string name="about_application_preferences">О приложении</string>
 	<string name="fullscreen_preferences">Полноэкранный режим</string>
 	<string name="keepscreen_preferences">Не выключать экран</string>
+	<string name="source_code_preferences">Исходный код</string>
 </resources>

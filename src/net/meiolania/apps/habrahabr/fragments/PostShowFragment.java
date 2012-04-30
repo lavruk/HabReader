@@ -103,14 +103,16 @@ public class PostShowFragment extends SherlockFragment{
         protected void onPostExecute(final PostsFullData result){
             getSherlockActivity().runOnUiThread(new Runnable(){
                 public void run(){
-                    WebView content = (WebView) getSherlockActivity().findViewById(R.id.content);
-                    content.getSettings().setPluginsEnabled(true);
-                    content.getSettings().setSupportZoom(true);
-                    content.getSettings().setBuiltInZoomControls(true);
-                    content.loadDataWithBaseURL("", result.getContent(), "text/html", "UTF-8", null);
+                    if(!isCancelled()){
+                        WebView content = (WebView) getSherlockActivity().findViewById(R.id.post_content);
+                        content.getSettings().setPluginsEnabled(true);
+                        content.getSettings().setSupportZoom(true);
+                        content.getSettings().setBuiltInZoomControls(true);
+                        content.loadDataWithBaseURL("", result.getContent(), "text/html", "UTF-8", null);
+                    }
+                    progressDialog.dismiss();
                 }
             });
-            progressDialog.dismiss();
         }
 
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="@string/base_preferences" >
+    <PreferenceScreen android:title="@string/base_preferences" >
         
         <CheckBoxPreference
             android:key="fullscreen"
@@ -11,13 +11,13 @@
             android:key="keepscreen"
             android:title="@string/keepscreen_preferences" />
         
-    </PreferenceCategory>
+    </PreferenceScreen>
     
-    <PreferenceCategory android:title="@string/posts_preferences" >
+    <PreferenceScreen android:title="@string/posts_preferences" >
         
-    </PreferenceCategory>
+    </PreferenceScreen>
     
-    <PreferenceCategory android:title="@string/additional_preferences" >
+    <PreferenceScreen android:title="@string/additional_preferences" >
         
         <Preference
             android:key="donate"
@@ -43,6 +43,6 @@
             android:summary="1.0"
             android:title="@string/version_preferences" />
         
-    </PreferenceCategory>
+    </PreferenceScreen>
 
 </PreferenceScreen>

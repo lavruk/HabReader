@@ -119,9 +119,9 @@ public class QaShowFragment extends SherlockFragment{
                         content.getSettings().setSupportZoom(true);
                         content.loadDataWithBaseURL("", result.getContent(), "text/html", "UTF-8", null);
                     }
+                    progressDialog.dismiss();
                 }
             });
-            progressDialog.dismiss();
         }
 
     }

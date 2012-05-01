@@ -77,8 +77,7 @@ public class PeopleFragment extends SherlockListFragment implements OnScrollList
                     
                     Element rating = user.select("div.rating").first();
                     Element karma = user.select("div.karma").first();
-                    //FIXME: null pointer exception. Need to fix.(Below)
-                    Element avatar = user.select("div.avatar > img").first();
+                    Element avatar = user.select("div.avatar > a > img").first();
                     Element name = user.select("div.info > div.username > a").first();
                     Element lifetime = user.select("div.info > div.lifetime").first();
                     
@@ -86,7 +85,7 @@ public class PeopleFragment extends SherlockListFragment implements OnScrollList
                     peopleData.setUrl(name.attr("abs:href"));
                     peopleData.setRating(rating.text());
                     peopleData.setKarma(karma.text());
-                    //peopleData.setAvatar(avatar.attr("src"));
+                    peopleData.setAvatar(avatar.attr("src"));
                     peopleData.setLifetime(lifetime.text());
                     
                     peopleDatas.add(peopleData);

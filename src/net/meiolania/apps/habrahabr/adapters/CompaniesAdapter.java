@@ -60,7 +60,7 @@ public class CompaniesAdapter extends BaseAdapter{
         title.setText(companiesData.getTitle());
         
         ImageView icon = (ImageView) view.findViewById(R.id.company_icon);
-        imageLoader.displayImage(companiesData.getIcon(), icon, DisplayImageOptions.createSimple());
+        imageLoader.displayImage(companiesData.getIcon(), icon);
 
         return view;
     }

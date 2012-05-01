@@ -82,7 +82,8 @@ public class CompaniesFragment extends SherlockListFragment implements OnScrollL
                     
                     companiesData.setTitle(title.text());
                     companiesData.setUrl(title.attr("abs:href"));
-                    companiesData.setIcon(icon.attr("abs:href"));
+                    //TODO: rewrite the code below
+                    companiesData.setIcon("http://habrahabr.ru" + icon.attr("src"));
                     companiesData.setIndex(index.text());
                     companiesData.setDescription(description.text());
                     

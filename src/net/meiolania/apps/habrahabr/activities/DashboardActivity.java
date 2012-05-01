@@ -5,8 +5,13 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -32,6 +37,20 @@ public class DashboardActivity extends SherlockActivity implements OnClickListen
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater menuInflater = getSupportMenuInflater();
         menuInflater.inflate(R.menu.dashboard_activity, menu);
+        
+        final EditText searchQuery = (EditText) menu.findItem(R.id.search).getActionView().findViewById(R.id.search_query);
+        searchQuery.setOnEditorActionListener(new OnEditorActionListener(){
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
+                if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                    Intent intent = new Intent(DashboardActivity.this, PostsSearchActivity.class);
+                    intent.putExtra(PostsSearchActivity.EXTRA_QUERY, searchQuery.getText().toString());
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+        });
+        
         return super.onCreateOptionsMenu(menu);
     }
 

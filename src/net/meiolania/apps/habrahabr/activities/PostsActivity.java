@@ -14,8 +14,6 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class PostsActivity extends SherlockFragmentActivity implements TabListener{
@@ -44,13 +42,6 @@ public class PostsActivity extends SherlockFragmentActivity implements TabListen
         
         tab = actionBar.newTab().setText(R.string.corporate).setTag("corporate").setTabListener(this);
         actionBar.addTab(tab, (selectedTab == 2 ? true : false));
-    }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater menuInflater = getSupportMenuInflater();
-        menuInflater.inflate(R.menu.posts_activity, menu);
-        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

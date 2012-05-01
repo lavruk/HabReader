@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.activities.PostsSearchActivity;
 import net.meiolania.apps.habrahabr.activities.PostsShowActivity;
 import net.meiolania.apps.habrahabr.adapters.PostsAdapter;
 import net.meiolania.apps.habrahabr.data.PostsData;
@@ -18,13 +19,20 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 
 public abstract class AbstractionPostsFragment extends SherlockListFragment implements OnScrollListener{
     public final static String LOG_TAG = "PostsFragment";
@@ -35,11 +43,37 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
     protected boolean noMorePage = false;
     
     @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+    
+    @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         postsAdapter = new PostsAdapter(getActivity(), postsDatas);
         setListAdapter(postsAdapter);
         getListView().setOnScrollListener(this);
+    }
+    
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        inflater.inflate(R.menu.posts_fragment, menu);
+        
+        final EditText searchQuery = (EditText) menu.findItem(R.id.search).getActionView().findViewById(R.id.search_query);
+        searchQuery.setOnEditorActionListener(new OnEditorActionListener(){
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
+                if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                    Intent intent = new Intent(getSherlockActivity(), PostsSearchActivity.class);
+                    intent.putExtra(PostsSearchActivity.EXTRA_QUERY, searchQuery.getText().toString());
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+        });
+        
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     protected void loadList(){

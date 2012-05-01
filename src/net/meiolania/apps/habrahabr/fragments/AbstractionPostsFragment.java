@@ -89,9 +89,9 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
         @Override
         protected Void doInBackground(Void... params){
             try{
-                Log.d(LOG_TAG, "Loading " + String.format(getUrl(), page));
+                Log.d(LOG_TAG, "Loading " + getUrl().replace("%page%", String.valueOf(page)));
 
-                Document document = Jsoup.connect(String.format(getUrl(), page)).get();
+                Document document = Jsoup.connect(getUrl().replace("%page%", String.valueOf(page))).get();
                 Elements posts = document.select("div.post");
                 
                 if(posts.size() <= 0){

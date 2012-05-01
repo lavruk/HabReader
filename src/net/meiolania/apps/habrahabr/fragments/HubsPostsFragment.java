@@ -15,7 +15,7 @@ public class HubsPostsFragment extends AbstractionPostsFragment{
     
     @Override
     protected String getUrl(){
-        return url;
+        return url + "posts/page%page%/";
     }
     
 }

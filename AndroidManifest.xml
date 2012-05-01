@@ -46,6 +46,7 @@
         <!-- Hubs -->
         <activity android:name=".activities.HubsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         <activity android:name=".activities.HubsShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.HubsSearchActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         
         <!-- Q&A -->
         <activity android:name=".activities.QaActivity" android:configChanges="orientation|keyboard|keyboardHidden" />

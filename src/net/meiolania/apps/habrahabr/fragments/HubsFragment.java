@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.activities.HubsSearchActivity;
 import net.meiolania.apps.habrahabr.activities.HubsShowActivity;
 import net.meiolania.apps.habrahabr.adapters.HubsAdapter;
 import net.meiolania.apps.habrahabr.data.HubsData;
@@ -18,13 +19,20 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 
 public class HubsFragment extends SherlockListFragment implements OnScrollListener{
     public final static String LOG_TAG = "HubsFragment";
@@ -41,6 +49,12 @@ public class HubsFragment extends SherlockListFragment implements OnScrollListen
     public HubsFragment(String url){
         this.url = url;
     }
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
@@ -48,6 +62,26 @@ public class HubsFragment extends SherlockListFragment implements OnScrollListen
         hubsAdapter = new HubsAdapter(getSherlockActivity(), hubsDatas);
         setListAdapter(hubsAdapter);
         getListView().setOnScrollListener(this);
+    }
+    
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        inflater.inflate(R.menu.hubs_fragment, menu);
+        
+        final EditText searchQuery = (EditText) menu.findItem(R.id.search).getActionView().findViewById(R.id.search_query);
+        searchQuery.setOnEditorActionListener(new OnEditorActionListener(){
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
+                if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                    Intent intent = new Intent(getSherlockActivity(), HubsSearchActivity.class);
+                    intent.putExtra(HubsSearchActivity.EXTRA_QUERY, searchQuery.getText().toString());
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+        });
+        
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     protected void loadList(){
@@ -61,13 +95,13 @@ public class HubsFragment extends SherlockListFragment implements OnScrollListen
         @Override
         protected Void doInBackground(Void... params){
             try{
-                Log.i(LOG_TAG, "Loading " + String.format(url, page));
+                Log.i(LOG_TAG, "Loading " + getUrl().replace("%page%", String.valueOf(page)));
 
-                Document document = Jsoup.connect(String.format(url, page)).get();
+                Document document = Jsoup.connect(getUrl().replace("%page%", String.valueOf(page))).get();
                 Elements hubs = document.select("div.hub");
                 
-                if(hubs.size() <= 0 && page > 1){
-                    noMorePages = true;
+                if(hubs.size() <= 0){
+                    loadMoreData = false;
                     /*
                      * It's a solve for:
                      * java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()
@@ -137,7 +171,7 @@ public class HubsFragment extends SherlockListFragment implements OnScrollListen
     }
 
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
-        if((firstVisibleItem + visibleItemCount) == totalItemCount && loadMoreData && !noMorePages){
+        if((firstVisibleItem + visibleItemCount) == totalItemCount && loadMoreData){
             loadMoreData = false;
             loadList();
             Log.i(LOG_TAG, "Loading " + page + " page");

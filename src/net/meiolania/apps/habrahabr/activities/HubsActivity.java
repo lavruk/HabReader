@@ -65,49 +65,49 @@ public class HubsActivity extends SherlockFragmentActivity implements OnNavigati
         switch((int)itemId){
             default:
             case LIST_ALL_HUBS:
-                hubsFragment.setUrl("http://habrahabr.ru/hubs/page%d/");
+                hubsFragment.setUrl("http://habrahabr.ru/hubs/page%page%/");
                 break;
             case LIST_API:
-                hubsFragment.setUrl("http://habrahabr.ru/hubs/api/page%d/");
+                hubsFragment.setUrl("http://habrahabr.ru/hubs/api/page%page%/");
                 break;
             case LIST_ADMIN:
-                hubsFragment.setUrl("http://habrahabr.ru/hubs/administration/page%d/");
+                hubsFragment.setUrl("http://habrahabr.ru/hubs/administration/page%page%/");
                 break;
             case LIST_DB:
-                hubsFragment.setUrl("http://habrahabr.ru/hubs/databases/page%d/");
+                hubsFragment.setUrl("http://habrahabr.ru/hubs/databases/page%page%/");
                 break;
             case LIST_SECURITY:
-                hubsFragment.setUrl("http://habrahabr.ru/hubs/security/page%d/");
+                hubsFragment.setUrl("http://habrahabr.ru/hubs/security/page%page%/");
                 break;
             case LIST_DESIGN:
-                hubsFragment.setUrl("http://habrahabr.ru/hubs/design-and-media/page%d/");
+                hubsFragment.setUrl("http://habrahabr.ru/hubs/design-and-media/page%page%/");
                 break;
             case LIST_GADGETS:
-                hubsFragment.setUrl("http://habrahabr.ru/hubs/hardware/page%d/");
+                hubsFragment.setUrl("http://habrahabr.ru/hubs/hardware/page%page%/");
                 break;
             case LIST_COMPANIES:
-                hubsFragment.setUrl("http://habrahabr.ru/hubs/companies-and-services/page%d/");
+                hubsFragment.setUrl("http://habrahabr.ru/hubs/companies-and-services/page%page%/");
                 break;
             case LIST_MANAGEMENT:
-                hubsFragment.setUrl("http://habrahabr.ru/hubs/management/page%d/");
+                hubsFragment.setUrl("http://habrahabr.ru/hubs/management/page%page%/");
                 break;
             case LIST_PROGRAMMING:
-                hubsFragment.setUrl("http://habrahabr.ru/hubs/programming/page%d/");
+                hubsFragment.setUrl("http://habrahabr.ru/hubs/programming/page%page%/");
                 break;
             case LIST_SOFTWARE:
-                hubsFragment.setUrl("http://habrahabr.ru/hubs/software/page%d/");
+                hubsFragment.setUrl("http://habrahabr.ru/hubs/software/page%page%/");
                 break;
             case LIST_TELECOMMUNICATIONS:
-                hubsFragment.setUrl("http://habrahabr.ru/hubs/telecommunications/page%d/");
+                hubsFragment.setUrl("http://habrahabr.ru/hubs/telecommunications/page%page%/");
                 break;
             case LIST_FRAMEWORKS:
-                hubsFragment.setUrl("http://habrahabr.ru/hubs/fw-and-cms/page%d/");
+                hubsFragment.setUrl("http://habrahabr.ru/hubs/fw-and-cms/page%page%/");
                 break;
             case LIST_FRONTEND:
-                hubsFragment.setUrl("http://habrahabr.ru/hubs/frontend/page%d/");
+                hubsFragment.setUrl("http://habrahabr.ru/hubs/frontend/page%page%/");
                 break;
             case LIST_OTHERS:
-                hubsFragment.setUrl("http://habrahabr.ru/hubs/others/page%d/");
+                hubsFragment.setUrl("http://habrahabr.ru/hubs/others/page%page%/");
                 break;
         }
         fragmentTransaction.replace(android.R.id.content, hubsFragment);

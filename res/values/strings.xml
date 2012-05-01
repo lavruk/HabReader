@@ -28,6 +28,8 @@
 	<string name="comments">Комментарии</string>
 	<string name="loading_post">Загрузка поста</string>
 	<string name="post_search">Поиск постов</string>
+	<!-- Hubs -->
+	<string name="hubs_search">Поиск хабов</string>
 	<!-- Q&A -->
 	<string name="question">Вопрос</string>
 	<string name="unanswered">Без ответа</string>

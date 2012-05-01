@@ -32,7 +32,6 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
     protected EventsAdapter eventsAdapter;
     protected int page = 0;
     protected boolean loadMoreData = true;
-    protected boolean noMorePages = false;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
@@ -55,13 +54,13 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
         @Override
         protected Void doInBackground(Void... params){
             try{
-                Log.i(LOG_TAG, "Loading " + String.format(getUrl(), page));
+                Log.i(LOG_TAG, "Loading " + getUrl().replace("%page%", String.valueOf(page)));
 
-                Document document = Jsoup.connect(String.format(getUrl(), page)).get();
+                Document document = Jsoup.connect(String.format(getUrl().replace("%page%", String.valueOf(page)))).get();
                 Elements events = document.select("div.event");
                 
                 if(events.size() <= 0){
-                    noMorePages = true;
+                    loadMoreData = false;
                     /*
                      * It's a solve for:
                      * java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()
@@ -121,7 +120,7 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
     }
 
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
-        if((firstVisibleItem + visibleItemCount) == totalItemCount && loadMoreData && !noMorePages){
+        if((firstVisibleItem + visibleItemCount) == totalItemCount && loadMoreData){
             loadMoreData = false;
             loadList();
             Log.i(LOG_TAG, "Loading " + page + " page");

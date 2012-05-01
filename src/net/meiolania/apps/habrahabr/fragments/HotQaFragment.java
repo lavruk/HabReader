@@ -1,7 +1,7 @@
 package net.meiolania.apps.habrahabr.fragments;
 
 public class HotQaFragment extends AbstractionQaFragment{
-    public final static String URL = "http://habrahabr.ru/qa/hot/";
+    public final static String URL = "http://habrahabr.ru/qa/hot/page%page%/";
     
     @Override
     public String getUrl(){

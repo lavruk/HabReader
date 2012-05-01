@@ -10,10 +10,9 @@ import android.widget.ArrayAdapter;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class HubsActivity extends SherlockFragmentActivity implements OnNavigationListener{
+public class HubsActivity extends AbstractionActivity implements OnNavigationListener{
     public final static int LIST_ALL_HUBS = 0;
     public final static int LIST_API = 1;
     public final static int LIST_ADMIN = 2;

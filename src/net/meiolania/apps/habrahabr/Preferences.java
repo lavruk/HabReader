@@ -17,6 +17,9 @@ public final class Preferences{
     /* Fullscreen */
     public final static String FULLSCREEN_KEY = "fullscreen";
     public final static boolean FULLSCREEN_DEFAULT = false;
+    /* Keepscreen */
+    public final static String KEEPSCREEN_KEY = "keepscreen";
+    public final static boolean KEEPSCREEN_DEFAULT = false;
     private static Preferences preferences = null;
     private SharedPreferences sharedPreferences;
     
@@ -30,6 +33,10 @@ public final class Preferences{
     
     public boolean getFullScreen(){
         return sharedPreferences.getBoolean(FULLSCREEN_KEY, FULLSCREEN_DEFAULT);
+    }
+    
+    public boolean getKeepScreen(){
+        return sharedPreferences.getBoolean(KEEPSCREEN_KEY, KEEPSCREEN_DEFAULT);
     }
     
     public int getPostsDefaultTab(){

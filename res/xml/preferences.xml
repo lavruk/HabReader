@@ -5,6 +5,7 @@
         
         <CheckBoxPreference
             android:key="fullscreen"
+            android:summary="@string/fullscreen_summary_preferences"
             android:title="@string/fullscreen_preferences" />
         
         <CheckBoxPreference
@@ -12,49 +13,41 @@
             android:title="@string/keepscreen_preferences" />
         
     </PreferenceCategory>
-    
     <PreferenceCategory android:title="@string/posts" >
         
-        <ListPreference 
-            android:key="posts_default_tab"
-            android:title="@string/default_tab_preferences"
+        <ListPreference
+            android:defaultValue="1"
             android:entries="@array/posts_tabs"
             android:entryValues="@array/posts_tabs_values"
-            android:defaultValue="1" />
+            android:key="posts_default_tab"
+            android:title="@string/default_tab_preferences" />
         
     </PreferenceCategory>
-    
-    <PreferenceCategory android:title="@string/qa">
+    <PreferenceCategory android:title="@string/qa" >
         
-        <ListPreference 
-            android:key="qa_default_tab"
-            android:title="@string/default_tab_preferences"
+        <ListPreference
+            android:defaultValue="0"
             android:entries="@array/qa_tabs"
             android:entryValues="@array/qa_tabs_values"
-            android:defaultValue="0" />
+            android:key="qa_default_tab"
+            android:title="@string/default_tab_preferences" />
         
     </PreferenceCategory>
-    
-    <PreferenceCategory android:title="@string/events">
+    <PreferenceCategory android:title="@string/events" >
         
-        <ListPreference 
-            android:key="events_default_tab"
-            android:title="@string/default_tab_preferences"
+        <ListPreference
+            android:defaultValue="0"
             android:entries="@array/events_tabs"
             android:entryValues="@array/events_tabs_values"
-            android:defaultValue="0" />
+            android:key="events_default_tab"
+            android:title="@string/default_tab_preferences" />
         
     </PreferenceCategory>
-    
     <PreferenceCategory android:title="@string/additional_preferences" >
         
         <Preference
             android:key="donate"
             android:title="@string/donate_preferences" />
-        
-        <Preference
-            android:key="about_application"
-            android:title="@string/about_application_preferences" />
         
         <Preference android:title="Meiolania.net" >
             <intent

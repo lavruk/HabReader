@@ -8,10 +8,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Window;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class QaSearchActivity extends SherlockFragmentActivity{
+public class QaSearchActivity extends AbstractionActivity{
     public final static String EXTRA_QUERY = "query";
     private String query;
     

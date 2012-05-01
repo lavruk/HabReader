@@ -9,10 +9,9 @@ import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class QaShowActivity extends SherlockFragmentActivity implements TabListener{
+public class QaShowActivity extends AbstractionActivity implements TabListener{
     public final static String EXTRA_URL = "url";
     public final static String EXTRA_TITLE = "title";
     private String title;

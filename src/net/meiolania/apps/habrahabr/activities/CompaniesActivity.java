@@ -8,10 +8,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Window;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class CompaniesActivity extends SherlockFragmentActivity{
+public class CompaniesActivity extends AbstractionActivity{
     
     @Override
     protected void onCreate(Bundle savedInstanceState){

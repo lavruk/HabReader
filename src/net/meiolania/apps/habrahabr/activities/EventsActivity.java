@@ -13,10 +13,9 @@ import android.view.Window;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class EventsActivity extends SherlockFragmentActivity implements TabListener{
+public class EventsActivity extends AbstractionActivity implements TabListener{
     
     @Override
     protected void onCreate(Bundle savedInstanceState){

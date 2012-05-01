@@ -14,12 +14,11 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class DashboardActivity extends SherlockActivity implements OnClickListener{
+public class DashboardActivity extends AbstractionActivity implements OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

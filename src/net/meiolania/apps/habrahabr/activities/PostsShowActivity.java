@@ -1,8 +1,8 @@
 package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.fragments.ShowCommentsFragment;
 import net.meiolania.apps.habrahabr.fragments.PostShowFragment;
+import net.meiolania.apps.habrahabr.fragments.ShowCommentsFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -10,10 +10,9 @@ import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class PostsShowActivity extends SherlockFragmentActivity implements TabListener{
+public class PostsShowActivity extends AbstractionActivity implements TabListener{
     public final static String EXTRA_URL = "url";
     public final static String EXTRA_TITLE = "title";
     private String url;

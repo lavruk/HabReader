@@ -6,10 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class CompaniesShowActivity extends SherlockFragmentActivity{
+public class CompaniesShowActivity extends AbstractionActivity{
     public final static String EXTRA_URL = "url";
     public final static String EXTRA_TITLE = "title";
     private String url;

@@ -7,10 +7,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Window;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class HubsShowActivity extends SherlockFragmentActivity{
+public class HubsShowActivity extends AbstractionActivity{
     public final static String EXTRA_URL = "url";
     public final static String EXTRA_TITLE = "title";
     protected String url;

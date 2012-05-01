@@ -51,8 +51,8 @@
 	<string name="version_preferences">Версия приложения</string>
 	<string name="donate_preferences">Помочь разработке</string>
 	<string name="donate_thanks_preferences">Спасибо за поддержку приложения!</string>
-	<string name="about_application_preferences">О приложении</string>
 	<string name="fullscreen_preferences">Полноэкранный режим</string>
+	<string name="fullscreen_summary_preferences">Потребуется перезапуск приложения</string>
 	<string name="keepscreen_preferences">Не выключать экран</string>
 	<string name="source_code_preferences">Исходный код</string>
 	<string name="default_tab_preferences">Вкладка по умолчанию</string>

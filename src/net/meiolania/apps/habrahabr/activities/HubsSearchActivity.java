@@ -11,10 +11,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Window;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class HubsSearchActivity extends SherlockFragmentActivity{
+public class HubsSearchActivity extends AbstractionActivity{
     public final static String URL = "http://habrahabr.ru/search/page%page%/?q=%query%&target_type=hubs";
     public final static String EXTRA_QUERY = "query";
     private String query;

@@ -58,6 +58,7 @@ public class PeopleFragment extends SherlockListFragment implements OnScrollList
     protected PeopleAdapter peopleAdapter;
     protected int page = 0;
     protected String url;
+    protected boolean noMorePages = false;
     
     public PeopleFragment(){
         url = DEFAULT_URL;
@@ -118,7 +119,7 @@ public class PeopleFragment extends SherlockListFragment implements OnScrollList
                 Elements users = document.select("div.user");
                 
                 if(users.size() <= 0){
-                    loadMoreData = false;
+                    noMorePages = true;
                     /*
                      * It's a solve for:
                      * java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()
@@ -182,7 +183,7 @@ public class PeopleFragment extends SherlockListFragment implements OnScrollList
     }
 
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
-        if((firstVisibleItem + visibleItemCount) == totalItemCount && loadMoreData){
+        if((firstVisibleItem + visibleItemCount) == totalItemCount && loadMoreData && !noMorePages){
             loadMoreData = false;
             loadList();
             Log.i(LOG_TAG, "Loading " + page + " page");

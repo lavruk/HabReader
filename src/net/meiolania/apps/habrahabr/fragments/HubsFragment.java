@@ -117,7 +117,7 @@ public class HubsFragment extends SherlockListFragment implements OnScrollListen
                 Elements hubs = document.select("div.hub");
                 
                 if(hubs.size() <= 0){
-                    loadMoreData = false;
+                    noMorePages = true;
                     /*
                      * It's a solve for:
                      * java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()
@@ -187,7 +187,7 @@ public class HubsFragment extends SherlockListFragment implements OnScrollListen
     }
 
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
-        if((firstVisibleItem + visibleItemCount) == totalItemCount && loadMoreData){
+        if((firstVisibleItem + visibleItemCount) == totalItemCount && loadMoreData && !noMorePages){
             loadMoreData = false;
             loadList();
             Log.i(LOG_TAG, "Loading " + page + " page");

@@ -11,12 +11,10 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Window;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class QaActivity extends SherlockFragmentActivity implements TabListener{
@@ -48,13 +46,6 @@ public class QaActivity extends SherlockFragmentActivity implements TabListener{
         
         tab = actionBar.newTab().setText(R.string.unanswered).setTag("unanswered").setTabListener(this);
         actionBar.addTab(tab, (selectedTab == 3 ? true : false));
-    }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater menuInflater = getSupportMenuInflater();
-        menuInflater.inflate(R.menu.qa_activity, menu);
-        return super.onCreateOptionsMenu(menu);
     }
     
     @Override

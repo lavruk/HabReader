@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.activities.QaSearchActivity;
 import net.meiolania.apps.habrahabr.activities.QaShowActivity;
 import net.meiolania.apps.habrahabr.adapters.QaAdapter;
 import net.meiolania.apps.habrahabr.data.QaData;
@@ -18,13 +19,20 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
-import android.widget.Toast;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 
 public abstract class AbstractionQaFragment extends SherlockListFragment implements OnScrollListener{
     public final static String LOG_TAG = "QaFragment";
@@ -32,13 +40,39 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
     protected QaAdapter qaAdapter;
     protected boolean loadMoreData = true;
     protected int page = 0;
-
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+    
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         qaAdapter = new QaAdapter(getSherlockActivity(), qaDatas);
         setListAdapter(qaAdapter);
         getListView().setOnScrollListener(this);
+    }
+    
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        inflater.inflate(R.menu.qa_fragment, menu);
+        
+        final EditText searchQuery = (EditText) menu.findItem(R.id.search).getActionView().findViewById(R.id.search_query);
+        searchQuery.setOnEditorActionListener(new OnEditorActionListener(){
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
+                if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                    Intent intent = new Intent(getSherlockActivity(), QaSearchActivity.class);
+                    intent.putExtra(QaSearchActivity.EXTRA_QUERY, searchQuery.getText().toString());
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+        });
+        
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     protected void loadList(){

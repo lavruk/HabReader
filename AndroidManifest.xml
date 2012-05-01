@@ -51,6 +51,7 @@
         <!-- Q&A -->
         <activity android:name=".activities.QaActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         <activity android:name=".activities.QaShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.QaSearchActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         
         <!-- Events -->
         <activity android:name=".activities.EventsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />

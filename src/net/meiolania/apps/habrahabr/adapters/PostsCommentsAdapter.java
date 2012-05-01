@@ -65,7 +65,7 @@ public class PostsCommentsAdapter extends BaseAdapter{
         
         if(level > 0){
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.FILL_PARENT);
-            layoutParams.setMargins(0, 0, level * 10, 0);
+            layoutParams.setMargins(level * 10, 0, 0, 0);
             comment.setLayoutParams(layoutParams);
         }
 

@@ -17,6 +17,7 @@ limitations under the License.
 package net.meiolania.apps.habrahabr.data;
 
 public class CommentsData{
+    public final static int MAX_LEVEL = 7;
     protected String url;
     protected String author;
     protected String comment;

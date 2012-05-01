@@ -47,6 +47,10 @@ public final class Preferences{
         return preferences != null ? preferences : (preferences = new Preferences(context));
     }
     
+    public SharedPreferences getSharedPreferences(){
+        return sharedPreferences;
+    }
+    
     public boolean getFullScreen(){
         return sharedPreferences.getBoolean(FULLSCREEN_KEY, FULLSCREEN_DEFAULT);
     }

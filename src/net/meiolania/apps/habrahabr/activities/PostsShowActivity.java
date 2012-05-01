@@ -18,7 +18,7 @@ package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.PostShowFragment;
-import net.meiolania.apps.habrahabr.fragments.ShowCommentsFragment;
+import net.meiolania.apps.habrahabr.fragments.PostsCommentsFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -76,8 +76,8 @@ public class PostsShowActivity extends AbstractionActivity implements TabListene
             PostShowFragment postShowFragment = new PostShowFragment(url);
             ft.replace(android.R.id.content, postShowFragment);
         }else if(tab.getTag().equals("comments")){
-            ShowCommentsFragment showCommentsFragment = new ShowCommentsFragment();
-            ft.replace(android.R.id.content, showCommentsFragment);
+            PostsCommentsFragment postsCommentsFragment = new PostsCommentsFragment(url);
+            ft.replace(android.R.id.content, postsCommentsFragment);
         }
     }
 

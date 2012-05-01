@@ -9,9 +9,26 @@
         android:orientation="vertical"
         android:padding="10dp" >
 
-        <TextView
-            android:id="@+id/fullname"
-            style="@style/DataFields" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+			
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_weight="1"
+                android:gravity="left" />
+            
+            <TextView
+                android:id="@+id/fullname"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right" />
+            
+        </LinearLayout>
 
         <LinearLayout
             style="@style/DataFields"
@@ -21,29 +38,28 @@
                 android:id="@+id/karma"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:gravity="left|center_vertical"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="left|center_vertical" />
 
             <TextView
                 android:id="@+id/rating"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:gravity="center_vertical|right"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="center_vertical|right" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/birthday"
             style="@style/DataFields" />
-		
+
         <TextView
             android:id="@+id/interests"
             style="@style/DataFields" />
-        
+
         <TextView
             android:id="@+id/summary"
             style="@style/DataFields" />
-        
     </LinearLayout>
 
 </ScrollView>

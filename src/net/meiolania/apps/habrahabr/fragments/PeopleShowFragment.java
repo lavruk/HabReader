@@ -32,12 +32,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class PeopleShowFragment extends SherlockFragment{
     public final static String LOG_TAG = "PeopleShowFragment";
@@ -103,10 +106,10 @@ public class PeopleShowFragment extends SherlockFragment{
                 peopleFullData.setAvatar(avatar.attr("src"));
                 peopleFullData.setKarma(karma.text());
                 peopleFullData.setRating(rating.text());
-                peopleFullData.setBirthday(birthday.text());
-                peopleFullData.setFullname(fullname.text());
-                peopleFullData.setSummary(summary.text());
-                peopleFullData.setInterests(interests.text());
+                peopleFullData.setBirthday(birthday != null ? birthday.text() : "");
+                peopleFullData.setFullname(fullname != null ? fullname.text() : "");
+                peopleFullData.setSummary(summary != null ? summary.text() : "");
+                peopleFullData.setInterests(interests != null ? interests.text() : "");
             }
             catch(IOException e){
             }
@@ -128,9 +131,16 @@ public class PeopleShowFragment extends SherlockFragment{
                 public void run(){
                     if(!isCancelled()){
                         SherlockFragmentActivity activity = getSherlockActivity();
-
+                        
+                        ImageView avatar = (ImageView)activity.findViewById(R.id.avatar);
+                        ImageLoader imageLoader = ImageLoader.getInstance();
+                        imageLoader.init(ImageLoaderConfiguration.createDefault(getSherlockActivity()));
+                        imageLoader.displayImage(result.getAvatar(), avatar);
+                        
                         TextView fullname = (TextView) activity.findViewById(R.id.fullname);
                         fullname.setText(result.getFullname());
+                        if(result.getFullname().length() <= 0)
+                            fullname.setVisibility(View.GONE);
 
                         TextView karma = (TextView) activity.findViewById(R.id.karma);
                         karma.setText(result.getKarma());
@@ -140,12 +150,18 @@ public class PeopleShowFragment extends SherlockFragment{
 
                         TextView birthday = (TextView) activity.findViewById(R.id.birthday);
                         birthday.setText(result.getBirthday());
+                        if(result.getBirthday().length() <= 0)
+                            birthday.setVisibility(View.GONE);
 
                         TextView interests = (TextView) activity.findViewById(R.id.interests);
                         interests.setText(result.getInterests());
+                        if(result.getInterests().length() <= 0)
+                            interests.setVisibility(View.GONE);
 
                         TextView summary = (TextView) activity.findViewById(R.id.summary);
                         summary.setText(result.getSummary());
+                        if(result.getSummary().length() <= 0)
+                            summary.setVisibility(View.GONE);
                     }
                     progressDialog.dismiss();
                 }

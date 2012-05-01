@@ -64,6 +64,7 @@
         <!-- People -->
         <activity android:name=".activities.PeopleActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         <activity android:name=".activities.PeopleShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.PeopleSearchActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
         
         <service android:name="net.robotmedia.billing.BillingService" />
 		<receiver android:name="net.robotmedia.billing.BillingReceiver">

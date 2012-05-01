@@ -44,6 +44,7 @@
 	<string name="loading_company">Загрузка данных о компании</string>
 	<!-- People -->
 	<string name="loading_profile_info">Загрузка профиля</string>
+	<string name="people_search">Поиск пользователей</string>
 	<!-- Preferences -->
 	<string name="base_preferences">Основные настройки</string>
 	<string name="additional_preferences">Дополнительная информация</string>

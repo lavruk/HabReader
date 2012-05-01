@@ -17,6 +17,7 @@ limitations under the License.
 package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.fragments.QaCommentsFragment;
 import net.meiolania.apps.habrahabr.fragments.QaShowFragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -75,7 +76,8 @@ public class QaShowActivity extends AbstractionActivity implements TabListener{
             QaShowFragment qaShowFragment = new QaShowFragment(url);
             ft.replace(android.R.id.content, qaShowFragment);
         }else if(tab.getTag().equals("comments")){
-            
+            QaCommentsFragment qaCommentsFragment = new QaCommentsFragment(url);
+            ft.replace(android.R.id.content, qaCommentsFragment);
         }
     }
 

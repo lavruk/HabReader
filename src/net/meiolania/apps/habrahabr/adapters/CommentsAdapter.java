@@ -28,11 +28,11 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class PostsCommentsAdapter extends BaseAdapter{
+public class CommentsAdapter extends BaseAdapter{
     protected ArrayList<CommentsData> commentsDatas;
     protected Context context;
 
-    public PostsCommentsAdapter(Context context, ArrayList<CommentsData> commentsDatas){
+    public CommentsAdapter(Context context, ArrayList<CommentsData> commentsDatas){
         this.commentsDatas = commentsDatas;
         this.context = context;
     }

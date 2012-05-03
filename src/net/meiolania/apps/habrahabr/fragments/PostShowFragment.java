@@ -121,10 +121,12 @@ public class PostShowFragment extends SherlockFragment{
                 public void run(){
                     if(!isCancelled()){
                         WebView content = (WebView) getSherlockActivity().findViewById(R.id.post_content);
-                        content.getSettings().setPluginsEnabled(true);
-                        content.getSettings().setSupportZoom(true);
-                        content.getSettings().setBuiltInZoomControls(true);
-                        content.loadDataWithBaseURL("", result.getContent(), "text/html", "UTF-8", null);
+                        if(content != null){
+                            content.getSettings().setPluginsEnabled(true);
+                            content.getSettings().setSupportZoom(true);
+                            content.getSettings().setBuiltInZoomControls(true);
+                            content.loadDataWithBaseURL("", result.getContent(), "text/html", "UTF-8", null);
+                        }
                     }
                     progressDialog.dismiss();
                 }

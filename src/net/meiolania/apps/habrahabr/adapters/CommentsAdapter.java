@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class CommentsAdapter extends BaseAdapter{
+    public final static int MARGIN = 10;
     protected ArrayList<CommentsData> commentsDatas;
     protected Context context;
 
@@ -65,7 +66,7 @@ public class CommentsAdapter extends BaseAdapter{
         
         if(level > 0){
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.FILL_PARENT);
-            layoutParams.setMargins(level * 10, 0, 0, 0);
+            layoutParams.setMargins(level * MARGIN, 0, 0, 0);
             comment.setLayoutParams(layoutParams);
         }
 

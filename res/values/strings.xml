@@ -11,6 +11,8 @@
 	<string name="no_more_pages">Нет страниц для загрузки</string>
 	<string name="search">Поиск</string>
 	<string name="loading_comments">Загрузка комментариев</string>
+	<string name="open_comment_in_browser">Открыть комментарий в браузере</string>
+	<string name="open_author_profile">Открыть профиль автора</string>
 	<!-- Dashboard titles -->
 	<string name="posts">Посты</string>
 	<string name="qa">Q&amp;A</string>

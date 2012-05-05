@@ -62,7 +62,7 @@
         </Preference>
         
         <Preference
-            android:summary="1.0"
+            android:summary="1.1"
             android:title="@string/version_preferences" />
         
     </PreferenceCategory>

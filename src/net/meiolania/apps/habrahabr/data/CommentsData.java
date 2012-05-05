@@ -20,10 +20,19 @@ public class CommentsData{
     public final static int MAX_LEVEL = 7;
     protected String url;
     protected String author;
+    protected String authorUrl;
     protected String comment;
     protected int score;
     protected int level;
-
+    
+    public String getAuthorUrl(){
+        return authorUrl;
+    }
+    
+    public void setAuthorUrl(String url){
+        this.authorUrl = url;
+    }
+    
     public String getUrl(){
         return url;
     }

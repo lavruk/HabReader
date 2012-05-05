@@ -21,6 +21,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public final class Preferences{
+    /* Auth data */
+    public final static String HSEC_ID = "hsec_id";
+    public final static String SESSION_ID = "PHPSESSID";
     /* Default tab for posts */
     public final static String POSTS_DEFAULT_TAB_KEY = "posts_default_tab";
     public final static String POSTS_DEFAULT_TAB_DEFAULT = "1";
@@ -69,6 +72,21 @@ public final class Preferences{
     
     public int getQaDefaultTab(){
         return Integer.parseInt(sharedPreferences.getString(QA_DEFAULT_TAB_KEY, QA_DEFAULT_TAB_DEFAULT));
+    }
+    
+    public boolean setAuthData(String hsecId, String sessionId){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HSEC_ID, hsecId);
+        editor.putString(SESSION_ID, sessionId);
+        return editor.commit();
+    }
+    
+    public String getSessionId(){
+        return sharedPreferences.getString(SESSION_ID, "");
+    }
+    
+    public String getHsecId(){
+        return sharedPreferences.getString(HSEC_ID, "");
     }
     
 }

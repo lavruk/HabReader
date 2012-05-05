@@ -11,6 +11,11 @@
 	<string name="no_more_pages">Нет страниц для загрузки</string>
 	<string name="search">Поиск</string>
 	<string name="loading_comments">Загрузка комментариев</string>
+	<string name="login">Логин</string>
+	<string name="password">Пароль</string>
+	<string name="do_sign_in">Вход</string>
+	<string name="captcha_hint">Введите код с картинки</string>
+	<string name="logged_in">Вход произведён</string>
 	<!-- Dashboard titles -->
 	<string name="posts">Посты</string>
 	<string name="qa">Q&amp;A</string>
@@ -57,4 +62,6 @@
 	<string name="keepscreen_preferences">Не выключать экран</string>
 	<string name="source_code_preferences">Исходный код</string>
 	<string name="default_tab_preferences">Вкладка по умолчанию</string>
+	<string name="auth_preferences">Авторизация</string>
+	<string name="personal_preferences">Личные настройки</string>
 </resources>

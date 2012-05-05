@@ -59,4 +59,6 @@
 	<string name="keepscreen_preferences">Не выключать экран</string>
 	<string name="source_code_preferences">Исходный код</string>
 	<string name="default_tab_preferences">Вкладка по умолчанию</string>
+	<string name="events_additional_layout_preferences">Отображать доп. информацию</string>
+	<string name="events_additional_layout_summary_preferences">Отображать дополнительную информацию при просмотре списка событий</string>
 </resources>

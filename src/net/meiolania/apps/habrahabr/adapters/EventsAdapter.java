@@ -18,6 +18,7 @@ package net.meiolania.apps.habrahabr.adapters;
 
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.EventsData;
 import android.content.Context;
@@ -30,10 +31,14 @@ import android.widget.TextView;
 public class EventsAdapter extends BaseAdapter{
     protected ArrayList<EventsData> eventsDatas;
     protected Context context;
+    protected boolean additionalLayout = false;
     
     public EventsAdapter(Context context, ArrayList<EventsData> eventsDatas){
         this.context = context;
         this.eventsDatas = eventsDatas;
+        
+        Preferences preferences = Preferences.getInstance(context);
+        this.additionalLayout = preferences.getAdditionalEvents();
     }
     
     public int getCount(){
@@ -59,6 +64,12 @@ public class EventsAdapter extends BaseAdapter{
         
         TextView title = (TextView)view.findViewById(R.id.event_title);
         title.setText(eventsData.getTitle());
+        
+        TextView text = (TextView)view.findViewById(R.id.event_text);
+        if(additionalLayout)
+            text.setText(eventsData.getText());
+        else
+            text.setVisibility(View.GONE);
         
         return view;
     }

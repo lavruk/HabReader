@@ -6,11 +6,13 @@
         <CheckBoxPreference
             android:key="fullscreen"
             android:summary="@string/fullscreen_summary_preferences"
-            android:title="@string/fullscreen_preferences" />
+            android:title="@string/fullscreen_preferences"
+            android:defaultValue="false" />
         
         <CheckBoxPreference
             android:key="keepscreen"
-            android:title="@string/keepscreen_preferences" />
+            android:title="@string/keepscreen_preferences"
+            android:defaultValue="false" />
         
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/posts" >
@@ -41,6 +43,12 @@
             android:entryValues="@array/events_tabs_values"
             android:key="events_default_tab"
             android:title="@string/default_tab_preferences" />
+        
+        <CheckBoxPreference
+            android:key="events_additional_layout"
+            android:title="@string/events_additional_layout_preferences"
+            android:summary="@string/events_additional_layout_summary_preferences"
+            android:defaultValue="false" />
         
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/additional_preferences" >

@@ -54,6 +54,7 @@
 	<string name="additional_preferences">Дополнительная информация</string>
 	<string name="version_preferences">Версия приложения</string>
 	<string name="donate_preferences">Помочь разработке</string>
+	<string name="review_preferences">Оценить приложение</string>
 	<string name="donate_thanks_preferences">Спасибо за поддержку приложения!</string>
 	<string name="fullscreen_preferences">Полноэкранный режим</string>
 	<string name="fullscreen_summary_preferences">Потребуется перезапуск приложения</string>

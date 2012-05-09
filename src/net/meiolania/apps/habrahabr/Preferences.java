@@ -32,16 +32,16 @@ public final class Preferences{
     public final static String EVENTS_DEFAULT_TAB_DEFAULT = "0";
     /* Additional layout for posts */
     public final static String ADDITIONAL_LAYOUT_POSTS_KEY = "posts_additional_layout";
-    public final static boolean ADDITIONAL_LAYOUT_POSTS_DEFAULT = false;
+    public final static boolean ADDITIONAL_LAYOUT_POSTS_DEFAULT = true;
     /* Additional layout for hubs */
     public final static String ADDITIONAL_LAYOUT_HUBS_KEY = "hubs_additional_layout";
-    public final static boolean ADDITIONAL_LAYOUT_HUBS_DEFAULT = false;
+    public final static boolean ADDITIONAL_LAYOUT_HUBS_DEFAULT = true;
     /* Additional layout for Q&A */
     public final static String ADDITIONAL_LAYOUT_QA_KEY = "qa_additional_layout";
-    public final static boolean ADDITIONAL_LAYOUT_QA_DEFAULT = false;
+    public final static boolean ADDITIONAL_LAYOUT_QA_DEFAULT = true;
     /* Additional layout for events */
     public final static String ADDITIONAL_LAYOUT_EVENTS_KEY = "events_additional_layout";
-    public final static boolean ADDITIONAL_LAYOUT_EVENTS_DEFAULT = false;
+    public final static boolean ADDITIONAL_LAYOUT_EVENTS_DEFAULT = true;
     /* Fullscreen */
     public final static String FULLSCREEN_KEY = "fullscreen";
     public final static boolean FULLSCREEN_DEFAULT = false;

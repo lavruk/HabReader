@@ -77,6 +77,12 @@ public class PeopleAdapter extends BaseAdapter{
         
         ImageView avatar = (ImageView) view.findViewById(R.id.people_avatar);
         imageLoader.displayImage(peopleData.getAvatar(), avatar);
+        
+        TextView karma = (TextView)view.findViewById(R.id.people_karma);
+        karma.setText(peopleData.getKarma());
+        
+        TextView rating = (TextView)view.findViewById(R.id.people_rating);
+        rating.setText(peopleData.getRating());
 
         return view;
     }

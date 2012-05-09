@@ -63,4 +63,5 @@
 	<string name="events_additional_layout_summary_preferences">Отображать дополнительную информацию при просмотре списка событий</string>
 	<string name="posts_additional_layout_summary_preferences">Отображать дополнительную информацию при просмотре списка постов</string>
 	<string name="hubs_additional_layout_summary_preferences">Отображать дополнительную информацию при просмотре списка хабов</string>
+	<string name="qa_additional_layout_summary_preferences">Отображать дополнительную информауию при просмотре списка вопросов</string>
 </resources>

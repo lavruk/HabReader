@@ -18,6 +18,7 @@ package net.meiolania.apps.habrahabr.adapters;
 
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.QaData;
 import android.content.Context;
@@ -25,15 +26,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class QaAdapter extends BaseAdapter{
     protected ArrayList<QaData> qaDatas;
     protected Context context;
+    protected boolean additionalLayout = false;
     
     public QaAdapter(Context context, ArrayList<QaData> qaDatas){
         this.context = context;
         this.qaDatas = qaDatas;
+        
+        Preferences preferences = Preferences.getInstance(context);
+        this.additionalLayout = preferences.getAdditionalQa();
     }
     
     public int getCount(){
@@ -59,6 +65,20 @@ public class QaAdapter extends BaseAdapter{
         
         TextView title = (TextView)view.findViewById(R.id.qa_title);
         title.setText(qaData.getTitle());
+        
+        TextView hubs = (TextView)view.findViewById(R.id.qa_hubs);
+        TextView author = (TextView)view.findViewById(R.id.qa_author);
+        TextView date = (TextView)view.findViewById(R.id.qa_date);
+        LinearLayout qaInfo = (LinearLayout)view.findViewById(R.id.qa_info);
+        
+        if(additionalLayout){
+            hubs.setText(qaData.getHubs());
+            author.setText(qaData.getAuthor());
+            date.setText(qaData.getDate());
+        }else{
+            hubs.setVisibility(View.GONE);
+            qaInfo.setVisibility(View.GONE);
+        }
         
         return view;
     }

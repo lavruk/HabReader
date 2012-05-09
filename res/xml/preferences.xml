@@ -52,6 +52,12 @@
             android:key="qa_default_tab"
             android:title="@string/default_tab_preferences" />
         
+        <CheckBoxPreference
+            android:key="qa_additional_layout"
+            android:title="@string/additional_layout_preferences"
+            android:summary="@string/qa_additional_layout_summary_preferences"
+            android:defaultValue="false" />
+        
     </PreferenceCategory>
     
     <PreferenceCategory android:title="@string/events" >

@@ -21,6 +21,7 @@ public class QaData{
     protected String hubs;
     protected String url;
     protected String date;
+    //TODO: add a link to author's profile
     protected String author;
     protected String answers;
 

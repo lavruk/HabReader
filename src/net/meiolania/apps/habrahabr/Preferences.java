@@ -36,6 +36,9 @@ public final class Preferences{
     /* Additional layout for hubs */
     public final static String ADDITIONAL_LAYOUT_HUBS_KEY = "hubs_additional_layout";
     public final static boolean ADDITIONAL_LAYOUT_HUBS_DEFAULT = false;
+    /* Additional layout for Q&A */
+    public final static String ADDITIONAL_LAYOUT_QA_KEY = "qa_additional_layout";
+    public final static boolean ADDITIONAL_LAYOUT_QA_DEFAULT = false;
     /* Additional layout for events */
     public final static String ADDITIONAL_LAYOUT_EVENTS_KEY = "events_additional_layout";
     public final static boolean ADDITIONAL_LAYOUT_EVENTS_DEFAULT = false;
@@ -90,6 +93,10 @@ public final class Preferences{
     
     public boolean getAdditionalHubs(){
         return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_HUBS_KEY, ADDITIONAL_LAYOUT_HUBS_DEFAULT);
+    }
+    
+    public boolean getAdditionalQa(){
+        return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_QA_KEY, ADDITIONAL_LAYOUT_QA_DEFAULT);
     }
     
 }

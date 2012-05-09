@@ -30,6 +30,9 @@ public final class Preferences{
     /* Default tab for events */
     public final static String EVENTS_DEFAULT_TAB_KEY = "events_default_tab";
     public final static String EVENTS_DEFAULT_TAB_DEFAULT = "0";
+    /* Additional layout for posts */
+    public final static String ADDITIONAL_LAYOUT_POSTS_KEY = "posts_additional_layout";
+    public final static boolean ADDITIONAL_LAYOUT_POSTS_DEFAULT = false;
     /* Additional layout for events */
     public final static String ADDITIONAL_LAYOUT_EVENTS_KEY = "events_additional_layout";
     public final static boolean ADDITIONAL_LAYOUT_EVENTS_DEFAULT = false;
@@ -76,6 +79,10 @@ public final class Preferences{
     
     public boolean getAdditionalEvents(){
         return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_EVENTS_KEY, ADDITIONAL_LAYOUT_EVENTS_DEFAULT);
+    }
+    
+    public boolean getAdditionalPosts(){
+        return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_POSTS_KEY, ADDITIONAL_LAYOUT_POSTS_DEFAULT);
     }
     
 }

@@ -20,6 +20,7 @@ public class PostsData{
     protected String title;
     protected String url;
     protected String hubs;
+    //TODO: add a link to the author's profile
     protected String author;
     protected String date;
     protected int comments;

@@ -18,6 +18,7 @@ package net.meiolania.apps.habrahabr.adapters;
 
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.PostsData;
 import android.content.Context;
@@ -25,15 +26,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class PostsAdapter extends BaseAdapter{
     protected ArrayList<PostsData> postsDatas;
     protected Context context;
+    protected boolean additionalLayout = false;
     
     public PostsAdapter(Context context, ArrayList<PostsData> postsDatas){
         this.context = context;
         this.postsDatas = postsDatas;
+        
+        Preferences preferences = Preferences.getInstance(context);
+        this.additionalLayout = preferences.getAdditionalPosts();
     }
     
     public int getCount(){
@@ -59,6 +65,20 @@ public class PostsAdapter extends BaseAdapter{
         
         TextView title = (TextView) view.findViewById(R.id.post_title);
         title.setText(postsData.getTitle());
+        
+        TextView hubs = (TextView)view.findViewById(R.id.post_hubs);
+        TextView author = (TextView)view.findViewById(R.id.post_author);
+        TextView date = (TextView)view.findViewById(R.id.post_date);
+        LinearLayout postInfo = (LinearLayout)view.findViewById(R.id.post_info);
+        
+        if(additionalLayout){
+            hubs.setText(postsData.getHubs());
+            author.setText(postsData.getAuthor());
+            date.setText(postsData.getDate());
+        }else{
+            hubs.setVisibility(View.GONE);
+            postInfo.setVisibility(View.GONE);
+        }
         
         return view;
     }

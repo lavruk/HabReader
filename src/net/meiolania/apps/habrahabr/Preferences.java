@@ -33,6 +33,9 @@ public final class Preferences{
     /* Additional layout for posts */
     public final static String ADDITIONAL_LAYOUT_POSTS_KEY = "posts_additional_layout";
     public final static boolean ADDITIONAL_LAYOUT_POSTS_DEFAULT = false;
+    /* Additional layout for hubs */
+    public final static String ADDITIONAL_LAYOUT_HUBS_KEY = "hubs_additional_layout";
+    public final static boolean ADDITIONAL_LAYOUT_HUBS_DEFAULT = false;
     /* Additional layout for events */
     public final static String ADDITIONAL_LAYOUT_EVENTS_KEY = "events_additional_layout";
     public final static boolean ADDITIONAL_LAYOUT_EVENTS_DEFAULT = false;
@@ -83,6 +86,10 @@ public final class Preferences{
     
     public boolean getAdditionalPosts(){
         return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_POSTS_KEY, ADDITIONAL_LAYOUT_POSTS_DEFAULT);
+    }
+    
+    public boolean getAdditionalHubs(){
+        return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_HUBS_KEY, ADDITIONAL_LAYOUT_HUBS_DEFAULT);
     }
     
 }

@@ -9,6 +9,38 @@
         android:id="@+id/hub_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/title_in_list" />
+        android:textSize="@dimen/title_in_list"
+        android:layout_marginBottom="5dp" />
+    
+    <TextView
+        android:id="@+id/hub_stat"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_small"
+        android:layout_marginBottom="5dp" />
+    
+    <LinearLayout
+        android:id="@+id/hub_info"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <TextView
+            android:id="@+id/hub_category"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:textSize="@dimen/text_size_small"
+            android:layout_weight="1" />
+        
+        <TextView
+            android:id="@+id/hub_index"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right|center_vertical"
+            android:textSize="@dimen/text_size_small"
+            android:layout_weight="1" />
+        
+    </LinearLayout>
 
 </LinearLayout>

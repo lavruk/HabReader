@@ -77,6 +77,9 @@ public class CompaniesAdapter extends BaseAdapter{
         
         ImageView icon = (ImageView) view.findViewById(R.id.company_icon);
         imageLoader.displayImage(companiesData.getIcon(), icon);
+        
+        TextView index = (TextView)view.findViewById(R.id.company_index);
+        index.setText(String.format(context.getString(R.string.habraindex), companiesData.getIndex()));
 
         return view;
     }

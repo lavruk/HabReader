@@ -13,6 +13,7 @@
 	<string name="loading_comments">Загрузка комментариев</string>
 	<string name="open_comment_in_browser">Открыть комментарий в браузере</string>
 	<string name="open_author_profile">Открыть профиль автора</string>
+	<string name="habraindex">Хабраиндекс %s</string>
 	<!-- Dashboard titles -->
 	<string name="posts">Посты</string>
 	<string name="qa">Q&amp;A</string>

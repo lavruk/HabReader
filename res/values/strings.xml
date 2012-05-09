@@ -3,7 +3,7 @@
 	<string name="app_name">HabReader</string>
 	<!-- Base -->
 	<string name="loading">Загрузка</string>
-	<string name="share">Поделиться</string>
+	<string name="share">Поделиться с друзьями</string>
 	<string name="inbox">Входящие</string>
 	<string name="hot">Горячие</string>
 	<string name="popular">Популярные</string>

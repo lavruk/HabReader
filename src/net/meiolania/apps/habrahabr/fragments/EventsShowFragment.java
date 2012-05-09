@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.EventsFullData;
+import net.meiolania.apps.habrahabr.utils.IntentUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -37,12 +38,16 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 public class EventsShowFragment extends SherlockFragment{
     public final static int INFO_LOCATION = 0;
     public final static int INFO_PAY = 1;
     public final static int INFO_SITE = 2;
     protected String url;
+    protected EventsFullData eventsFullData;
 
     public EventsShowFragment(){
     }
@@ -75,6 +80,22 @@ public class EventsShowFragment extends SherlockFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         return inflater.inflate(R.layout.events_show_activity, container, false);
     }
+    
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.events_show_activity, menu);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.share:
+                IntentUtils.createShareIntent(getSherlockActivity(), eventsFullData.getTitle(), url);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     protected void loadEvent(){
         Log.d("EventsShowFragment", "Url is " + url);
@@ -91,6 +112,7 @@ public class EventsShowFragment extends SherlockFragment{
                 Document document = Jsoup.connect(url).get();
                 Element day = document.select("div.date > div.day").first();
                 Element month = document.select("div.date > div.month").first();
+                //TODO: add logo
                 Element logo = document.select("div.logo > img").first();
                 Element title = document.select("div.info_block > h1.title").first();
                 Element detail = document.select("div.info_block > div.detail").first();
@@ -143,6 +165,7 @@ public class EventsShowFragment extends SherlockFragment{
         protected void onPostExecute(final EventsFullData result){
             getSherlockActivity().runOnUiThread(new Runnable(){
                 public void run(){
+                    eventsFullData = result;
                     if(!isCancelled()){
                         SherlockFragmentActivity activity = getSherlockActivity();
                         

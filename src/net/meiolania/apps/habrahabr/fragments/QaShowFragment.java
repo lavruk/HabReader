@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.QaFullData;
+import net.meiolania.apps.habrahabr.utils.IntentUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -37,10 +38,12 @@ import android.webkit.WebView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 public class QaShowFragment extends SherlockFragment{
     public final static String LOG_TAG = "QaShowFragment";
     protected String url;
+    protected QaFullData qaFullData;
 
     public QaShowFragment(){
     }
@@ -78,6 +81,16 @@ public class QaShowFragment extends SherlockFragment{
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.qa_show_activity, menu);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.share:
+                IntentUtils.createShareIntent(getSherlockActivity(), qaFullData.getTitle(), url);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     protected void loadInfo(){
@@ -128,6 +141,7 @@ public class QaShowFragment extends SherlockFragment{
         protected void onPostExecute(final QaFullData result){
             getSherlockActivity().runOnUiThread(new Runnable(){
                 public void run(){
+                    qaFullData = result;
                     if(!isCancelled()){
                         WebView content = (WebView)getSherlockActivity().findViewById(R.id.qa_content);
                         content.getSettings().setPluginsEnabled(true);

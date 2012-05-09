@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.PostsFullData;
+import net.meiolania.apps.habrahabr.utils.IntentUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -40,6 +41,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class PostShowFragment extends SherlockFragment{
     protected String url;
+    protected PostsFullData postsFullData;
 
     public PostShowFragment(){
     }
@@ -73,6 +75,11 @@ public class PostShowFragment extends SherlockFragment{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.share:
+                IntentUtils.createShareIntent(getSherlockActivity(), postsFullData.getTitle(), url);
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -119,6 +126,7 @@ public class PostShowFragment extends SherlockFragment{
         protected void onPostExecute(final PostsFullData result){
             getSherlockActivity().runOnUiThread(new Runnable(){
                 public void run(){
+                    postsFullData = result;
                     if(!isCancelled()){
                         WebView content = (WebView) getSherlockActivity().findViewById(R.id.post_content);
                         if(content != null){

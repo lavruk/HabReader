@@ -39,12 +39,12 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.TextView.OnEditorActionListener;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;

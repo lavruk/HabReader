@@ -40,8 +40,43 @@ public class PreferencesActivity extends SherlockPreferenceActivity{
         super.onCreate(savedInstanceState);
         showActionBar();
         addPreferencesFromResource(R.xml.preferences);
-
+        
+        launchAuthActivity();
         donate();
+    }
+    
+    @Override
+    protected void onDestroy(){
+        BillingController.unregisterObserver(billingObserver);
+        super.onDestroy();
+    }
+    
+    private void showActionBar(){
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(R.string.preferences);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case android.R.id.home:
+                Intent intent = new Intent(this, DashboardActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    
+    private void launchAuthActivity(){
+        Preference auth = (Preference)findPreference("auth");
+        auth.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+            public boolean onPreferenceClick(Preference preference){
+                startActivity(new Intent(PreferencesActivity.this, AuthActivity.class));
+                return false;
+            }
+        });
     }
 
     private void donate(){
@@ -90,30 +125,6 @@ public class PreferencesActivity extends SherlockPreferenceActivity{
             donate.setTitle(R.string.donate_thanks_preferences);
             donate.setEnabled(false);
         }
-    }
-
-    @Override
-    protected void onDestroy(){
-        BillingController.unregisterObserver(billingObserver);
-        super.onDestroy();
-    }
-
-    private void showActionBar(){
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(R.string.preferences);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch(item.getItemId()){
-            case android.R.id.home:
-                Intent intent = new Intent(this, DashboardActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 }

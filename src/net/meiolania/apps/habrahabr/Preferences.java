@@ -21,6 +21,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public final class Preferences{
+    /* Auth data */
+    public final static String HSEC_ID = "hsec_id";
+    public final static String SESSION_ID = "PHPSESSID";
     /* Default tab for posts */
     public final static String POSTS_DEFAULT_TAB_KEY = "posts_default_tab";
     public final static String POSTS_DEFAULT_TAB_DEFAULT = "1";
@@ -50,53 +53,68 @@ public final class Preferences{
     public final static boolean KEEPSCREEN_DEFAULT = false;
     private static Preferences preferences = null;
     private SharedPreferences sharedPreferences;
-    
+
     private Preferences(Context context){
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
-    
+
     public static Preferences getInstance(Context context){
         return preferences != null ? preferences : (preferences = new Preferences(context));
     }
-    
+
     public SharedPreferences getSharedPreferences(){
         return sharedPreferences;
     }
-    
+
     public boolean getFullScreen(){
         return sharedPreferences.getBoolean(FULLSCREEN_KEY, FULLSCREEN_DEFAULT);
     }
-    
+
     public boolean getKeepScreen(){
         return sharedPreferences.getBoolean(KEEPSCREEN_KEY, KEEPSCREEN_DEFAULT);
     }
-    
+
     public int getPostsDefaultTab(){
         return Integer.parseInt(sharedPreferences.getString(POSTS_DEFAULT_TAB_KEY, POSTS_DEFAULT_TAB_DEFAULT));
     }
-    
+
     public int getEventsDefaultTab(){
         return Integer.parseInt(sharedPreferences.getString(EVENTS_DEFAULT_TAB_KEY, EVENTS_DEFAULT_TAB_DEFAULT));
     }
-    
+
     public int getQaDefaultTab(){
         return Integer.parseInt(sharedPreferences.getString(QA_DEFAULT_TAB_KEY, QA_DEFAULT_TAB_DEFAULT));
     }
-    
+
     public boolean getAdditionalEvents(){
         return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_EVENTS_KEY, ADDITIONAL_LAYOUT_EVENTS_DEFAULT);
     }
-    
+
     public boolean getAdditionalPosts(){
         return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_POSTS_KEY, ADDITIONAL_LAYOUT_POSTS_DEFAULT);
     }
-    
+
     public boolean getAdditionalHubs(){
         return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_HUBS_KEY, ADDITIONAL_LAYOUT_HUBS_DEFAULT);
     }
-    
+
     public boolean getAdditionalQa(){
         return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_QA_KEY, ADDITIONAL_LAYOUT_QA_DEFAULT);
     }
-    
+
+    public boolean setAuthData(String hsecId, String sessionId){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(HSEC_ID, hsecId);
+        editor.putString(SESSION_ID, sessionId);
+        return editor.commit();
+    }
+
+    public String getSessionId(){
+        return sharedPreferences.getString(SESSION_ID, "");
+    }
+
+    public String getHsecId(){
+        return sharedPreferences.getString(HSEC_ID, "");
+    }
+
 }

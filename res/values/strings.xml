@@ -14,6 +14,11 @@
 	<string name="open_comment_in_browser">Открыть комментарий в браузере</string>
 	<string name="open_author_profile">Открыть профиль автора</string>
 	<string name="habraindex">Хабраиндекс %s</string>
+	<string name="login">Логин</string>
+	<string name="password">Пароль</string>
+	<string name="do_sign_in">Вход</string>
+	<string name="captcha_hint">Введите код с картинки</string>
+	<string name="logged_in">Вход произведён</string>
 	<!-- Dashboard titles -->
 	<string name="posts">Посты</string>
 	<string name="qa">Q&amp;A</string>
@@ -66,4 +71,6 @@
 	<string name="posts_additional_layout_summary_preferences">Отображать дополнительную информацию при просмотре списка постов</string>
 	<string name="hubs_additional_layout_summary_preferences">Отображать дополнительную информацию при просмотре списка хабов</string>
 	<string name="qa_additional_layout_summary_preferences">Отображать дополнительную информауию при просмотре списка вопросов</string>
+	<string name="auth_preferences">Авторизация</string>
+	<string name="personal_preferences">Личные настройки</string>
 </resources>

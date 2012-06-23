@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.fragments;
+package net.meiolania.apps.habrahabr.fragments.posts;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-public class SearchQaFragment extends AbstractionQaFragment{
-    public final static String URL = "http://habrahabr.ru/search/page%page%/?target_type=qa&order_by=relevance&q=%query%";
+public class SearchPostsFragment extends AbstractionPostsFragment{
+    public final static String URL = "http://habrahabr.ru/search/page%page%/?target_type=posts&order_by=relevance&q=%query%";
     protected String query;
 
-    public SearchQaFragment(String query){
+    public SearchPostsFragment(String query){
         this.query = query;
     }
 

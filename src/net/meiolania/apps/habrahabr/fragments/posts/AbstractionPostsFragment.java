@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.fragments;
+package net.meiolania.apps.habrahabr.fragments.posts;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.activities.QaSearchActivity;
-import net.meiolania.apps.habrahabr.activities.QaShowActivity;
-import net.meiolania.apps.habrahabr.adapters.QaAdapter;
-import net.meiolania.apps.habrahabr.data.QaData;
+import net.meiolania.apps.habrahabr.activities.PostsSearchActivity;
+import net.meiolania.apps.habrahabr.activities.PostsShowActivity;
+import net.meiolania.apps.habrahabr.adapters.PostsAdapter;
+import net.meiolania.apps.habrahabr.data.PostsData;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 
 import org.jsoup.Jsoup;
@@ -50,12 +50,12 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 
-public abstract class AbstractionQaFragment extends SherlockListFragment implements OnScrollListener{
-    public final static String LOG_TAG = "QaFragment";
-    protected final ArrayList<QaData> qaDatas = new ArrayList<QaData>();
-    protected QaAdapter qaAdapter;
-    protected boolean loadMoreData = true;
+public abstract class AbstractionPostsFragment extends SherlockListFragment implements OnScrollListener{
+    public final static String LOG_TAG = "PostsFragment";
+    protected final ArrayList<PostsData> postsDatas = new ArrayList<PostsData>();
+    protected PostsAdapter postsAdapter;
     protected int page = 0;
+    protected boolean loadMoreData = true;
     protected boolean noMorePages = false;
     
     @Override
@@ -67,21 +67,21 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        qaAdapter = new QaAdapter(getSherlockActivity(), qaDatas);
-        setListAdapter(qaAdapter);
+        postsAdapter = new PostsAdapter(getActivity(), postsDatas);
+        setListAdapter(postsAdapter);
         getListView().setOnScrollListener(this);
     }
     
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
-        inflater.inflate(R.menu.qa_fragment, menu);
+        inflater.inflate(R.menu.posts_fragment, menu);
         
         final EditText searchQuery = (EditText) menu.findItem(R.id.search).getActionView().findViewById(R.id.search_query);
         searchQuery.setOnEditorActionListener(new OnEditorActionListener(){
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
                 if(actionId == EditorInfo.IME_ACTION_SEARCH){
-                    Intent intent = new Intent(getSherlockActivity(), QaSearchActivity.class);
-                    intent.putExtra(QaSearchActivity.EXTRA_QUERY, searchQuery.getText().toString());
+                    Intent intent = new Intent(getSherlockActivity(), PostsSearchActivity.class);
+                    intent.putExtra(PostsSearchActivity.EXTRA_QUERY, searchQuery.getText().toString());
                     startActivity(intent);
                     return true;
                 }
@@ -95,22 +95,22 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
     protected void loadList(){
         ++page;
         getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-        new LoadQa().execute();
+        new LoadPosts().execute();
     }
 
     protected abstract String getUrl();
 
-    protected final class LoadQa extends AsyncTask<Void, Void, Void>{
+    protected final class LoadPosts extends AsyncTask<Void, Void, Void>{
 
         @Override
         protected Void doInBackground(Void... params){
             try{
-                Log.i(LOG_TAG, "Loading " + getUrl().replace("%page%", String.valueOf(page)));
+                Log.d(LOG_TAG, "Loading " + getUrl().replace("%page%", String.valueOf(page)));
 
                 Document document = Jsoup.connect(getUrl().replace("%page%", String.valueOf(page))).get();
-                Elements qaList = document.select("div.post");
+                Elements posts = document.select("div.post");
                 
-                if(qaList.size() <= 0){
+                if(posts.size() <= 0){
                     noMorePages = true;
                     /*
                      * It's a solve for:
@@ -121,25 +121,25 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
                             Toast.makeText(getSherlockActivity(), R.string.no_more_pages, Toast.LENGTH_SHORT).show();
                         }
                     });
-                }
+                }    
                 
-                for(Element qa : qaList){
-                    QaData qaData = new QaData();
-                    
-                    Element title = qa.select("a.post_title").first();
-                    Element hubs = qa.select("div.hubs").first();
-                    Element answers = qa.select("div.informative").first();
-                    Element date = qa.select("div.published").first();
-                    Element author = qa.select("div.author > a").first();
-                    
-                    qaData.setTitle(title.text());
-                    qaData.setUrl(title.attr("abs:href"));
-                    qaData.setHubs(hubs.text());
-                    qaData.setAnswers(answers.text());
-                    qaData.setDate(date.text());
-                    qaData.setAuthor(author.text());
-                    
-                    qaDatas.add(qaData);
+                for(Element post : posts){
+                    PostsData postsData = new PostsData();
+
+                    final Element postTitle = post.select("a.post_title").first();
+                    final Element hubs = post.select("div.hubs").first();
+                    final Element date = post.select("div.published").first();
+                    final Element author = post.select("div.author > a").first();
+                    final Element comments = post.select("div.comments > span.all").first();
+
+                    postsData.setTitle(postTitle.text());
+                    postsData.setUrl(postTitle.attr("abs:href"));
+                    postsData.setHubs(hubs.text());
+                    postsData.setDate(date.text());
+                    postsData.setAuthor(author != null ? author.text() : "");
+                    postsData.setComments(comments != null ? Integer.valueOf(comments.text()) : 0);
+
+                    postsDatas.add(postsData);
                 }
             }
             catch(IOException e){
@@ -149,28 +149,31 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
 
         @Override
         protected void onPostExecute(Void result){
+            /*
+             * Okay, that works. But I'm not sure that's a good solution.
+             */
             getSherlockActivity().runOnUiThread(new Runnable(){
                 public void run(){
                     if(!isCancelled())
-                        qaAdapter.notifyDataSetChanged();
-                    getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
+                        postsAdapter.notifyDataSetChanged();
                     loadMoreData = true;
+                    getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
                 }
             });
         }
 
     }
-    
+
     @Override
     public void onListItemClick(ListView list, View view, int position, long id){
-        showQa(position);
+        showPost(position);
     }
-    
-    protected void showQa(int position){
-        QaData qaData = qaDatas.get(position);
-        Intent intent = new Intent(getSherlockActivity(), QaShowActivity.class);
-        intent.putExtra(QaShowActivity.EXTRA_URL, qaData.getUrl());
-        intent.putExtra(QaShowActivity.EXTRA_TITLE, qaData.getTitle());
+
+    protected void showPost(int position){
+        PostsData postsData = postsDatas.get(position);
+        Intent intent = new Intent(getSherlockActivity(), PostsShowActivity.class);
+        intent.putExtra(PostsShowActivity.EXTRA_URL, postsData.getUrl());
+        intent.putExtra(PostsShowActivity.EXTRA_TITLE, postsData.getTitle());
         startActivity(intent);
     }
 

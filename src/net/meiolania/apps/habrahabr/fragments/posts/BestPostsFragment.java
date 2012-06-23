@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.fragments;
+package net.meiolania.apps.habrahabr.fragments.posts;
 
-public class HotQaFragment extends AbstractionQaFragment{
-    public final static String URL = "http://habrahabr.ru/qa/hot/page%page%/";
+public class BestPostsFragment extends AbstractionPostsFragment{
+    public final static String URL = "http://habrahabr.ru/posts/top/daily/page%page%/";
     
     @Override
-    public String getUrl(){
+    protected String getUrl(){
         return URL;
     }
 

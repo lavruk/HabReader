@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.fragments;
+package net.meiolania.apps.habrahabr.fragments.events;
 
 import java.io.IOException;
 import java.util.ArrayList;

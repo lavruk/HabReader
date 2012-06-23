@@ -16,6 +16,7 @@ public class Auth{
     public final static String LOG_TAG = "Auth";
     public final static String AUTH_URL = "http://habrahabr.ru/ajax/auth/";
 
+    //TODO: rewrite
     public static String doAuth(Context context, String login, String password, String captcha){
         try{
             Connection.Response auth = Jsoup.connect(AUTH_URL).
@@ -42,9 +43,7 @@ public class Auth{
                 return error.text();
             }    
         }
-        catch(IOException e){
-            return e.getMessage();
-        }
+        catch(IOException e){}
         return "None";
     }
 

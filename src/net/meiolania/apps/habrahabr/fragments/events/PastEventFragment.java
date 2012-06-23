@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.fragments;
+package net.meiolania.apps.habrahabr.fragments.events;
 
 public class PastEventFragment extends AbstractionEventsFragment{
     public final static String URL = "http://habrahabr.ru/events/past/page%page%/";

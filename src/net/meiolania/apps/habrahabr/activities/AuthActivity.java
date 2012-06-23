@@ -19,7 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class AuthActivity extends AbstractionActivity{
-    public final static String CAPTCHA_URL = "http://habrahabr.ru/core/captcha";
+    public final static String CAPTCHA_URL = "http://habrahabr.ru/core/captcha/";
     
     @Override
     protected void onCreate(Bundle savedInstanceState){

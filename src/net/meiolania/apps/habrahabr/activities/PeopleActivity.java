@@ -17,7 +17,7 @@ limitations under the License.
 package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.fragments.PeopleFragment;
+import net.meiolania.apps.habrahabr.fragments.people.PeopleFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;

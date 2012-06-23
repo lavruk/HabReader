@@ -18,9 +18,9 @@ package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.fragments.ComingEventFragment;
-import net.meiolania.apps.habrahabr.fragments.CurrentEventFragment;
-import net.meiolania.apps.habrahabr.fragments.PastEventFragment;
+import net.meiolania.apps.habrahabr.fragments.events.ComingEventFragment;
+import net.meiolania.apps.habrahabr.fragments.events.CurrentEventFragment;
+import net.meiolania.apps.habrahabr.fragments.events.PastEventFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;

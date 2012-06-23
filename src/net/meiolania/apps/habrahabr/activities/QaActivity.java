@@ -18,10 +18,10 @@ package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.fragments.HotQaFragment;
-import net.meiolania.apps.habrahabr.fragments.InboxQaFragment;
-import net.meiolania.apps.habrahabr.fragments.PopularQaFragment;
-import net.meiolania.apps.habrahabr.fragments.UnansweredQaFragment;
+import net.meiolania.apps.habrahabr.fragments.qa.HotQaFragment;
+import net.meiolania.apps.habrahabr.fragments.qa.InboxQaFragment;
+import net.meiolania.apps.habrahabr.fragments.qa.PopularQaFragment;
+import net.meiolania.apps.habrahabr.fragments.qa.UnansweredQaFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;

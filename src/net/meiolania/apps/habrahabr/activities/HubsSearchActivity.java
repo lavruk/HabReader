@@ -20,7 +20,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.fragments.HubsFragment;
+import net.meiolania.apps.habrahabr.fragments.hubs.HubsFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;

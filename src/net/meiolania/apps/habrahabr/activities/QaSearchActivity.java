@@ -17,7 +17,7 @@ limitations under the License.
 package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.fragments.SearchQaFragment;
+import net.meiolania.apps.habrahabr.fragments.qa.SearchQaFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;

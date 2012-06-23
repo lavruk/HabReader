@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.fragments;
+package net.meiolania.apps.habrahabr.fragments.events;
 
-public class BestPostsFragment extends AbstractionPostsFragment{
-    public final static String URL = "http://habrahabr.ru/posts/top/daily/page%page%/";
+public class CurrentEventFragment extends AbstractionEventsFragment{
+    public final static String URL = "http://habrahabr.ru/events/coming/page%page%/";
     
     @Override
     protected String getUrl(){

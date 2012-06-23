@@ -14,24 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.fragments;
+package net.meiolania.apps.habrahabr.fragments.posts;
 
-public class HubsPostsFragment extends AbstractionPostsFragment{
-    protected String url;
-    
-    public HubsPostsFragment(){}
-    
-    public HubsPostsFragment(String url){
-        this.url = url;
-    }
-    
-    public void setUrl(String url){
-        this.url = url;
-    }
+public class CorporatePostsFragment extends AbstractionPostsFragment{
+    public final static String URL = "http://habrahabr.ru/posts/corporative/page%page%/";
     
     @Override
     protected String getUrl(){
-        return url + "posts/page%page%/";
+        return URL;
     }
-    
+
 }

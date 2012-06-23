@@ -18,9 +18,9 @@ package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.fragments.BestPostsFragment;
-import net.meiolania.apps.habrahabr.fragments.CorporatePostsFragment;
-import net.meiolania.apps.habrahabr.fragments.ThematicPostsFragment;
+import net.meiolania.apps.habrahabr.fragments.posts.BestPostsFragment;
+import net.meiolania.apps.habrahabr.fragments.posts.CorporatePostsFragment;
+import net.meiolania.apps.habrahabr.fragments.posts.ThematicPostsFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;

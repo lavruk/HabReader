@@ -32,6 +32,7 @@ import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 
 public class PreferencesActivity extends SherlockPreferenceActivity{
+    public final static String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+ZiahGZpgCRnvogALUM15bEIwTFjcXCIrsbwE8DdEocJGH5FHkwIdceXTSowUhIOaukOLmG1+R+2PqEnRnYsEdqBcCmSnYxT/LRGhoKWU2BDlOUCtm0KRGBFywV4BavgN21GLRNgm5jl67LjEy6jwKfBFddLi0T/jzySoHtJkLhVwvuPNpmv99il1sQJArgDWIa/grS7rOH69I7BJRYugNk9smONONamsgtN3JUvH0qqIF371En9nMJlFdLLIq4UwSZ7IhqVvwexFpvx6J5k63YXfB5uanrfGXJ6sv9GOCFoqfHkmS1016I60hbIH16ye0b65gfxFd1XVRQrIhW3QIDAQAB";
     public final static String ANDROID_DONATE_ITEM = "donate.1dollar";
     private AbstractBillingObserver billingObserver;
 
@@ -73,7 +74,7 @@ public class PreferencesActivity extends SherlockPreferenceActivity{
         Preference auth = (Preference)findPreference("auth");
         auth.setOnPreferenceClickListener(new OnPreferenceClickListener(){
             public boolean onPreferenceClick(Preference preference){
-                startActivity(new Intent(PreferencesActivity.this, AuthActivity.class));
+                //startActivity(new Intent(PreferencesActivity.this, AuthActivity.class));
                 return false;
             }
         });
@@ -102,7 +103,7 @@ public class PreferencesActivity extends SherlockPreferenceActivity{
         BillingController.setConfiguration(new IConfiguration(){
 
             public String getPublicKey(){
-                return "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+ZiahGZpgCRnvogALUM15bEIwTFjcXCIrsbwE8DdEocJGH5FHkwIdceXTSowUhIOaukOLmG1+R+2PqEnRnYsEdqBcCmSnYxT/LRGhoKWU2BDlOUCtm0KRGBFywV4BavgN21GLRNgm5jl67LjEy6jwKfBFddLi0T/jzySoHtJkLhVwvuPNpmv99il1sQJArgDWIa/grS7rOH69I7BJRYugNk9smONONamsgtN3JUvH0qqIF371En9nMJlFdLLIq4UwSZ7IhqVvwexFpvx6J5k63YXfB5uanrfGXJ6sv9GOCFoqfHkmS1016I60hbIH16ye0b65gfxFd1XVRQrIhW3QIDAQAB";
+                return PUBLIC_KEY;
             }
 
             public byte[] getObfuscationSalt(){

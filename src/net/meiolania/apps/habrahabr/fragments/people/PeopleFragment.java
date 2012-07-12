@@ -24,6 +24,7 @@ import net.meiolania.apps.habrahabr.activities.PeopleSearchActivity;
 import net.meiolania.apps.habrahabr.activities.PeopleShowActivity;
 import net.meiolania.apps.habrahabr.adapters.PeopleAdapter;
 import net.meiolania.apps.habrahabr.data.PeopleData;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 
 import org.jsoup.Jsoup;
@@ -77,8 +78,10 @@ public class PeopleFragment extends SherlockListFragment implements OnScrollList
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
+        
         peopleAdapter = new PeopleAdapter(getSherlockActivity(), peopleDatas);
         setListAdapter(peopleAdapter);
+        
         getListView().setOnScrollListener(this);
     }
     
@@ -103,9 +106,11 @@ public class PeopleFragment extends SherlockListFragment implements OnScrollList
     }
 
     protected void loadList(){
-        ++page;
-        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-        new LoadPeople().execute();
+    	if(ConnectionUtils.isConnected(getSherlockActivity())){
+    		++page;
+            getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+            new LoadPeople().execute();
+    	}
     }
 
     protected final class LoadPeople extends AsyncTask<Void, Void, Void>{

@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.EventsFullData;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import net.meiolania.apps.habrahabr.utils.IntentUtils;
 
 import org.jsoup.Jsoup;
@@ -98,8 +99,8 @@ public class EventsShowFragment extends SherlockFragment{
     }
 
     protected void loadEvent(){
-        Log.d("EventsShowFragment", "Url is " + url);
-        new LoadEvent().execute();
+    	if(ConnectionUtils.isConnected(getSherlockActivity()))
+    		new LoadEvent().execute();
     }
 
     protected final class LoadEvent extends AsyncTask<Void, Void, EventsFullData>{

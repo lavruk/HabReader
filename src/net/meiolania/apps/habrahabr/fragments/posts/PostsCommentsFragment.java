@@ -23,6 +23,7 @@ import java.util.Hashtable;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.adapters.CommentsAdapter;
 import net.meiolania.apps.habrahabr.data.CommentsData;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 
 import org.jsoup.Jsoup;
@@ -69,9 +70,12 @@ public class PostsCommentsFragment extends SherlockListFragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
+        
         commentsAdapter = new CommentsAdapter(getSherlockActivity(), commentsDatas);
         setListAdapter(commentsAdapter);
+        
         registerForContextMenu(getListView());
+        
         loadList();
     }
     
@@ -99,12 +103,14 @@ public class PostsCommentsFragment extends SherlockListFragment{
     }
 
     protected void loadList(){
-        new LoadComments().execute();
-        if(!UIUtils.isHoneycombOrHigher())
-            Toast.makeText(getSherlockActivity(), R.string.loading_comments, Toast.LENGTH_SHORT).show();
+    	if(ConnectionUtils.isConnected(getSherlockActivity())){
+    		new LoadComments().execute();
+    		if(!UIUtils.isHoneycombOrHigher())
+    			Toast.makeText(getSherlockActivity(), R.string.loading_comments, Toast.LENGTH_SHORT).show();
+    	}
     }
     
-    //TODO: okay. I need to think more about the algorithm
+    //TODO: need to think more about the algorithm
     protected final class LoadComments extends AsyncTask<Void, Void, Void>{
         private Hashtable<String, Boolean> containedComments = new Hashtable<String, Boolean>();
         

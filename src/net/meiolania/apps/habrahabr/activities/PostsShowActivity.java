@@ -19,6 +19,8 @@ package net.meiolania.apps.habrahabr.activities;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.posts.PostShowFragment;
 import net.meiolania.apps.habrahabr.fragments.posts.PostsCommentsFragment;
+import android.content.DialogInterface.OnClickListener;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -81,12 +83,18 @@ public class PostsShowActivity extends AbstractionActivity implements TabListene
         }
     }
 
-    public void onTabUnselected(Tab tab, FragmentTransaction ft){
-        
-    }
+    public void onTabUnselected(Tab tab, FragmentTransaction ft){}
 
-    public void onTabReselected(Tab tab, FragmentTransaction ft){
-        
-    }
+    public void onTabReselected(Tab tab, FragmentTransaction ft){}
+
+	@Override
+	protected OnClickListener getConnectionDialogListener(){
+		return new OnClickListener(){
+			@Override
+			public void onClick(DialogInterface dialog, int which){
+				finish();
+			}
+		};
+	}
     
 }

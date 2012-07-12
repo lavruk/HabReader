@@ -18,6 +18,8 @@ package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.companies.CompaniesFragment;
+import android.content.DialogInterface.OnClickListener;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -60,5 +62,15 @@ public class CompaniesActivity extends AbstractionActivity{
         fragmentTransaction.replace(android.R.id.content, companiesFragment);
         fragmentTransaction.commit();
     }
+
+	@Override
+	protected OnClickListener getConnectionDialogListener(){
+		return new OnClickListener(){
+			@Override
+			public void onClick(DialogInterface dialog, int which){
+				finish();
+			}
+		};
+	}
     
 }

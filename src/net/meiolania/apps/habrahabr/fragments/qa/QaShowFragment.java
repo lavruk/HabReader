@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.QaFullData;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import net.meiolania.apps.habrahabr.utils.IntentUtils;
 
 import org.jsoup.Jsoup;
@@ -94,7 +95,8 @@ public class QaShowFragment extends SherlockFragment{
     }
 
     protected void loadInfo(){
-        new LoadQuestion().execute();
+    	if(ConnectionUtils.isConnected(getSherlockActivity()))
+    		new LoadQuestion().execute();
     }
 
     protected final class LoadQuestion extends AsyncTask<Void, Void, QaFullData>{

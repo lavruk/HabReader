@@ -24,6 +24,7 @@ import net.meiolania.apps.habrahabr.activities.QaSearchActivity;
 import net.meiolania.apps.habrahabr.activities.QaShowActivity;
 import net.meiolania.apps.habrahabr.adapters.QaAdapter;
 import net.meiolania.apps.habrahabr.data.QaData;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 
 import org.jsoup.Jsoup;
@@ -67,8 +68,10 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
+        
         qaAdapter = new QaAdapter(getSherlockActivity(), qaDatas);
         setListAdapter(qaAdapter);
+        
         getListView().setOnScrollListener(this);
     }
     
@@ -93,9 +96,11 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
     }
 
     protected void loadList(){
-        ++page;
-        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-        new LoadQa().execute();
+    	if(ConnectionUtils.isConnected(getSherlockActivity())){
+    		++page;
+            getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+            new LoadQa().execute();
+    	}
     }
 
     protected abstract String getUrl();

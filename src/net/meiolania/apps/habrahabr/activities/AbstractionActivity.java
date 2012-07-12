@@ -17,7 +17,11 @@ limitations under the License.
 package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.Preferences;
+import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.Window;
@@ -44,6 +48,15 @@ public abstract class AbstractionActivity extends SherlockFragmentActivity{
             wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "wakeLock");
             wakeLock.acquire();
         }
+        
+        if(!ConnectionUtils.isConnected(this)){
+        	AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+    		dialog.setTitle(R.string.error);
+    		dialog.setMessage(getString(R.string.no_connection));
+    		dialog.setPositiveButton(R.string.close, getConnectionDialogListener());
+    		dialog.setCancelable(false);
+    		dialog.show();
+        }
     }
     
     @Override
@@ -52,5 +65,7 @@ public abstract class AbstractionActivity extends SherlockFragmentActivity{
             wakeLock.release();
         super.onDestroy();
     }
+    
+    protected abstract OnClickListener getConnectionDialogListener();
     
 }

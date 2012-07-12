@@ -20,13 +20,17 @@ import java.io.IOException;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.PostsFullData;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import net.meiolania.apps.habrahabr.utils.IntentUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -84,7 +88,8 @@ public class PostShowFragment extends SherlockFragment{
     }
 
     protected void loadPost(){
-        new LoadPost().execute();
+    	if(ConnectionUtils.isConnected(getSherlockActivity()))
+    		new LoadPost().execute();
     }
 
     protected final class LoadPost extends AsyncTask<Void, Void, PostsFullData>{
@@ -125,7 +130,7 @@ public class PostShowFragment extends SherlockFragment{
         @Override
         protected void onPostExecute(final PostsFullData result){
             getSherlockActivity().runOnUiThread(new Runnable(){
-                public void run(){
+				public void run(){
                     postsFullData = result;
                     if(!isCancelled()){
                         WebView content = (WebView) getSherlockActivity().findViewById(R.id.post_content);

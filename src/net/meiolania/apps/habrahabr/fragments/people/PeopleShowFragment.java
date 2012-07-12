@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.PeopleFullData;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -82,7 +83,8 @@ public class PeopleShowFragment extends SherlockFragment{
     }
 
     protected void loadInfo(){
-        new LoadPeopleInfo().execute();
+    	if(ConnectionUtils.isConnected(getSherlockActivity()))
+    		new LoadPeopleInfo().execute();
     }
 
     protected final class LoadPeopleInfo extends AsyncTask<Void, Void, PeopleFullData>{

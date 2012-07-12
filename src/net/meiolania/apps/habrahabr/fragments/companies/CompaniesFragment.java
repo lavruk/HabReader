@@ -23,6 +23,7 @@ import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.CompaniesShowActivity;
 import net.meiolania.apps.habrahabr.adapters.CompaniesAdapter;
 import net.meiolania.apps.habrahabr.data.CompaniesData;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 
 import org.jsoup.Jsoup;
@@ -60,9 +61,11 @@ public class CompaniesFragment extends SherlockListFragment implements OnScrollL
     }
 
     protected void loadList(){
-        ++page;
-        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-        new LoadCompanies().execute();
+    	if(ConnectionUtils.isConnected(getSherlockActivity())){
+    		++page;
+            getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+            new LoadCompanies().execute();
+    	}
     }
 
     protected final class LoadCompanies extends AsyncTask<Void, Void, Void>{

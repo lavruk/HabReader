@@ -18,6 +18,7 @@ package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.R;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -110,5 +111,15 @@ public class DashboardActivity extends AbstractionActivity implements OnClickLis
                 break;
         }
     }
+
+	@Override
+	protected android.content.DialogInterface.OnClickListener getConnectionDialogListener(){
+		return new android.content.DialogInterface.OnClickListener(){
+			@Override
+			public void onClick(DialogInterface dialog, int which){
+				dialog.dismiss();
+			}
+		};
+	}
 
 }

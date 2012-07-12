@@ -18,6 +18,8 @@ package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.hubs.HubsFragment;
+import android.content.DialogInterface.OnClickListener;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -129,5 +131,15 @@ public class HubsActivity extends AbstractionActivity implements OnNavigationLis
         fragmentTransaction.commit();
         return false;
     }
+
+	@Override
+	protected OnClickListener getConnectionDialogListener(){
+		return new OnClickListener(){
+			@Override
+			public void onClick(DialogInterface dialog, int which){
+				finish();
+			}
+		};
+	}
     
 }

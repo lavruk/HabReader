@@ -32,8 +32,8 @@ public class SearchQaFragment extends AbstractionQaFragment{
         try{
             return URL.replace("%query%", URLEncoder.encode(query, "UTF-8"));
         }
-        catch(UnsupportedEncodingException e){
-        }
+        catch(UnsupportedEncodingException e){}
+        
         return URL.replace("%query%", query);
     }
 

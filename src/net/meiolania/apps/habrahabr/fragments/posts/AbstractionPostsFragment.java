@@ -24,6 +24,7 @@ import net.meiolania.apps.habrahabr.activities.PostsSearchActivity;
 import net.meiolania.apps.habrahabr.activities.PostsShowActivity;
 import net.meiolania.apps.habrahabr.adapters.PostsAdapter;
 import net.meiolania.apps.habrahabr.data.PostsData;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 
 import org.jsoup.Jsoup;
@@ -67,8 +68,10 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
+        
         postsAdapter = new PostsAdapter(getActivity(), postsDatas);
         setListAdapter(postsAdapter);
+        
         getListView().setOnScrollListener(this);
     }
     
@@ -93,9 +96,11 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
     }
 
     protected void loadList(){
-        ++page;
-        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-        new LoadPosts().execute();
+    	if(ConnectionUtils.isConnected(getSherlockActivity())){
+    		++page;
+        	getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+        	new LoadPosts().execute();
+    	}
     }
 
     protected abstract String getUrl();

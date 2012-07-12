@@ -15,6 +15,9 @@
 	<string name="open_comment_in_browser">Открыть комментарий в браузере</string>
 	<string name="open_author_profile">Открыть профиль автора</string>
 	<string name="habraindex">Хабраиндекс %s</string>
+	<string name="error">Ошибка</string>
+	<string name="no_connection">Отсутствует соединение с интернетом</string>
+	<string name="close">Закрыть</string>
 	
 	<!-- Dashboard titles -->
 	<string name="posts">Посты</string>

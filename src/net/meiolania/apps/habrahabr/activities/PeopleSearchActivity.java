@@ -21,6 +21,8 @@ import java.net.URLEncoder;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.people.PeopleFragment;
+import android.content.DialogInterface.OnClickListener;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -80,5 +82,15 @@ public class PeopleSearchActivity extends AbstractionActivity{
         }
         return super.onOptionsItemSelected(item);
     }
+
+	@Override
+	protected OnClickListener getConnectionDialogListener(){
+		return new OnClickListener(){
+			@Override
+			public void onClick(DialogInterface dialog, int which){
+				finish();
+			}
+		};
+	}
 
 }

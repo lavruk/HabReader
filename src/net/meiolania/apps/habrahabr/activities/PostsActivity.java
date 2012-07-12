@@ -21,6 +21,8 @@ import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.posts.BestPostsFragment;
 import net.meiolania.apps.habrahabr.fragments.posts.CorporatePostsFragment;
 import net.meiolania.apps.habrahabr.fragments.posts.ThematicPostsFragment;
+import android.content.DialogInterface.OnClickListener;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -35,8 +37,10 @@ public class PostsActivity extends AbstractionActivity implements TabListener{
     
     @Override
     protected void onCreate(Bundle savedInstanceState){
+    	super.onCreate(savedInstanceState);
+    	
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        super.onCreate(savedInstanceState);
+        
         showActionBar();
     }
 
@@ -84,12 +88,18 @@ public class PostsActivity extends AbstractionActivity implements TabListener{
         }
     }
 
-    public void onTabUnselected(Tab tab, FragmentTransaction ft){
-        
-    }
+    public void onTabUnselected(Tab tab, FragmentTransaction ft){}
 
-    public void onTabReselected(Tab tab, FragmentTransaction ft){
-        
-    }
+    public void onTabReselected(Tab tab, FragmentTransaction ft){}
+
+	@Override
+	protected OnClickListener getConnectionDialogListener(){
+		return new OnClickListener(){
+			@Override
+			public void onClick(DialogInterface dialog, int which){
+				dialog.dismiss();
+			}
+		};
+	}
 
 }

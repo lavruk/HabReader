@@ -23,6 +23,7 @@ import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.EventsShowActivity;
 import net.meiolania.apps.habrahabr.adapters.EventsAdapter;
 import net.meiolania.apps.habrahabr.data.EventsData;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 
 import org.jsoup.Jsoup;
@@ -59,9 +60,11 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
     }
 
     protected void loadList(){
-        ++page;
-        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-        new LoadEvents().execute();
+    	if(ConnectionUtils.isConnected(getSherlockActivity())){
+    		++page;
+            getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+            new LoadEvents().execute();
+    	}
     }
 
     protected abstract String getUrl();

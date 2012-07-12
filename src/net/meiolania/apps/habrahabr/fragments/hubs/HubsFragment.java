@@ -24,6 +24,7 @@ import net.meiolania.apps.habrahabr.activities.HubsSearchActivity;
 import net.meiolania.apps.habrahabr.activities.HubsShowActivity;
 import net.meiolania.apps.habrahabr.adapters.HubsAdapter;
 import net.meiolania.apps.habrahabr.data.HubsData;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 
 import org.jsoup.Jsoup;
@@ -75,8 +76,10 @@ public class HubsFragment extends SherlockListFragment implements OnScrollListen
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
+        
         hubsAdapter = new HubsAdapter(getSherlockActivity(), hubsDatas);
         setListAdapter(hubsAdapter);
+        
         getListView().setOnScrollListener(this);
     }
     
@@ -101,9 +104,11 @@ public class HubsFragment extends SherlockListFragment implements OnScrollListen
     }
 
     protected void loadList(){
-        ++page;
-        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-        new LoadHubs().execute();
+    	if(ConnectionUtils.isConnected(getSherlockActivity())){
+    		++page;
+            getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+            new LoadHubs().execute();
+    	}
     }
 
     protected final class LoadHubs extends AsyncTask<Void, Void, Void>{

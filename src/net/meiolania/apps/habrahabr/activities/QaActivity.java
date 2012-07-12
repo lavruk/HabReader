@@ -22,6 +22,8 @@ import net.meiolania.apps.habrahabr.fragments.qa.HotQaFragment;
 import net.meiolania.apps.habrahabr.fragments.qa.InboxQaFragment;
 import net.meiolania.apps.habrahabr.fragments.qa.PopularQaFragment;
 import net.meiolania.apps.habrahabr.fragments.qa.UnansweredQaFragment;
+import android.content.DialogInterface.OnClickListener;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -91,12 +93,18 @@ public class QaActivity extends AbstractionActivity implements TabListener{
         }
     }
 
-    public void onTabUnselected(Tab tab, FragmentTransaction ft){
-        
-    }
+    public void onTabUnselected(Tab tab, FragmentTransaction ft){}
 
-    public void onTabReselected(Tab tab, FragmentTransaction ft){
-        
-    }
+    public void onTabReselected(Tab tab, FragmentTransaction ft){}
+
+	@Override
+	protected OnClickListener getConnectionDialogListener(){
+		return new OnClickListener(){
+			@Override
+			public void onClick(DialogInterface dialog, int which){
+				finish();
+			}
+		};
+	}
     
 }

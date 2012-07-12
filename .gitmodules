@@ -1,0 +1,6 @@
+[submodule "ActionBarSherlock"]
+	path = ActionBarSherlock
+	url = git://github.com/JakeWharton/ActionBarSherlock.git
+[submodule "AndroidBillingLibrary"]
+	path = AndroidBillingLibrary
+	url = git://github.com/robotmedia/AndroidBillingLibrary.git

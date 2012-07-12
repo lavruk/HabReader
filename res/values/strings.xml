@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">HabReader</string>
+	
 	<!-- Base -->
 	<string name="loading">Загрузка</string>
 	<string name="share">Поделиться с друзьями</string>
@@ -14,11 +15,7 @@
 	<string name="open_comment_in_browser">Открыть комментарий в браузере</string>
 	<string name="open_author_profile">Открыть профиль автора</string>
 	<string name="habraindex">Хабраиндекс %s</string>
-	<string name="login">Логин</string>
-	<string name="password">Пароль</string>
-	<string name="do_sign_in">Вход</string>
-	<string name="captcha_hint">Введите код с картинки</string>
-	<string name="logged_in">Вход произведён</string>
+	
 	<!-- Dashboard titles -->
 	<string name="posts">Посты</string>
 	<string name="qa">Q&amp;A</string>
@@ -26,9 +23,11 @@
 	<string name="hubs">Хабы</string>
 	<string name="companies">Компании</string>
 	<string name="people">Пользователи</string>
+	
 	<!-- Dashboard menus -->
 	<string name="preferences">Настройки</string>
 	<string name="more_applications">Другие приложения</string>
+	
 	<!-- Posts -->
 	<string name="best">Лучшие</string>
 	<string name="thematic">Тематические</string>
@@ -37,23 +36,29 @@
 	<string name="comments">Комментарии</string>
 	<string name="loading_post">Загрузка поста</string>
 	<string name="post_search">Поиск постов</string>
+	
 	<!-- Hubs -->
 	<string name="hubs_search">Поиск хабов</string>
+	
 	<!-- Q&A -->
 	<string name="question">Вопрос</string>
 	<string name="unanswered">Без ответа</string>
 	<string name="loading_question">Загрузка вопроса</string>
 	<string name="qa_search">Поиск вопросов</string>
+	
 	<!-- Events -->
 	<string name="coming">Предстоящие</string>
 	<string name="current">Текущие</string>
 	<string name="past">Прошедшие</string>
 	<string name="loading_event">Загрузка события</string>
+	
 	<!-- Companies -->
 	<string name="loading_company">Загрузка данных о компании</string>
+	
 	<!-- People -->
 	<string name="loading_profile_info">Загрузка профиля</string>
 	<string name="people_search">Поиск пользователей</string>
+	
 	<!-- Preferences -->
 	<string name="base_preferences">Основные настройки</string>
 	<string name="additional_preferences">Дополнительная информация</string>
@@ -71,6 +76,4 @@
 	<string name="posts_additional_layout_summary_preferences">Отображать дополнительную информацию при просмотре списка постов</string>
 	<string name="hubs_additional_layout_summary_preferences">Отображать дополнительную информацию при просмотре списка хабов</string>
 	<string name="qa_additional_layout_summary_preferences">Отображать дополнительную информауию при просмотре списка вопросов</string>
-	<string name="auth_preferences">Авторизация</string>
-	<string name="personal_preferences">Личные настройки</string>
 </resources>

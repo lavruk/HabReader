@@ -42,7 +42,6 @@ public class PreferencesActivity extends SherlockPreferenceActivity{
         showActionBar();
         addPreferencesFromResource(R.xml.preferences);
         
-        launchAuthActivity();
         donate();
     }
     
@@ -68,16 +67,6 @@ public class PreferencesActivity extends SherlockPreferenceActivity{
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-    
-    private void launchAuthActivity(){
-        Preference auth = (Preference)findPreference("auth");
-        auth.setOnPreferenceClickListener(new OnPreferenceClickListener(){
-            public boolean onPreferenceClick(Preference preference){
-                //startActivity(new Intent(PreferencesActivity.this, AuthActivity.class));
-                return false;
-            }
-        });
     }
 
     private void donate(){

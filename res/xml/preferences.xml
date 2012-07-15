@@ -89,18 +89,6 @@
                 android:data="https://play.google.com/store/apps/details?id=net.meiolania.apps.habrahabr" />
         </Preference>
         
-        <Preference android:title="Meiolania.net" >
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="http://meiolania.net" />
-        </Preference>
-        
-        <Preference android:title="@string/source_code_preferences" >
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="https://github.com/AEinsam/HabReader" />
-        </Preference>
-        
         <Preference
             android:summary="1.2"
             android:title="@string/version_preferences" />

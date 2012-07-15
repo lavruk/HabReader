@@ -16,23 +16,14 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.fragments.posts;
 
-import java.io.IOException;
-
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.PostsFullData;
-import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
+import net.meiolania.apps.habrahabr.fragments.posts.loader.PostShowLoader;
 import net.meiolania.apps.habrahabr.utils.IntentUtils;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,117 +34,84 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class PostShowFragment extends SherlockFragment{
-    protected String url;
-    protected PostsFullData postsFullData;
+public class PostShowFragment extends SherlockFragment implements LoaderCallbacks<PostsFullData>{
+	private final static int LOADER_POST = 0;
+	private String url;
+	private ProgressDialog progressDialog;
+	private PostsFullData data;
+	
+	//TODO: move a url value to fragment's arguments
+	public PostShowFragment(String url){
+		this.url = url;
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState){
+		super.onActivityCreated(savedInstanceState);
+		
+		setHasOptionsMenu(true);
+		setRetainInstance(true);
+		
+		getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_POST, null, this);
+	}
 
-    public PostShowFragment(){
-    }
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+		return inflater.inflate(R.layout.posts_show_activity, container, false);
+	}
 
-    public PostShowFragment(String url){
-        this.url = url;
-    }
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.posts_show_activity, menu);
+	}
 
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		switch(item.getItemId()){
+			case R.id.share:
+				IntentUtils.createShareIntent(getSherlockActivity(), data.getTitle(), url);
+				break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-        loadPost();
-    }
+	@Override
+	public Loader<PostsFullData> onCreateLoader(int id, Bundle args){
+		showProgressDialog();
+		
+		PostShowLoader loader = new PostShowLoader(getSherlockActivity(), url);
+		loader.forceLoad();
+		
+		return loader;
+	}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        return inflater.inflate(R.layout.posts_show_activity, container, false);
-    }
+	@Override
+	public void onLoadFinished(Loader<PostsFullData> loader, PostsFullData data){
+		WebView content = (WebView) getSherlockActivity().findViewById(R.id.post_content);
+		content.getSettings().setPluginsEnabled(true);
+		content.getSettings().setSupportZoom(true);
+		content.getSettings().setBuiltInZoomControls(true);
+		content.loadDataWithBaseURL("", data.getContent(), "text/html", "UTF-8", null);
+		
+		this.data = data;
+		
+		hideProgressDialog();
+	}
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.posts_show_activity, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch(item.getItemId()){
-            case R.id.share:
-                IntentUtils.createShareIntent(getSherlockActivity(), postsFullData.getTitle(), url);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    protected void loadPost(){
-    	if(ConnectionUtils.isConnected(getSherlockActivity()))
-    		new LoadPost().execute();
-    }
-
-    protected final class LoadPost extends AsyncTask<Void, Void, PostsFullData>{
-        private ProgressDialog progressDialog;
-
-        @Override
-        protected PostsFullData doInBackground(Void... params){
-            PostsFullData postsFullData = new PostsFullData();
-            try{
-                Document document = Jsoup.connect(url).get();
-                Element title = document.select("span.post_title").first();
-                Element hubs = document.select("div.hubs").first();
-                Element content = document.select("div.content").first();
-                Element date = document.select("div.published").first();
-                Element author = document.select("div.author > a").first();
-
-                postsFullData.setUrl(url);
-                postsFullData.setTitle(title.text());
-                postsFullData.setHubs(hubs.text());
-                postsFullData.setContent(content.html());
-                postsFullData.setDate(date.text());
-                postsFullData.setAuthor(author.text());
-            }
-            catch(IOException e){
-            }
-            return postsFullData;
-        }
-
-        @Override
-        protected void onPreExecute(){
-            progressDialog = new ProgressDialog(getSherlockActivity());
-            progressDialog.setTitle(R.string.loading);
-            progressDialog.setMessage(getString(R.string.loading_post));
-            progressDialog.setCancelable(true);
-            progressDialog.show();
-        }
-
-        @Override
-        protected void onPostExecute(final PostsFullData result){
-            getSherlockActivity().runOnUiThread(new Runnable(){
-				public void run(){
-                    postsFullData = result;
-                    if(!isCancelled()){
-                        WebView content = (WebView) getSherlockActivity().findViewById(R.id.post_content);
-                        if(content != null){
-                            content.getSettings().setPluginsEnabled(true);
-                            content.getSettings().setSupportZoom(true);
-                            content.getSettings().setBuiltInZoomControls(true);
-                            content.loadDataWithBaseURL("", result.getContent(), "text/html", "UTF-8", null);
-                        }
-                    }
-                    progressDialog.dismiss();
-                }
-            });
-        }
-
-    }
-
-    public void setUrl(String url){
-        this.url = url;
-    }
-
-    public String getUrl(){
-        return url;
-    }
+	@Override
+	public void onLoaderReset(Loader<PostsFullData> loader){}
+	
+	private void showProgressDialog(){
+		progressDialog = new ProgressDialog(getSherlockActivity());
+		progressDialog.setMessage(getString(R.string.loading_post));
+		progressDialog.setCancelable(true);
+		progressDialog.show();
+	}
+	
+	private void hideProgressDialog(){
+		if(progressDialog != null)
+			progressDialog.dismiss();
+	}
 
 }

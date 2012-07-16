@@ -36,7 +36,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import com.actionbarsherlock.app.SherlockListFragment;
 
 public class PostsCommentsFragment extends SherlockListFragment implements LoaderCallbacks<ArrayList<CommentsData>>{
-	public final static int LOADER_COMMENTS = 1;
+	public final static int LOADER_COMMENTS = 0;
     public final static int MENU_OPEN_COMMENT_IN_BROWSER = 0;
     public final static int MENU_OPEN_AUTHOR_PROFILE = 1;
     protected ArrayList<CommentsData> commentsDatas;
@@ -94,7 +94,7 @@ public class PostsCommentsFragment extends SherlockListFragment implements Loade
 
 	@Override
 	public Loader<ArrayList<CommentsData>> onCreateLoader(int id, Bundle args){
-		PostCommentsLoader loader = new PostCommentsLoader(getSherlockActivity(), url, commentsDatas);
+		PostCommentsLoader loader = new PostCommentsLoader(getSherlockActivity(), url);
 		loader.forceLoad();
 		
 		return loader;
@@ -102,6 +102,7 @@ public class PostsCommentsFragment extends SherlockListFragment implements Loade
 
 	@Override
 	public void onLoadFinished(Loader<ArrayList<CommentsData>> loader, ArrayList<CommentsData> data){
+		commentsDatas.addAll(data);
 		commentsAdapter.notifyDataSetChanged();
 	}
 

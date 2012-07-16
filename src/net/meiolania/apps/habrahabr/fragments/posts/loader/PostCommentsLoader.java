@@ -15,16 +15,15 @@ import android.support.v4.content.AsyncTaskLoader;
 
 public class PostCommentsLoader extends AsyncTaskLoader<ArrayList<CommentsData>>{
 	private String url;
-	private ArrayList<CommentsData> commentsDatas;
+	private ArrayList<CommentsData> commentsDatas = new ArrayList<CommentsData>();
 	
 	//TODO: rewrite
 	private Hashtable<String, Boolean> containedComments = new Hashtable<String, Boolean>();
 	
-	public PostCommentsLoader(Context context, String url, ArrayList<CommentsData> commentsDatas){
+	public PostCommentsLoader(Context context, String url){
 		super(context);
 		
 		this.url = url;
-		this.commentsDatas = commentsDatas;
 	}
 
 	@Override

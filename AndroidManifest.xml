@@ -21,42 +21,42 @@
         
         <activity 
             android:name=".activities.DashboardActivity"
-            android:configChanges="orientation|keyboard|keyboardHidden">
+            android:configChanges="orientation|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         
-        <activity android:name=".activities.PreferencesActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.PreferencesActivity" android:configChanges="orientation|keyboardHidden" />
         
         <!-- Posts -->
-        <activity android:name=".activities.PostsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".activities.PostsShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".activities.PostsSearchActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.PostsActivity" android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".activities.PostsShowActivity" android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".activities.PostsSearchActivity" android:configChanges="orientation|keyboardHidden" />
         
         <!-- Hubs -->
-        <activity android:name=".activities.HubsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".activities.HubsShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".activities.HubsSearchActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.HubsActivity" android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".activities.HubsShowActivity" android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".activities.HubsSearchActivity" android:configChanges="orientation|keyboardHidden" />
         
         <!-- Q&A -->
-        <activity android:name=".activities.QaActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".activities.QaShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".activities.QaSearchActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.QaActivity" android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".activities.QaShowActivity" android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".activities.QaSearchActivity" android:configChanges="orientation|keyboardHidden" />
         
         <!-- Events -->
-        <activity android:name=".activities.EventsActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".activities.EventsShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.EventsActivity" android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".activities.EventsShowActivity" android:configChanges="orientation|keyboardHidden" />
         
         <!-- Companies -->
-        <activity android:name=".activities.CompaniesActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".activities.CompaniesShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.CompaniesActivity" android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".activities.CompaniesShowActivity" android:configChanges="orientation|keyboardHidden" />
         
         <!-- People -->
-        <activity android:name=".activities.PeopleActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".activities.PeopleShowActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
-        <activity android:name=".activities.PeopleSearchActivity" android:configChanges="orientation|keyboard|keyboardHidden" />
+        <activity android:name=".activities.PeopleActivity" android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".activities.PeopleShowActivity" android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".activities.PeopleSearchActivity" android:configChanges="orientation|keyboardHidden" />
         
         <service android:name="net.robotmedia.billing.BillingService" />
 		<receiver android:name="net.robotmedia.billing.BillingReceiver">

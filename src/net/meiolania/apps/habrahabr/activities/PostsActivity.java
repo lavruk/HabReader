@@ -33,13 +33,13 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.view.MenuItem;
 
 public class PostsActivity extends AbstractionActivity{
-    
+	
     @Override
     protected void onCreate(Bundle savedInstanceState){
     	super.onCreate(savedInstanceState);
     	
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        
+        	
         showActionBar();
     }
 

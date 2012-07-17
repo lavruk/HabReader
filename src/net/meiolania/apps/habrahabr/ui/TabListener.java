@@ -49,16 +49,13 @@ public class TabListener<T extends Fragment> implements com.actionbarsherlock.ap
 			
 			if(arguments != null)
 				fragment.setArguments(arguments);
-			
-			ft.add(android.R.id.content, fragment, tag);
-		}else
-			ft.attach(fragment);
+		}
+		ft.replace(android.R.id.content, fragment, tag);
 	}
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft){
-		if(fragment != null)
-			ft.detach(fragment);
+		
 	}
 
 	@Override

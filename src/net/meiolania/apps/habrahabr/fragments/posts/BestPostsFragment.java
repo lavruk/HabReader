@@ -24,4 +24,9 @@ public class BestPostsFragment extends AbstractionPostsFragment{
         return URL;
     }
 
+	@Override
+	protected int getLoaderId(){
+		return 0;
+	}
+
 }

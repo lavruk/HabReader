@@ -37,4 +37,9 @@ public class SearchPostsFragment extends AbstractionPostsFragment{
         return URL.replace("%query%", query);
     }
 
+	@Override
+	protected int getLoaderId(){
+		return 0;
+	}
+
 }

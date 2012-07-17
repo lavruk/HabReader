@@ -35,5 +35,10 @@ public class HubsPostsFragment extends AbstractionPostsFragment{
     protected String getUrl(){
         return url + "posts/page%page%/";
     }
+
+	@Override
+	protected int getLoaderId(){
+		return 0;
+	}
     
 }

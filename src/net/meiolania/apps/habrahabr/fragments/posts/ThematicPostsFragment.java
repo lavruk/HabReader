@@ -24,4 +24,9 @@ public class ThematicPostsFragment extends AbstractionPostsFragment{
         return URL;
     }
 
+	@Override
+	protected int getLoaderId(){
+		return 1;
+	}
+
 }

@@ -24,4 +24,9 @@ public class CorporatePostsFragment extends AbstractionPostsFragment{
         return URL;
     }
 
+	@Override
+	protected int getLoaderId(){
+		return 2;
+	}
+
 }

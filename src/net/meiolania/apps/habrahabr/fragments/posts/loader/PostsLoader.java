@@ -1,24 +1,72 @@
 package net.meiolania.apps.habrahabr.fragments.posts.loader;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.data.PostsData;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
 
 public class PostsLoader extends AsyncTaskLoader<ArrayList<PostsData>>{
+	public final static String TAG = PostsLoader.class.getName();
 	private String url;
-	
+	private static int page;
+
 	public PostsLoader(Context context, String url){
 		super(context);
-		
+
 		this.url = url;
+	}
+	
+	/*
+	 * TODO: well, it's not a very cool solving. I need to find another solution.
+	 */
+	public static void setPage(int page){
+		PostsLoader.page = page;
 	}
 
 	@Override
 	public ArrayList<PostsData> loadInBackground(){
-		return null;
+		ArrayList<PostsData> postsDatas = new ArrayList<PostsData>();
+
+		try{
+			String readyUrl = url.replace("%page%", String.valueOf(page));
+			
+			Log.i(TAG, "Loading a page: " + readyUrl);
+			
+			Document document = Jsoup.connect(readyUrl).get();
+			Elements posts = document.select("div.post");
+
+			for(Element post : posts){
+				PostsData postsData = new PostsData();
+
+				Element postTitle = post.select("a.post_title").first();
+				Element hubs = post.select("div.hubs").first();
+				Element date = post.select("div.published").first();
+				Element author = post.select("div.author > a").first();
+				Element comments = post.select("div.comments > span.all").first();
+
+				postsData.setTitle(postTitle.text());
+				postsData.setUrl(postTitle.attr("abs:href"));
+				postsData.setHubs(hubs.text());
+				postsData.setDate(date.text());
+				postsData.setAuthor(author != null ? author.text() : "");
+				postsData.setComments(comments != null ? Integer.valueOf(comments.text()) : 0);
+
+				postsDatas.add(postsData);
+			}
+		}
+		catch(IOException e){
+		}
+
+		return postsDatas;
 	}
 
 }

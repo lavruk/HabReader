@@ -16,7 +16,7 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.fragments.posts;
 
-public class BestPostsFragment extends AbstractionPostsFragment{
+public class PostsBestFragment extends AbstractionPostsFragment{
     public final static String URL = "http://habrahabr.ru/posts/top/daily/page%page%/";
     
     @Override

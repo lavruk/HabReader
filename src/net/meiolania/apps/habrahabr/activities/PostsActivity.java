@@ -18,9 +18,9 @@ package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.fragments.posts.BestPostsFragment;
-import net.meiolania.apps.habrahabr.fragments.posts.CorporatePostsFragment;
-import net.meiolania.apps.habrahabr.fragments.posts.ThematicPostsFragment;
+import net.meiolania.apps.habrahabr.fragments.posts.PostsBestFragment;
+import net.meiolania.apps.habrahabr.fragments.posts.PostsCorporateFragment;
+import net.meiolania.apps.habrahabr.fragments.posts.PostsThematicFragment;
 import net.meiolania.apps.habrahabr.ui.TabListener;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -52,13 +52,13 @@ public class PostsActivity extends AbstractionActivity{
         Preferences preferences = Preferences.getInstance(this);
         int selectedTab = preferences.getPostsDefaultTab();
 
-        Tab tab = actionBar.newTab().setText(R.string.best).setTag("best").setTabListener(new TabListener<BestPostsFragment>(this, "best", BestPostsFragment.class));
+        Tab tab = actionBar.newTab().setText(R.string.best).setTag("best").setTabListener(new TabListener<PostsBestFragment>(this, "best", PostsBestFragment.class));
         actionBar.addTab(tab, (selectedTab == 0 ? true : false));
         
-        tab = actionBar.newTab().setText(R.string.thematic).setTag("thematic").setTabListener(new TabListener<ThematicPostsFragment>(this, "thematic", ThematicPostsFragment.class));
+        tab = actionBar.newTab().setText(R.string.thematic).setTag("thematic").setTabListener(new TabListener<PostsThematicFragment>(this, "thematic", PostsThematicFragment.class));
         actionBar.addTab(tab, (selectedTab == 1 ? true : false));
         
-        tab = actionBar.newTab().setText(R.string.corporate).setTag("corporate").setTabListener(new TabListener<CorporatePostsFragment>(this, "corporate", CorporatePostsFragment.class));
+        tab = actionBar.newTab().setText(R.string.corporate).setTag("corporate").setTabListener(new TabListener<PostsCorporateFragment>(this, "corporate", PostsCorporateFragment.class));
         actionBar.addTab(tab, (selectedTab == 2 ? true : false));
     }
 

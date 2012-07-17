@@ -17,7 +17,7 @@ limitations under the License.
 package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.fragments.posts.SearchPostsFragment;
+import net.meiolania.apps.habrahabr.fragments.posts.PostsSearchFragment;
 import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,8 +34,10 @@ public class PostsSearchActivity extends AbstractionActivity{
     
     @Override
     protected void onCreate(Bundle savedInstanceState){
+    	super.onCreate(savedInstanceState);
+    	
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        super.onCreate(savedInstanceState);
+        
         loadExtras();
         showActionBar();
         loadSearchedPosts();
@@ -52,7 +54,7 @@ public class PostsSearchActivity extends AbstractionActivity{
     }
     
     private void loadSearchedPosts(){
-        SearchPostsFragment searchPostsFragment = new SearchPostsFragment(query);
+        PostsSearchFragment searchPostsFragment = new PostsSearchFragment(query);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(android.R.id.content, searchPostsFragment);
         fragmentTransaction.commit();

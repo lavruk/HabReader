@@ -17,6 +17,7 @@ limitations under the License.
 package net.meiolania.apps.habrahabr.ui;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
@@ -27,6 +28,7 @@ public class TabListener<T extends Fragment> implements com.actionbarsherlock.ap
 	private Class<T> fragmentClass;
 	private Context context;
 	private String tag;
+	private Bundle arguments;
 	
 	public TabListener(Context context, String tag, Class<T> fragmentClass){
 		this.context = context;
@@ -34,10 +36,20 @@ public class TabListener<T extends Fragment> implements com.actionbarsherlock.ap
 		this.fragmentClass = fragmentClass;
 	}
 	
+	public TabListener(Context context, String tag, Class<T> fragmentClass, Bundle arguments){
+		this(context, tag, fragmentClass);
+		
+		this.arguments = arguments;
+	}
+	
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft){
 		if(fragment == null){
 			fragment = Fragment.instantiate(context, fragmentClass.getName());
+			
+			if(arguments != null)
+				fragment.setArguments(arguments);
+			
 			ft.add(android.R.id.content, fragment, tag);
 		}else
 			ft.attach(fragment);

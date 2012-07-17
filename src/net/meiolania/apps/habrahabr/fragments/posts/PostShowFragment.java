@@ -35,15 +35,11 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class PostShowFragment extends SherlockFragment implements LoaderCallbacks<PostsFullData>{
+	public final static String URL_ARGUMENT = "url";
 	private final static int LOADER_POST = 0;
 	private String url;
 	private ProgressDialog progressDialog;
 	private PostsFullData data;
-	
-	//TODO: move a url value to fragment's arguments
-	public PostShowFragment(String url){
-		this.url = url;
-	}
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState){
@@ -51,6 +47,8 @@ public class PostShowFragment extends SherlockFragment implements LoaderCallback
 		
 		setHasOptionsMenu(true);
 		setRetainInstance(true);
+		
+		url = getArguments().getString(URL_ARGUMENT);
 		
 		getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_POST, null, this);
 	}

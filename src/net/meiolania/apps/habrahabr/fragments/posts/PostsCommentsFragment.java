@@ -39,20 +39,19 @@ public class PostsCommentsFragment extends SherlockListFragment implements Loade
 	public final static int LOADER_COMMENTS = 1;
     public final static int MENU_OPEN_COMMENT_IN_BROWSER = 0;
     public final static int MENU_OPEN_AUTHOR_PROFILE = 1;
+    public final static String URL_ARGUMENT = "url";
+    
     protected ArrayList<CommentsData> commentsDatas;
     protected CommentsAdapter commentsAdapter;
     protected String url;
-    
-    //TODO: move to arguments
-    public PostsCommentsFragment(String url){
-        this.url = url;
-    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         
         setRetainInstance(true);
+        
+        url = getArguments().getString(URL_ARGUMENT);
         
         if(commentsAdapter == null){
         	commentsDatas = new ArrayList<CommentsData>();

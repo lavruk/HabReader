@@ -16,7 +16,7 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.fragments.posts;
 
-public class CorporatePostsFragment extends AbstractionPostsFragment{
+public class PostsCorporateFragment extends AbstractionPostsFragment{
     public final static String URL = "http://habrahabr.ru/posts/corporative/page%page%/";
     
     @Override

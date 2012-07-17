@@ -19,18 +19,17 @@ package net.meiolania.apps.habrahabr.activities;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.posts.PostShowFragment;
 import net.meiolania.apps.habrahabr.fragments.posts.PostsCommentsFragment;
-import android.content.DialogInterface.OnClickListener;
+import net.meiolania.apps.habrahabr.ui.TabListener;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.view.MenuItem;
 
-public class PostsShowActivity extends AbstractionActivity implements TabListener{
+public class PostsShowActivity extends AbstractionActivity{
     public final static String EXTRA_URL = "url";
     public final static String EXTRA_TITLE = "title";
     private String url;
@@ -39,6 +38,7 @@ public class PostsShowActivity extends AbstractionActivity implements TabListene
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        
         loadExtras();
         showActionBar();
     }
@@ -54,10 +54,29 @@ public class PostsShowActivity extends AbstractionActivity implements TabListene
         actionBar.setTitle(title);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         
-        Tab tab = actionBar.newTab().setText(R.string.post).setTag("post").setTabListener(this);
+        /*
+         * Post tab
+         */
+        Bundle arguments = new Bundle();
+        arguments.putString(PostShowFragment.URL_ARGUMENT, url);
+        
+        Tab tab = actionBar.newTab().setText(R.string.post).setTag("post").setTabListener(new TabListener<PostShowFragment>(this, 
+        																													"post", 
+        																													PostShowFragment.class, 
+        																													arguments));
         actionBar.addTab(tab);
         
-        tab = actionBar.newTab().setText(R.string.comments).setTag("comments").setTabListener(this);
+        
+        /*
+         * Comments tab
+         */
+        arguments = new Bundle();
+        arguments.putString(PostsCommentsFragment.URL_ARGUMENT, url);
+        
+        tab = actionBar.newTab().setText(R.string.comments).setTag("comments").setTabListener(new TabListener<PostsCommentsFragment>(this, 
+        																												"comments", 
+        																												PostsCommentsFragment.class, 
+        																												arguments));
         actionBar.addTab(tab);
     }
     
@@ -72,20 +91,6 @@ public class PostsShowActivity extends AbstractionActivity implements TabListene
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public void onTabSelected(Tab tab, FragmentTransaction ft){
-        if(tab.getTag().equals("post")){
-            PostShowFragment postShowFragment = new PostShowFragment(url);
-            ft.replace(android.R.id.content, postShowFragment);
-        }else if(tab.getTag().equals("comments")){
-            PostsCommentsFragment postsCommentsFragment = new PostsCommentsFragment(url);
-            ft.replace(android.R.id.content, postsCommentsFragment);
-        }
-    }
-
-    public void onTabUnselected(Tab tab, FragmentTransaction ft){}
-
-    public void onTabReselected(Tab tab, FragmentTransaction ft){}
 
 	@Override
 	protected OnClickListener getConnectionDialogListener(){

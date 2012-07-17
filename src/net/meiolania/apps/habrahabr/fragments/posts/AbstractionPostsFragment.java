@@ -70,7 +70,8 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
 
 		getListView().setOnScrollListener(this);
 		
-		getSherlockActivity().getSupportLoaderManager().initLoader(getLoaderId(), null, this);
+		if(getSherlockActivity().getSupportLoaderManager().getLoader(getLoaderId()) == null)
+			getSherlockActivity().getSupportLoaderManager().initLoader(getLoaderId(), null, this);
 	}
 
 	@Override

@@ -21,19 +21,18 @@ import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.posts.BestPostsFragment;
 import net.meiolania.apps.habrahabr.fragments.posts.CorporatePostsFragment;
 import net.meiolania.apps.habrahabr.fragments.posts.ThematicPostsFragment;
-import android.content.DialogInterface.OnClickListener;
+import net.meiolania.apps.habrahabr.ui.TabListener;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.Window;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.view.MenuItem;
 
-public class PostsActivity extends AbstractionActivity implements TabListener{
+public class PostsActivity extends AbstractionActivity{
     
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -53,13 +52,13 @@ public class PostsActivity extends AbstractionActivity implements TabListener{
         Preferences preferences = Preferences.getInstance(this);
         int selectedTab = preferences.getPostsDefaultTab();
 
-        Tab tab = actionBar.newTab().setText(R.string.best).setTag("best").setTabListener(this);
+        Tab tab = actionBar.newTab().setText(R.string.best).setTag("best").setTabListener(new TabListener<BestPostsFragment>(this, "best", BestPostsFragment.class));
         actionBar.addTab(tab, (selectedTab == 0 ? true : false));
         
-        tab = actionBar.newTab().setText(R.string.thematic).setTag("thematic").setTabListener(this);
+        tab = actionBar.newTab().setText(R.string.thematic).setTag("thematic").setTabListener(new TabListener<ThematicPostsFragment>(this, "thematic", ThematicPostsFragment.class));
         actionBar.addTab(tab, (selectedTab == 1 ? true : false));
         
-        tab = actionBar.newTab().setText(R.string.corporate).setTag("corporate").setTabListener(this);
+        tab = actionBar.newTab().setText(R.string.corporate).setTag("corporate").setTabListener(new TabListener<CorporatePostsFragment>(this, "corporate", CorporatePostsFragment.class));
         actionBar.addTab(tab, (selectedTab == 2 ? true : false));
     }
 
@@ -74,23 +73,6 @@ public class PostsActivity extends AbstractionActivity implements TabListener{
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public void onTabSelected(Tab tab, FragmentTransaction ft){
-        if(tab.getTag().equals("best")){
-            BestPostsFragment bestPostsFragment = new BestPostsFragment();
-            ft.replace(android.R.id.content, bestPostsFragment);
-        }else if(tab.getTag().equals("thematic")){
-            ThematicPostsFragment thematicPostsFragment = new ThematicPostsFragment();
-            ft.replace(android.R.id.content, thematicPostsFragment);
-        }else if(tab.getTag().equals("corporate")){
-            CorporatePostsFragment corporatePostsFragment = new CorporatePostsFragment();
-            ft.replace(android.R.id.content, corporatePostsFragment);
-        }
-    }
-
-    public void onTabUnselected(Tab tab, FragmentTransaction ft){}
-
-    public void onTabReselected(Tab tab, FragmentTransaction ft){}
 
 	@Override
 	protected OnClickListener getConnectionDialogListener(){

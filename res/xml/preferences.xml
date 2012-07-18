@@ -33,16 +33,6 @@
         
     </PreferenceCategory>
     
-    <PreferenceCategory android:title="@string/hubs">
-        
-        <CheckBoxPreference
-            android:key="hubs_additional_layout"
-            android:title="@string/additional_layout_preferences"
-            android:summary="@string/hubs_additional_layout_summary_preferences"
-            android:defaultValue="true" />
-        
-    </PreferenceCategory>
-    
     <PreferenceCategory android:title="@string/qa" >
         
         <ListPreference

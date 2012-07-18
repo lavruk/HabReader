@@ -32,52 +32,60 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
 public class HubsSearchActivity extends AbstractionActivity{
-    public final static String URL = "http://habrahabr.ru/search/page%page%/?q=%query%&target_type=hubs";
-    public final static String EXTRA_QUERY = "query";
-    private String query;
-    
-    @Override
-    protected void onCreate(Bundle savedInstanceState){
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        super.onCreate(savedInstanceState);
-        loadExtras();
-        showActionBar();
-        loadSearchedHubs();
-    }
-    
-    private void loadExtras(){
-        query = getIntent().getStringExtra(EXTRA_QUERY);
-    }
-    
-    private void showActionBar(){
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.hubs_search);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-    }
-    
-    private void loadSearchedHubs(){
-        HubsFragment hubsFragment = new HubsFragment();
-        try{
-            hubsFragment.setUrl(URL.replace("%query%", URLEncoder.encode(query, "UTF-8")));
-        }catch(UnsupportedEncodingException e){
-            hubsFragment.setUrl(URL.replace("%query%", query));
-        }
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(android.R.id.content, hubsFragment);
-        fragmentTransaction.commit();
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch(item.getItemId()){
-            case android.R.id.home:
-                Intent intent = new Intent(this, HubsActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+	public final static String URL = "http://habrahabr.ru/search/page%page%/?q=%query%&target_type=hubs";
+	public final static String EXTRA_QUERY = "query";
+	private String query;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
+		loadExtras();
+		showActionBar();
+		loadSearchedHubs();
+	}
+
+	private void loadExtras(){
+		query = getIntent().getStringExtra(EXTRA_QUERY);
+	}
+
+	private void showActionBar(){
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setTitle(R.string.hubs_search);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+	}
+
+	private void loadSearchedHubs(){
+		HubsFragment hubsFragment = new HubsFragment();
+
+		Bundle arguments = new Bundle();
+		try{
+			arguments.putString(HubsFragment.URL_ARGUMENT, URL.replace("%query%", URLEncoder.encode(query, "UTF-8")));
+		}
+		catch(UnsupportedEncodingException e){
+			arguments.putString(HubsFragment.URL_ARGUMENT, URL.replace("%query%", query));
+		}
+
+		hubsFragment.setArguments(arguments);
+
+		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+		fragmentTransaction.replace(android.R.id.content, hubsFragment);
+		fragmentTransaction.commit();
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		switch(item.getItemId()){
+			case android.R.id.home:
+				Intent intent = new Intent(this, HubsActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 	@Override
 	protected OnClickListener getConnectionDialogListener(){
@@ -88,5 +96,5 @@ public class HubsSearchActivity extends AbstractionActivity{
 			}
 		};
 	}
-    
+
 }

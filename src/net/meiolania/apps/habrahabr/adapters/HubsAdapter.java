@@ -18,7 +18,6 @@ package net.meiolania.apps.habrahabr.adapters;
 
 import java.util.ArrayList;
 
-import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.HubsData;
 import android.content.Context;
@@ -26,20 +25,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class HubsAdapter extends BaseAdapter{
     protected ArrayList<HubsData> hubsDatas;
     protected Context context;
-    protected boolean additionalLayout = false;
 
     public HubsAdapter(Context context, ArrayList<HubsData> hubsDatas){
         this.context = context;
         this.hubsDatas = hubsDatas;
-        
-        Preferences preferences = Preferences.getInstance(context);
-        this.additionalLayout = preferences.getAdditionalHubs();
     }
 
     public int getCount(){
@@ -64,21 +58,12 @@ public class HubsAdapter extends BaseAdapter{
         }
         
         TextView title = (TextView)view.findViewById(R.id.hub_title);
-        title.setText(hubsData.getTitle());
-        
         TextView stat = (TextView)view.findViewById(R.id.hub_stat);
-        TextView category = (TextView)view.findViewById(R.id.hub_category);
         TextView index = (TextView)view.findViewById(R.id.hub_index);
-        LinearLayout hubInfo = (LinearLayout)view.findViewById(R.id.hub_info);
         
-        if(additionalLayout){
-            stat.setText(hubsData.getStat());
-            category.setText(hubsData.getCategory());
-            index.setText(hubsData.getIndex());
-        }else{
-            stat.setVisibility(View.GONE);
-            hubInfo.setVisibility(View.GONE);
-        }
+        title.setText(hubsData.getTitle());
+        stat.setText(hubsData.getStat());
+        index.setText(hubsData.getIndex());
         
         return view;
     }

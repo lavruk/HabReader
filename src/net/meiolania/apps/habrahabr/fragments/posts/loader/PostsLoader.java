@@ -42,7 +42,7 @@ public class PostsLoader extends AsyncTaskLoader<ArrayList<PostsData>>{
 	}
 	
 	/*
-	 * TODO: well, it's not a very cool solving. I need to find another solution.
+	 * TODO: well, it's not a very cool solution. I need to find another solution.
 	 */
 	public static void setPage(int page){
 		PostsLoader.page = page;

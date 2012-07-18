@@ -19,7 +19,6 @@ package net.meiolania.apps.habrahabr.data;
 public class HubsData{
     protected String title;
     protected String url;
-    protected String category;
     protected String index;
     protected String stat;
 
@@ -37,14 +36,6 @@ public class HubsData{
 
     public void setUrl(String url){
         this.url = url;
-    }
-
-    public String getCategory(){
-        return category;
-    }
-
-    public void setCategory(String category){
-        this.category = category;
     }
 
     public String getIndex(){

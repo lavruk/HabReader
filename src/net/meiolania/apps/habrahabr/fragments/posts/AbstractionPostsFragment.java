@@ -101,9 +101,11 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
 
 	protected void showPost(int position){
 		PostsData postsData = postsDatas.get(position);
+		
 		Intent intent = new Intent(getSherlockActivity(), PostsShowActivity.class);
 		intent.putExtra(PostsShowActivity.EXTRA_URL, postsData.getUrl());
 		intent.putExtra(PostsShowActivity.EXTRA_TITLE, postsData.getTitle());
+		
 		startActivity(intent);
 	}
 	
@@ -111,8 +113,7 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
 		if(!isLoadData){
 			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
 			
-			page++;
-			PostsLoader.setPage(page);
+			PostsLoader.setPage(++page);
 			
 			getSherlockActivity().getSupportLoaderManager().restartLoader(getLoaderId(), null, this);
 			

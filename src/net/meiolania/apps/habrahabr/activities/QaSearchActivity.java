@@ -17,7 +17,7 @@ limitations under the License.
 package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.fragments.qa.SearchQaFragment;
+import net.meiolania.apps.habrahabr.fragments.qa.QaSearchFragment;
 import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -52,7 +52,7 @@ public class QaSearchActivity extends AbstractionActivity{
     }
     
     private void loadSearchedQuestions(){
-        SearchQaFragment searchQaFragment = new SearchQaFragment(query);
+        QaSearchFragment searchQaFragment = new QaSearchFragment(query);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(android.R.id.content, searchQaFragment);
         fragmentTransaction.commit();

@@ -18,28 +18,29 @@ package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.fragments.qa.HotQaFragment;
-import net.meiolania.apps.habrahabr.fragments.qa.InboxQaFragment;
-import net.meiolania.apps.habrahabr.fragments.qa.PopularQaFragment;
-import net.meiolania.apps.habrahabr.fragments.qa.UnansweredQaFragment;
-import android.content.DialogInterface.OnClickListener;
+import net.meiolania.apps.habrahabr.fragments.qa.QaHotFragment;
+import net.meiolania.apps.habrahabr.fragments.qa.QaInboxFragment;
+import net.meiolania.apps.habrahabr.fragments.qa.QaPopularFragment;
+import net.meiolania.apps.habrahabr.fragments.qa.QaUnansweredFragment;
+import net.meiolania.apps.habrahabr.ui.TabListener;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.Window;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.view.MenuItem;
 
-public class QaActivity extends AbstractionActivity implements TabListener{
+public class QaActivity extends AbstractionActivity{
     
     @Override
     protected void onCreate(Bundle savedInstanceState){
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
+        
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        
         showActionBar();
     }
     
@@ -52,16 +53,16 @@ public class QaActivity extends AbstractionActivity implements TabListener{
         Preferences preferences = Preferences.getInstance(this);
         int selectedTab = preferences.getQaDefaultTab();
         
-        Tab tab = actionBar.newTab().setText(R.string.inbox).setTag("inbox").setTabListener(this);
+        Tab tab = actionBar.newTab().setText(R.string.inbox).setTag("inbox").setTabListener(new TabListener<QaInboxFragment>(this, "inbox", QaInboxFragment.class));
         actionBar.addTab(tab, (selectedTab == 0 ? true : false));
         
-        tab = actionBar.newTab().setText(R.string.hot).setTag("hot").setTabListener(this);
+        tab = actionBar.newTab().setText(R.string.hot).setTag("hot").setTabListener(new TabListener<QaHotFragment>(this, "hot", QaHotFragment.class));
         actionBar.addTab(tab, (selectedTab == 1 ? true : false));
         
-        tab = actionBar.newTab().setText(R.string.popular).setTag("popular").setTabListener(this);
+        tab = actionBar.newTab().setText(R.string.popular).setTag("popular").setTabListener(new TabListener<QaPopularFragment>(this, "popular", QaPopularFragment.class));
         actionBar.addTab(tab, (selectedTab == 2 ? true : false));
         
-        tab = actionBar.newTab().setText(R.string.unanswered).setTag("unanswered").setTabListener(this);
+        tab = actionBar.newTab().setText(R.string.unanswered).setTag("unanswered").setTabListener(new TabListener<QaUnansweredFragment>(this, "unanswered", QaUnansweredFragment.class));
         actionBar.addTab(tab, (selectedTab == 3 ? true : false));
     }
     
@@ -76,26 +77,6 @@ public class QaActivity extends AbstractionActivity implements TabListener{
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public void onTabSelected(Tab tab, FragmentTransaction ft){
-        if(tab.getTag().equals("inbox")){
-            InboxQaFragment inboxQaFragment = new InboxQaFragment();
-            ft.replace(android.R.id.content, inboxQaFragment);
-        }else if(tab.getTag().equals("hot")){
-            HotQaFragment hotQaFragment = new HotQaFragment();
-            ft.replace(android.R.id.content, hotQaFragment);
-        }else if(tab.getTag().equals("popular")){
-            PopularQaFragment popularQaFragment = new PopularQaFragment();
-            ft.replace(android.R.id.content, popularQaFragment);
-        }else if(tab.getTag().equals("unanswered")){
-            UnansweredQaFragment unansweredQaFragment = new UnansweredQaFragment();
-            ft.replace(android.R.id.content, unansweredQaFragment);
-        }
-    }
-
-    public void onTabUnselected(Tab tab, FragmentTransaction ft){}
-
-    public void onTabReselected(Tab tab, FragmentTransaction ft){}
 
 	@Override
 	protected OnClickListener getConnectionDialogListener(){

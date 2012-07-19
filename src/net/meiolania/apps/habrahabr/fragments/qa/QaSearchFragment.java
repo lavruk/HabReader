@@ -19,11 +19,11 @@ package net.meiolania.apps.habrahabr.fragments.qa;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-public class SearchQaFragment extends AbstractionQaFragment{
+public class QaSearchFragment extends AbstractionQaFragment{
     public final static String URL = "http://habrahabr.ru/search/page%page%/?target_type=qa&order_by=relevance&q=%query%";
     protected String query;
 
-    public SearchQaFragment(String query){
+    public QaSearchFragment(String query){
         this.query = query;
     }
 
@@ -36,5 +36,10 @@ public class SearchQaFragment extends AbstractionQaFragment{
         
         return URL.replace("%query%", query);
     }
+
+	@Override
+	protected int getLoaderId(){
+		return 0;
+	}
 
 }

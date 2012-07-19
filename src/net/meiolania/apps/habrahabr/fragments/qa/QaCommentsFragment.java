@@ -16,154 +16,97 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.fragments.qa;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.adapters.CommentsAdapter;
 import net.meiolania.apps.habrahabr.data.CommentsData;
-import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
-import net.meiolania.apps.habrahabr.utils.UIUtils;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
+import net.meiolania.apps.habrahabr.fragments.qa.loader.QaCommentsLoader;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.Loader;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
-public class QaCommentsFragment extends SherlockListFragment{
-    public final static String LOG_TAG = "QaCommentsFragment";
-    public final static int MENU_OPEN_COMMENT_IN_BROWSER = 0;
-    public final static int MENU_OPEN_AUTHOR_PROFILE = 1;
-    protected final ArrayList<CommentsData> commentsDatas = new ArrayList<CommentsData>();
-    protected CommentsAdapter commentsAdapter;
-    protected String url;
+public class QaCommentsFragment extends SherlockListFragment implements LoaderCallbacks<ArrayList<CommentsData>>{
+	public final static int LOADER_COMMENTS = 1;
+	public final static int MENU_OPEN_COMMENT_IN_BROWSER = 0;
+	public final static int MENU_OPEN_AUTHOR_PROFILE = 1;
+	public final static String URL_ARGUMENT = "url";
 
-    public QaCommentsFragment(){
-    }
+	protected ArrayList<CommentsData> commentsDatas;
+	protected CommentsAdapter commentsAdapter;
+	protected String url;
 
-    public QaCommentsFragment(String url){
-        this.url = url;
-    }
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState){
+		super.onActivityCreated(savedInstanceState);
+		
+		url = getArguments().getString(URL_ARGUMENT);
+		
+		setRetainInstance(true);
 
-    public void setUrl(String url){
-        this.url = url;
-    }
+		if(commentsAdapter == null){
+			commentsDatas = new ArrayList<CommentsData>();
+			commentsAdapter = new CommentsAdapter(getSherlockActivity(), commentsDatas);
+		}
 
-    public String getUrl(){
-        return url;
-    }
+		setListAdapter(commentsAdapter);
+		setListShown(true);
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-        
-        commentsAdapter = new CommentsAdapter(getSherlockActivity(), commentsDatas);
-        setListAdapter(commentsAdapter);
-        
-        registerForContextMenu(getListView());
-        
-        loadList();
-    }
-    
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenuInfo menuInfo){
-        super.onCreateContextMenu(menu, view, menuInfo);
-        menu.add(0, MENU_OPEN_COMMENT_IN_BROWSER, 0, R.string.open_comment_in_browser);
-        menu.add(0, MENU_OPEN_AUTHOR_PROFILE, 0, R.string.open_author_profile);
-    }
-    
-    @Override
-    public boolean onContextItemSelected(MenuItem item){
-        AdapterContextMenuInfo adapterContextMenuInfo = (AdapterContextMenuInfo)item.getMenuInfo();
-        CommentsData commentsData = (CommentsData)getListAdapter().getItem(adapterContextMenuInfo.position);
-        
-        switch(item.getItemId()){
-            case MENU_OPEN_COMMENT_IN_BROWSER:
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(commentsData.getUrl())));
-                break;
-            case MENU_OPEN_AUTHOR_PROFILE:
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(commentsData.getAuthorUrl())));
-                break;
-        }
-        return super.onContextItemSelected(item);
-    }
+		registerForContextMenu(getListView());
 
-    protected void loadList(){
-    	if(ConnectionUtils.isConnected(getSherlockActivity())){
-    		new LoadComments().execute();
-    		if(!UIUtils.isHoneycombOrHigher())
-    			Toast.makeText(getSherlockActivity(), R.string.loading_comments, Toast.LENGTH_SHORT).show();
-    	}
-    }
-    
-    protected final class LoadComments extends AsyncTask<Void, Void, Void>{
-        
-        @Override
-        protected Void doInBackground(Void... params){
-            try{
-                Document document = Jsoup.connect(url).get();
-                Elements answers = document.select("div.answer");
-                for(Element answer : answers){
-                    CommentsData commentsData = new CommentsData();
-                    
-                    Element name = answer.select("a.username").first();
-                    Element message = answer.select("div.message").first();
-                    Element linkToComment = answer.select("a.link_to_comment").first();
-                    
-                    commentsData.setUrl(linkToComment.attr("abs:href"));
-                    commentsData.setAuthor(name.text());
-                    commentsData.setAuthorUrl(name.attr("abs:href"));
-                    commentsData.setComment(message.text());
-                    commentsData.setLevel(0);
-                    
-                    commentsDatas.add(commentsData);
-                    
-                    Elements comments = answer.select("div.comment_item");
-                    for(Element comment : comments){
-                        commentsData = new CommentsData();
-                        
-                        name = comment.select("span.info > a").first();
-                        message = comment.select("span.text").first();
-                        
-                        commentsData.setUrl(linkToComment.attr("abs:href"));
-                        commentsData.setAuthorUrl(name.attr("abs:href"));
-                        commentsData.setAuthor(name.text());
-                        commentsData.setComment(message.text());
-                        commentsData.setLevel(1);
-                        
-                        commentsDatas.add(commentsData);
-                    }
-                }
-            }
-            catch(IOException e){
-            }
-            return null;
-        }
+		getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_COMMENTS, null, this);
+	}
 
-        @Override
-        protected void onPostExecute(Void result){
-            getSherlockActivity().runOnUiThread(new Runnable(){
-                public void run(){
-                    if(!isCancelled())
-                        commentsAdapter.notifyDataSetChanged();
-                    getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
-                }
-            });
-        }
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenuInfo menuInfo){
+		super.onCreateContextMenu(menu, view, menuInfo);
 
-    }
+		menu.add(0, MENU_OPEN_COMMENT_IN_BROWSER, 0, R.string.open_comment_in_browser);
+		menu.add(0, MENU_OPEN_AUTHOR_PROFILE, 0, R.string.open_author_profile);
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item){
+		AdapterContextMenuInfo adapterContextMenuInfo = (AdapterContextMenuInfo) item.getMenuInfo();
+		CommentsData commentsData = (CommentsData) getListAdapter().getItem(adapterContextMenuInfo.position);
+
+		switch(item.getItemId()){
+			case MENU_OPEN_COMMENT_IN_BROWSER:
+				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(commentsData.getUrl())));
+				break;
+			case MENU_OPEN_AUTHOR_PROFILE:
+				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(commentsData.getAuthorUrl())));
+				break;
+		}
+		return super.onContextItemSelected(item);
+	}
+
+	@Override
+	public Loader<ArrayList<CommentsData>> onCreateLoader(int id, Bundle args){
+		QaCommentsLoader loader = new QaCommentsLoader(getSherlockActivity(), url);
+		loader.forceLoad();
+
+		return loader;
+	}
+
+	@Override
+	public void onLoadFinished(Loader<ArrayList<CommentsData>> loader, ArrayList<CommentsData> data){
+		commentsDatas.addAll(data);
+		commentsAdapter.notifyDataSetChanged();
+	}
+
+	@Override
+	public void onLoaderReset(Loader<ArrayList<CommentsData>> loader){
+
+	}
 
 }

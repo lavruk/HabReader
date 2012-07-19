@@ -19,18 +19,17 @@ package net.meiolania.apps.habrahabr.activities;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.qa.QaCommentsFragment;
 import net.meiolania.apps.habrahabr.fragments.qa.QaShowFragment;
-import android.content.DialogInterface.OnClickListener;
+import net.meiolania.apps.habrahabr.ui.TabListener;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.view.MenuItem;
 
-public class QaShowActivity extends AbstractionActivity implements TabListener{
+public class QaShowActivity extends AbstractionActivity{
     public final static String EXTRA_URL = "url";
     public final static String EXTRA_TITLE = "title";
     private String title;
@@ -39,7 +38,9 @@ public class QaShowActivity extends AbstractionActivity implements TabListener{
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        
         loadExtras();
+        
         showActionBar();
     }
     
@@ -66,26 +67,31 @@ public class QaShowActivity extends AbstractionActivity implements TabListener{
         actionBar.setTitle(title);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        Tab tab = actionBar.newTab().setText(R.string.question).setTag("question").setTabListener(this);
+        /*
+         * Question tab
+         */
+        Bundle arguments = new Bundle();
+        arguments.putString(QaShowFragment.URL_ARGUMENT, url);
+        
+        Tab tab = actionBar.newTab().setText(R.string.question).setTag("question").setTabListener(new TabListener<QaShowFragment>(this, 
+        																													"question", 
+        																													QaShowFragment.class, 
+        																													arguments));
         actionBar.addTab(tab);
-
-        tab = actionBar.newTab().setText(R.string.comments).setTag("comments").setTabListener(this);
+        
+        
+        /*
+         * Comments tab
+         */
+        arguments = new Bundle();
+        arguments.putString(QaCommentsFragment.URL_ARGUMENT, url);
+        
+        tab = actionBar.newTab().setText(R.string.comments).setTag("comments").setTabListener(new TabListener<QaCommentsFragment>(this, 
+        																												"comments",
+        																												QaCommentsFragment.class, 
+        																												arguments));
         actionBar.addTab(tab);
     }
-
-    public void onTabSelected(Tab tab, FragmentTransaction ft){
-        if(tab.getTag().equals("question")){
-            QaShowFragment qaShowFragment = new QaShowFragment(url);
-            ft.replace(android.R.id.content, qaShowFragment);
-        }else if(tab.getTag().equals("comments")){
-            QaCommentsFragment qaCommentsFragment = new QaCommentsFragment(url);
-            ft.replace(android.R.id.content, qaCommentsFragment);
-        }
-    }
-
-    public void onTabUnselected(Tab tab, FragmentTransaction ft){}
-
-    public void onTabReselected(Tab tab, FragmentTransaction ft){}
 
 	@Override
 	protected OnClickListener getConnectionDialogListener(){

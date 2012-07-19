@@ -49,9 +49,9 @@ public class PostsCommentsFragment extends SherlockListFragment implements Loade
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         
-        setRetainInstance(true);
-        
         url = getArguments().getString(URL_ARGUMENT);
+        
+        setRetainInstance(true);
         
         if(commentsAdapter == null){
         	commentsDatas = new ArrayList<CommentsData>();

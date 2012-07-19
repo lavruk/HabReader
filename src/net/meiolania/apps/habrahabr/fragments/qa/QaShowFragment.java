@@ -16,21 +16,14 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.fragments.qa;
 
-import java.io.IOException;
-
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.QaFullData;
-import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
+import net.meiolania.apps.habrahabr.fragments.qa.loader.QaShowLoader;
 import net.meiolania.apps.habrahabr.utils.IntentUtils;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
 import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,121 +34,85 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class QaShowFragment extends SherlockFragment{
-    public final static String LOG_TAG = "QaShowFragment";
-    protected String url;
-    protected QaFullData qaFullData;
+public class QaShowFragment extends SherlockFragment implements LoaderCallbacks<QaFullData>{
+	public final static String URL_ARGUMENT = "url";
+	public final static int LOADER_QA = 0;
+	private String url;
+	private QaFullData data;
+	private ProgressDialog progressDialog;
 
-    public QaShowFragment(){
-    }
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState){
+		super.onActivityCreated(savedInstanceState);
 
-    public QaShowFragment(String url){
-        this.url = url;
-    }
+		setHasOptionsMenu(true);
+		setRetainInstance(true);
 
-    public void setUrl(String url){
-        this.url = url;
-    }
+		url = getArguments().getString(URL_ARGUMENT);
 
-    public String getUrl(){
-        return url;
-    }
+		getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_QA, null, this);
+	}
 
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+		return inflater.inflate(R.layout.qa_show_activity, container, false);
+	}
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-        loadInfo();
-    }
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+		super.onCreateOptionsMenu(menu, inflater);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        return inflater.inflate(R.layout.qa_show_activity, container, false);
-    }
+		inflater.inflate(R.menu.qa_show_activity, menu);
+	}
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.qa_show_activity, menu);
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch(item.getItemId()){
-            case R.id.share:
-                IntentUtils.createShareIntent(getSherlockActivity(), qaFullData.getTitle(), url);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		switch(item.getItemId()){
+			case R.id.share:
+				IntentUtils.createShareIntent(getSherlockActivity(), data.getTitle(), url);
+				break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
-    protected void loadInfo(){
-    	if(ConnectionUtils.isConnected(getSherlockActivity()))
-    		new LoadQuestion().execute();
-    }
+	@Override
+	public Loader<QaFullData> onCreateLoader(int id, Bundle args){
+		showProgressDialog();
 
-    protected final class LoadQuestion extends AsyncTask<Void, Void, QaFullData>{
-        private ProgressDialog progressDialog;
+		QaShowLoader loader = new QaShowLoader(getSherlockActivity(), url);
+		loader.forceLoad();
 
-        @Override
-        protected QaFullData doInBackground(Void... params){
-            QaFullData qaFullData = new QaFullData();
-            try{
-                Log.i(LOG_TAG, "Loading " + url);
+		return loader;
+	}
 
-                Document document = Jsoup.connect(url).get();
-                Element title = document.select("span.post_title").first();
-                Element hubs = document.select("div.hubs").first();
-                Element content = document.select("div.content").first();
-                Element tags = document.select("ul.tags").first();
-                Element date = document.select("div.published").first();
-                Element author = document.select("div.author > a").first();
-                Element answers = document.select("span#comments_count").first();
-                
-                qaFullData.setTitle(title.text());
-                qaFullData.setHubs(hubs.text());
-                qaFullData.setContent(content.html());
-                qaFullData.setTags(tags.text());
-                qaFullData.setDate(date.text());
-                qaFullData.setAuthor(author.text());
-                qaFullData.setAnswers(answers.text());
-            }
-            catch(IOException e){
-            }
-            return qaFullData;
-        }
+	@Override
+	public void onLoadFinished(Loader<QaFullData> loader, QaFullData data){
+		WebView content = (WebView) getSherlockActivity().findViewById(R.id.qa_content);
+		content.getSettings().setPluginsEnabled(true);
+		content.getSettings().setBuiltInZoomControls(true);
+		content.getSettings().setSupportZoom(true);
+		content.loadDataWithBaseURL("", data.getContent(), "text/html", "UTF-8", null);
 
-        @Override
-        protected void onPreExecute(){
-            progressDialog = new ProgressDialog(getSherlockActivity());
-            progressDialog.setTitle(R.string.loading);
-            progressDialog.setMessage(getString(R.string.loading_question));
-            progressDialog.setCancelable(true);
-            progressDialog.show();
-        }
+		this.data = data;
 
-        @Override
-        protected void onPostExecute(final QaFullData result){
-            getSherlockActivity().runOnUiThread(new Runnable(){
-                public void run(){
-                    qaFullData = result;
-                    if(!isCancelled()){
-                        WebView content = (WebView)getSherlockActivity().findViewById(R.id.qa_content);
-                        content.getSettings().setPluginsEnabled(true);
-                        content.getSettings().setBuiltInZoomControls(true);
-                        content.getSettings().setSupportZoom(true);
-                        content.loadDataWithBaseURL("", result.getContent(), "text/html", "UTF-8", null);
-                    }
-                    progressDialog.dismiss();
-                }
-            });
-        }
+		hideProgressDialog();
+	}
 
-    }
+	@Override
+	public void onLoaderReset(Loader<QaFullData> loader){
+
+	}
+
+	private void showProgressDialog(){
+		progressDialog = new ProgressDialog(getSherlockActivity());
+		progressDialog.setMessage(getString(R.string.loading_question));
+		progressDialog.setCancelable(true);
+		progressDialog.show();
+	}
+
+	private void hideProgressDialog(){
+		if(progressDialog != null)
+			progressDialog.dismiss();
+	}
 
 }

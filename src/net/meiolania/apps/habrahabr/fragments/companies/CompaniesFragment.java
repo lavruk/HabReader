@@ -16,116 +16,45 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.fragments.companies;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.CompaniesShowActivity;
 import net.meiolania.apps.habrahabr.adapters.CompaniesAdapter;
 import net.meiolania.apps.habrahabr.data.CompaniesData;
-import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
-import net.meiolania.apps.habrahabr.utils.UIUtils;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
+import net.meiolania.apps.habrahabr.fragments.companies.loader.CompaniesLoader;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
-public class CompaniesFragment extends SherlockListFragment implements OnScrollListener{
-    public final static String LOG_TAG = "CompaniesFragment";
-    public final static String URL = "http://habrahabr.ru/companies/page%d/";
-    protected final ArrayList<CompaniesData> companiesDatas = new ArrayList<CompaniesData>();
+public class CompaniesFragment extends SherlockListFragment implements OnScrollListener, LoaderCallbacks<ArrayList<CompaniesData>>{
+	public final static int LOADER_COMPANIES = 0;
+    protected ArrayList<CompaniesData> companiesDatas;
     protected CompaniesAdapter companiesAdapter;
-    protected boolean loadMoreData = true;
-    protected int page = 0;
-    protected boolean noMorePages = false;
+    private int page;
+    private boolean isLoadData;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        companiesAdapter = new CompaniesAdapter(getSherlockActivity(), companiesDatas);
+        
+        setRetainInstance(true);
+        
+        if(companiesAdapter == null){
+        	companiesDatas = new ArrayList<CompaniesData>();
+        	companiesAdapter = new CompaniesAdapter(getSherlockActivity(), companiesDatas);
+        }
+        
         setListAdapter(companiesAdapter);
+        setListShown(true);
+        
         getListView().setOnScrollListener(this);
-    }
-
-    protected void loadList(){
-    	if(ConnectionUtils.isConnected(getSherlockActivity())){
-    		++page;
-            getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-            new LoadCompanies().execute();
-    	}
-    }
-
-    protected final class LoadCompanies extends AsyncTask<Void, Void, Void>{
-
-        @Override
-        protected Void doInBackground(Void... params){
-            try{
-                Log.i(LOG_TAG, "Loading " + String.format(URL, page));
-                
-                Document document = Jsoup.connect(String.format(URL, page)).get();
-                Elements companies = document.select("div.company");
-                
-                if(companies.size() <= 0){
-                    noMorePages = true;
-                    /*
-                     * It's a solve for:
-                     * java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()
-                     */
-                    getSherlockActivity().runOnUiThread(new Runnable(){
-                        public void run(){
-                            Toast.makeText(getSherlockActivity(), R.string.no_more_pages, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-                
-                for(Element company : companies){
-                    CompaniesData companiesData = new CompaniesData();
-                    
-                    Element icon = company.select("div.icon > img").first();
-                    Element index = company.select("div.habraindex").first();
-                    Element title = company.select("div.description > div.name > a").first();
-                    Element description = company.select("div.description > p").first();
-                    
-                    companiesData.setTitle(title.text());
-                    companiesData.setUrl(title.attr("abs:href"));
-                    //TODO: rewrite the code below
-                    companiesData.setIcon("http://habrahabr.ru" + icon.attr("src"));
-                    companiesData.setIndex(index.text());
-                    companiesData.setDescription(description.text());
-                    
-                    companiesDatas.add(companiesData);
-                }
-            }
-            catch(IOException e){
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result){
-            getSherlockActivity().runOnUiThread(new Runnable(){
-                public void run(){
-                    if(!isCancelled())
-                        companiesAdapter.notifyDataSetChanged();
-                    loadMoreData = true;
-                    getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
-                }
-            });
-        }
-
     }
     
     @Override
@@ -135,25 +64,56 @@ public class CompaniesFragment extends SherlockListFragment implements OnScrollL
 
     protected void showCompany(int position){
         CompaniesData companiesData = companiesDatas.get(position);
+        
         Intent intent = new Intent(getSherlockActivity(), CompaniesShowActivity.class);
         intent.putExtra(CompaniesShowActivity.EXTRA_TITLE, companiesData.getTitle());
-        intent.putExtra(CompaniesShowActivity.EXTRA_URL, companiesData.getUrl());
+        //TODO: made a quick fix. Need to make another.
+        intent.putExtra(CompaniesShowActivity.EXTRA_URL, companiesData.getUrl() + "/profile/");
+        
         startActivity(intent);
+    }
+    
+    protected void restartLoading(){
+    	getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+    	
+    	CompaniesLoader.setPage(++page);
+    	
+    	getSherlockActivity().getSupportLoaderManager().restartLoader(LOADER_COMPANIES, null, this);
+    	
+    	isLoadData = true;
     }
 
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
-        if((firstVisibleItem + visibleItemCount) == totalItemCount && loadMoreData && !noMorePages){
-            loadMoreData = false;
-            loadList();
-            Log.i(LOG_TAG, "Loading " + page + " page");
-            //TODO: need to find a better way to display a notification for devices with Android < 3.0
-            if(!UIUtils.isHoneycombOrHigher())
-                Toast.makeText(getSherlockActivity(), getString(R.string.loading_page, page), Toast.LENGTH_SHORT).show();
-        }
+        if((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData)
+        	restartLoading();
     }
 
     public void onScrollStateChanged(AbsListView view, int scrollState){
 
     }
+
+	@Override
+	public Loader<ArrayList<CompaniesData>> onCreateLoader(int id, Bundle args){
+		CompaniesLoader loader = new CompaniesLoader(getSherlockActivity());
+		loader.forceLoad();
+		
+		return loader;
+	}
+
+	@Override
+	public void onLoadFinished(Loader<ArrayList<CompaniesData>> loader, ArrayList<CompaniesData> data){
+		companiesDatas.addAll(data);
+		companiesAdapter.notifyDataSetChanged();
+		
+		if(getSherlockActivity() != null)
+			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
+		
+		isLoadData = false;
+	}
+
+	@Override
+	public void onLoaderReset(Loader<ArrayList<CompaniesData>> loader){
+		
+	}
 
 }

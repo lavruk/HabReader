@@ -58,9 +58,6 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
 		setListShown(true);
 
 		getListView().setOnScrollListener(this);
-		
-		if(getSherlockActivity().getSupportLoaderManager().getLoader(getLoaderId()) == null)
-			getSherlockActivity().getSupportLoaderManager().initLoader(getLoaderId(), null, this);
 	}
 
 	@Override

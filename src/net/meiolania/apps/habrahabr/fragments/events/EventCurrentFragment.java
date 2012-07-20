@@ -16,12 +16,17 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.fragments.events;
 
-public class ComingEventFragment extends AbstractionEventsFragment{
-    public final static String URL = "http://habrahabr.ru/events/coming/page%page%/";
+public class EventCurrentFragment extends AbstractionEventsFragment{
+    public final static String URL = "http://habrahabr.ru/events/current/page%page%/";
     
     @Override
     protected String getUrl(){
         return URL;
     }
-    
+
+	@Override
+	protected int getLoaderId(){
+		return 1;
+	}
+
 }

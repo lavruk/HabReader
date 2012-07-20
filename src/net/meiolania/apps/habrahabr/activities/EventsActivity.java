@@ -18,27 +18,28 @@ package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.fragments.events.ComingEventFragment;
-import net.meiolania.apps.habrahabr.fragments.events.CurrentEventFragment;
-import net.meiolania.apps.habrahabr.fragments.events.PastEventFragment;
-import android.content.DialogInterface.OnClickListener;
+import net.meiolania.apps.habrahabr.fragments.events.EventComingFragment;
+import net.meiolania.apps.habrahabr.fragments.events.EventCurrentFragment;
+import net.meiolania.apps.habrahabr.fragments.events.EventPastFragment;
+import net.meiolania.apps.habrahabr.ui.TabListener;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.Window;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.view.MenuItem;
 
-public class EventsActivity extends AbstractionActivity implements TabListener{
+public class EventsActivity extends AbstractionActivity{
     
     @Override
     protected void onCreate(Bundle savedInstanceState){
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
+        
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        
         showActionBar();
     }
     
@@ -51,13 +52,13 @@ public class EventsActivity extends AbstractionActivity implements TabListener{
         Preferences preferences = Preferences.getInstance(this);
         int selectedTab = preferences.getEventsDefaultTab();
         
-        Tab tab = actionBar.newTab().setText(R.string.coming).setTag("coming").setTabListener(this);
+        Tab tab = actionBar.newTab().setText(R.string.coming).setTag("coming").setTabListener(new TabListener<EventComingFragment>(this, "coming", EventComingFragment.class));
         actionBar.addTab(tab, (selectedTab == 0 ? true : false));
         
-        tab = actionBar.newTab().setText(R.string.current).setTag("current").setTabListener(this);
+        tab = actionBar.newTab().setText(R.string.current).setTag("current").setTabListener(new TabListener<EventCurrentFragment>(this, "current", EventCurrentFragment.class));
         actionBar.addTab(tab, (selectedTab == 1 ? true : false));
         
-        tab = actionBar.newTab().setText(R.string.past).setTag("past").setTabListener(this);
+        tab = actionBar.newTab().setText(R.string.past).setTag("past").setTabListener(new TabListener<EventPastFragment>(this, "past", EventPastFragment.class));
         actionBar.addTab(tab, (selectedTab == 2 ? true : false));
     }
     
@@ -72,23 +73,6 @@ public class EventsActivity extends AbstractionActivity implements TabListener{
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public void onTabSelected(Tab tab, FragmentTransaction ft){
-        if(tab.getTag().equals("coming")){
-            ComingEventFragment comingEventFragment = new ComingEventFragment();
-            ft.replace(android.R.id.content, comingEventFragment);
-        }else if(tab.getTag().equals("current")){
-            CurrentEventFragment currentEventFragment = new CurrentEventFragment();
-            ft.replace(android.R.id.content, currentEventFragment);
-        }else if(tab.getTag().equals("past")){
-            PastEventFragment pastEventFragment = new PastEventFragment();
-            ft.replace(android.R.id.content, pastEventFragment);
-        }
-    }
-
-    public void onTabUnselected(Tab tab, FragmentTransaction ft){}
-
-    public void onTabReselected(Tab tab, FragmentTransaction ft){}
 
 	@Override
 	protected OnClickListener getConnectionDialogListener(){

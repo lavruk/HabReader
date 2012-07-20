@@ -45,12 +45,12 @@ import com.actionbarsherlock.view.MenuInflater;
 public abstract class AbstractionPostsFragment extends SherlockListFragment implements OnScrollListener, LoaderCallbacks<ArrayList<PostsData>>{
 	private boolean isLoadData;
 	private int page;
-	
+
 	protected ArrayList<PostsData> postsDatas;
 	protected PostsAdapter postsAdapter;
 
 	protected abstract String getUrl();
-	
+
 	protected abstract int getLoaderId();
 
 	@Override
@@ -69,7 +69,7 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
 		setListShown(true);
 
 		getListView().setOnScrollListener(this);
-		
+
 		if(getSherlockActivity().getSupportLoaderManager().getLoader(getLoaderId()) == null)
 			getSherlockActivity().getSupportLoaderManager().initLoader(getLoaderId(), null, this);
 	}
@@ -101,24 +101,22 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
 
 	protected void showPost(int position){
 		PostsData postsData = postsDatas.get(position);
-		
+
 		Intent intent = new Intent(getSherlockActivity(), PostsShowActivity.class);
 		intent.putExtra(PostsShowActivity.EXTRA_URL, postsData.getUrl());
 		intent.putExtra(PostsShowActivity.EXTRA_TITLE, postsData.getTitle());
-		
+
 		startActivity(intent);
 	}
-	
+
 	protected void restartLoading(){
-		if(!isLoadData){
-			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-			
-			PostsLoader.setPage(++page);
-			
-			getSherlockActivity().getSupportLoaderManager().restartLoader(getLoaderId(), null, this);
-			
-			isLoadData = true;
-		}
+		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+
+		PostsLoader.setPage(++page);
+
+		getSherlockActivity().getSupportLoaderManager().restartLoader(getLoaderId(), null, this);
+
+		isLoadData = true;
 	}
 
 	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
@@ -133,7 +131,7 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
 	public Loader<ArrayList<PostsData>> onCreateLoader(int id, Bundle args){
 		PostsLoader loader = new PostsLoader(getSherlockActivity(), getUrl());
 		loader.forceLoad();
-		
+
 		return loader;
 	}
 
@@ -141,17 +139,16 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
 	public void onLoadFinished(Loader<ArrayList<PostsData>> loader, ArrayList<PostsData> data){
 		postsDatas.addAll(data);
 		postsAdapter.notifyDataSetChanged();
-		
-		//FIXME: I catched a NullPointerException when I changed a tab until loader was finished. So need to fix.
+
 		if(getSherlockActivity() != null)
 			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
-		
+
 		isLoadData = false;
 	}
 
 	@Override
 	public void onLoaderReset(Loader<ArrayList<PostsData>> loader){
-		
+
 	}
 
 }

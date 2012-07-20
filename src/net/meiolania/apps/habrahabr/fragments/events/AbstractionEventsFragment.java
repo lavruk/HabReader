@@ -16,142 +16,109 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.fragments.events;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.EventsShowActivity;
 import net.meiolania.apps.habrahabr.adapters.EventsAdapter;
 import net.meiolania.apps.habrahabr.data.EventsData;
-import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
-import net.meiolania.apps.habrahabr.utils.UIUtils;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
+import net.meiolania.apps.habrahabr.fragments.events.loader.EventLoader;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.Toast;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
-public abstract class AbstractionEventsFragment extends SherlockListFragment implements OnScrollListener{
-    public final static String LOG_TAG = "EventsFragment";
-    protected final ArrayList<EventsData> eventsDatas = new ArrayList<EventsData>();
-    protected EventsAdapter eventsAdapter;
-    protected int page = 0;
-    protected boolean loadMoreData = true;
-    protected boolean noMorePages = false;
+public abstract class AbstractionEventsFragment extends SherlockListFragment implements OnScrollListener, LoaderCallbacks<ArrayList<EventsData>>{
+	private int page;
+	private boolean isLoadData;
+	protected ArrayList<EventsData> eventsDatas;
+	protected EventsAdapter eventsAdapter;
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-        eventsAdapter = new EventsAdapter(getSherlockActivity(), eventsDatas);
-        setListAdapter(eventsAdapter);
-        getListView().setOnScrollListener(this);
-    }
+	protected abstract String getUrl();
 
-    protected void loadList(){
-    	if(ConnectionUtils.isConnected(getSherlockActivity())){
-    		++page;
-            getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-            new LoadEvents().execute();
-    	}
-    }
+	protected abstract int getLoaderId();
 
-    protected abstract String getUrl();
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState){
+		super.onActivityCreated(savedInstanceState);
 
-    protected final class LoadEvents extends AsyncTask<Void, Void, Void>{
+		setRetainInstance(true);
 
-        @Override
-        protected Void doInBackground(Void... params){
-            try{
-                Log.i(LOG_TAG, "Loading " + getUrl().replace("%page%", String.valueOf(page)));
+		if(eventsAdapter == null){
+			eventsDatas = new ArrayList<EventsData>();
+			eventsAdapter = new EventsAdapter(getSherlockActivity(), eventsDatas);
+		}
 
-                Document document = Jsoup.connect(String.format(getUrl().replace("%page%", String.valueOf(page)))).get();
-                Elements events = document.select("div.event");
-                
-                if(events.size() <= 0){
-                    noMorePages = true;
-                    /*
-                     * It's a solve for:
-                     * java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()
-                     */
-                    getSherlockActivity().runOnUiThread(new Runnable(){
-                        public void run(){
-                            Toast.makeText(getSherlockActivity(), R.string.no_more_pages, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-                
-                for(Element event : events){
-                    EventsData eventsData = new EventsData();
-                    
-                    Element title = event.select("h1.title > a").first();
-                    Element detail = event.select("div.detail").first();
-                    Element text = event.select("div.text").first();
-                    
-                    eventsData.setTitle(title.text());
-                    eventsData.setUrl(title.attr("abs:href"));
-                    eventsData.setDetail(detail.text());
-                    eventsData.setText(text.text());
-                    
-                    eventsDatas.add(eventsData);
-                }
-            }
-            catch(IOException e){
-            }
-            return null;
-        }
+		setListAdapter(eventsAdapter);
+		setListShown(true);
 
-        @Override
-        protected void onPostExecute(Void result){
-            getSherlockActivity().runOnUiThread(new Runnable(){
-                public void run(){
-                    if(!isCancelled())
-                        eventsAdapter.notifyDataSetChanged();
-                    loadMoreData = true;
-                    getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
-                }
-            });
-        }
+		getListView().setOnScrollListener(this);
+		
+		if(getSherlockActivity().getSupportLoaderManager().getLoader(getLoaderId()) == null)
+			getSherlockActivity().getSupportLoaderManager().initLoader(getLoaderId(), null, this);
+	}
 
-    }
+	@Override
+	public void onListItemClick(ListView list, View view, int position, long id){
+		showEvent(position);
+	}
 
-    @Override
-    public void onListItemClick(ListView list, View view, int position, long id){
-        showEvent(position);
-    }
+	protected void showEvent(int position){
+		EventsData eventsData = eventsDatas.get(position);
 
-    protected void showEvent(int position){
-        EventsData eventsData = eventsDatas.get(position);
-        Intent intent = new Intent(getSherlockActivity(), EventsShowActivity.class);
-        intent.putExtra(EventsShowActivity.EXTRA_TITLE, eventsData.getTitle());
-        intent.putExtra(EventsShowActivity.EXTRA_URL, eventsData.getUrl());
-        startActivity(intent);
-    }
+		Intent intent = new Intent(getSherlockActivity(), EventsShowActivity.class);
+		intent.putExtra(EventsShowActivity.EXTRA_TITLE, eventsData.getTitle());
+		intent.putExtra(EventsShowActivity.EXTRA_URL, eventsData.getUrl());
 
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
-        if((firstVisibleItem + visibleItemCount) == totalItemCount && loadMoreData && !noMorePages){
-            loadMoreData = false;
-            loadList();
-            Log.i(LOG_TAG, "Loading " + page + " page");
-            //TODO: need to find a better way to display a notification for devices with Android < 3.0
-            if(!UIUtils.isHoneycombOrHigher())
-                Toast.makeText(getSherlockActivity(), getString(R.string.loading_page, page), Toast.LENGTH_SHORT).show();
-        }
-    }
+		startActivity(intent);
+	}
 
-    public void onScrollStateChanged(AbsListView view, int scrollState){
+	protected void restartLoading(){
+		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
 
-    }
+		EventLoader.setPage(++page);
+
+		getSherlockActivity().getSupportLoaderManager().restartLoader(getLoaderId(), null, this);
+
+		isLoadData = true;
+	}
+
+	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
+		if((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData)
+			restartLoading();
+	}
+
+	public void onScrollStateChanged(AbsListView view, int scrollState){
+
+	}
+
+	@Override
+	public Loader<ArrayList<EventsData>> onCreateLoader(int id, Bundle args){
+		EventLoader loader = new EventLoader(getSherlockActivity(), getUrl());
+		loader.forceLoad();
+
+		return loader;
+	}
+
+	@Override
+	public void onLoadFinished(Loader<ArrayList<EventsData>> loader, ArrayList<EventsData> data){
+		eventsDatas.addAll(data);
+		eventsAdapter.notifyDataSetChanged();
+
+		if(getSherlockActivity() != null)
+			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
+
+		isLoadData = false;
+	}
+
+	@Override
+	public void onLoaderReset(Loader<ArrayList<EventsData>> loader){
+
+	}
 
 }

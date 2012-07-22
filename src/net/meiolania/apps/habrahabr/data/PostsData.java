@@ -23,7 +23,8 @@ public class PostsData{
     //TODO: add a link to the author's profile
     protected String author;
     protected String date;
-    protected int comments;
+    protected String comments;
+    protected String score;
 
     public String getTitle(){
         return title;
@@ -65,12 +66,20 @@ public class PostsData{
         return date;
     }
 
-    public int getComments(){
+    public String getComments(){
         return comments;
     }
 
-    public void setComments(int comments){
+    public void setComments(String comments){
         this.comments = comments;
     }
+    
+    public void setScore(String score){
+		this.score = score;
+	}
+    
+    public String getScore(){
+		return score;
+	}
 
 }

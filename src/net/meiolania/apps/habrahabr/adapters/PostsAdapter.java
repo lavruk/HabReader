@@ -30,57 +30,61 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class PostsAdapter extends BaseAdapter{
-    protected ArrayList<PostsData> postsDatas;
-    protected Context context;
-    protected boolean additionalLayout = false;
-    
-    public PostsAdapter(Context context, ArrayList<PostsData> postsDatas){
-        this.context = context;
-        this.postsDatas = postsDatas;
-        
-        Preferences preferences = Preferences.getInstance(context);
-        this.additionalLayout = preferences.getAdditionalPosts();
-    }
-    
-    public int getCount(){
-        return postsDatas.size();
-    }
+	protected ArrayList<PostsData> postsDatas;
+	protected Context context;
+	protected boolean additionalLayout = false;
 
-    public PostsData getItem(int position){
-        return postsDatas.get(position);
-    }
+	public PostsAdapter(Context context, ArrayList<PostsData> postsDatas){
+		this.context = context;
+		this.postsDatas = postsDatas;
 
-    public long getItemId(int position){
-        return position;
-    }
+		Preferences preferences = Preferences.getInstance(context);
+		this.additionalLayout = preferences.getAdditionalPosts();
+	}
 
-    public View getView(int position, View convertView, ViewGroup parent){
-        final PostsData postsData = getItem(position);
-        
-        View view = convertView;
-        if(view == null){
-            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.posts_list_row, null);
-        }
-        
-        TextView title = (TextView) view.findViewById(R.id.post_title);
-        title.setText(postsData.getTitle());
-        
-        TextView hubs = (TextView)view.findViewById(R.id.post_hubs);
-        TextView author = (TextView)view.findViewById(R.id.post_author);
-        TextView date = (TextView)view.findViewById(R.id.post_date);
-        LinearLayout postInfo = (LinearLayout)view.findViewById(R.id.post_info);
-        
-        if(additionalLayout){
-            hubs.setText(postsData.getHubs());
-            author.setText(postsData.getAuthor());
-            date.setText(postsData.getDate());
-        }else{
-            hubs.setVisibility(View.GONE);
-            postInfo.setVisibility(View.GONE);
-        }
-        
-        return view;
-    }
-    
+	public int getCount(){
+		return postsDatas.size();
+	}
+
+	public PostsData getItem(int position){
+		return postsDatas.get(position);
+	}
+
+	public long getItemId(int position){
+		return position;
+	}
+
+	public View getView(int position, View convertView, ViewGroup parent){
+		PostsData postsData = getItem(position);
+
+		View view = convertView;
+		if(view == null){
+			LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			view = layoutInflater.inflate(R.layout.posts_list_row, null);
+		}
+
+		TextView title = (TextView) view.findViewById(R.id.post_title);
+		title.setText(postsData.getTitle());
+
+		TextView hubs = (TextView) view.findViewById(R.id.post_hubs);
+		TextView author = (TextView) view.findViewById(R.id.post_author);
+		TextView date = (TextView) view.findViewById(R.id.post_date);
+		TextView score = (TextView) view.findViewById(R.id.post_score);
+
+		LinearLayout postInfo = (LinearLayout) view.findViewById(R.id.post_info);
+
+		if(additionalLayout){
+			hubs.setText(postsData.getHubs());
+			author.setText(postsData.getAuthor());
+			date.setText(postsData.getDate());
+			score.setText(context.getString(R.string.rating_count).replace("%d", postsData.getScore()));
+		}
+		else{
+			hubs.setVisibility(View.GONE);
+			postInfo.setVisibility(View.GONE);
+		}
+
+		return view;
+	}
+
 }

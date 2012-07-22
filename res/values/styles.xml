@@ -10,7 +10,7 @@
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:background">@drawable/db_buttons</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">@dimen/dashboard_buttons</item>
         <item name="android:textColor">@color/dashboard_text</item>
     </style>
     

@@ -64,9 +64,12 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
 			postsDatas = new ArrayList<PostsData>();
 			postsAdapter = new PostsAdapter(getActivity(), postsDatas);
 		}
-
+		
 		setListAdapter(postsAdapter);
 		setListShown(true);
+		
+		getListView().setDivider(null);
+		getListView().setDividerHeight(0);
 
 		getListView().setOnScrollListener(this);
 

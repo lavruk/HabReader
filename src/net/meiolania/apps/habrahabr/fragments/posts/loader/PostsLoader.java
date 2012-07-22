@@ -68,13 +68,15 @@ public class PostsLoader extends AsyncTaskLoader<ArrayList<PostsData>>{
 				Element date = post.select("div.published").first();
 				Element author = post.select("div.author > a").first();
 				Element comments = post.select("div.comments > span.all").first();
+				Element score = post.select("div.voting > div.score").first();
 
 				postsData.setTitle(postTitle.text());
 				postsData.setUrl(postTitle.attr("abs:href"));
 				postsData.setHubs(hubs.text());
 				postsData.setDate(date.text());
 				postsData.setAuthor(author != null ? author.text() : "");
-				postsData.setComments(comments != null ? Integer.valueOf(comments.text()) : 0);
+				postsData.setComments(comments != null ? comments.text() : "0");
+				postsData.setScore(score != null ? score.text() : "—");
 
 				postsDatas.add(postsData);
 			}

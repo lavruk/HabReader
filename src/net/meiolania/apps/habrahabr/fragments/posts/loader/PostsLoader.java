@@ -41,9 +41,6 @@ public class PostsLoader extends AsyncTaskLoader<ArrayList<PostsData>>{
 		this.url = url;
 	}
 	
-	/*
-	 * TODO: well, it's not a very cool solution. I need to find another solution.
-	 */
 	public static void setPage(int page){
 		PostsLoader.page = page;
 	}
@@ -68,7 +65,7 @@ public class PostsLoader extends AsyncTaskLoader<ArrayList<PostsData>>{
 				Element date = post.select("div.published").first();
 				Element author = post.select("div.author > a").first();
 				Element comments = post.select("div.comments > span.all").first();
-				Element score = post.select("div.voting > div.score").first();
+				Element score = post.select("span.score").first();
 
 				postsData.setTitle(postTitle.text());
 				postsData.setUrl(postTitle.attr("abs:href"));
@@ -76,7 +73,7 @@ public class PostsLoader extends AsyncTaskLoader<ArrayList<PostsData>>{
 				postsData.setDate(date.text());
 				postsData.setAuthor(author != null ? author.text() : "");
 				postsData.setComments(comments != null ? comments.text() : "0");
-				postsData.setScore(score != null ? score.text() : "—");
+				postsData.setScore(score.text());
 
 				postsDatas.add(postsData);
 			}

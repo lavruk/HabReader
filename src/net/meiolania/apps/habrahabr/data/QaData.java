@@ -24,6 +24,7 @@ public class QaData{
     //TODO: add a link to author's profile
     protected String author;
     protected String answers;
+    protected String score;
 
     public String getTitle(){
         return title;
@@ -72,5 +73,13 @@ public class QaData{
     public void setAnswers(String answers){
         this.answers = answers;
     }
+    
+    public void setScore(String score){
+		this.score = score;
+	}
+    
+    public String getScore(){
+		return score;
+	}
 
 }

@@ -65,6 +65,7 @@ public class QaLoader extends AsyncTaskLoader<ArrayList<QaData>>{
                 Element answers = qa.select("div.informative").first();
                 Element date = qa.select("div.published").first();
                 Element author = qa.select("div.author > a").first();
+                Element score = qa.select("span.score").first();
                 
                 qaData.setTitle(title.text());
                 qaData.setUrl(title.attr("abs:href"));
@@ -72,6 +73,7 @@ public class QaLoader extends AsyncTaskLoader<ArrayList<QaData>>{
                 qaData.setAnswers(answers.text());
                 qaData.setDate(date.text());
                 qaData.setAuthor(author.text());
+                qaData.setScore(score.text());
                 
                 qaDatas.add(qaData);
             }

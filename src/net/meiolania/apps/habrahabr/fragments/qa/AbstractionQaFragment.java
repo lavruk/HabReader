@@ -67,6 +67,9 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
 
 		setListAdapter(qaAdapter);
 		setListShown(true);
+		
+		getListView().setDivider(null);
+		getListView().setDividerHeight(0);
 
 		getListView().setOnScrollListener(this);
 

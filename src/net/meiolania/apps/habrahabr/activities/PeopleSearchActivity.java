@@ -32,56 +32,65 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
 public class PeopleSearchActivity extends AbstractionActivity{
-    public final static String URL = "http://habrahabr.ru/search/page%page%/?target_type=users&order_by=relevance&q=%query%";
-    public final static String EXTRA_QUERY = "query";
-    private String query;
+	public final static String URL = "http://habrahabr.ru/search/page%page%/?target_type=users&order_by=relevance&q=%query%";
+	public final static String EXTRA_QUERY = "query";
+	private String query;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState){
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        super.onCreate(savedInstanceState);
-        loadExtras();
-        showActionBar();
-        loadSearchedPeople();
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
 
-    private void loadExtras(){
-        query = getIntent().getStringExtra(EXTRA_QUERY);
-    }
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-    private void showActionBar(){
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.people_search);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-    }
+		loadExtras();
+		showActionBar();
+		loadSearchedPeople();
+	}
 
-    private void loadSearchedPeople(){
-        PeopleFragment peopleFragment = new PeopleFragment(getUrl());
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(android.R.id.content, peopleFragment);
-        fragmentTransaction.commit();
-    }
+	private void loadExtras(){
+		query = getIntent().getStringExtra(EXTRA_QUERY);
+	}
 
-    private String getUrl(){
-        try{
-            return URL.replace("%query%", URLEncoder.encode(query, "UTF-8"));
-        }
-        catch(UnsupportedEncodingException e){
-        }
-        return URL.replace("%query%", query);
-    }
+	private void showActionBar(){
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setTitle(R.string.people_search);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+	}
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch(item.getItemId()){
-            case android.R.id.home:
-                Intent intent = new Intent(this, PeopleActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+	private void loadSearchedPeople(){
+		PeopleFragment peopleFragment = new PeopleFragment();
+
+		Bundle arguments = new Bundle();
+		arguments.putString(PeopleFragment.URL_ARGUMENT, getUrl());
+
+		peopleFragment.setArguments(arguments);
+
+		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+		fragmentTransaction.replace(android.R.id.content, peopleFragment);
+		fragmentTransaction.commit();
+	}
+
+	private String getUrl(){
+		try{
+			return URL.replace("%query%", URLEncoder.encode(query, "UTF-8"));
+		}
+		catch(UnsupportedEncodingException e){
+		}
+
+		return URL.replace("%query%", query);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		switch(item.getItemId()){
+			case android.R.id.home:
+				Intent intent = new Intent(this, PeopleActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 	@Override
 	protected OnClickListener getConnectionDialogListener(){

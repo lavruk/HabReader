@@ -16,7 +16,6 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.fragments.people;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
@@ -24,18 +23,11 @@ import net.meiolania.apps.habrahabr.activities.PeopleSearchActivity;
 import net.meiolania.apps.habrahabr.activities.PeopleShowActivity;
 import net.meiolania.apps.habrahabr.adapters.PeopleAdapter;
 import net.meiolania.apps.habrahabr.data.PeopleData;
-import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
-import net.meiolania.apps.habrahabr.utils.UIUtils;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
+import net.meiolania.apps.habrahabr.fragments.people.loader.PeopleLoader;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.Loader;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -45,42 +37,40 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 
-public class PeopleFragment extends SherlockListFragment implements OnScrollListener{
-    public final static String LOG_TAG = "PeopleFragment";
-    public final static String DEFAULT_URL = "http://habrahabr.ru/people/page%page%/";
-    protected final ArrayList<PeopleData> peopleDatas = new ArrayList<PeopleData>();
-    protected boolean loadMoreData = true;
+public class PeopleFragment extends SherlockListFragment implements OnScrollListener, LoaderCallbacks<ArrayList<PeopleData>>{
+	public final static String URL_ARGUMENT = "url";
+	public final static int LOADER_PEOPLE = 0;
+    
+    protected ArrayList<PeopleData> peopleDatas;
     protected PeopleAdapter peopleAdapter;
-    protected int page = 0;
+    
+    protected int page;
+    
     protected String url;
-    protected boolean noMorePages = false;
-    
-    public PeopleFragment(){
-        url = DEFAULT_URL;
-    }
-    
-    public PeopleFragment(String url){
-        this.url = url;
-    }
-    
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
+    private boolean isLoadData;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         
-        peopleAdapter = new PeopleAdapter(getSherlockActivity(), peopleDatas);
+        if(getArguments() != null)
+        	url = getArguments().getString(URL_ARGUMENT);
+        
+        setRetainInstance(true);
+        setHasOptionsMenu(true);
+        
+        if(peopleAdapter == null){
+        	peopleDatas = new ArrayList<PeopleData>();
+        	peopleAdapter = new PeopleAdapter(getSherlockActivity(), peopleDatas);
+        }
+        
         setListAdapter(peopleAdapter);
+        setListShown(true);
         
         getListView().setOnScrollListener(this);
     }
@@ -105,75 +95,6 @@ public class PeopleFragment extends SherlockListFragment implements OnScrollList
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    protected void loadList(){
-    	if(ConnectionUtils.isConnected(getSherlockActivity())){
-    		++page;
-            getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-            new LoadPeople().execute();
-    	}
-    }
-
-    protected final class LoadPeople extends AsyncTask<Void, Void, Void>{
-
-        @Override
-        protected Void doInBackground(Void... params){
-            try{
-                Log.i(LOG_TAG, "Loading " + url.replace("%page%", String.valueOf(page)));
-
-                Document document = Jsoup.connect(url.replace("%page%", String.valueOf(page))).get();
-                Elements users = document.select("div.user");
-                
-                if(users.size() <= 0){
-                    noMorePages = true;
-                    /*
-                     * It's a solve for:
-                     * java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()
-                     */
-                    getSherlockActivity().runOnUiThread(new Runnable(){
-                        public void run(){
-                            Toast.makeText(getSherlockActivity(), R.string.no_more_pages, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-                
-                for(Element user : users){
-                    PeopleData peopleData = new PeopleData();
-                    
-                    Element rating = user.select("div.rating").first();
-                    Element karma = user.select("div.karma").first();
-                    Element avatar = user.select("div.avatar > a > img").first();
-                    Element name = user.select("div.info > div.username > a").first();
-                    Element lifetime = user.select("div.info > div.lifetime").first();
-                    
-                    peopleData.setName(name.text());
-                    peopleData.setUrl(name.attr("abs:href"));
-                    peopleData.setRating(rating.text());
-                    peopleData.setKarma(karma.text());
-                    peopleData.setAvatar(avatar.attr("src"));
-                    peopleData.setLifetime(lifetime.text());
-                    
-                    peopleDatas.add(peopleData);
-                }
-            }
-            catch(IOException e){
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result){
-            getSherlockActivity().runOnUiThread(new Runnable(){
-                public void run(){
-                    if(!isCancelled())
-                        peopleAdapter.notifyDataSetChanged();
-                    loadMoreData = true;
-                    getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
-                }
-            });
-        }
-
-    }
-
     @Override
     public void onListItemClick(ListView list, View view, int position, long id){
         showUser(position);
@@ -181,25 +102,61 @@ public class PeopleFragment extends SherlockListFragment implements OnScrollList
 
     protected void showUser(int position){
         PeopleData peopleData = peopleDatas.get(position);
+        
         Intent intent = new Intent(getSherlockActivity(), PeopleShowActivity.class);
         intent.putExtra(PeopleShowActivity.EXTRA_NAME, peopleData.getName());
         intent.putExtra(PeopleShowActivity.EXTRA_URL, peopleData.getUrl());
+        
         startActivity(intent);
+    }
+    
+    protected void restartLoading(){
+    	getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+    	
+    	PeopleLoader.setPage(++page);
+    	
+    	getSherlockActivity().getSupportLoaderManager().restartLoader(LOADER_PEOPLE, null, this);
+    	
+    	isLoadData = true;
     }
 
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
-        if((firstVisibleItem + visibleItemCount) == totalItemCount && loadMoreData && !noMorePages){
-            loadMoreData = false;
-            loadList();
-            Log.i(LOG_TAG, "Loading " + page + " page");
-            //TODO: need to find a better way to display a notification for devices with Android < 3.0
-            if(!UIUtils.isHoneycombOrHigher())
-                Toast.makeText(getSherlockActivity(), getString(R.string.loading_page, page), Toast.LENGTH_SHORT).show();
-        }
+        if((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData)
+        	restartLoading();
     }
 
     public void onScrollStateChanged(AbsListView view, int scrollState){
 
     }
+
+	@Override
+	public Loader<ArrayList<PeopleData>> onCreateLoader(int id, Bundle args){
+		PeopleLoader loader = null;
+		
+		if(url == null)
+			loader = new PeopleLoader(getSherlockActivity());
+		else
+			loader = new PeopleLoader(getSherlockActivity(), url);
+		
+		loader.forceLoad();
+		
+		return loader;
+	}
+
+	@Override
+	public void onLoadFinished(Loader<ArrayList<PeopleData>> loader, ArrayList<PeopleData> data){
+		peopleDatas.addAll(data);
+		peopleAdapter.notifyDataSetChanged();
+		
+		if(getSherlockActivity() != null)
+			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
+		
+		isLoadData = false;
+	}
+
+	@Override
+	public void onLoaderReset(Loader<ArrayList<PeopleData>> loader){
+		
+	}
 
 }

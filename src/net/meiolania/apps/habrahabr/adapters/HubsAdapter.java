@@ -28,44 +28,44 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class HubsAdapter extends BaseAdapter{
-    protected ArrayList<HubsData> hubsDatas;
-    protected Context context;
+	private ArrayList<HubsData> hubs;
+	private Context context;
 
-    public HubsAdapter(Context context, ArrayList<HubsData> hubsDatas){
-        this.context = context;
-        this.hubsDatas = hubsDatas;
-    }
+	public HubsAdapter(Context context, ArrayList<HubsData> hubs){
+		this.context = context;
+		this.hubs = hubs;
+	}
 
-    public int getCount(){
-        return hubsDatas.size();
-    }
+	public int getCount(){
+		return hubs.size();
+	}
 
-    public HubsData getItem(int position){
-        return hubsDatas.get(position);
-    }
+	public HubsData getItem(int position){
+		return hubs.get(position);
+	}
 
-    public long getItemId(int position){
-        return position;
-    }
+	public long getItemId(int position){
+		return position;
+	}
 
-    public View getView(int position, View convertView, ViewGroup parent){
-        final HubsData hubsData = getItem(position);
-        
-        View view = convertView;
-        if(view == null){
-            LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.hubs_list_row, null);
-        }
-        
-        TextView title = (TextView)view.findViewById(R.id.hub_title);
-        TextView stat = (TextView)view.findViewById(R.id.hub_stat);
-        TextView index = (TextView)view.findViewById(R.id.hub_index);
-        
-        title.setText(hubsData.getTitle());
-        stat.setText(hubsData.getStat());
-        index.setText(hubsData.getIndex());
-        
-        return view;
-    }
+	public View getView(int position, View convertView, ViewGroup parent){
+		HubsData data = getItem(position);
+
+		View view = convertView;
+		if(view == null){
+			LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			view = layoutInflater.inflate(R.layout.hubs_list_row, null);
+		}
+
+		TextView title = (TextView) view.findViewById(R.id.hub_title);
+		TextView stat = (TextView) view.findViewById(R.id.hub_stat);
+		TextView index = (TextView) view.findViewById(R.id.hub_index);
+
+		title.setText(data.getTitle());
+		stat.setText(data.getStat());
+		index.setText(data.getIndex());
+
+		return view;
+	}
 
 }

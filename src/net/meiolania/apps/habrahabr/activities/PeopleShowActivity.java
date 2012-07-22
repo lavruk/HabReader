@@ -65,15 +65,15 @@ public class PeopleShowActivity extends AbstractionActivity{
 	}
 
 	private void loadInfo(){
-		PeopleShowFragment peopleShowFragment = new PeopleShowFragment();
+		PeopleShowFragment fragment = new PeopleShowFragment();
 
 		Bundle arguments = new Bundle();
 		arguments.putString(PeopleShowFragment.URL_ARGUMENT, url);
 
-		peopleShowFragment.setArguments(arguments);
+		fragment.setArguments(arguments);
 
 		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-		fragmentTransaction.replace(android.R.id.content, peopleShowFragment);
+		fragmentTransaction.replace(android.R.id.content, fragment);
 		fragmentTransaction.commit();
 	}
 

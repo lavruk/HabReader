@@ -58,7 +58,7 @@ public class HubsSearchActivity extends AbstractionActivity{
 	}
 
 	private void loadSearchedHubs(){
-		HubsFragment hubsFragment = new HubsFragment();
+		HubsFragment fragment = new HubsFragment();
 
 		Bundle arguments = new Bundle();
 		try{
@@ -68,10 +68,10 @@ public class HubsSearchActivity extends AbstractionActivity{
 			arguments.putString(HubsFragment.URL_ARGUMENT, URL.replace("%query%", query));
 		}
 
-		hubsFragment.setArguments(arguments);
+		fragment.setArguments(arguments);
 
 		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-		fragmentTransaction.replace(android.R.id.content, hubsFragment);
+		fragmentTransaction.replace(android.R.id.content, fragment);
 		fragmentTransaction.commit();
 	}
 

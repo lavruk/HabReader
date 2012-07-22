@@ -43,11 +43,10 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 
 public abstract class AbstractionQaFragment extends SherlockListFragment implements OnScrollListener, LoaderCallbacks<ArrayList<QaData>>{
-	private int page;
-	private boolean isLoadData;
-
-	protected ArrayList<QaData> qaDatas;
-	protected QaAdapter qaAdapter;
+	protected int page;
+	protected boolean isLoadData;
+	protected ArrayList<QaData> questions;
+	protected QaAdapter adapter;
 
 	protected abstract String getUrl();
 
@@ -60,12 +59,12 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
 		setRetainInstance(true);
 		setHasOptionsMenu(true);
 
-		if(qaAdapter == null){
-			qaDatas = new ArrayList<QaData>();
-			qaAdapter = new QaAdapter(getSherlockActivity(), qaDatas);
+		if(adapter == null){
+			questions = new ArrayList<QaData>();
+			adapter = new QaAdapter(getSherlockActivity(), questions);
 		}
 
-		setListAdapter(qaAdapter);
+		setListAdapter(adapter);
 		setListShown(true);
 		
 		getListView().setDivider(null);
@@ -103,11 +102,11 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
 	}
 
 	protected void showQa(int position){
-		QaData qaData = qaDatas.get(position);
+		QaData data = questions.get(position);
 
 		Intent intent = new Intent(getSherlockActivity(), QaShowActivity.class);
-		intent.putExtra(QaShowActivity.EXTRA_URL, qaData.getUrl());
-		intent.putExtra(QaShowActivity.EXTRA_TITLE, qaData.getTitle());
+		intent.putExtra(QaShowActivity.EXTRA_URL, data.getUrl());
+		intent.putExtra(QaShowActivity.EXTRA_TITLE, data.getTitle());
 
 		startActivity(intent);
 	}
@@ -143,8 +142,8 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
 
 	@Override
 	public void onLoadFinished(Loader<ArrayList<QaData>> loader, ArrayList<QaData> data){
-		qaDatas.addAll(data);
-		qaAdapter.notifyDataSetChanged();
+		questions.addAll(data);
+		adapter.notifyDataSetChanged();
 
 		if(getSherlockActivity() != null)
 			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);

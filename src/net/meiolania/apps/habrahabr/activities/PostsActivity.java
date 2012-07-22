@@ -51,14 +51,26 @@ public class PostsActivity extends AbstractionActivity{
         
         Preferences preferences = Preferences.getInstance(this);
         int selectedTab = preferences.getPostsDefaultTab();
-
-        Tab tab = actionBar.newTab().setText(R.string.best).setTag("best").setTabListener(new TabListener<PostsBestFragment>(this, "best", PostsBestFragment.class));
+        
+        /* Best tab */
+        Tab tab = actionBar.newTab()
+        				   .setText(R.string.best)
+        				   .setTag("best")
+        				   .setTabListener(new TabListener<PostsBestFragment>(this, "best", PostsBestFragment.class));
         actionBar.addTab(tab, (selectedTab == 0 ? true : false));
         
-        tab = actionBar.newTab().setText(R.string.thematic).setTag("thematic").setTabListener(new TabListener<PostsThematicFragment>(this, "thematic", PostsThematicFragment.class));
+        /* Thematic tab */
+        tab = actionBar.newTab()
+        			   .setText(R.string.thematic)
+        			   .setTag("thematic")
+        			   .setTabListener(new TabListener<PostsThematicFragment>(this, "thematic", PostsThematicFragment.class));
         actionBar.addTab(tab, (selectedTab == 1 ? true : false));
         
-        tab = actionBar.newTab().setText(R.string.corporate).setTag("corporate").setTabListener(new TabListener<PostsCorporateFragment>(this, "corporate", PostsCorporateFragment.class));
+        /* Corporate tab */
+        tab = actionBar.newTab()
+        			   .setText(R.string.corporate)
+        			   .setTag("corporate")
+        			   .setTabListener(new TabListener<PostsCorporateFragment>(this, "corporate", PostsCorporateFragment.class));
         actionBar.addTab(tab, (selectedTab == 2 ? true : false));
     }
 

@@ -45,7 +45,7 @@ public class CompaniesLoader extends AsyncTaskLoader<ArrayList<CompaniesData>>{
 
 	@Override
 	public ArrayList<CompaniesData> loadInBackground(){
-		ArrayList<CompaniesData> companiesDatas = new ArrayList<CompaniesData>();
+		ArrayList<CompaniesData> data = new ArrayList<CompaniesData>();
 
 		try{
 			String readyUrl = String.format(URL, page);
@@ -53,6 +53,7 @@ public class CompaniesLoader extends AsyncTaskLoader<ArrayList<CompaniesData>>{
 			Log.i(TAG, "Loading a page: " + readyUrl);
 
 			Document document = Jsoup.connect(readyUrl).get();
+			
 			Elements companies = document.select("div.company");
 
 			for(Element company : companies){
@@ -70,13 +71,13 @@ public class CompaniesLoader extends AsyncTaskLoader<ArrayList<CompaniesData>>{
 				companiesData.setIndex(index.text());
 				companiesData.setDescription(description.text());
 
-				companiesDatas.add(companiesData);
+				data.add(companiesData);
 			}
 		}
 		catch(IOException e){
 		}
 
-		return companiesDatas;
+		return data;
 	}
 
 }

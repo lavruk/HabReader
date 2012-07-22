@@ -63,6 +63,7 @@
 	<!-- People -->
 	<string name="loading_profile_info">Загрузка профиля</string>
 	<string name="people_search">Поиск пользователей</string>
+	<string name="karma_count">Карма %d</string>
 	
 	<!-- Preferences -->
 	<string name="base_preferences">Основные настройки</string>

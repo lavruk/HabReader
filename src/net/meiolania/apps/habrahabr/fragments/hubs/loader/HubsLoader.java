@@ -47,7 +47,7 @@ public class HubsLoader extends AsyncTaskLoader<ArrayList<HubsData>>{
 
 	@Override
 	public ArrayList<HubsData> loadInBackground(){
-		ArrayList<HubsData> datas = new ArrayList<HubsData>();
+		ArrayList<HubsData> data = new ArrayList<HubsData>();
 
 		try{
 			String readyUrl = url.replace("%page%", String.valueOf(page));
@@ -55,6 +55,7 @@ public class HubsLoader extends AsyncTaskLoader<ArrayList<HubsData>>{
 			Log.i(TAG, "Loading a page: " + readyUrl);
 
 			Document document = Jsoup.connect(readyUrl).get();
+
 			Elements hubs = document.select("div.hub");
 
 			for(Element hub : hubs){
@@ -69,13 +70,13 @@ public class HubsLoader extends AsyncTaskLoader<ArrayList<HubsData>>{
 				hubsData.setStat(stat.text());
 				hubsData.setIndex(index.text());
 
-				datas.add(hubsData);
+				data.add(hubsData);
 			}
 		}
 		catch(IOException e){
 		}
 
-		return datas;
+		return data;
 	}
 
 }

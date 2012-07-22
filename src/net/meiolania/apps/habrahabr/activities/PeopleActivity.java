@@ -59,9 +59,10 @@ public class PeopleActivity extends AbstractionActivity{
 	}
 
 	private void loadPeopleList(){
-		PeopleFragment peopleFragment = new PeopleFragment();
+		PeopleFragment fragment = new PeopleFragment();
+		
 		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-		fragmentTransaction.replace(android.R.id.content, peopleFragment);
+		fragmentTransaction.replace(android.R.id.content, fragment);
 		fragmentTransaction.commit();
 	}
 

@@ -79,7 +79,7 @@ public class HubsActivity extends AbstractionActivity implements OnNavigationLis
     }
 
     public boolean onNavigationItemSelected(int itemPosition, long itemId){
-        HubsFragment hubsFragment = new HubsFragment();
+        HubsFragment fragment = new HubsFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         
         Bundle arguments = new Bundle();
@@ -132,9 +132,9 @@ public class HubsActivity extends AbstractionActivity implements OnNavigationLis
                 break;
         }
         
-        hubsFragment.setArguments(arguments);
+        fragment.setArguments(arguments);
         
-        fragmentTransaction.replace(android.R.id.content, hubsFragment);
+        fragmentTransaction.replace(android.R.id.content, fragment);
         fragmentTransaction.commit();
         return false;
     }

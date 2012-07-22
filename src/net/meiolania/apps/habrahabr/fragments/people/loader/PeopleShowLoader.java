@@ -39,12 +39,13 @@ public class PeopleShowLoader extends AsyncTaskLoader<PeopleFullData>{
 
 	@Override
 	public PeopleFullData loadInBackground(){
-		PeopleFullData peopleFullData = new PeopleFullData();
+		PeopleFullData data = new PeopleFullData();
 
 		try{
 			Log.i(TAG, "Loading a page: " + url);
 
 			Document document = Jsoup.connect(url).get();
+
 			Element avatar = document.select("a.avatar > img").first();
 			Element karma = document.select("div.karma > div.score > div.num").first();
 			Element rating = document.select("div.rating > div.num").first();
@@ -53,18 +54,18 @@ public class PeopleShowLoader extends AsyncTaskLoader<PeopleFullData>{
 			Element summary = document.select("dd.summary").first();
 			Element interests = document.select("dl.interests > dd").first();
 
-			peopleFullData.setAvatar(avatar.attr("src"));
-			peopleFullData.setKarma(karma.text());
-			peopleFullData.setRating(rating.text());
-			peopleFullData.setBirthday(birthday != null ? birthday.text() : "");
-			peopleFullData.setFullname(fullname != null ? fullname.text() : "");
-			peopleFullData.setSummary(summary != null ? summary.text() : "");
-			peopleFullData.setInterests(interests != null ? interests.text() : "");
+			data.setAvatar(avatar.attr("src"));
+			data.setKarma(karma.text());
+			data.setRating(rating.text());
+			data.setBirthday(birthday != null ? birthday.text() : "");
+			data.setFullname(fullname != null ? fullname.text() : "");
+			data.setSummary(summary != null ? summary.text() : "");
+			data.setInterests(interests != null ? interests.text() : "");
 		}
 		catch(IOException e){
 		}
 
-		return peopleFullData;
+		return data;
 	}
 
 }

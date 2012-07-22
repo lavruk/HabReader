@@ -31,56 +31,59 @@ import android.support.v4.content.AsyncTaskLoader;
 
 public class QaCommentsLoader extends AsyncTaskLoader<ArrayList<CommentsData>>{
 	private String url;
-	
+
 	public QaCommentsLoader(Context context, String url){
 		super(context);
-		
+
 		this.url = url;
 	}
 
 	@Override
 	public ArrayList<CommentsData> loadInBackground(){
-		ArrayList<CommentsData> commentsDatas = new ArrayList<CommentsData>();
-		
+		ArrayList<CommentsData> data = new ArrayList<CommentsData>();
+
 		try{
-            Document document = Jsoup.connect(url).get();
-            Elements answers = document.select("div.answer");
-            for(Element answer : answers){
-                CommentsData commentsData = new CommentsData();
-                
-                Element name = answer.select("a.username").first();
-                Element message = answer.select("div.message").first();
-                Element linkToComment = answer.select("a.link_to_comment").first();
-                
-                commentsData.setUrl(linkToComment.attr("abs:href"));
-                commentsData.setAuthor(name.text());
-                commentsData.setAuthorUrl(name.attr("abs:href"));
-                commentsData.setComment(message.text());
-                commentsData.setLevel(0);
-                
-                commentsDatas.add(commentsData);
-                
-                Elements comments = answer.select("div.comment_item");
-                for(Element comment : comments){
-                    commentsData = new CommentsData();
-                    
-                    name = comment.select("span.info > a").first();
-                    message = comment.select("span.text").first();
-                    
-                    commentsData.setUrl(linkToComment.attr("abs:href"));
-                    commentsData.setAuthorUrl(name.attr("abs:href"));
-                    commentsData.setAuthor(name.text());
-                    commentsData.setComment(message.text());
-                    commentsData.setLevel(1);
-                    
-                    commentsDatas.add(commentsData);
-                }
-            }
-        }
-        catch(IOException e){
-        }
-		
-		return commentsDatas;
+			Document document = Jsoup.connect(url).get();
+			
+			Elements answers = document.select("div.answer");
+			
+			for(Element answer : answers){
+				CommentsData commentsData = new CommentsData();
+
+				Element name = answer.select("a.username").first();
+				Element message = answer.select("div.message").first();
+				Element linkToComment = answer.select("a.link_to_comment").first();
+
+				commentsData.setUrl(linkToComment.attr("abs:href"));
+				commentsData.setAuthor(name.text());
+				commentsData.setAuthorUrl(name.attr("abs:href"));
+				commentsData.setComment(message.text());
+				commentsData.setLevel(0);
+
+				data.add(commentsData);
+
+				Elements comments = answer.select("div.comment_item");
+				
+				for(Element comment : comments){
+					commentsData = new CommentsData();
+
+					name = comment.select("span.info > a").first();
+					message = comment.select("span.text").first();
+
+					commentsData.setUrl(linkToComment.attr("abs:href"));
+					commentsData.setAuthorUrl(name.attr("abs:href"));
+					commentsData.setAuthor(name.text());
+					commentsData.setComment(message.text());
+					commentsData.setLevel(1);
+
+					data.add(commentsData);
+				}
+			}
+		}
+		catch(IOException e){
+		}
+
+		return data;
 	}
 
 }

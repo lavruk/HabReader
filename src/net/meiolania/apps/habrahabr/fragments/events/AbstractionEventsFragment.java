@@ -34,10 +34,10 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockListFragment;
 
 public abstract class AbstractionEventsFragment extends SherlockListFragment implements OnScrollListener, LoaderCallbacks<ArrayList<EventsData>>{
-	private int page;
-	private boolean isLoadData;
-	protected ArrayList<EventsData> eventsDatas;
-	protected EventsAdapter eventsAdapter;
+	protected int page;
+	protected boolean isLoadData;
+	protected ArrayList<EventsData> events;
+	protected EventsAdapter adapter;
 
 	protected abstract String getUrl();
 
@@ -49,12 +49,12 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
 
 		setRetainInstance(true);
 
-		if(eventsAdapter == null){
-			eventsDatas = new ArrayList<EventsData>();
-			eventsAdapter = new EventsAdapter(getSherlockActivity(), eventsDatas);
+		if(adapter == null){
+			events = new ArrayList<EventsData>();
+			adapter = new EventsAdapter(getSherlockActivity(), events);
 		}
 
-		setListAdapter(eventsAdapter);
+		setListAdapter(adapter);
 		setListShown(true);
 
 		getListView().setOnScrollListener(this);
@@ -66,11 +66,11 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
 	}
 
 	protected void showEvent(int position){
-		EventsData eventsData = eventsDatas.get(position);
+		EventsData data = events.get(position);
 
 		Intent intent = new Intent(getSherlockActivity(), EventsShowActivity.class);
-		intent.putExtra(EventsShowActivity.EXTRA_TITLE, eventsData.getTitle());
-		intent.putExtra(EventsShowActivity.EXTRA_URL, eventsData.getUrl());
+		intent.putExtra(EventsShowActivity.EXTRA_TITLE, data.getTitle());
+		intent.putExtra(EventsShowActivity.EXTRA_URL, data.getUrl());
 
 		startActivity(intent);
 	}
@@ -104,8 +104,8 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
 
 	@Override
 	public void onLoadFinished(Loader<ArrayList<EventsData>> loader, ArrayList<EventsData> data){
-		eventsDatas.addAll(data);
-		eventsAdapter.notifyDataSetChanged();
+		events.addAll(data);
+		adapter.notifyDataSetChanged();
 
 		if(getSherlockActivity() != null)
 			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);

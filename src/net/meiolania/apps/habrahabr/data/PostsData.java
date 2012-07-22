@@ -17,68 +17,68 @@ limitations under the License.
 package net.meiolania.apps.habrahabr.data;
 
 public class PostsData{
-    protected String title;
-    protected String url;
-    protected String hubs;
-    //TODO: add a link to the author's profile
-    protected String author;
-    protected String date;
-    protected String comments;
-    protected String score;
+	protected String title;
+	protected String url;
+	protected String hubs;
+	// TODO: add a link to the author's profile
+	protected String author;
+	protected String date;
+	protected String comments;
+	protected String score;
 
-    public String getTitle(){
-        return title;
-    }
+	public String getTitle(){
+		return title;
+	}
 
-    public void setTitle(String title){
-        this.title = title;
-    }
+	public void setTitle(String title){
+		this.title = title;
+	}
 
-    public String getUrl(){
-        return url;
-    }
+	public String getUrl(){
+		return url;
+	}
 
-    public void setUrl(String url){
-        this.url = url;
-    }
+	public void setUrl(String url){
+		this.url = url;
+	}
 
-    public String getHubs(){
-        return hubs;
-    }
+	public String getHubs(){
+		return hubs;
+	}
 
-    public void setHubs(String hubs){
-        this.hubs = hubs;
-    }
+	public void setHubs(String hubs){
+		this.hubs = hubs;
+	}
 
-    public String getAuthor(){
-        return author;
-    }
+	public String getAuthor(){
+		return author;
+	}
 
-    public void setAuthor(String author){
-        this.author = author;
-    }
-    
-    public void setDate(String date){
-        this.date = date;
-    }
-    
-    public String getDate(){
-        return date;
-    }
+	public void setAuthor(String author){
+		this.author = author;
+	}
 
-    public String getComments(){
-        return comments;
-    }
+	public void setDate(String date){
+		this.date = date;
+	}
 
-    public void setComments(String comments){
-        this.comments = comments;
-    }
-    
-    public void setScore(String score){
+	public String getDate(){
+		return date;
+	}
+
+	public String getComments(){
+		return comments;
+	}
+
+	public void setComments(String comments){
+		this.comments = comments;
+	}
+
+	public void setScore(String score){
 		this.score = score;
 	}
-    
-    public String getScore(){
+
+	public String getScore(){
 		return score;
 	}
 

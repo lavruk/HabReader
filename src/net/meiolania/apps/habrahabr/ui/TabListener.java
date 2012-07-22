@@ -29,24 +29,24 @@ public class TabListener<T extends Fragment> implements com.actionbarsherlock.ap
 	private Context context;
 	private String tag;
 	private Bundle arguments;
-	
+
 	public TabListener(Context context, String tag, Class<T> fragmentClass){
 		this.context = context;
 		this.tag = tag;
 		this.fragmentClass = fragmentClass;
 	}
-	
+
 	public TabListener(Context context, String tag, Class<T> fragmentClass, Bundle arguments){
 		this(context, tag, fragmentClass);
-		
+
 		this.arguments = arguments;
 	}
-	
+
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft){
 		if(fragment == null){
 			fragment = Fragment.instantiate(context, fragmentClass.getName());
-			
+
 			if(arguments != null)
 				fragment.setArguments(arguments);
 		}
@@ -55,12 +55,12 @@ public class TabListener<T extends Fragment> implements com.actionbarsherlock.ap
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft){
-		
+
 	}
 
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft){
-		
+
 	}
 
 }

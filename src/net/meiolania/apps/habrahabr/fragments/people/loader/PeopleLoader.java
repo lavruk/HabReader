@@ -54,7 +54,7 @@ public class PeopleLoader extends AsyncTaskLoader<ArrayList<PeopleData>>{
 
 	@Override
 	public ArrayList<PeopleData> loadInBackground(){
-		ArrayList<PeopleData> peopleDatas = new ArrayList<PeopleData>();
+		ArrayList<PeopleData> data = new ArrayList<PeopleData>();
 
 		try{
 			String readyUrl = url.replace("%page%", String.valueOf(page));
@@ -80,13 +80,13 @@ public class PeopleLoader extends AsyncTaskLoader<ArrayList<PeopleData>>{
 				peopleData.setAvatar(avatar.attr("src"));
 				peopleData.setLifetime(lifetime.text());
 
-				peopleDatas.add(peopleData);
+				data.add(peopleData);
 			}
 		}
 		catch(IOException e){
 		}
 
-		return peopleDatas;
+		return data;
 	}
 
 }

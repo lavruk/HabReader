@@ -40,16 +40,16 @@ public class PostShowFragment extends SherlockFragment implements LoaderCallback
 	private String url;
 	private ProgressDialog progressDialog;
 	private PostsFullData data;
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
-		
+
 		setHasOptionsMenu(true);
 		setRetainInstance(true);
-		
+
 		url = getArguments().getString(URL_ARGUMENT);
-		
+
 		getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_POST, null, this);
 	}
 
@@ -61,6 +61,7 @@ public class PostShowFragment extends SherlockFragment implements LoaderCallback
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
 		super.onCreateOptionsMenu(menu, inflater);
+		
 		inflater.inflate(R.menu.posts_show_activity, menu);
 	}
 
@@ -77,10 +78,10 @@ public class PostShowFragment extends SherlockFragment implements LoaderCallback
 	@Override
 	public Loader<PostsFullData> onCreateLoader(int id, Bundle args){
 		showProgressDialog();
-		
+
 		PostShowLoader loader = new PostShowLoader(getSherlockActivity(), url);
 		loader.forceLoad();
-		
+
 		return loader;
 	}
 
@@ -91,22 +92,23 @@ public class PostShowFragment extends SherlockFragment implements LoaderCallback
 		content.getSettings().setSupportZoom(true);
 		content.getSettings().setBuiltInZoomControls(true);
 		content.loadDataWithBaseURL("", data.getContent(), "text/html", "UTF-8", null);
-		
+
 		this.data = data;
-		
+
 		hideProgressDialog();
 	}
 
 	@Override
-	public void onLoaderReset(Loader<PostsFullData> loader){}
-	
+	public void onLoaderReset(Loader<PostsFullData> loader){
+	}
+
 	private void showProgressDialog(){
 		progressDialog = new ProgressDialog(getSherlockActivity());
 		progressDialog.setMessage(getString(R.string.loading_post));
 		progressDialog.setCancelable(true);
 		progressDialog.show();
 	}
-	
+
 	private void hideProgressDialog(){
 		if(progressDialog != null)
 			progressDialog.dismiss();

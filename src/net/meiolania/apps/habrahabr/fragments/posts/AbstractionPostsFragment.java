@@ -43,11 +43,10 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 
 public abstract class AbstractionPostsFragment extends SherlockListFragment implements OnScrollListener, LoaderCallbacks<ArrayList<PostsData>>{
-	private boolean isLoadData;
-	private int page;
-
-	protected ArrayList<PostsData> postsDatas;
-	protected PostsAdapter postsAdapter;
+	protected boolean isLoadData;
+	protected int page;
+	protected ArrayList<PostsData> posts;
+	protected PostsAdapter adapter;
 
 	protected abstract String getUrl();
 
@@ -60,14 +59,14 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
 		setRetainInstance(true);
 		setHasOptionsMenu(true);
 
-		if(postsAdapter == null){
-			postsDatas = new ArrayList<PostsData>();
-			postsAdapter = new PostsAdapter(getActivity(), postsDatas);
+		if(adapter == null){
+			posts = new ArrayList<PostsData>();
+			adapter = new PostsAdapter(getActivity(), posts);
 		}
-		
-		setListAdapter(postsAdapter);
+
+		setListAdapter(adapter);
 		setListShown(true);
-		
+
 		getListView().setDivider(null);
 		getListView().setDividerHeight(0);
 
@@ -103,11 +102,11 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
 	}
 
 	protected void showPost(int position){
-		PostsData postsData = postsDatas.get(position);
+		PostsData data = posts.get(position);
 
 		Intent intent = new Intent(getSherlockActivity(), PostsShowActivity.class);
-		intent.putExtra(PostsShowActivity.EXTRA_URL, postsData.getUrl());
-		intent.putExtra(PostsShowActivity.EXTRA_TITLE, postsData.getTitle());
+		intent.putExtra(PostsShowActivity.EXTRA_URL, data.getUrl());
+		intent.putExtra(PostsShowActivity.EXTRA_TITLE, data.getTitle());
 
 		startActivity(intent);
 	}
@@ -140,8 +139,8 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
 
 	@Override
 	public void onLoadFinished(Loader<ArrayList<PostsData>> loader, ArrayList<PostsData> data){
-		postsDatas.addAll(data);
-		postsAdapter.notifyDataSetChanged();
+		posts.addAll(data);
+		adapter.notifyDataSetChanged();
 
 		if(getSherlockActivity() != null)
 			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);

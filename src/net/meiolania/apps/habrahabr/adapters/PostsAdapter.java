@@ -30,24 +30,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class PostsAdapter extends BaseAdapter{
-	protected ArrayList<PostsData> postsDatas;
-	protected Context context;
-	protected boolean additionalLayout = false;
+	private ArrayList<PostsData> posts;
+	private Context context;
+	private boolean additionalLayout = false;
 
-	public PostsAdapter(Context context, ArrayList<PostsData> postsDatas){
+	public PostsAdapter(Context context, ArrayList<PostsData> posts){
 		this.context = context;
-		this.postsDatas = postsDatas;
+		this.posts = posts;
 
 		Preferences preferences = Preferences.getInstance(context);
 		this.additionalLayout = preferences.getAdditionalPosts();
 	}
 
 	public int getCount(){
-		return postsDatas.size();
+		return posts.size();
 	}
 
 	public PostsData getItem(int position){
-		return postsDatas.get(position);
+		return posts.get(position);
 	}
 
 	public long getItemId(int position){
@@ -55,7 +55,7 @@ public class PostsAdapter extends BaseAdapter{
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent){
-		PostsData postsData = getItem(position);
+		PostsData data = getItem(position);
 
 		View view = convertView;
 		if(view == null){
@@ -64,7 +64,7 @@ public class PostsAdapter extends BaseAdapter{
 		}
 
 		TextView title = (TextView) view.findViewById(R.id.post_title);
-		title.setText(postsData.getTitle());
+		title.setText(data.getTitle());
 
 		TextView hubs = (TextView) view.findViewById(R.id.post_hubs);
 		TextView author = (TextView) view.findViewById(R.id.post_author);
@@ -74,10 +74,10 @@ public class PostsAdapter extends BaseAdapter{
 		LinearLayout postInfo = (LinearLayout) view.findViewById(R.id.post_info);
 
 		if(additionalLayout){
-			hubs.setText(postsData.getHubs());
-			author.setText(postsData.getAuthor());
-			date.setText(postsData.getDate());
-			score.setText(context.getString(R.string.rating_count).replace("%d", postsData.getScore()));
+			hubs.setText(data.getHubs());
+			author.setText(data.getAuthor());
+			date.setText(data.getDate());
+			score.setText(context.getString(R.string.rating_count).replace("%d", data.getScore()));
 		}
 		else{
 			hubs.setVisibility(View.GONE);

@@ -40,6 +40,7 @@ public class PostShowLoader extends AsyncTaskLoader<PostsFullData>{
 
 		try{
 			Document document = Jsoup.connect(url).get();
+
 			Element title = document.select("span.post_title").first();
 			Element hubs = document.select("div.hubs").first();
 			Element content = document.select("div.content").first();

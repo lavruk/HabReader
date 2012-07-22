@@ -40,25 +40,24 @@ public class QaCommentsFragment extends SherlockListFragment implements LoaderCa
 	public final static int MENU_OPEN_COMMENT_IN_BROWSER = 0;
 	public final static int MENU_OPEN_AUTHOR_PROFILE = 1;
 	public final static String URL_ARGUMENT = "url";
-
-	protected ArrayList<CommentsData> commentsDatas;
-	protected CommentsAdapter commentsAdapter;
-	protected String url;
+	private ArrayList<CommentsData> comments;
+	private CommentsAdapter adapter;
+	private String url;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState){
 		super.onActivityCreated(savedInstanceState);
-		
+
 		url = getArguments().getString(URL_ARGUMENT);
-		
+
 		setRetainInstance(true);
 
-		if(commentsAdapter == null){
-			commentsDatas = new ArrayList<CommentsData>();
-			commentsAdapter = new CommentsAdapter(getSherlockActivity(), commentsDatas);
+		if(adapter == null){
+			comments = new ArrayList<CommentsData>();
+			adapter = new CommentsAdapter(getSherlockActivity(), comments);
 		}
 
-		setListAdapter(commentsAdapter);
+		setListAdapter(adapter);
 		setListShown(true);
 
 		registerForContextMenu(getListView());
@@ -100,8 +99,8 @@ public class QaCommentsFragment extends SherlockListFragment implements LoaderCa
 
 	@Override
 	public void onLoadFinished(Loader<ArrayList<CommentsData>> loader, ArrayList<CommentsData> data){
-		commentsDatas.addAll(data);
-		commentsAdapter.notifyDataSetChanged();
+		comments.addAll(data);
+		adapter.notifyDataSetChanged();
 	}
 
 	@Override

@@ -29,48 +29,49 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
 public class PostsSearchActivity extends AbstractionActivity{
-    public final static String EXTRA_QUERY = "query";
-    private String query;
-    
-    @Override
-    protected void onCreate(Bundle savedInstanceState){
-    	super.onCreate(savedInstanceState);
-    	
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        
-        loadExtras();
-        showActionBar();
-        loadSearchedPosts();
-    }
-    
-    private void loadExtras(){
-        query = getIntent().getStringExtra(EXTRA_QUERY);
-    }
-    
-    private void showActionBar(){
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.post_search);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-    }
-    
-    private void loadSearchedPosts(){
-        PostsSearchFragment searchPostsFragment = new PostsSearchFragment(query);
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(android.R.id.content, searchPostsFragment);
-        fragmentTransaction.commit();
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch(item.getItemId()){
-            case android.R.id.home:
-                Intent intent = new Intent(this, DashboardActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+	public final static String EXTRA_QUERY = "query";
+	private String query;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
+		loadExtras();
+		showActionBar();
+		loadSearchedPosts();
+	}
+
+	private void loadExtras(){
+		query = getIntent().getStringExtra(EXTRA_QUERY);
+	}
+
+	private void showActionBar(){
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setTitle(R.string.post_search);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+	}
+
+	private void loadSearchedPosts(){
+		PostsSearchFragment fragment = new PostsSearchFragment(query);
+		
+		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+		fragmentTransaction.replace(android.R.id.content, fragment);
+		fragmentTransaction.commit();
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		switch(item.getItemId()){
+			case android.R.id.home:
+				Intent intent = new Intent(this, DashboardActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 	@Override
 	protected OnClickListener getConnectionDialogListener(){
@@ -81,5 +82,5 @@ public class PostsSearchActivity extends AbstractionActivity{
 			}
 		};
 	}
-    
+
 }

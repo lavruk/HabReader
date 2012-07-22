@@ -29,49 +29,50 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class EventsAdapter extends BaseAdapter{
-    protected ArrayList<EventsData> eventsDatas;
-    protected Context context;
-    protected boolean additionalLayout = false;
-    
-    public EventsAdapter(Context context, ArrayList<EventsData> eventsDatas){
-        this.context = context;
-        this.eventsDatas = eventsDatas;
-        
-        Preferences preferences = Preferences.getInstance(context);
-        this.additionalLayout = preferences.getAdditionalEvents();
-    }
-    
-    public int getCount(){
-        return eventsDatas.size();
-    }
+	private ArrayList<EventsData> events;
+	private Context context;
+	private boolean additionalLayout = false;
 
-    public EventsData getItem(int position){
-        return eventsDatas.get(position);
-    }
+	public EventsAdapter(Context context, ArrayList<EventsData> events){
+		this.context = context;
+		this.events = events;
 
-    public long getItemId(int position){
-        return position;
-    }
+		Preferences preferences = Preferences.getInstance(context);
+		this.additionalLayout = preferences.getAdditionalEvents();
+	}
 
-    public View getView(int position, View convertView, ViewGroup parent){
-        EventsData eventsData = getItem(position);
-        
-        View view = convertView;
-        if(view == null){
-            LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.events_list_row, null);
-        }
-        
-        TextView title = (TextView)view.findViewById(R.id.event_title);
-        title.setText(eventsData.getTitle());
-        
-        TextView text = (TextView)view.findViewById(R.id.event_text);
-        if(additionalLayout)
-            text.setText(eventsData.getText());
-        else
-            text.setVisibility(View.GONE);
-        
-        return view;
-    }
+	public int getCount(){
+		return events.size();
+	}
+
+	public EventsData getItem(int position){
+		return events.get(position);
+	}
+
+	public long getItemId(int position){
+		return position;
+	}
+
+	public View getView(int position, View convertView, ViewGroup parent){
+		EventsData data = getItem(position);
+
+		View view = convertView;
+		if(view == null){
+			LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			view = layoutInflater.inflate(R.layout.events_list_row, null);
+		}
+
+		TextView title = (TextView) view.findViewById(R.id.event_title);
+		title.setText(data.getTitle());
+
+		TextView text = (TextView) view.findViewById(R.id.event_text);
+		
+		if(additionalLayout)
+			text.setText(data.getText());
+		else
+			text.setVisibility(View.GONE);
+
+		return view;
+	}
 
 }

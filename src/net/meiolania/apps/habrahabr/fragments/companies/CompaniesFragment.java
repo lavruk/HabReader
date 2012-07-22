@@ -35,85 +35,84 @@ import com.actionbarsherlock.app.SherlockListFragment;
 
 public class CompaniesFragment extends SherlockListFragment implements OnScrollListener, LoaderCallbacks<ArrayList<CompaniesData>>{
 	public final static int LOADER_COMPANIES = 0;
-    protected ArrayList<CompaniesData> companiesDatas;
-    protected CompaniesAdapter companiesAdapter;
-    private int page;
-    private boolean isLoadData;
+	private ArrayList<CompaniesData> companies;
+	private CompaniesAdapter adapter;
+	private int page;
+	private boolean isLoadData;
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-        
-        setRetainInstance(true);
-        
-        if(companiesAdapter == null){
-        	companiesDatas = new ArrayList<CompaniesData>();
-        	companiesAdapter = new CompaniesAdapter(getSherlockActivity(), companiesDatas);
-        }
-        
-        setListAdapter(companiesAdapter);
-        setListShown(true);
-        
-        getListView().setOnScrollListener(this);
-    }
-    
-    @Override
-    public void onListItemClick(ListView list, View view, int position, long id){
-        showCompany(position);
-    }
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState){
+		super.onActivityCreated(savedInstanceState);
 
-    protected void showCompany(int position){
-        CompaniesData companiesData = companiesDatas.get(position);
-        
-        Intent intent = new Intent(getSherlockActivity(), CompaniesShowActivity.class);
-        intent.putExtra(CompaniesShowActivity.EXTRA_TITLE, companiesData.getTitle());
-        //TODO: made a quick fix. Need to make another.
-        intent.putExtra(CompaniesShowActivity.EXTRA_URL, companiesData.getUrl() + "/profile/");
-        
-        startActivity(intent);
-    }
-    
-    protected void restartLoading(){
-    	getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-    	
-    	CompaniesLoader.setPage(++page);
-    	
-    	getSherlockActivity().getSupportLoaderManager().restartLoader(LOADER_COMPANIES, null, this);
-    	
-    	isLoadData = true;
-    }
+		setRetainInstance(true);
 
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
-        if((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData)
-        	restartLoading();
-    }
+		if(adapter == null){
+			companies = new ArrayList<CompaniesData>();
+			adapter = new CompaniesAdapter(getSherlockActivity(), companies);
+		}
 
-    public void onScrollStateChanged(AbsListView view, int scrollState){
+		setListAdapter(adapter);
+		setListShown(true);
 
-    }
+		getListView().setOnScrollListener(this);
+	}
+
+	@Override
+	public void onListItemClick(ListView list, View view, int position, long id){
+		showCompany(position);
+	}
+
+	protected void showCompany(int position){
+		CompaniesData data = companies.get(position);
+
+		Intent intent = new Intent(getSherlockActivity(), CompaniesShowActivity.class);
+		intent.putExtra(CompaniesShowActivity.EXTRA_TITLE, data.getTitle());
+		intent.putExtra(CompaniesShowActivity.EXTRA_URL, data.getProfileUrl());
+
+		startActivity(intent);
+	}
+
+	protected void restartLoading(){
+		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+
+		CompaniesLoader.setPage(++page);
+
+		getSherlockActivity().getSupportLoaderManager().restartLoader(LOADER_COMPANIES, null, this);
+
+		isLoadData = true;
+	}
+
+	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
+		if((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData)
+			restartLoading();
+	}
+
+	public void onScrollStateChanged(AbsListView view, int scrollState){
+
+	}
 
 	@Override
 	public Loader<ArrayList<CompaniesData>> onCreateLoader(int id, Bundle args){
 		CompaniesLoader loader = new CompaniesLoader(getSherlockActivity());
 		loader.forceLoad();
-		
+
 		return loader;
 	}
 
 	@Override
 	public void onLoadFinished(Loader<ArrayList<CompaniesData>> loader, ArrayList<CompaniesData> data){
-		companiesDatas.addAll(data);
-		companiesAdapter.notifyDataSetChanged();
-		
+		companies.addAll(data);
+		adapter.notifyDataSetChanged();
+
 		if(getSherlockActivity() != null)
 			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
-		
+
 		isLoadData = false;
 	}
 
 	@Override
 	public void onLoaderReset(Loader<ArrayList<CompaniesData>> loader){
-		
+
 	}
 
 }

@@ -33,14 +33,14 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class PeopleAdapter extends BaseAdapter{
-    protected ArrayList<PeopleData> peopleDatas;
-    protected Context context;
-    protected DisplayImageOptions options;
-    protected ImageLoader imageLoader = ImageLoader.getInstance();
+    private ArrayList<PeopleData> people;
+    private Context context;
+    private ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public PeopleAdapter(Context context, ArrayList<PeopleData> peopleDatas){
+    public PeopleAdapter(Context context, ArrayList<PeopleData> people){
         this.context = context;
-        this.peopleDatas = peopleDatas;
+        this.people = people;
+        
         DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory().cacheOnDisc().build();
         ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.Builder(context)
                                                      .memoryCacheSize(3000000)
@@ -52,11 +52,11 @@ public class PeopleAdapter extends BaseAdapter{
     }
 
     public int getCount(){
-        return peopleDatas.size();
+        return people.size();
     }
 
     public PeopleData getItem(int position){
-        return peopleDatas.get(position);
+        return people.get(position);
     }
 
     public long getItemId(int position){
@@ -64,7 +64,7 @@ public class PeopleAdapter extends BaseAdapter{
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
-        PeopleData peopleData = getItem(position);
+        PeopleData data = getItem(position);
 
         View view = convertView;
         if(view == null){
@@ -73,16 +73,16 @@ public class PeopleAdapter extends BaseAdapter{
         }
 
         TextView title = (TextView) view.findViewById(R.id.people_title);
-        title.setText(peopleData.getName());
+        title.setText(data.getName());
         
         ImageView avatar = (ImageView) view.findViewById(R.id.people_avatar);
-        imageLoader.displayImage(peopleData.getAvatar(), avatar);
+        imageLoader.displayImage(data.getAvatar(), avatar);
         
         TextView karma = (TextView)view.findViewById(R.id.people_karma);
-        karma.setText(peopleData.getKarma());
+        karma.setText(context.getString(R.string.karma_count).replace("%d", data.getKarma()));
         
         TextView rating = (TextView)view.findViewById(R.id.people_rating);
-        rating.setText(peopleData.getRating());
+        rating.setText(context.getString(R.string.rating_count).replace("%d", data.getRating()));
 
         return view;
     }

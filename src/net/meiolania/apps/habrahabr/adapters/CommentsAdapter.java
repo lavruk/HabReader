@@ -29,48 +29,49 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class CommentsAdapter extends BaseAdapter{
-    public final static int MARGIN = 10;
-    protected ArrayList<CommentsData> commentsDatas;
-    protected Context context;
+	public final static int MARGIN = 10;
+	private ArrayList<CommentsData> comments;
+	private Context context;
 
-    public CommentsAdapter(Context context, ArrayList<CommentsData> commentsDatas){
-        this.commentsDatas = commentsDatas;
-        this.context = context;
-    }
+	public CommentsAdapter(Context context, ArrayList<CommentsData> comments){
+		this.comments = comments;
+		this.context = context;
+	}
 
-    public int getCount(){
-        return commentsDatas.size();
-    }
+	public int getCount(){
+		return comments.size();
+	}
 
-    public CommentsData getItem(int position){
-        return commentsDatas.get(position);
-    }
+	public CommentsData getItem(int position){
+		return comments.get(position);
+	}
 
-    public long getItemId(int position){
-        return position;
-    }
+	public long getItemId(int position){
+		return position;
+	}
 
-    public View getView(int position, View convertView, ViewGroup parent){
-        final CommentsData commentsData = getItem(position);
+	public View getView(int position, View convertView, ViewGroup parent){
+		CommentsData data = getItem(position);
 
-        View view = convertView;
-        if(view == null){
-            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.comments_list_row, null);
-        }
+		View view = convertView;
+		if(view == null){
+			LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			view = layoutInflater.inflate(R.layout.comments_list_row, null);
+		}
 
-        int level = commentsData.getLevel();
-        
-        TextView comment = (TextView)view.findViewById(R.id.comment);
-        comment.setText(commentsData.getComment());
-        
-        if(level > 0){
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.FILL_PARENT);
-            layoutParams.setMargins(level * MARGIN, 0, 0, 0);
-            comment.setLayoutParams(layoutParams);
-        }
+		int level = data.getLevel();
 
-        return view;
-    }
+		TextView comment = (TextView) view.findViewById(R.id.comment);
+		comment.setText(data.getComment());
+		
+		if(level > 0){
+			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+																				   LinearLayout.LayoutParams.FILL_PARENT);
+			layoutParams.setMargins(level * MARGIN, 0, 0, 0);
+			comment.setLayoutParams(layoutParams);
+		}
+
+		return view;
+	}
 
 }

@@ -40,21 +40,22 @@ public class PostsLoader extends AsyncTaskLoader<ArrayList<PostsData>>{
 
 		this.url = url;
 	}
-	
+
 	public static void setPage(int page){
 		PostsLoader.page = page;
 	}
 
 	@Override
 	public ArrayList<PostsData> loadInBackground(){
-		ArrayList<PostsData> postsDatas = new ArrayList<PostsData>();
+		ArrayList<PostsData> data = new ArrayList<PostsData>();
 
 		try{
 			String readyUrl = url.replace("%page%", String.valueOf(page));
-			
+
 			Log.i(TAG, "Loading a page: " + readyUrl);
-			
+
 			Document document = Jsoup.connect(readyUrl).get();
+			
 			Elements posts = document.select("div.post");
 
 			for(Element post : posts){
@@ -75,13 +76,13 @@ public class PostsLoader extends AsyncTaskLoader<ArrayList<PostsData>>{
 				postsData.setComments(comments != null ? comments.text() : "0");
 				postsData.setScore(score.text());
 
-				postsDatas.add(postsData);
+				data.add(postsData);
 			}
 		}
 		catch(IOException e){
 		}
 
-		return postsDatas;
+		return data;
 	}
 
 }

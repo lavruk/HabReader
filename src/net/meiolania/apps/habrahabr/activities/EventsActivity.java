@@ -52,13 +52,25 @@ public class EventsActivity extends AbstractionActivity{
         Preferences preferences = Preferences.getInstance(this);
         int selectedTab = preferences.getEventsDefaultTab();
         
-        Tab tab = actionBar.newTab().setText(R.string.coming).setTag("coming").setTabListener(new TabListener<EventComingFragment>(this, "coming", EventComingFragment.class));
+        /* Coming tab */
+        Tab tab = actionBar.newTab()
+        				   .setText(R.string.coming)
+        				   .setTag("coming")
+        				   .setTabListener(new TabListener<EventComingFragment>(this, "coming", EventComingFragment.class));
         actionBar.addTab(tab, (selectedTab == 0 ? true : false));
         
-        tab = actionBar.newTab().setText(R.string.current).setTag("current").setTabListener(new TabListener<EventCurrentFragment>(this, "current", EventCurrentFragment.class));
+        /* Current tab */
+        tab = actionBar.newTab()
+        			   .setText(R.string.current)
+        			   .setTag("current")
+        			   .setTabListener(new TabListener<EventCurrentFragment>(this, "current", EventCurrentFragment.class));
         actionBar.addTab(tab, (selectedTab == 1 ? true : false));
         
-        tab = actionBar.newTab().setText(R.string.past).setTag("past").setTabListener(new TabListener<EventPastFragment>(this, "past", EventPastFragment.class));
+        /* Past tab */
+        tab = actionBar.newTab()
+        			   .setText(R.string.past)
+        			   .setTag("past")
+        			   .setTabListener(new TabListener<EventPastFragment>(this, "past", EventPastFragment.class));
         actionBar.addTab(tab, (selectedTab == 2 ? true : false));
     }
     

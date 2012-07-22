@@ -58,15 +58,15 @@ public class PeopleSearchActivity extends AbstractionActivity{
 	}
 
 	private void loadSearchedPeople(){
-		PeopleFragment peopleFragment = new PeopleFragment();
+		PeopleFragment fragment = new PeopleFragment();
 
 		Bundle arguments = new Bundle();
 		arguments.putString(PeopleFragment.URL_ARGUMENT, getUrl());
 
-		peopleFragment.setArguments(arguments);
+		fragment.setArguments(arguments);
 
 		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-		fragmentTransaction.replace(android.R.id.content, peopleFragment);
+		fragmentTransaction.replace(android.R.id.content, fragment);
 		fragmentTransaction.commit();
 	}
 
@@ -75,9 +75,8 @@ public class PeopleSearchActivity extends AbstractionActivity{
 			return URL.replace("%query%", URLEncoder.encode(query, "UTF-8"));
 		}
 		catch(UnsupportedEncodingException e){
+			return URL.replace("%query%", query);
 		}
-
-		return URL.replace("%query%", query);
 	}
 
 	@Override

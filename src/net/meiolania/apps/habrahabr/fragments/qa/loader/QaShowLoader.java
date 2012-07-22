@@ -26,8 +26,10 @@ import org.jsoup.nodes.Element;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
 
 public class QaShowLoader extends AsyncTaskLoader<QaFullData>{
+	public final static String TAG = QaShowLoader.class.getName();
 	private String url;
 
 	public QaShowLoader(Context context, String url){
@@ -41,9 +43,10 @@ public class QaShowLoader extends AsyncTaskLoader<QaFullData>{
 		QaFullData data = new QaFullData();
 
 		try{
-			// Log.i(LOG_TAG, "Loading " + url);
+			Log.i(TAG, "Loading a page: " + url);
 
 			Document document = Jsoup.connect(url).get();
+			
 			Element title = document.select("span.post_title").first();
 			Element hubs = document.select("div.hubs").first();
 			Element content = document.select("div.content").first();

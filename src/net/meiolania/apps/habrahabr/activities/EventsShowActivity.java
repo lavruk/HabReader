@@ -65,15 +65,15 @@ public class EventsShowActivity extends AbstractionActivity{
 	}
 
 	private void loadInfo(){
-		EventsShowFragment eventsShowFragment = new EventsShowFragment();
+		EventsShowFragment fragment = new EventsShowFragment();
 
 		Bundle arguments = new Bundle();
 		arguments.putString(EventsShowFragment.URL_ARGUMENT, url);
 
-		eventsShowFragment.setArguments(arguments);
+		fragment.setArguments(arguments);
 
 		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-		fragmentTransaction.replace(android.R.id.content, eventsShowFragment);
+		fragmentTransaction.replace(android.R.id.content, fragment);
 		fragmentTransaction.commit();
 	}
 

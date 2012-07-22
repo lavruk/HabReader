@@ -65,15 +65,15 @@ public class CompaniesShowActivity extends AbstractionActivity{
 	}
 
 	private void loadInfo(){
-		CompaniesShowFragment companiesShowFragment = new CompaniesShowFragment();
+		CompaniesShowFragment fragment = new CompaniesShowFragment();
 
 		Bundle arguments = new Bundle();
 		arguments.putString(CompaniesShowFragment.URL_ARGUMENT, url);
 
-		companiesShowFragment.setArguments(arguments);
+		fragment.setArguments(arguments);
 
 		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-		fragmentTransaction.replace(android.R.id.content, companiesShowFragment);
+		fragmentTransaction.replace(android.R.id.content, fragment);
 		fragmentTransaction.commit();
 	}
 

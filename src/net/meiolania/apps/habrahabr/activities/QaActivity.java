@@ -53,16 +53,32 @@ public class QaActivity extends AbstractionActivity{
         Preferences preferences = Preferences.getInstance(this);
         int selectedTab = preferences.getQaDefaultTab();
         
-        Tab tab = actionBar.newTab().setText(R.string.inbox).setTag("inbox").setTabListener(new TabListener<QaInboxFragment>(this, "inbox", QaInboxFragment.class));
+        /* Inbox tab */
+        Tab tab = actionBar.newTab()
+        				   .setText(R.string.inbox)
+        				   .setTag("inbox")
+        				   .setTabListener(new TabListener<QaInboxFragment>(this, "inbox", QaInboxFragment.class));
         actionBar.addTab(tab, (selectedTab == 0 ? true : false));
         
-        tab = actionBar.newTab().setText(R.string.hot).setTag("hot").setTabListener(new TabListener<QaHotFragment>(this, "hot", QaHotFragment.class));
+        /* Hot tab */
+        tab = actionBar.newTab()
+        			   .setText(R.string.hot)
+        			   .setTag("hot")
+        			   .setTabListener(new TabListener<QaHotFragment>(this, "hot", QaHotFragment.class));
         actionBar.addTab(tab, (selectedTab == 1 ? true : false));
         
-        tab = actionBar.newTab().setText(R.string.popular).setTag("popular").setTabListener(new TabListener<QaPopularFragment>(this, "popular", QaPopularFragment.class));
+        /* Popular tab */
+        tab = actionBar.newTab()
+        			   .setText(R.string.popular)
+        			   .setTag("popular")
+        			   .setTabListener(new TabListener<QaPopularFragment>(this, "popular", QaPopularFragment.class));
         actionBar.addTab(tab, (selectedTab == 2 ? true : false));
         
-        tab = actionBar.newTab().setText(R.string.unanswered).setTag("unanswered").setTabListener(new TabListener<QaUnansweredFragment>(this, "unanswered", QaUnansweredFragment.class));
+        /* Unanswered tab */
+        tab = actionBar.newTab()
+        			   .setText(R.string.unanswered)
+        			   .setTag("unanswered")
+        			   .setTabListener(new TabListener<QaUnansweredFragment>(this, "unanswered", QaUnansweredFragment.class));
         actionBar.addTab(tab, (selectedTab == 3 ? true : false));
     }
     

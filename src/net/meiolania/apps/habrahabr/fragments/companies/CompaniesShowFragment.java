@@ -17,7 +17,7 @@ limitations under the License.
 package net.meiolania.apps.habrahabr.fragments.companies;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.data.CompaniesFullData;
+import net.meiolania.apps.habrahabr.data.CompanyFullData;
 import net.meiolania.apps.habrahabr.fragments.companies.loader.CompaniesShowLoader;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -32,10 +32,10 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class CompaniesShowFragment extends SherlockFragment implements LoaderCallbacks<CompaniesFullData>{
+public class CompaniesShowFragment extends SherlockFragment implements LoaderCallbacks<CompanyFullData>{
 	public final static String URL_ARGUMENT = "url";
 	public final static int LOADER_COMPANY = 0;
-	protected String url;
+	private String url;
 	private ProgressDialog progressDialog;
 
 	@Override
@@ -55,7 +55,7 @@ public class CompaniesShowFragment extends SherlockFragment implements LoaderCal
 	}
 
 	@Override
-	public Loader<CompaniesFullData> onCreateLoader(int id, Bundle args){
+	public Loader<CompanyFullData> onCreateLoader(int id, Bundle args){
 		showProgressDialog();
 
 		CompaniesShowLoader loader = new CompaniesShowLoader(getSherlockActivity(), url);
@@ -65,7 +65,7 @@ public class CompaniesShowFragment extends SherlockFragment implements LoaderCal
 	}
 
 	@Override
-	public void onLoadFinished(Loader<CompaniesFullData> loader, CompaniesFullData data){
+	public void onLoadFinished(Loader<CompanyFullData> loader, CompanyFullData data){
 		SherlockFragmentActivity activity = getSherlockActivity();
 
 		TextView date = (TextView) activity.findViewById(R.id.company_date);
@@ -99,7 +99,7 @@ public class CompaniesShowFragment extends SherlockFragment implements LoaderCal
 	}
 
 	@Override
-	public void onLoaderReset(Loader<CompaniesFullData> loader){
+	public void onLoaderReset(Loader<CompanyFullData> loader){
 
 	}
 

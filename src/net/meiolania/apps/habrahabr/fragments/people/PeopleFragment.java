@@ -45,118 +45,115 @@ import com.actionbarsherlock.view.MenuInflater;
 public class PeopleFragment extends SherlockListFragment implements OnScrollListener, LoaderCallbacks<ArrayList<PeopleData>>{
 	public final static String URL_ARGUMENT = "url";
 	public final static int LOADER_PEOPLE = 0;
-    
-    protected ArrayList<PeopleData> peopleDatas;
-    protected PeopleAdapter peopleAdapter;
-    
-    protected int page;
-    
-    protected String url;
-    private boolean isLoadData;
+	private ArrayList<PeopleData> people;
+	private PeopleAdapter adapter;
+	private int page;
+	private String url;
+	private boolean isLoadData;
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-        
-        if(getArguments() != null)
-        	url = getArguments().getString(URL_ARGUMENT);
-        
-        setRetainInstance(true);
-        setHasOptionsMenu(true);
-        
-        if(peopleAdapter == null){
-        	peopleDatas = new ArrayList<PeopleData>();
-        	peopleAdapter = new PeopleAdapter(getSherlockActivity(), peopleDatas);
-        }
-        
-        setListAdapter(peopleAdapter);
-        setListShown(true);
-        
-        getListView().setOnScrollListener(this);
-    }
-    
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
-        inflater.inflate(R.menu.people_fragment, menu);
-        
-        final EditText searchQuery = (EditText) menu.findItem(R.id.search).getActionView().findViewById(R.id.search_query);
-        searchQuery.setOnEditorActionListener(new OnEditorActionListener(){
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
-                if(actionId == EditorInfo.IME_ACTION_SEARCH){
-                    Intent intent = new Intent(getSherlockActivity(), PeopleSearchActivity.class);
-                    intent.putExtra(PeopleSearchActivity.EXTRA_QUERY, searchQuery.getText().toString());
-                    startActivity(intent);
-                    return true;
-                }
-                return false;
-            }
-        });
-        
-        super.onCreateOptionsMenu(menu, inflater);
-    }
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState){
+		super.onActivityCreated(savedInstanceState);
 
-    @Override
-    public void onListItemClick(ListView list, View view, int position, long id){
-        showUser(position);
-    }
+		if(getArguments() != null)
+			url = getArguments().getString(URL_ARGUMENT);
 
-    protected void showUser(int position){
-        PeopleData peopleData = peopleDatas.get(position);
-        
-        Intent intent = new Intent(getSherlockActivity(), PeopleShowActivity.class);
-        intent.putExtra(PeopleShowActivity.EXTRA_NAME, peopleData.getName());
-        intent.putExtra(PeopleShowActivity.EXTRA_URL, peopleData.getUrl());
-        
-        startActivity(intent);
-    }
-    
-    protected void restartLoading(){
-    	getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-    	
-    	PeopleLoader.setPage(++page);
-    	
-    	getSherlockActivity().getSupportLoaderManager().restartLoader(LOADER_PEOPLE, null, this);
-    	
-    	isLoadData = true;
-    }
+		setRetainInstance(true);
+		setHasOptionsMenu(true);
 
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
-        if((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData)
-        	restartLoading();
-    }
+		if(adapter == null){
+			people = new ArrayList<PeopleData>();
+			adapter = new PeopleAdapter(getSherlockActivity(), people);
+		}
 
-    public void onScrollStateChanged(AbsListView view, int scrollState){
+		setListAdapter(adapter);
+		setListShown(true);
 
-    }
+		getListView().setOnScrollListener(this);
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+		inflater.inflate(R.menu.people_fragment, menu);
+
+		final EditText searchQuery = (EditText) menu.findItem(R.id.search).getActionView().findViewById(R.id.search_query);
+		searchQuery.setOnEditorActionListener(new OnEditorActionListener(){
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
+				if(actionId == EditorInfo.IME_ACTION_SEARCH){
+					Intent intent = new Intent(getSherlockActivity(), PeopleSearchActivity.class);
+					intent.putExtra(PeopleSearchActivity.EXTRA_QUERY, searchQuery.getText().toString());
+					startActivity(intent);
+					return true;
+				}
+				return false;
+			}
+		});
+
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	@Override
+	public void onListItemClick(ListView list, View view, int position, long id){
+		showUser(position);
+	}
+
+	protected void showUser(int position){
+		PeopleData data = people.get(position);
+
+		Intent intent = new Intent(getSherlockActivity(), PeopleShowActivity.class);
+		intent.putExtra(PeopleShowActivity.EXTRA_NAME, data.getName());
+		intent.putExtra(PeopleShowActivity.EXTRA_URL, data.getUrl());
+
+		startActivity(intent);
+	}
+
+	protected void restartLoading(){
+		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+
+		PeopleLoader.setPage(++page);
+
+		getSherlockActivity().getSupportLoaderManager().restartLoader(LOADER_PEOPLE, null, this);
+
+		isLoadData = true;
+	}
+
+	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
+		if((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData)
+			restartLoading();
+	}
+
+	public void onScrollStateChanged(AbsListView view, int scrollState){
+
+	}
 
 	@Override
 	public Loader<ArrayList<PeopleData>> onCreateLoader(int id, Bundle args){
 		PeopleLoader loader = null;
-		
+
 		if(url == null)
 			loader = new PeopleLoader(getSherlockActivity());
 		else
 			loader = new PeopleLoader(getSherlockActivity(), url);
-		
+
 		loader.forceLoad();
-		
+
 		return loader;
 	}
 
 	@Override
 	public void onLoadFinished(Loader<ArrayList<PeopleData>> loader, ArrayList<PeopleData> data){
-		peopleDatas.addAll(data);
-		peopleAdapter.notifyDataSetChanged();
-		
+		people.addAll(data);
+		adapter.notifyDataSetChanged();
+
 		if(getSherlockActivity() != null)
 			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
-		
+
 		isLoadData = false;
 	}
 
 	@Override
 	public void onLoaderReset(Loader<ArrayList<PeopleData>> loader){
-		
+
 	}
 
 }

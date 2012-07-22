@@ -23,11 +23,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import net.meiolania.apps.habrahabr.data.EventsFullData;
+import net.meiolania.apps.habrahabr.data.EventFullData;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
-public class EventShowLoader extends AsyncTaskLoader<EventsFullData>{
+public class EventShowLoader extends AsyncTaskLoader<EventFullData>{
 	public final static int INFO_LOCATION = 0;
 	public final static int INFO_PAY = 1;
 	public final static int INFO_SITE = 2;
@@ -40,12 +40,12 @@ public class EventShowLoader extends AsyncTaskLoader<EventsFullData>{
 	}
 
 	@Override
-	public EventsFullData loadInBackground(){
-		EventsFullData eventsFullData = new EventsFullData();
+	public EventFullData loadInBackground(){
+		EventFullData event = new EventFullData();
 
 		try{
 			Document document = Jsoup.connect(url).get();
-			
+
 			Element day = document.select("div.date > div.day").first();
 			Element month = document.select("div.date > div.month").first();
 			// TODO: add logo
@@ -73,20 +73,20 @@ public class EventShowLoader extends AsyncTaskLoader<EventsFullData>{
 				i++;
 			}
 
-			eventsFullData.setTitle(title.text());
-			eventsFullData.setUrl(url);
-			eventsFullData.setDate(day.text() + " " + month.text());
+			event.setTitle(title.text());
+			event.setUrl(url);
+			event.setDate(day.text() + " " + month.text());
 			// eventsFullData.setLogo(logo.attr("src"));
-			eventsFullData.setDetail(detail.text());
-			eventsFullData.setText(description.text());
-			eventsFullData.setPay(pay.text());
-			eventsFullData.setLocation(location.text());
-			eventsFullData.setSite(site.text());
+			event.setDetail(detail.text());
+			event.setText(description.text());
+			event.setPay(pay.text());
+			event.setLocation(location.text());
+			event.setSite(site.text());
 		}
 		catch(IOException e){
 		}
 
-		return eventsFullData;
+		return event;
 	}
 
 }

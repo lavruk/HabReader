@@ -33,14 +33,14 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class CompaniesAdapter extends BaseAdapter{
-    protected ArrayList<CompaniesData> companiesDatas;
-    protected Context context;
-    protected DisplayImageOptions options;
-    protected ImageLoader imageLoader = ImageLoader.getInstance();
+    private ArrayList<CompaniesData> companies;
+    private Context context;
+    private ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public CompaniesAdapter(Context context, ArrayList<CompaniesData> companiesDatas){
+    public CompaniesAdapter(Context context, ArrayList<CompaniesData> companies){
         this.context = context;
-        this.companiesDatas = companiesDatas;
+        this.companies = companies;
+        
         DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory().cacheOnDisc().build();
         ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.Builder(context)
                                                      .memoryCacheSize(3000000)
@@ -52,11 +52,11 @@ public class CompaniesAdapter extends BaseAdapter{
     }
 
     public int getCount(){
-        return companiesDatas.size();
+        return companies.size();
     }
 
     public CompaniesData getItem(int position){
-        return companiesDatas.get(position);
+        return companies.get(position);
     }
 
     public long getItemId(int position){
@@ -64,7 +64,7 @@ public class CompaniesAdapter extends BaseAdapter{
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
-        CompaniesData companiesData = getItem(position);
+        CompaniesData data = getItem(position);
 
         View view = convertView;
         if(view == null){
@@ -73,13 +73,13 @@ public class CompaniesAdapter extends BaseAdapter{
         }
 
         TextView title = (TextView) view.findViewById(R.id.company_title);
-        title.setText(companiesData.getTitle());
+        title.setText(data.getTitle());
         
         ImageView icon = (ImageView) view.findViewById(R.id.company_icon);
-        imageLoader.displayImage(companiesData.getIcon(), icon);
+        imageLoader.displayImage(data.getIcon(), icon);
         
         TextView index = (TextView)view.findViewById(R.id.company_index);
-        index.setText(String.format(context.getString(R.string.habraindex), companiesData.getIndex()));
+        index.setText(String.format(context.getString(R.string.habraindex), data.getIndex()));
 
         return view;
     }

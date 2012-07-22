@@ -32,7 +32,6 @@ import android.util.Log;
 
 public class EventLoader extends AsyncTaskLoader<ArrayList<EventsData>>{
 	public final static String TAG = EventLoader.class.getName();
-
 	private String url;
 	private static int page;
 
@@ -48,7 +47,7 @@ public class EventLoader extends AsyncTaskLoader<ArrayList<EventsData>>{
 
 	@Override
 	public ArrayList<EventsData> loadInBackground(){
-		ArrayList<EventsData> eventsDatas = new ArrayList<EventsData>();
+		ArrayList<EventsData> data = new ArrayList<EventsData>();
 
 		try{
 			String readyUrl = url.replace("%page%", String.valueOf(page));
@@ -56,6 +55,7 @@ public class EventLoader extends AsyncTaskLoader<ArrayList<EventsData>>{
 			Log.i(TAG, "Loading a page: " + readyUrl);
 
 			Document document = Jsoup.connect(readyUrl).get();
+
 			Elements events = document.select("div.event");
 
 			for(Element event : events){
@@ -70,13 +70,13 @@ public class EventLoader extends AsyncTaskLoader<ArrayList<EventsData>>{
 				eventsData.setDetail(detail.text());
 				eventsData.setText(text.text());
 
-				eventsDatas.add(eventsData);
+				data.add(eventsData);
 			}
 		}
 		catch(IOException e){
 		}
 
-		return eventsDatas;
+		return data;
 	}
 
 }

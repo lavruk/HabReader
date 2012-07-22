@@ -28,49 +28,52 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
 public class HubsShowActivity extends AbstractionActivity{
-    public final static String EXTRA_URL = "url";
-    public final static String EXTRA_TITLE = "title";
-    protected String url;
-    protected String title;
-    
-    @Override
-    protected void onCreate(Bundle savedInstanceState){
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        super.onCreate(savedInstanceState);
-        loadExtras();
-        showActionBar();
-        loadHubsPosts();
-    }
-    
-    private void loadExtras(){
-        url = getIntent().getStringExtra(EXTRA_URL);
-        title = getIntent().getStringExtra(EXTRA_TITLE);
-    }
-    
-    private void showActionBar(){
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(title);
-    }
-    
-    private void loadHubsPosts(){
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        HubsPostsFragment hubsPostsFragment = new HubsPostsFragment(url);
-        fragmentTransaction.replace(android.R.id.content, hubsPostsFragment);
-        fragmentTransaction.commit();
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch(item.getItemId()){
-            case android.R.id.home:
-                Intent intent = new Intent(this, HubsActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+	public final static String EXTRA_URL = "url";
+	public final static String EXTRA_TITLE = "title";
+	protected String url;
+	protected String title;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
+		loadExtras();
+		showActionBar();
+		loadHubsPosts();
+	}
+
+	private void loadExtras(){
+		url = getIntent().getStringExtra(EXTRA_URL);
+		title = getIntent().getStringExtra(EXTRA_TITLE);
+	}
+
+	private void showActionBar(){
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setTitle(title);
+	}
+
+	private void loadHubsPosts(){
+		HubsPostsFragment fragment = new HubsPostsFragment(url);
+		
+		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+		fragmentTransaction.replace(android.R.id.content, fragment);
+		fragmentTransaction.commit();
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		switch(item.getItemId()){
+			case android.R.id.home:
+				Intent intent = new Intent(this, HubsActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 	@Override
 	protected OnClickListener getConnectionDialogListener(){
@@ -81,5 +84,5 @@ public class HubsShowActivity extends AbstractionActivity{
 			}
 		};
 	}
-    
+
 }

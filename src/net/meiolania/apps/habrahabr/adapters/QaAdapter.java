@@ -30,24 +30,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class QaAdapter extends BaseAdapter{
-	protected ArrayList<QaData> qaDatas;
-	protected Context context;
-	protected boolean additionalLayout = false;
+	private ArrayList<QaData> questions;
+	private Context context;
+	private boolean additionalLayout = false;
 
-	public QaAdapter(Context context, ArrayList<QaData> qaDatas){
+	public QaAdapter(Context context, ArrayList<QaData> questions){
 		this.context = context;
-		this.qaDatas = qaDatas;
+		this.questions = questions;
 
 		Preferences preferences = Preferences.getInstance(context);
 		this.additionalLayout = preferences.getAdditionalQa();
 	}
 
 	public int getCount(){
-		return qaDatas.size();
+		return questions.size();
 	}
 
 	public QaData getItem(int position){
-		return qaDatas.get(position);
+		return questions.get(position);
 	}
 
 	public long getItemId(int position){
@@ -55,7 +55,7 @@ public class QaAdapter extends BaseAdapter{
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent){
-		QaData qaData = getItem(position);
+		QaData data = getItem(position);
 
 		View view = convertView;
 		if(view == null){
@@ -64,7 +64,7 @@ public class QaAdapter extends BaseAdapter{
 		}
 
 		TextView title = (TextView) view.findViewById(R.id.qa_title);
-		title.setText(qaData.getTitle());
+		title.setText(data.getTitle());
 
 		TextView hubs = (TextView) view.findViewById(R.id.qa_hubs);
 		TextView author = (TextView) view.findViewById(R.id.qa_author);
@@ -74,10 +74,10 @@ public class QaAdapter extends BaseAdapter{
 		LinearLayout qaInfo = (LinearLayout) view.findViewById(R.id.qa_info);
 
 		if(additionalLayout){
-			hubs.setText(qaData.getHubs());
-			author.setText(qaData.getAuthor());
-			date.setText(qaData.getDate());
-			answers.setText(qaData.getAnswers());
+			hubs.setText(data.getHubs());
+			author.setText(data.getAuthor());
+			date.setText(data.getDate());
+			answers.setText(data.getAnswers());
 		}
 		else{
 			hubs.setVisibility(View.GONE);

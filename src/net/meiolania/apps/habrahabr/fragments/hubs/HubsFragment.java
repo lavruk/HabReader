@@ -45,111 +45,109 @@ import com.actionbarsherlock.view.MenuInflater;
 public class HubsFragment extends SherlockListFragment implements OnScrollListener, LoaderCallbacks<ArrayList<HubsData>>{
 	public final static int LOADER_HUBS = 0;
 	public final static String URL_ARGUMENT = "url";
-    protected ArrayList<HubsData> hubsDatas;
-    protected HubsAdapter hubsAdapter;
-    
-    private int page;
-    private boolean isLoadData;
-    
-    protected String url;
+	private ArrayList<HubsData> hubs;
+	private HubsAdapter adapter;
+	private int page;
+	private boolean isLoadData;
+	private String url;
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-        
-        setHasOptionsMenu(true);
-        
-        url = getArguments().getString(URL_ARGUMENT);
-        
-        if(hubsAdapter == null){
-        	hubsDatas = new ArrayList<HubsData>();
-        	hubsAdapter = new HubsAdapter(getSherlockActivity(), hubsDatas);
-        }
-        
-        setListAdapter(hubsAdapter);
-        setListShown(true);
-        
-        getListView().setOnScrollListener(this);
-    }
-    
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
-        inflater.inflate(R.menu.hubs_fragment, menu);
-        
-        final EditText searchQuery = (EditText) menu.findItem(R.id.search).getActionView().findViewById(R.id.search_query);
-        searchQuery.setOnEditorActionListener(new OnEditorActionListener(){
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
-                if(actionId == EditorInfo.IME_ACTION_SEARCH){
-                    Intent intent = new Intent(getSherlockActivity(), HubsSearchActivity.class);
-                    intent.putExtra(HubsSearchActivity.EXTRA_QUERY, searchQuery.getText().toString());
-                    startActivity(intent);
-                    return true;
-                }
-                return false;
-            }
-        });
-        
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-    
-    @Override
-    public void onListItemClick(ListView list, View view, int position, long id){
-        showHub(position);
-    }
-    
-    protected void showHub(int position){
-        HubsData hubsData = hubsDatas.get(position);
-        
-        Intent intent = new Intent(getSherlockActivity(), HubsShowActivity.class);
-        intent.putExtra(HubsShowActivity.EXTRA_URL, hubsData.getUrl());
-        intent.putExtra(HubsShowActivity.EXTRA_TITLE, hubsData.getTitle());
-        
-        startActivity(intent);
-    }
-    
-    protected void restartLoading(){
-    	if(!isLoadData){
-    		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-    		
-    		HubsLoader.setPage(++page);
-    		
-    		getSherlockActivity().getSupportLoaderManager().restartLoader(LOADER_HUBS, null, this);
-    		
-    		isLoadData = true;
-    	}
-    }
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState){
+		super.onActivityCreated(savedInstanceState);
 
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
-        if((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData)
-        	restartLoading();
-    }
+		setHasOptionsMenu(true);
 
-    public void onScrollStateChanged(AbsListView view, int scrollState){
-    	
-    }
+		url = getArguments().getString(URL_ARGUMENT);
+
+		if(adapter == null){
+			hubs = new ArrayList<HubsData>();
+			adapter = new HubsAdapter(getSherlockActivity(), hubs);
+		}
+
+		setListAdapter(adapter);
+		setListShown(true);
+
+		getListView().setOnScrollListener(this);
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+		inflater.inflate(R.menu.hubs_fragment, menu);
+
+		final EditText searchQuery = (EditText) menu.findItem(R.id.search).getActionView().findViewById(R.id.search_query);
+		searchQuery.setOnEditorActionListener(new OnEditorActionListener(){
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
+				if(actionId == EditorInfo.IME_ACTION_SEARCH){
+					Intent intent = new Intent(getSherlockActivity(), HubsSearchActivity.class);
+					intent.putExtra(HubsSearchActivity.EXTRA_QUERY, searchQuery.getText().toString());
+					startActivity(intent);
+					return true;
+				}
+				return false;
+			}
+		});
+
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	@Override
+	public void onListItemClick(ListView list, View view, int position, long id){
+		showHub(position);
+	}
+
+	protected void showHub(int position){
+		HubsData data = hubs.get(position);
+
+		Intent intent = new Intent(getSherlockActivity(), HubsShowActivity.class);
+		intent.putExtra(HubsShowActivity.EXTRA_URL, data.getUrl());
+		intent.putExtra(HubsShowActivity.EXTRA_TITLE, data.getTitle());
+
+		startActivity(intent);
+	}
+
+	protected void restartLoading(){
+		if(!isLoadData){
+			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+
+			HubsLoader.setPage(++page);
+
+			getSherlockActivity().getSupportLoaderManager().restartLoader(LOADER_HUBS, null, this);
+
+			isLoadData = true;
+		}
+	}
+
+	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
+		if((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData)
+			restartLoading();
+	}
+
+	public void onScrollStateChanged(AbsListView view, int scrollState){
+
+	}
 
 	@Override
 	public Loader<ArrayList<HubsData>> onCreateLoader(int id, Bundle args){
 		HubsLoader loader = new HubsLoader(getSherlockActivity(), url);
 		loader.forceLoad();
-		
+
 		return loader;
 	}
 
 	@Override
 	public void onLoadFinished(Loader<ArrayList<HubsData>> loader, ArrayList<HubsData> data){
-		hubsDatas.addAll(data);
-		hubsAdapter.notifyDataSetChanged();
-		
+		hubs.addAll(data);
+		adapter.notifyDataSetChanged();
+
 		if(getSherlockActivity() != null)
 			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
-		
+
 		isLoadData = false;
 	}
 
 	@Override
 	public void onLoaderReset(Loader<ArrayList<HubsData>> loader){
-		
+
 	}
 
 }

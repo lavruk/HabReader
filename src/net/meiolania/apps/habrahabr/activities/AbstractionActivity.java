@@ -30,42 +30,42 @@ import android.view.WindowManager;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public abstract class AbstractionActivity extends SherlockFragmentActivity{
-    protected Preferences preferences;
-    protected PowerManager.WakeLock wakeLock;
-    
-    @Override
-    protected void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        
-        preferences = Preferences.getInstance(this);
-        if(preferences.getFullScreen()){
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
-        
-        if(preferences.getKeepScreen()){
-            final PowerManager powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
-            wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "wakeLock");
-            wakeLock.acquire();
-        }
-        
-        if(!ConnectionUtils.isConnected(this)){
-        	AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-    		dialog.setTitle(R.string.error);
-    		dialog.setMessage(getString(R.string.no_connection));
-    		dialog.setPositiveButton(R.string.close, getConnectionDialogListener());
-    		dialog.setCancelable(false);
-    		dialog.show();
-        }
-    }
-    
-    @Override
-    protected void onDestroy(){
-        if(wakeLock != null)
-            wakeLock.release();
-        super.onDestroy();
-    }
-    
-    protected abstract OnClickListener getConnectionDialogListener();
-    
+	protected PowerManager.WakeLock wakeLock;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+
+		Preferences preferences = Preferences.getInstance(this);
+		if(preferences.getFullScreen()){
+			requestWindowFeature(Window.FEATURE_NO_TITLE);
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
+
+		if(preferences.getKeepScreen()){
+			PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+			wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "wakeLock");
+			wakeLock.acquire();
+		}
+
+		if(!ConnectionUtils.isConnected(this)){
+			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+			dialog.setTitle(R.string.error);
+			dialog.setMessage(getString(R.string.no_connection));
+			dialog.setPositiveButton(R.string.close, getConnectionDialogListener());
+			dialog.setCancelable(false);
+			dialog.show();
+		}
+	}
+
+	@Override
+	protected void onDestroy(){
+		if(wakeLock != null)
+			wakeLock.release();
+
+		super.onDestroy();
+	}
+
+	protected abstract OnClickListener getConnectionDialogListener();
+
 }

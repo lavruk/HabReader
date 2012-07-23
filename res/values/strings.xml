@@ -19,7 +19,6 @@
 	<string name="no_connection">Отсутствует соединение с интернетом</string>
 	<string name="close">Закрыть</string>
 	<string name="rating_count">Рейтинг %d</string>
-	<string name="comments_count">Комментариев %d</string>
 	
 	<!-- Dashboard titles -->
 	<string name="posts">Посты</string>

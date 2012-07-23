@@ -65,7 +65,7 @@ public class PeopleFragment extends SherlockListFragment implements LoaderCallba
 
 		setListAdapter(adapter);
 		setListShown(true);
-		
+
 		if(ConnectionUtils.isConnected(getSherlockActivity()))
 			getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_PEOPLE, null, this);
 	}
@@ -108,7 +108,7 @@ public class PeopleFragment extends SherlockListFragment implements LoaderCallba
 	@Override
 	public Loader<ArrayList<PeopleData>> onCreateLoader(int id, Bundle args){
 		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-		
+
 		PeopleLoader loader = null;
 
 		if(url == null)

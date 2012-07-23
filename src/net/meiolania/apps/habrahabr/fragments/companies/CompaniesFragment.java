@@ -18,6 +18,7 @@ package net.meiolania.apps.habrahabr.fragments.companies;
 
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.CompaniesShowActivity;
 import net.meiolania.apps.habrahabr.adapters.CompaniesAdapter;
 import net.meiolania.apps.habrahabr.data.CompaniesData;
@@ -31,6 +32,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
@@ -40,6 +42,7 @@ public class CompaniesFragment extends SherlockListFragment implements OnScrollL
 	private CompaniesAdapter adapter;
 	private int page;
 	private boolean isLoadData;
+	private boolean noMoreData;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState){
@@ -86,7 +89,7 @@ public class CompaniesFragment extends SherlockListFragment implements OnScrollL
 	}
 
 	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
-		if((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData)
+		if((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData && !noMoreData)
 			restartLoading();
 	}
 
@@ -104,6 +107,12 @@ public class CompaniesFragment extends SherlockListFragment implements OnScrollL
 
 	@Override
 	public void onLoadFinished(Loader<ArrayList<CompaniesData>> loader, ArrayList<CompaniesData> data){
+		if(data.isEmpty()){
+			noMoreData = true;
+			
+			Toast.makeText(getSherlockActivity(), R.string.no_more_pages, Toast.LENGTH_SHORT).show();
+		}
+		
 		companies.addAll(data);
 		adapter.notifyDataSetChanged();
 

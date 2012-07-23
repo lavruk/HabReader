@@ -18,6 +18,7 @@ package net.meiolania.apps.habrahabr.fragments.events;
 
 import java.util.ArrayList;
 
+import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.EventsShowActivity;
 import net.meiolania.apps.habrahabr.adapters.EventsAdapter;
 import net.meiolania.apps.habrahabr.data.EventsData;
@@ -29,6 +30,7 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.Toast;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
@@ -39,6 +41,7 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
 	protected boolean isLoadData;
 	protected ArrayList<EventsData> events;
 	protected EventsAdapter adapter;
+	protected boolean noMoreData;
 
 	protected abstract String getUrl();
 
@@ -81,6 +84,8 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
 
 	protected void restartLoading(){
 		if(ConnectionUtils.isConnected(getSherlockActivity())){
+			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+			
 			EventLoader.setPage(++page);
 
 			getSherlockActivity().getSupportLoaderManager().restartLoader(getLoaderId(), null, this);
@@ -90,7 +95,7 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
 	}
 
 	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
-		if((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData)
+		if((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData && !noMoreData)
 			restartLoading();
 	}
 
@@ -108,6 +113,12 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
 
 	@Override
 	public void onLoadFinished(Loader<ArrayList<EventsData>> loader, ArrayList<EventsData> data){
+		if(data.isEmpty()){
+			noMoreData = true;
+			
+			Toast.makeText(getSherlockActivity(), R.string.no_more_pages, Toast.LENGTH_SHORT).show();
+		}
+		
 		events.addAll(data);
 		adapter.notifyDataSetChanged();
 

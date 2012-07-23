@@ -22,6 +22,7 @@ public class EventsData{
 	protected String text;
 	protected String date;
 	protected String url;
+	protected String hubs;
 
 	public String getUrl(){
 		return url;
@@ -61,6 +62,14 @@ public class EventsData{
 
 	public void setDate(String date){
 		this.date = date;
+	}
+	
+	public void setHubs(String hubs){
+		this.hubs = hubs;
+	}
+	
+	public String getHubs(){
+		return hubs;
 	}
 
 }

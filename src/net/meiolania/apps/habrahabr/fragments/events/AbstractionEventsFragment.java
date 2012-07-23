@@ -57,6 +57,9 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
 
 		setListAdapter(adapter);
 		setListShown(true);
+		
+		getListView().setDivider(null);
+		getListView().setDividerHeight(0);
 
 		getListView().setOnScrollListener(this);
 	}

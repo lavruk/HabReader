@@ -26,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class EventsAdapter extends BaseAdapter{
@@ -66,11 +67,19 @@ public class EventsAdapter extends BaseAdapter{
 		title.setText(data.getTitle());
 
 		TextView text = (TextView) view.findViewById(R.id.event_text);
+		TextView date = (TextView) view.findViewById(R.id.event_date);
+		TextView hubs = (TextView) view.findViewById(R.id.event_hubs);
 		
-		if(additionalLayout)
+		LinearLayout info = (LinearLayout) view.findViewById(R.id.event_info);
+		
+		if(additionalLayout){
 			text.setText(data.getText());
-		else
+			date.setText(data.getDate());
+			hubs.setText(data.getHubs());
+		}else{
 			text.setVisibility(View.GONE);
+			info.setVisibility(View.GONE);
+		}	
 
 		return view;
 	}

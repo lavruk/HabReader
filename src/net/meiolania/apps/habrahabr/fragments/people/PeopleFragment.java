@@ -24,6 +24,7 @@ import net.meiolania.apps.habrahabr.activities.PeopleShowActivity;
 import net.meiolania.apps.habrahabr.adapters.PeopleAdapter;
 import net.meiolania.apps.habrahabr.data.PeopleData;
 import net.meiolania.apps.habrahabr.fragments.people.loader.PeopleLoader;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -65,7 +66,8 @@ public class PeopleFragment extends SherlockListFragment implements LoaderCallba
 		setListAdapter(adapter);
 		setListShown(true);
 		
-		getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_PEOPLE, null, this);
+		if(ConnectionUtils.isConnected(getSherlockActivity()))
+			getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_PEOPLE, null, this);
 	}
 
 	@Override

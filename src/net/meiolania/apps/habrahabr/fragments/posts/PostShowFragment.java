@@ -19,6 +19,7 @@ package net.meiolania.apps.habrahabr.fragments.posts;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.PostsFullData;
 import net.meiolania.apps.habrahabr.fragments.posts.loader.PostShowLoader;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import net.meiolania.apps.habrahabr.utils.IntentUtils;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -49,8 +50,9 @@ public class PostShowFragment extends SherlockFragment implements LoaderCallback
 		setRetainInstance(true);
 
 		url = getArguments().getString(URL_ARGUMENT);
-
-		getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_POST, null, this);
+		
+		if(ConnectionUtils.isConnected(getSherlockActivity()))
+			getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_POST, null, this);
 	}
 
 	@Override

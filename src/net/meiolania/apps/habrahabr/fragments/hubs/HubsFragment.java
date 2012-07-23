@@ -24,6 +24,7 @@ import net.meiolania.apps.habrahabr.activities.HubsShowActivity;
 import net.meiolania.apps.habrahabr.adapters.HubsAdapter;
 import net.meiolania.apps.habrahabr.data.HubsData;
 import net.meiolania.apps.habrahabr.fragments.hubs.loader.HubsLoader;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -106,7 +107,7 @@ public class HubsFragment extends SherlockListFragment implements OnScrollListen
 	}
 
 	protected void restartLoading(){
-		if(!isLoadData){
+		if(ConnectionUtils.isConnected(getSherlockActivity())){
 			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
 
 			HubsLoader.setPage(++page);

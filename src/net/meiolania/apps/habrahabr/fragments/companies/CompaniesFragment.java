@@ -22,6 +22,7 @@ import net.meiolania.apps.habrahabr.activities.CompaniesShowActivity;
 import net.meiolania.apps.habrahabr.adapters.CompaniesAdapter;
 import net.meiolania.apps.habrahabr.data.CompaniesData;
 import net.meiolania.apps.habrahabr.fragments.companies.loader.CompaniesLoader;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -73,13 +74,15 @@ public class CompaniesFragment extends SherlockListFragment implements OnScrollL
 	}
 
 	protected void restartLoading(){
-		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+		if(ConnectionUtils.isConnected(getSherlockActivity())){
+			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
 
-		CompaniesLoader.setPage(++page);
+			CompaniesLoader.setPage(++page);
 
-		getSherlockActivity().getSupportLoaderManager().restartLoader(LOADER_COMPANIES, null, this);
+			getSherlockActivity().getSupportLoaderManager().restartLoader(LOADER_COMPANIES, null, this);
 
-		isLoadData = true;
+			isLoadData = true;
+		}
 	}
 
 	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){

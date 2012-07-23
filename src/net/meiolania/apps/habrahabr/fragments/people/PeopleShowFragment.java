@@ -19,6 +19,7 @@ package net.meiolania.apps.habrahabr.fragments.people;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.PeopleFullData;
 import net.meiolania.apps.habrahabr.fragments.people.loader.PeopleShowLoader;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -46,7 +47,8 @@ public class PeopleShowFragment extends SherlockFragment implements LoaderCallba
         
         url = getArguments().getString(URL_ARGUMENT);
         
-        getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_PEOPLE, null, this);
+        if(ConnectionUtils.isConnected(getSherlockActivity()))
+        	getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_PEOPLE, null, this);
     }
 
     @Override

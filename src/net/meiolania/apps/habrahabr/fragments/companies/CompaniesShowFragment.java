@@ -19,6 +19,7 @@ package net.meiolania.apps.habrahabr.fragments.companies;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.CompanyFullData;
 import net.meiolania.apps.habrahabr.fragments.companies.loader.CompaniesShowLoader;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -45,8 +46,9 @@ public class CompaniesShowFragment extends SherlockFragment implements LoaderCal
 		url = getArguments().getString(URL_ARGUMENT);
 
 		setRetainInstance(true);
-
-		getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_COMPANY, null, this);
+		
+		if(ConnectionUtils.isConnected(getSherlockActivity()))
+			getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_COMPANY, null, this);
 	}
 
 	@Override

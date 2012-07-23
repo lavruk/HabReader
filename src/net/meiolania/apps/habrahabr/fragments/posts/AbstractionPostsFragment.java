@@ -24,6 +24,7 @@ import net.meiolania.apps.habrahabr.activities.PostsShowActivity;
 import net.meiolania.apps.habrahabr.adapters.PostsAdapter;
 import net.meiolania.apps.habrahabr.data.PostsData;
 import net.meiolania.apps.habrahabr.fragments.posts.loader.PostsLoader;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -71,9 +72,6 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
 		getListView().setDividerHeight(0);
 
 		getListView().setOnScrollListener(this);
-
-		if(getSherlockActivity().getSupportLoaderManager().getLoader(getLoaderId()) == null)
-			getSherlockActivity().getSupportLoaderManager().initLoader(getLoaderId(), null, this);
 	}
 
 	@Override
@@ -112,13 +110,15 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
 	}
 
 	protected void restartLoading(){
-		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+		if(ConnectionUtils.isConnected(getSherlockActivity())){
+			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
 
-		PostsLoader.setPage(++page);
+			PostsLoader.setPage(++page);
 
-		getSherlockActivity().getSupportLoaderManager().restartLoader(getLoaderId(), null, this);
+			getSherlockActivity().getSupportLoaderManager().restartLoader(getLoaderId(), null, this);
 
-		isLoadData = true;
+			isLoadData = true;
+		}
 	}
 
 	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){

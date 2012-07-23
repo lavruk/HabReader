@@ -19,6 +19,7 @@ package net.meiolania.apps.habrahabr.fragments.events;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.EventFullData;
 import net.meiolania.apps.habrahabr.fragments.events.loader.EventShowLoader;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import net.meiolania.apps.habrahabr.utils.IntentUtils;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -51,7 +52,8 @@ public class EventsShowFragment extends SherlockFragment implements LoaderCallba
 		setRetainInstance(true);
 		setHasOptionsMenu(true);
 
-		getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_EVENT, null, this);
+		if(ConnectionUtils.isConnected(getSherlockActivity()))
+			getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_EVENT, null, this);
 	}
 
 	@Override

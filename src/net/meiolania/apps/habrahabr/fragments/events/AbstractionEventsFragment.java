@@ -22,6 +22,7 @@ import net.meiolania.apps.habrahabr.activities.EventsShowActivity;
 import net.meiolania.apps.habrahabr.adapters.EventsAdapter;
 import net.meiolania.apps.habrahabr.data.EventsData;
 import net.meiolania.apps.habrahabr.fragments.events.loader.EventLoader;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -76,13 +77,13 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
 	}
 
 	protected void restartLoading(){
-		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+		if(ConnectionUtils.isConnected(getSherlockActivity())){
+			EventLoader.setPage(++page);
 
-		EventLoader.setPage(++page);
+			getSherlockActivity().getSupportLoaderManager().restartLoader(getLoaderId(), null, this);
 
-		getSherlockActivity().getSupportLoaderManager().restartLoader(getLoaderId(), null, this);
-
-		isLoadData = true;
+			isLoadData = true;
+		}
 	}
 
 	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){

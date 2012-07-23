@@ -24,6 +24,7 @@ import net.meiolania.apps.habrahabr.activities.QaShowActivity;
 import net.meiolania.apps.habrahabr.adapters.QaAdapter;
 import net.meiolania.apps.habrahabr.data.QaData;
 import net.meiolania.apps.habrahabr.fragments.qa.loader.QaLoader;
+import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -71,9 +72,6 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
 		getListView().setDividerHeight(0);
 
 		getListView().setOnScrollListener(this);
-
-		if(getSherlockActivity().getSupportLoaderManager().getLoader(getLoaderId()) == null)
-			getSherlockActivity().getSupportLoaderManager().initLoader(getLoaderId(), null, this);
 	}
 
 	@Override
@@ -112,7 +110,7 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
 	}
 
 	protected void restartLoading(){
-		if(!isLoadData){
+		if(ConnectionUtils.isConnected(getSherlockActivity())){
 			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
 
 			QaLoader.setPage(++page);

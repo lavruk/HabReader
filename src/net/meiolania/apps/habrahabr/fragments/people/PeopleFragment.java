@@ -31,8 +31,6 @@ import android.support.v4.content.Loader;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -42,14 +40,12 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 
-public class PeopleFragment extends SherlockListFragment implements OnScrollListener, LoaderCallbacks<ArrayList<PeopleData>>{
+public class PeopleFragment extends SherlockListFragment implements LoaderCallbacks<ArrayList<PeopleData>>{
 	public final static String URL_ARGUMENT = "url";
 	public final static int LOADER_PEOPLE = 0;
 	private ArrayList<PeopleData> people;
 	private PeopleAdapter adapter;
-	private int page;
 	private String url;
-	private boolean isLoadData;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState){
@@ -68,8 +64,8 @@ public class PeopleFragment extends SherlockListFragment implements OnScrollList
 
 		setListAdapter(adapter);
 		setListShown(true);
-
-		getListView().setOnScrollListener(this);
+		
+		getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_PEOPLE, null, this);
 	}
 
 	@Override
@@ -107,27 +103,10 @@ public class PeopleFragment extends SherlockListFragment implements OnScrollList
 		startActivity(intent);
 	}
 
-	protected void restartLoading(){
-		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-
-		PeopleLoader.setPage(++page);
-
-		getSherlockActivity().getSupportLoaderManager().restartLoader(LOADER_PEOPLE, null, this);
-
-		isLoadData = true;
-	}
-
-	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
-		if((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData)
-			restartLoading();
-	}
-
-	public void onScrollStateChanged(AbsListView view, int scrollState){
-
-	}
-
 	@Override
 	public Loader<ArrayList<PeopleData>> onCreateLoader(int id, Bundle args){
+		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+		
 		PeopleLoader loader = null;
 
 		if(url == null)
@@ -147,8 +126,6 @@ public class PeopleFragment extends SherlockListFragment implements OnScrollList
 
 		if(getSherlockActivity() != null)
 			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
-
-		isLoadData = false;
 	}
 
 	@Override

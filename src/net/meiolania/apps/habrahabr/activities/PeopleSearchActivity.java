@@ -32,7 +32,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
 public class PeopleSearchActivity extends AbstractionActivity{
-	public final static String URL = "http://habrahabr.ru/search/page%page%/?target_type=users&order_by=relevance&q=%query%";
+	public final static String URL = "http://habrahabr.ru/search/?target_type=users&order_by=relevance&q=%query%";
 	public final static String EXTRA_QUERY = "query";
 	private String query;
 

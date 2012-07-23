@@ -32,9 +32,9 @@ import android.util.Log;
 
 public class PeopleLoader extends AsyncTaskLoader<ArrayList<PeopleData>>{
 	public final static String TAG = PeopleLoader.class.getName();
-	public final static String DEFAULT_URL = "http://habrahabr.ru/people/page%page%/";
+	public final static String DEFAULT_URL = "http://habrahabr.ru/people/";
+	
 	private String url;
-	private static int page;
 
 	public PeopleLoader(Context context){
 		super(context);
@@ -48,20 +48,14 @@ public class PeopleLoader extends AsyncTaskLoader<ArrayList<PeopleData>>{
 		this.url = url;
 	}
 
-	public static void setPage(int page){
-		PeopleLoader.page = page;
-	}
-
 	@Override
 	public ArrayList<PeopleData> loadInBackground(){
 		ArrayList<PeopleData> data = new ArrayList<PeopleData>();
 
 		try{
-			String readyUrl = url.replace("%page%", String.valueOf(page));
+			Log.i(TAG, "Loading a page: " + url);
 
-			Log.i(TAG, "Loading a page: " + readyUrl);
-
-			Document document = Jsoup.connect(readyUrl).get();
+			Document document = Jsoup.connect(url).get();
 			Elements users = document.select("div.user");
 
 			for(Element user : users){

@@ -69,33 +69,35 @@ public class CompaniesShowFragment extends SherlockFragment implements LoaderCal
 	@Override
 	public void onLoadFinished(Loader<CompanyFullData> loader, CompanyFullData data){
 		SherlockFragmentActivity activity = getSherlockActivity();
+		
+		if(activity != null){
+			TextView date = (TextView) activity.findViewById(R.id.company_date);
+			date.setText(data.getDate());
 
-		TextView date = (TextView) activity.findViewById(R.id.company_date);
-		date.setText(data.getDate());
+			TextView site = (TextView) activity.findViewById(R.id.company_site);
+			site.setText(data.getCompanyUrl());
 
-		TextView site = (TextView) activity.findViewById(R.id.company_site);
-		site.setText(data.getCompanyUrl());
+			TextView industries = (TextView) activity.findViewById(R.id.company_industries);
+			industries.setText(data.getIndustries());
 
-		TextView industries = (TextView) activity.findViewById(R.id.company_industries);
-		industries.setText(data.getIndustries());
+			TextView location = (TextView) activity.findViewById(R.id.company_location);
+			location.setText(data.getLocation());
 
-		TextView location = (TextView) activity.findViewById(R.id.company_location);
-		location.setText(data.getLocation());
+			TextView quantity = (TextView) activity.findViewById(R.id.company_quantity);
+			quantity.setText(data.getQuantity());
 
-		TextView quantity = (TextView) activity.findViewById(R.id.company_quantity);
-		quantity.setText(data.getQuantity());
+			WebView summary = (WebView) activity.findViewById(R.id.company_summary);
+			summary.getSettings().setSupportZoom(true);
+			summary.loadDataWithBaseURL("", data.getSummary(), "text/html", "UTF-8", null);
 
-		WebView summary = (WebView) activity.findViewById(R.id.company_summary);
-		summary.getSettings().setSupportZoom(true);
-		summary.loadDataWithBaseURL("", data.getSummary(), "text/html", "UTF-8", null);
+			WebView management = (WebView) activity.findViewById(R.id.company_management);
+			management.getSettings().setSupportZoom(true);
+			management.loadDataWithBaseURL("", data.getManagement(), "text/html", "UTF-8", null);
 
-		WebView management = (WebView) activity.findViewById(R.id.company_management);
-		management.getSettings().setSupportZoom(true);
-		management.loadDataWithBaseURL("", data.getManagement(), "text/html", "UTF-8", null);
-
-		WebView developmentStages = (WebView) activity.findViewById(R.id.company_development_stages);
-		developmentStages.getSettings().setSupportZoom(true);
-		developmentStages.loadDataWithBaseURL("", data.getDevelopmentStages(), "text/html", "UTF-8", null);
+			WebView developmentStages = (WebView) activity.findViewById(R.id.company_development_stages);
+			developmentStages.getSettings().setSupportZoom(true);
+			developmentStages.loadDataWithBaseURL("", data.getDevelopmentStages(), "text/html", "UTF-8", null);
+		}
 
 		hideProgressDialog();
 	}

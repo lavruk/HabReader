@@ -18,23 +18,22 @@ package net.meiolania.apps.habrahabr.fragments.posts.loader;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashSet;
+
+import net.meiolania.apps.habrahabr.data.CommentsData;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import net.meiolania.apps.habrahabr.data.CommentsData;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
 public class PostCommentsLoader extends AsyncTaskLoader<ArrayList<CommentsData>>{
 	private String url;
 	private ArrayList<CommentsData> commentsDatas = new ArrayList<CommentsData>();
-
-	// TODO: rewrite
-	private Hashtable<String, Boolean> containedComments = new Hashtable<String, Boolean>();
+	private HashSet<String> containedComments = new HashSet<String>();
 
 	public PostCommentsLoader(Context context, String url){
 		super(context);
@@ -58,19 +57,22 @@ public class PostCommentsLoader extends AsyncTaskLoader<ArrayList<CommentsData>>
 	private void parseComments(Elements comments, int level){
 		for(Element comment : comments){
 			CommentsData commentsData = new CommentsData();
-
+			
+			/*
+			 * TODO: Really awful. Need to rewrite this.
+			 */
 			String commentId = comment.attr("id");
-			if(containedComments.containsKey(commentId))
+			if(containedComments.contains(commentId))
 				continue;
 			
-			containedComments.put(commentId, true);
+			containedComments.add(commentId);
 
 			Element name = comment.select("a.username").first();
 			Element message = comment.select("div.message").first();
 			Element linkToComment = comment.select("a.link_to_comment").first();
-			// Element score = comment.select("span.score").first();
+			Element score = comment.select("span.score").first();
 
-			// commentsData.setScore(score);
+			commentsData.setScore(score.text());
 			commentsData.setUrl(linkToComment.attr("abs:href"));
 			commentsData.setAuthorUrl(name.attr("abs:href"));
 			commentsData.setAuthor(name.text());

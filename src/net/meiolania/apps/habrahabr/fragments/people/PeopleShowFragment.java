@@ -70,36 +70,38 @@ public class PeopleShowFragment extends SherlockFragment implements LoaderCallba
 	public void onLoadFinished(Loader<PeopleFullData> loader, PeopleFullData data){
 		SherlockFragmentActivity activity = getSherlockActivity();
         
-        ImageView avatar = (ImageView)activity.findViewById(R.id.avatar);
-        ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.init(ImageLoaderConfiguration.createDefault(getSherlockActivity()));
-        imageLoader.displayImage(data.getAvatar(), avatar);
-        
-        TextView fullname = (TextView) activity.findViewById(R.id.fullname);
-        fullname.setText(data.getFullname());
-        if(data.getFullname().length() <= 0)
-            fullname.setVisibility(View.GONE);
+		if(activity != null){
+			ImageView avatar = (ImageView)activity.findViewById(R.id.avatar);
+	        ImageLoader imageLoader = ImageLoader.getInstance();
+	        imageLoader.init(ImageLoaderConfiguration.createDefault(getSherlockActivity()));
+	        imageLoader.displayImage(data.getAvatar(), avatar);
+	        
+	        TextView fullname = (TextView) activity.findViewById(R.id.fullname);
+	        fullname.setText(data.getFullname());
+	        if(data.getFullname().length() <= 0)
+	            fullname.setVisibility(View.GONE);
 
-        TextView karma = (TextView) activity.findViewById(R.id.karma);
-        karma.setText(data.getKarma());
+	        TextView karma = (TextView) activity.findViewById(R.id.karma);
+	        karma.setText(data.getKarma());
 
-        TextView rating = (TextView) activity.findViewById(R.id.rating);
-        rating.setText(data.getRating());
+	        TextView rating = (TextView) activity.findViewById(R.id.rating);
+	        rating.setText(data.getRating());
 
-        TextView birthday = (TextView) activity.findViewById(R.id.birthday);
-        birthday.setText(data.getBirthday());
-        if(data.getBirthday().length() <= 0)
-            birthday.setVisibility(View.GONE);
+	        TextView birthday = (TextView) activity.findViewById(R.id.birthday);
+	        birthday.setText(data.getBirthday());
+	        if(data.getBirthday().length() <= 0)
+	            birthday.setVisibility(View.GONE);
 
-        TextView interests = (TextView) activity.findViewById(R.id.interests);
-        interests.setText(data.getInterests());
-        if(data.getInterests().length() <= 0)
-            interests.setVisibility(View.GONE);
+	        TextView interests = (TextView) activity.findViewById(R.id.interests);
+	        interests.setText(data.getInterests());
+	        if(data.getInterests().length() <= 0)
+	            interests.setVisibility(View.GONE);
 
-        TextView summary = (TextView) activity.findViewById(R.id.summary);
-        summary.setText(data.getSummary());
-        if(data.getSummary().length() <= 0)
-            summary.setVisibility(View.GONE);
+	        TextView summary = (TextView) activity.findViewById(R.id.summary);
+	        summary.setText(data.getSummary());
+	        if(data.getSummary().length() <= 0)
+	            summary.setVisibility(View.GONE);
+		}
 		
 		hideProgressDialog();
 	}

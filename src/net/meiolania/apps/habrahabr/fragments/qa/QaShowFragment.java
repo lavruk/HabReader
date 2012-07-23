@@ -89,11 +89,13 @@ public class QaShowFragment extends SherlockFragment implements LoaderCallbacks<
 
 	@Override
 	public void onLoadFinished(Loader<QaFullData> loader, QaFullData data){
-		WebView content = (WebView) getSherlockActivity().findViewById(R.id.qa_content);
-		content.getSettings().setPluginsEnabled(true);
-		content.getSettings().setBuiltInZoomControls(true);
-		content.getSettings().setSupportZoom(true);
-		content.loadDataWithBaseURL("", data.getContent(), "text/html", "UTF-8", null);
+		if(getSherlockActivity() != null){
+			WebView content = (WebView) getSherlockActivity().findViewById(R.id.qa_content);
+			content.getSettings().setPluginsEnabled(true);
+			content.getSettings().setBuiltInZoomControls(true);
+			content.getSettings().setSupportZoom(true);
+			content.loadDataWithBaseURL("", data.getContent(), "text/html", "UTF-8", null);
+		}
 
 		this.data = data;
 

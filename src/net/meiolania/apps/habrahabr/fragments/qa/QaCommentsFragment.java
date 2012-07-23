@@ -59,6 +59,9 @@ public class QaCommentsFragment extends SherlockListFragment implements LoaderCa
 
 		setListAdapter(adapter);
 		setListShown(true);
+		
+		getListView().setDivider(null);
+		getListView().setDividerHeight(0);
 
 		registerForContextMenu(getListView());
 
@@ -91,6 +94,8 @@ public class QaCommentsFragment extends SherlockListFragment implements LoaderCa
 
 	@Override
 	public Loader<ArrayList<CommentsData>> onCreateLoader(int id, Bundle args){
+		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+		
 		QaCommentsLoader loader = new QaCommentsLoader(getSherlockActivity(), url);
 		loader.forceLoad();
 
@@ -101,6 +106,9 @@ public class QaCommentsFragment extends SherlockListFragment implements LoaderCa
 	public void onLoadFinished(Loader<ArrayList<CommentsData>> loader, ArrayList<CommentsData> data){
 		comments.addAll(data);
 		adapter.notifyDataSetChanged();
+		
+		if(getSherlockActivity() != null)
+			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
 	}
 
 	@Override

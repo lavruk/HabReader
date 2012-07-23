@@ -22,7 +22,7 @@ public class CommentsData{
 	protected String author;
 	protected String authorUrl;
 	protected String comment;
-	protected int score;
+	protected String score;
 	protected int level;
 
 	public String getAuthorUrl(){
@@ -57,11 +57,11 @@ public class CommentsData{
 		this.comment = comment;
 	}
 
-	public int getScore(){
+	public String getScore(){
 		return score;
 	}
 
-	public void setScore(int score){
+	public void setScore(String score){
 		this.score = score;
 	}
 

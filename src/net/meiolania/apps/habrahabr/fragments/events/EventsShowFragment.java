@@ -91,21 +91,23 @@ public class EventsShowFragment extends SherlockFragment implements LoaderCallba
 	@Override
 	public void onLoadFinished(Loader<EventFullData> loader, EventFullData data){
 		SherlockFragmentActivity activity = getSherlockActivity();
+		
+		if(activity != null){
+			TextView title = (TextView) activity.findViewById(R.id.event_title);
+			title.setText(data.getTitle());
 
-		TextView title = (TextView) activity.findViewById(R.id.event_title);
-		title.setText(data.getTitle());
+			TextView location = (TextView) activity.findViewById(R.id.event_location);
+			location.setText(data.getLocation());
 
-		TextView location = (TextView) activity.findViewById(R.id.event_location);
-		location.setText(data.getLocation());
+			TextView pay = (TextView) activity.findViewById(R.id.event_pay);
+			pay.setText(data.getPay());
 
-		TextView pay = (TextView) activity.findViewById(R.id.event_pay);
-		pay.setText(data.getPay());
+			TextView site = (TextView) activity.findViewById(R.id.event_site);
+			site.setText(data.getSite());
 
-		TextView site = (TextView) activity.findViewById(R.id.event_site);
-		site.setText(data.getSite());
-
-		TextView description = (TextView) activity.findViewById(R.id.event_description);
-		description.setText(data.getText());
+			TextView description = (TextView) activity.findViewById(R.id.event_description);
+			description.setText(data.getText());
+		}
 
 		event = data;
 

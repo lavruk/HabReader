@@ -29,7 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class CommentsAdapter extends BaseAdapter{
-	public final static int MARGIN = 10;
+	public final static int MARGIN = 15;
 	private ArrayList<CommentsData> comments;
 	private Context context;
 
@@ -58,17 +58,28 @@ public class CommentsAdapter extends BaseAdapter{
 			LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = layoutInflater.inflate(R.layout.comments_list_row, null);
 		}
+		
+		LinearLayout commentBox = (LinearLayout) view.findViewById(R.id.comment_box);
 
-		int level = data.getLevel();
-
-		TextView comment = (TextView) view.findViewById(R.id.comment);
+		TextView comment = (TextView) view.findViewById(R.id.comment_text);
 		comment.setText(data.getComment());
 		
-		if(level > 0){
+		TextView author = (TextView) view.findViewById(R.id.comment_author);
+		author.setText(data.getAuthor());
+		
+		TextView score = (TextView) view.findViewById(R.id.comment_score);
+		score.setText(data.getScore());
+		
+		if(data.getLevel() > 0){
 			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
 																				   LinearLayout.LayoutParams.FILL_PARENT);
-			layoutParams.setMargins(level * MARGIN, 0, 0, 0);
-			comment.setLayoutParams(layoutParams);
+			layoutParams.setMargins(10 + data.getLevel() * MARGIN, 10, 10, 10);
+			commentBox.setLayoutParams(layoutParams);
+		}else{
+			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+					   															   LinearLayout.LayoutParams.FILL_PARENT);
+			layoutParams.setMargins(10, 10, 10, 10);
+			commentBox.setLayoutParams(layoutParams);
 		}
 
 		return view;

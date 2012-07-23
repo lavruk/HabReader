@@ -89,11 +89,13 @@ public class PostShowFragment extends SherlockFragment implements LoaderCallback
 
 	@Override
 	public void onLoadFinished(Loader<PostsFullData> loader, PostsFullData data){
-		WebView content = (WebView) getSherlockActivity().findViewById(R.id.post_content);
-		content.getSettings().setPluginsEnabled(true);
-		content.getSettings().setSupportZoom(true);
-		content.getSettings().setBuiltInZoomControls(true);
-		content.loadDataWithBaseURL("", data.getContent(), "text/html", "UTF-8", null);
+		if(getSherlockActivity() != null){
+			WebView content = (WebView) getSherlockActivity().findViewById(R.id.post_content);
+			content.getSettings().setPluginsEnabled(true);
+			content.getSettings().setSupportZoom(true);
+			content.getSettings().setBuiltInZoomControls(true);
+			content.loadDataWithBaseURL("", data.getContent(), "text/html", "UTF-8", null);
+		}
 
 		this.data = data;
 

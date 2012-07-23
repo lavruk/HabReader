@@ -53,12 +53,14 @@ public class QaCommentsLoader extends AsyncTaskLoader<ArrayList<CommentsData>>{
 				Element name = answer.select("a.username").first();
 				Element message = answer.select("div.message").first();
 				Element linkToComment = answer.select("a.link_to_comment").first();
+				Element score = answer.select("span.score").first();
 
 				commentsData.setUrl(linkToComment.attr("abs:href"));
 				commentsData.setAuthor(name.text());
 				commentsData.setAuthorUrl(name.attr("abs:href"));
 				commentsData.setComment(message.text());
 				commentsData.setLevel(0);
+				commentsData.setScore(score.text());
 
 				data.add(commentsData);
 
@@ -75,6 +77,7 @@ public class QaCommentsLoader extends AsyncTaskLoader<ArrayList<CommentsData>>{
 					commentsData.setAuthor(name.text());
 					commentsData.setComment(message.text());
 					commentsData.setLevel(1);
+					commentsData.setScore("—");
 
 					data.add(commentsData);
 				}

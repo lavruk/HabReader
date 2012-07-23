@@ -21,10 +21,20 @@ HabReader это open source клиент для сайта [Habrahabr.ru](http:
 - Андрей Зайцев - <a.einsam@gmail.com>
 
 
+Используемые библиотеки
+=======================
+
+- [ActionBarSherlock](https://github.com/JakeWharton/ActionBarSherlock)
+- [Android Billing Library](https://github.com/robotmedia/AndroidBillingLibrary)
+- [Android Universal Image Loader](https://github.com/nostra13/Android-Universal-Image-Loader)
+- [jsoup](https://github.com/jhy/jsoup)
+
+
 Благодарность
 =============
 
 - Огромное спасибо [INCWADRA](http://habrahabr.ru/users/INCWADRA/) за его [HabraPack](https://github.com/Incwadra/HabraPack). В приложение используется именно его иконка :)
+
 
 Лицензия
 ========

@@ -4,12 +4,6 @@
     <PreferenceCategory android:title="@string/base_preferences" >
         
         <CheckBoxPreference
-            android:key="fullscreen"
-            android:summary="@string/fullscreen_summary_preferences"
-            android:title="@string/fullscreen_preferences"
-            android:defaultValue="false" />
-        
-        <CheckBoxPreference
             android:key="keepscreen"
             android:title="@string/keepscreen_preferences"
             android:defaultValue="false" />

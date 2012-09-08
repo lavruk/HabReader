@@ -24,8 +24,6 @@ import android.content.Context;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
@@ -37,10 +35,6 @@ public abstract class AbstractionActivity extends SherlockFragmentActivity{
 		super.onCreate(savedInstanceState);
 
 		Preferences preferences = Preferences.getInstance(this);
-		if(preferences.getFullScreen()){
-			requestWindowFeature(Window.FEATURE_NO_TITLE);
-			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		}
 
 		if(preferences.getKeepScreen()){
 			PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);

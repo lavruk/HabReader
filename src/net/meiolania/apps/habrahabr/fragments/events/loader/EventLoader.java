@@ -62,7 +62,7 @@ public class EventLoader extends AsyncTaskLoader<ArrayList<EventsData>>{
 				EventsData eventsData = new EventsData();
 
 				Element title = event.select("h1.title > a").first();
-				Element detail = event.select("div.detail").first();
+				//Element detail = event.select("div.detail").first();
 				Element text = event.select("div.text").first();
 				Element month = event.select("div.date > div.month").first();
 				Element day = event.select("div.date > div.day").first();
@@ -70,7 +70,7 @@ public class EventLoader extends AsyncTaskLoader<ArrayList<EventsData>>{
 
 				eventsData.setTitle(title.text());
 				eventsData.setUrl(title.attr("abs:href"));
-				eventsData.setDetail(detail.text());
+				//eventsData.setDetail(detail.text());
 				eventsData.setText(text.text());
 				eventsData.setDate(day.text() + " " + month.text());
 				eventsData.setHubs(hubs.text());

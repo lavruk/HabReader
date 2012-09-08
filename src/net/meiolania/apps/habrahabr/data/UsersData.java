@@ -16,7 +16,7 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.data;
 
-public class PeopleData{
+public class UsersData{
 	protected String rating;
 	protected String karma;
 	protected String url;

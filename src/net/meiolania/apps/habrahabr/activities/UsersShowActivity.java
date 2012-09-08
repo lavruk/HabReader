@@ -16,7 +16,7 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.activities;
 
-import net.meiolania.apps.habrahabr.fragments.people.PeopleShowFragment;
+import net.meiolania.apps.habrahabr.fragments.users.UsersShowFragment;
 import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,7 +26,7 @@ import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
-public class PeopleShowActivity extends AbstractionActivity{
+public class UsersShowActivity extends AbstractionActivity{
 	public final static String EXTRA_NAME = "name";
 	public final static String EXTRA_URL = "url";
 	private String name;
@@ -45,7 +45,7 @@ public class PeopleShowActivity extends AbstractionActivity{
 	public boolean onOptionsItemSelected(MenuItem item){
 		switch(item.getItemId()){
 			case android.R.id.home:
-				Intent intent = new Intent(this, PeopleActivity.class);
+				Intent intent = new Intent(this, UsersActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);
 				break;
@@ -65,10 +65,10 @@ public class PeopleShowActivity extends AbstractionActivity{
 	}
 
 	private void loadInfo(){
-		PeopleShowFragment fragment = new PeopleShowFragment();
+		UsersShowFragment fragment = new UsersShowFragment();
 
 		Bundle arguments = new Bundle();
-		arguments.putString(PeopleShowFragment.URL_ARGUMENT, url);
+		arguments.putString(UsersShowFragment.URL_ARGUMENT, url);
 
 		fragment.setArguments(arguments);
 

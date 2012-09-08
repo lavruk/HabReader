@@ -40,7 +40,7 @@
         android:text="@string/companies" />
 
     <Button
-        android:id="@+id/people"
+        android:id="@+id/users"
         style="@style/DashboardButton"
         android:drawableTop="@drawable/ic_db_people"
         android:onClick="onClick"

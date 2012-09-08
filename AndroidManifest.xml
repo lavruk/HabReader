@@ -54,9 +54,9 @@
         <activity android:name=".activities.CompaniesShowActivity" android:configChanges="orientation|keyboardHidden" />
         
         <!-- People -->
-        <activity android:name=".activities.PeopleActivity" android:configChanges="orientation|keyboardHidden" />
-        <activity android:name=".activities.PeopleShowActivity" android:configChanges="orientation|keyboardHidden" />
-        <activity android:name=".activities.PeopleSearchActivity" android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".activities.UsersActivity" android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".activities.UsersShowActivity" android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".activities.UsersSearchActivity" android:configChanges="orientation|keyboardHidden" />
         
         <service android:name="net.robotmedia.billing.BillingService" />
 		<receiver android:name="net.robotmedia.billing.BillingReceiver">

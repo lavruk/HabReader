@@ -19,7 +19,7 @@ package net.meiolania.apps.habrahabr.adapters;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.data.PeopleData;
+import net.meiolania.apps.habrahabr.data.UsersData;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,11 +33,11 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class PeopleAdapter extends BaseAdapter{
-    private ArrayList<PeopleData> people;
+    private ArrayList<UsersData> people;
     private Context context;
     private ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public PeopleAdapter(Context context, ArrayList<PeopleData> people){
+    public PeopleAdapter(Context context, ArrayList<UsersData> people){
         this.context = context;
         this.people = people;
         
@@ -55,7 +55,7 @@ public class PeopleAdapter extends BaseAdapter{
         return people.size();
     }
 
-    public PeopleData getItem(int position){
+    public UsersData getItem(int position){
         return people.get(position);
     }
 
@@ -64,7 +64,7 @@ public class PeopleAdapter extends BaseAdapter{
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
-        PeopleData data = getItem(position);
+        UsersData data = getItem(position);
 
         View view = convertView;
         if(view == null){

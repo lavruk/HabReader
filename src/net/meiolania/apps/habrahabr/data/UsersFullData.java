@@ -16,7 +16,7 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.data;
 
-public class PeopleFullData extends PeopleData{
+public class UsersFullData extends UsersData{
 	protected String fullname;
 	protected String birthday;
 	protected String summary;

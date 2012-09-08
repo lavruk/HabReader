@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.fragments.people;
+package net.meiolania.apps.habrahabr.fragments.users;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.data.PeopleFullData;
-import net.meiolania.apps.habrahabr.fragments.people.loader.PeopleShowLoader;
+import net.meiolania.apps.habrahabr.data.UsersFullData;
+import net.meiolania.apps.habrahabr.fragments.users.loader.UsersShowLoader;
 import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -35,7 +35,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-public class PeopleShowFragment extends SherlockFragment implements LoaderCallbacks<PeopleFullData>{
+public class UsersShowFragment extends SherlockFragment implements LoaderCallbacks<UsersFullData>{
 	public final static String URL_ARGUMENT = "url";
 	public final static int LOADER_PEOPLE = 0;
     private String url;
@@ -57,17 +57,17 @@ public class PeopleShowFragment extends SherlockFragment implements LoaderCallba
     }
 
 	@Override
-	public Loader<PeopleFullData> onCreateLoader(int id, Bundle args){
+	public Loader<UsersFullData> onCreateLoader(int id, Bundle args){
 		showProgressDialog();
 		
-		PeopleShowLoader loader = new PeopleShowLoader(getSherlockActivity(), url);
+		UsersShowLoader loader = new UsersShowLoader(getSherlockActivity(), url);
 		loader.forceLoad();
 		
 		return loader;
 	}
 
 	@Override
-	public void onLoadFinished(Loader<PeopleFullData> loader, PeopleFullData data){
+	public void onLoadFinished(Loader<UsersFullData> loader, UsersFullData data){
 		SherlockFragmentActivity activity = getSherlockActivity();
         
 		if(activity != null){
@@ -107,7 +107,7 @@ public class PeopleShowFragment extends SherlockFragment implements LoaderCallba
 	}
 
 	@Override
-	public void onLoaderReset(Loader<PeopleFullData> loader){
+	public void onLoaderReset(Loader<UsersFullData> loader){
 		
 	}
 	

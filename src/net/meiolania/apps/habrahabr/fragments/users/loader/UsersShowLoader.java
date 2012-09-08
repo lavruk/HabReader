@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.fragments.people.loader;
+package net.meiolania.apps.habrahabr.fragments.users.loader;
 
 import java.io.IOException;
 
@@ -22,24 +22,24 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import net.meiolania.apps.habrahabr.data.PeopleFullData;
+import net.meiolania.apps.habrahabr.data.UsersFullData;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-public class PeopleShowLoader extends AsyncTaskLoader<PeopleFullData>{
-	public final static String TAG = PeopleShowLoader.class.getName();
+public class UsersShowLoader extends AsyncTaskLoader<UsersFullData>{
+	public final static String TAG = UsersShowLoader.class.getName();
 	private String url;
 
-	public PeopleShowLoader(Context context, String url){
+	public UsersShowLoader(Context context, String url){
 		super(context);
 
 		this.url = url;
 	}
 
 	@Override
-	public PeopleFullData loadInBackground(){
-		PeopleFullData data = new PeopleFullData();
+	public UsersFullData loadInBackground(){
+		UsersFullData data = new UsersFullData();
 
 		try{
 			Log.i(TAG, "Loading a page: " + url);

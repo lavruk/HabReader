@@ -16,11 +16,8 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.activities;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.fragments.people.PeopleFragment;
+import net.meiolania.apps.habrahabr.fragments.users.UsersFragment;
 import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,10 +28,7 @@ import android.view.Window;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
-public class PeopleSearchActivity extends AbstractionActivity{
-	public final static String URL = "http://habrahabr.ru/search/?target_type=users&order_by=relevance&q=%query%";
-	public final static String EXTRA_QUERY = "query";
-	private String query;
+public class UsersActivity extends AbstractionActivity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -42,53 +36,34 @@ public class PeopleSearchActivity extends AbstractionActivity{
 
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-		loadExtras();
 		showActionBar();
-		loadSearchedPeople();
-	}
-
-	private void loadExtras(){
-		query = getIntent().getStringExtra(EXTRA_QUERY);
-	}
-
-	private void showActionBar(){
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.setTitle(R.string.people_search);
-		actionBar.setDisplayHomeAsUpEnabled(true);
-	}
-
-	private void loadSearchedPeople(){
-		PeopleFragment fragment = new PeopleFragment();
-
-		Bundle arguments = new Bundle();
-		arguments.putString(PeopleFragment.URL_ARGUMENT, getUrl());
-
-		fragment.setArguments(arguments);
-
-		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-		fragmentTransaction.replace(android.R.id.content, fragment);
-		fragmentTransaction.commit();
-	}
-
-	private String getUrl(){
-		try{
-			return URL.replace("%query%", URLEncoder.encode(query, "UTF-8"));
-		}
-		catch(UnsupportedEncodingException e){
-			return URL.replace("%query%", query);
-		}
+		loadPeopleList();
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){
 		switch(item.getItemId()){
 			case android.R.id.home:
-				Intent intent = new Intent(this, PeopleActivity.class);
+				Intent intent = new Intent(this, DashboardActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);
 				break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void showActionBar(){
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setTitle(R.string.people);
+	}
+
+	private void loadPeopleList(){
+		UsersFragment fragment = new UsersFragment();
+		
+		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+		fragmentTransaction.replace(android.R.id.content, fragment);
+		fragmentTransaction.commit();
 	}
 
 	@Override

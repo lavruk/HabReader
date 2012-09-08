@@ -103,8 +103,8 @@ public class DashboardActivity extends AbstractionActivity implements OnClickLis
 			case R.id.companies:
 				startActivity(new Intent(this, CompaniesActivity.class));
 				break;
-			case R.id.people:
-				startActivity(new Intent(this, PeopleActivity.class));
+			case R.id.users:
+				startActivity(new Intent(this, UsersActivity.class));
 				break;
 		}
 	}

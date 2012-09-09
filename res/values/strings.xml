@@ -19,6 +19,7 @@
 	<string name="no_connection">Отсутствует соединение с интернетом</string>
 	<string name="close">Закрыть</string>
 	<string name="rating_count">Рейтинг %d</string>
+	<string name="error_404">К сожалению, такой страницы не существует. Вероятно, она была удалена автором с сервера, либо её здесь никогда не было.</string>
 	
 	<!-- Dashboard titles -->
 	<string name="posts">Посты</string>

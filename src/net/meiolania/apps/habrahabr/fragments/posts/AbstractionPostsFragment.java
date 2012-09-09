@@ -144,7 +144,9 @@ public abstract class AbstractionPostsFragment extends SherlockListFragment impl
 		if(data.isEmpty()){
 			noMoreData = true;
 			
-			Toast.makeText(getSherlockActivity(), R.string.no_more_pages, Toast.LENGTH_SHORT).show();
+			// Have some problem with NullPointerException
+			if(getSherlockActivity() != null)
+				Toast.makeText(getSherlockActivity(), R.string.no_more_pages, Toast.LENGTH_SHORT).show();
 		}
 		
 		posts.addAll(data);

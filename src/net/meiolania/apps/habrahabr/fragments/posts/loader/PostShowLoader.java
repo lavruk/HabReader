@@ -22,15 +22,18 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.PostsFullData;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
 public class PostShowLoader extends AsyncTaskLoader<PostsFullData>{
 	private String url;
+	private Context context;
 
 	public PostShowLoader(Context context, String url){
 		super(context);
+		this.context = context;
 		this.url = url;
 	}
 
@@ -47,12 +50,15 @@ public class PostShowLoader extends AsyncTaskLoader<PostsFullData>{
 			Element date = document.select("div.published").first();
 			Element author = document.select("div.author > a").first();
 
-			data.setUrl(url);
-			data.setTitle(title.text());
-			data.setHubs(hubs.text());
-			data.setContent(content.html());
-			data.setDate(date.text());
-			data.setAuthor(author.text());
+			if(title != null){
+				data.setUrl(url);
+				data.setTitle(title.text());
+				data.setHubs(hubs.text());
+				data.setContent(content.html());
+				data.setDate(date.text());
+				data.setAuthor(author.text());
+			}else
+				data.setContent(context.getString(R.string.error_404));
 		}
 		catch(IOException e){
 		}

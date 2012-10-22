@@ -42,6 +42,9 @@ public final class Preferences{
     /* Additional layout for events */
     public final static String ADDITIONAL_LAYOUT_EVENTS_KEY = "events_additional_layout";
     public final static boolean ADDITIONAL_LAYOUT_EVENTS_DEFAULT = true;
+    /* Fullscreen */
+    public final static String FULLSCREEN_KEY = "fullscreen";
+    public final static boolean FULLSCREEN_DEFAULT = false;
     /* Keepscreen */
     public final static String KEEPSCREEN_KEY = "keepscreen";
     public final static boolean KEEPSCREEN_DEFAULT = false;
@@ -59,6 +62,10 @@ public final class Preferences{
 
     public SharedPreferences getSharedPreferences(){
         return sharedPreferences;
+    }
+
+    public boolean getFullScreen(){   	
+        return sharedPreferences.getBoolean(FULLSCREEN_KEY, FULLSCREEN_DEFAULT);
     }
 
     public boolean getKeepScreen(){

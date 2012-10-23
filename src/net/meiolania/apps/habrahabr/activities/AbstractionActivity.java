@@ -24,17 +24,22 @@ import android.content.Context;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.view.WindowManager;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public abstract class AbstractionActivity extends SherlockFragmentActivity{
 	protected PowerManager.WakeLock wakeLock;
+	Preferences preferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 
-		Preferences preferences = Preferences.getInstance(this);
+		preferences = Preferences.getInstance(this);
+		if(preferences.getFullScreen()){
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
 
 		if(preferences.getKeepScreen()){
 			PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -50,6 +55,16 @@ public abstract class AbstractionActivity extends SherlockFragmentActivity{
 			dialog.setCancelable(false);
 			dialog.show();
 		}
+	}
+
+	@Override
+	protected void onResume() {
+	    if(preferences.getFullScreen()) {
+	       getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	    } else {
+	       getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	    }
+	    super.onResume();
 	}
 
 	@Override

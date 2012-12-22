@@ -28,12 +28,14 @@ import android.view.Window;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
-public class PostsSearchActivity extends AbstractionActivity{
+public class PostsSearchActivity extends AbstractionActivity
+{
 	public final static String EXTRA_QUERY = "query";
 	private String query;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState){
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -43,27 +45,32 @@ public class PostsSearchActivity extends AbstractionActivity{
 		loadSearchedPosts();
 	}
 
-	private void loadExtras(){
+	private void loadExtras()
+	{
 		query = getIntent().getStringExtra(EXTRA_QUERY);
 	}
 
-	private void showActionBar(){
+	private void showActionBar()
+	{
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setTitle(R.string.post_search);
 		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
-	private void loadSearchedPosts(){
+	private void loadSearchedPosts()
+	{
 		PostsSearchFragment fragment = new PostsSearchFragment(query);
-		
+
 		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 		fragmentTransaction.replace(android.R.id.content, fragment);
 		fragmentTransaction.commit();
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
-		switch(item.getItemId()){
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch(item.getItemId())
+		{
 			case android.R.id.home:
 				Intent intent = new Intent(this, DashboardActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -74,10 +81,13 @@ public class PostsSearchActivity extends AbstractionActivity{
 	}
 
 	@Override
-	protected OnClickListener getConnectionDialogListener(){
-		return new OnClickListener(){
+	protected OnClickListener getConnectionDialogListener()
+	{
+		return new OnClickListener()
+		{
 			@Override
-			public void onClick(DialogInterface dialog, int which){
+			public void onClick(DialogInterface dialog, int which)
+			{
 				finish();
 			}
 		};

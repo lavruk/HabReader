@@ -16,7 +16,8 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.data;
 
-public class CompanyFullData extends CompaniesData{
+public class CompanyFullData extends CompaniesData
+{
 	protected String companyUrl;
 	protected String date;
 	protected String industries;
@@ -26,67 +27,83 @@ public class CompanyFullData extends CompaniesData{
 	protected String management;
 	protected String developmentStages;
 
-	public String getQuantity(){
+	public String getQuantity()
+	{
 		return quantity;
 	}
 
-	public void setQuantity(String quantity){
+	public void setQuantity(String quantity)
+	{
 		this.quantity = quantity;
 	}
 
-	public String getCompanyUrl(){
+	public String getCompanyUrl()
+	{
 		return companyUrl;
 	}
 
-	public void setCompanyUrl(String companyUrl){
+	public void setCompanyUrl(String companyUrl)
+	{
 		this.companyUrl = companyUrl;
 	}
 
-	public String getDate(){
+	public String getDate()
+	{
 		return date;
 	}
 
-	public void setDate(String date){
+	public void setDate(String date)
+	{
 		this.date = date;
 	}
 
-	public String getIndustries(){
+	public String getIndustries()
+	{
 		return industries;
 	}
 
-	public void setIndustries(String industries){
+	public void setIndustries(String industries)
+	{
 		this.industries = industries;
 	}
 
-	public String getLocation(){
+	public String getLocation()
+	{
 		return location;
 	}
 
-	public void setLocation(String location){
+	public void setLocation(String location)
+	{
 		this.location = location;
 	}
 
-	public String getSummary(){
+	public String getSummary()
+	{
 		return summary;
 	}
 
-	public void setSummary(String summary){
+	public void setSummary(String summary)
+	{
 		this.summary = summary;
 	}
 
-	public String getManagement(){
+	public String getManagement()
+	{
 		return management;
 	}
 
-	public void setManagement(String management){
+	public void setManagement(String management)
+	{
 		this.management = management;
 	}
 
-	public String getDevelopmentStages(){
+	public String getDevelopmentStages()
+	{
 		return developmentStages;
 	}
 
-	public void setDevelopmentStages(String developmentStages){
+	public void setDevelopmentStages(String developmentStages)
+	{
 		this.developmentStages = developmentStages;
 	}
 }

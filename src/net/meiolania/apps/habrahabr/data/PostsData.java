@@ -16,7 +16,8 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.data;
 
-public class PostsData{
+public class PostsData
+{
 	protected String title;
 	protected String url;
 	protected String hubs;
@@ -26,59 +27,73 @@ public class PostsData{
 	protected String comments;
 	protected String score;
 
-	public String getTitle(){
+	public String getTitle()
+	{
 		return title;
 	}
 
-	public void setTitle(String title){
+	public void setTitle(String title)
+	{
 		this.title = title;
 	}
 
-	public String getUrl(){
+	public String getUrl()
+	{
 		return url;
 	}
 
-	public void setUrl(String url){
+	public void setUrl(String url)
+	{
 		this.url = url;
 	}
 
-	public String getHubs(){
+	public String getHubs()
+	{
 		return hubs;
 	}
 
-	public void setHubs(String hubs){
+	public void setHubs(String hubs)
+	{
 		this.hubs = hubs;
 	}
 
-	public String getAuthor(){
+	public String getAuthor()
+	{
 		return author;
 	}
 
-	public void setAuthor(String author){
+	public void setAuthor(String author)
+	{
 		this.author = author;
 	}
 
-	public void setDate(String date){
+	public void setDate(String date)
+	{
 		this.date = date;
 	}
 
-	public String getDate(){
+	public String getDate()
+	{
 		return date;
 	}
 
-	public String getComments(){
+	public String getComments()
+	{
 		return comments;
 	}
 
-	public void setComments(String comments){
+	public void setComments(String comments)
+	{
 		this.comments = comments;
 	}
 
-	public void setScore(String score){
+	public void setScore(String score)
+	{
 		this.score = score;
 	}
 
-	public String getScore(){
+	public String getScore()
+	{
 		return score;
 	}
 

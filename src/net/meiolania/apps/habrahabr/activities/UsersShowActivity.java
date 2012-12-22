@@ -26,14 +26,16 @@ import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
-public class UsersShowActivity extends AbstractionActivity{
+public class UsersShowActivity extends AbstractionActivity
+{
 	public final static String EXTRA_NAME = "name";
 	public final static String EXTRA_URL = "url";
 	private String name;
 	private String url;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState){
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 
 		loadExtras();
@@ -42,8 +44,10 @@ public class UsersShowActivity extends AbstractionActivity{
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
-		switch(item.getItemId()){
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch(item.getItemId())
+		{
 			case android.R.id.home:
 				Intent intent = new Intent(this, UsersActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -53,18 +57,21 @@ public class UsersShowActivity extends AbstractionActivity{
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void loadExtras(){
+	private void loadExtras()
+	{
 		name = getIntent().getStringExtra(EXTRA_NAME);
 		url = getIntent().getStringExtra(EXTRA_URL);
 	}
 
-	private void showActionBar(){
+	private void showActionBar()
+	{
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setTitle(name);
 	}
 
-	private void loadInfo(){
+	private void loadInfo()
+	{
 		UsersShowFragment fragment = new UsersShowFragment();
 
 		Bundle arguments = new Bundle();
@@ -78,10 +85,13 @@ public class UsersShowActivity extends AbstractionActivity{
 	}
 
 	@Override
-	protected OnClickListener getConnectionDialogListener(){
-		return new OnClickListener(){
+	protected OnClickListener getConnectionDialogListener()
+	{
+		return new OnClickListener()
+		{
 			@Override
-			public void onClick(DialogInterface dialog, int which){
+			public void onClick(DialogInterface dialog, int which)
+			{
 				finish();
 			}
 		};

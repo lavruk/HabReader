@@ -30,35 +30,41 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-public class QaLoader extends AsyncTaskLoader<ArrayList<QaData>>{
+public class QaLoader extends AsyncTaskLoader<ArrayList<QaData>>
+{
 	public final static String TAG = QaLoader.class.getName();
 	private String url;
 	private static int page;
 
-	public QaLoader(Context context, String url){
+	public QaLoader(Context context, String url)
+	{
 		super(context);
 
 		this.url = url;
 	}
 
-	public static void setPage(int page){
+	public static void setPage(int page)
+	{
 		QaLoader.page = page;
 	}
 
 	@Override
-	public ArrayList<QaData> loadInBackground(){
+	public ArrayList<QaData> loadInBackground()
+	{
 		ArrayList<QaData> data = new ArrayList<QaData>();
 
-		try{
+		try
+		{
 			String readyUrl = url.replace("%page%", String.valueOf(page));
 
 			Log.i(TAG, "Loading a page: " + readyUrl);
 
 			Document document = Jsoup.connect(readyUrl).get();
-			
+
 			Elements qaList = document.select("div.post");
 
-			for(Element qa : qaList){
+			for(Element qa : qaList)
+			{
 				QaData qaData = new QaData();
 
 				Element title = qa.select("a.post_title").first();
@@ -79,7 +85,8 @@ public class QaLoader extends AsyncTaskLoader<ArrayList<QaData>>{
 				data.add(qaData);
 			}
 		}
-		catch(IOException e){
+		catch(IOException e)
+		{
 		}
 
 		return data;

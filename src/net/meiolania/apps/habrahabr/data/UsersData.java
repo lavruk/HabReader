@@ -16,7 +16,8 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.data;
 
-public class UsersData{
+public class UsersData
+{
 	protected String rating;
 	protected String karma;
 	protected String url;
@@ -24,51 +25,63 @@ public class UsersData{
 	protected String name;
 	protected String lifetime;
 
-	public String getRating(){
+	public String getRating()
+	{
 		return rating;
 	}
 
-	public void setRating(String rating){
+	public void setRating(String rating)
+	{
 		this.rating = rating;
 	}
 
-	public String getKarma(){
+	public String getKarma()
+	{
 		return karma;
 	}
 
-	public void setKarma(String karma){
+	public void setKarma(String karma)
+	{
 		this.karma = karma;
 	}
 
-	public String getUrl(){
+	public String getUrl()
+	{
 		return url;
 	}
 
-	public void setUrl(String url){
+	public void setUrl(String url)
+	{
 		this.url = url;
 	}
 
-	public String getAvatar(){
+	public String getAvatar()
+	{
 		return avatar;
 	}
 
-	public void setAvatar(String avatar){
+	public void setAvatar(String avatar)
+	{
 		this.avatar = avatar;
 	}
 
-	public String getName(){
+	public String getName()
+	{
 		return name;
 	}
 
-	public void setName(String name){
+	public void setName(String name)
+	{
 		this.name = name;
 	}
 
-	public String getLifetime(){
+	public String getLifetime()
+	{
 		return lifetime;
 	}
 
-	public void setLifetime(String lifetime){
+	public void setLifetime(String lifetime)
+	{
 		this.lifetime = lifetime;
 	}
 

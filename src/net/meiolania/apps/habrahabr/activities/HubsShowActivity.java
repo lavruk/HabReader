@@ -27,14 +27,16 @@ import android.view.Window;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
-public class HubsShowActivity extends AbstractionActivity{
+public class HubsShowActivity extends AbstractionActivity
+{
 	public final static String EXTRA_URL = "url";
 	public final static String EXTRA_TITLE = "title";
 	protected String url;
 	protected String title;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState){
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -44,28 +46,33 @@ public class HubsShowActivity extends AbstractionActivity{
 		loadHubsPosts();
 	}
 
-	private void loadExtras(){
+	private void loadExtras()
+	{
 		url = getIntent().getStringExtra(EXTRA_URL);
 		title = getIntent().getStringExtra(EXTRA_TITLE);
 	}
 
-	private void showActionBar(){
+	private void showActionBar()
+	{
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setTitle(title);
 	}
 
-	private void loadHubsPosts(){
+	private void loadHubsPosts()
+	{
 		HubsPostsFragment fragment = new HubsPostsFragment(url);
-		
+
 		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 		fragmentTransaction.replace(android.R.id.content, fragment);
 		fragmentTransaction.commit();
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
-		switch(item.getItemId()){
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch(item.getItemId())
+		{
 			case android.R.id.home:
 				Intent intent = new Intent(this, HubsActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -76,10 +83,13 @@ public class HubsShowActivity extends AbstractionActivity{
 	}
 
 	@Override
-	protected OnClickListener getConnectionDialogListener(){
-		return new OnClickListener(){
+	protected OnClickListener getConnectionDialogListener()
+	{
+		return new OnClickListener()
+		{
 			@Override
-			public void onClick(DialogInterface dialog, int which){
+			public void onClick(DialogInterface dialog, int which)
+			{
 				finish();
 			}
 		};

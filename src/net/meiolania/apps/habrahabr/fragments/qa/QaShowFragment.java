@@ -35,7 +35,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class QaShowFragment extends SherlockFragment implements LoaderCallbacks<QaFullData>{
+public class QaShowFragment extends SherlockFragment implements LoaderCallbacks<QaFullData>
+{
 	public final static String URL_ARGUMENT = "url";
 	public final static int LOADER_QA = 0;
 	private String url;
@@ -43,33 +44,38 @@ public class QaShowFragment extends SherlockFragment implements LoaderCallbacks<
 	private ProgressDialog progressDialog;
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState){
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
 		super.onActivityCreated(savedInstanceState);
 
 		setHasOptionsMenu(true);
 		setRetainInstance(true);
 
 		url = getArguments().getString(URL_ARGUMENT);
-		
+
 		if(ConnectionUtils.isConnected(getSherlockActivity()))
 			getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_QA, null, this);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
 		return inflater.inflate(R.layout.qa_show_activity, container, false);
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
 		super.onCreateOptionsMenu(menu, inflater);
 
 		inflater.inflate(R.menu.qa_show_activity, menu);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
-		switch(item.getItemId()){
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch(item.getItemId())
+		{
 			case R.id.share:
 				IntentUtils.createShareIntent(getSherlockActivity(), data.getTitle(), url);
 				break;
@@ -78,7 +84,8 @@ public class QaShowFragment extends SherlockFragment implements LoaderCallbacks<
 	}
 
 	@Override
-	public Loader<QaFullData> onCreateLoader(int id, Bundle args){
+	public Loader<QaFullData> onCreateLoader(int id, Bundle args)
+	{
 		showProgressDialog();
 
 		QaShowLoader loader = new QaShowLoader(getSherlockActivity(), url);
@@ -88,8 +95,10 @@ public class QaShowFragment extends SherlockFragment implements LoaderCallbacks<
 	}
 
 	@Override
-	public void onLoadFinished(Loader<QaFullData> loader, QaFullData data){
-		if(getSherlockActivity() != null){
+	public void onLoadFinished(Loader<QaFullData> loader, QaFullData data)
+	{
+		if(getSherlockActivity() != null)
+		{
 			WebView content = (WebView) getSherlockActivity().findViewById(R.id.qa_content);
 			content.getSettings().setPluginsEnabled(true);
 			content.getSettings().setBuiltInZoomControls(true);
@@ -103,18 +112,21 @@ public class QaShowFragment extends SherlockFragment implements LoaderCallbacks<
 	}
 
 	@Override
-	public void onLoaderReset(Loader<QaFullData> loader){
+	public void onLoaderReset(Loader<QaFullData> loader)
+	{
 
 	}
 
-	private void showProgressDialog(){
+	private void showProgressDialog()
+	{
 		progressDialog = new ProgressDialog(getSherlockActivity());
 		progressDialog.setMessage(getString(R.string.loading_question));
 		progressDialog.setCancelable(true);
 		progressDialog.show();
 	}
 
-	private void hideProgressDialog(){
+	private void hideProgressDialog()
+	{
 		if(progressDialog != null)
 			progressDialog.dismiss();
 	}

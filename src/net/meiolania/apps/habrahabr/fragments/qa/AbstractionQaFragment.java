@@ -44,7 +44,8 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 
-public abstract class AbstractionQaFragment extends SherlockListFragment implements OnScrollListener, LoaderCallbacks<ArrayList<QaData>>{
+public abstract class AbstractionQaFragment extends SherlockListFragment implements OnScrollListener, LoaderCallbacks<ArrayList<QaData>>
+{
 	protected int page;
 	protected boolean isLoadData;
 	protected ArrayList<QaData> questions;
@@ -56,20 +57,22 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
 	protected abstract int getLoaderId();
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState){
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
 		super.onActivityCreated(savedInstanceState);
 
 		setRetainInstance(true);
 		setHasOptionsMenu(true);
 
-		if(adapter == null){
+		if(adapter == null)
+		{
 			questions = new ArrayList<QaData>();
 			adapter = new QaAdapter(getSherlockActivity(), questions);
 		}
 
 		setListAdapter(adapter);
 		setListShown(true);
-		
+
 		getListView().setDivider(null);
 		getListView().setDividerHeight(0);
 
@@ -77,13 +80,17 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
 		inflater.inflate(R.menu.qa_fragment, menu);
 
 		final EditText searchQuery = (EditText) menu.findItem(R.id.search).getActionView().findViewById(R.id.search_query);
-		searchQuery.setOnEditorActionListener(new OnEditorActionListener(){
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
-				if(actionId == EditorInfo.IME_ACTION_SEARCH){
+		searchQuery.setOnEditorActionListener(new OnEditorActionListener()
+		{
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+			{
+				if(actionId == EditorInfo.IME_ACTION_SEARCH)
+				{
 					Intent intent = new Intent(getSherlockActivity(), QaSearchActivity.class);
 					intent.putExtra(QaSearchActivity.EXTRA_QUERY, searchQuery.getText().toString());
 					startActivity(intent);
@@ -97,11 +104,13 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
 	}
 
 	@Override
-	public void onListItemClick(ListView list, View view, int position, long id){
+	public void onListItemClick(ListView list, View view, int position, long id)
+	{
 		showQa(position);
 	}
 
-	protected void showQa(int position){
+	protected void showQa(int position)
+	{
 		QaData data = questions.get(position);
 
 		Intent intent = new Intent(getSherlockActivity(), QaShowActivity.class);
@@ -111,8 +120,10 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
 		startActivity(intent);
 	}
 
-	protected void restartLoading(){
-		if(ConnectionUtils.isConnected(getSherlockActivity())){
+	protected void restartLoading()
+	{
+		if(ConnectionUtils.isConnected(getSherlockActivity()))
+		{
 			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
 
 			QaLoader.setPage(++page);
@@ -123,17 +134,20 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
 		}
 	}
 
-	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
+	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+	{
 		if((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData && !noMoreData)
 			restartLoading();
 	}
 
-	public void onScrollStateChanged(AbsListView view, int scrollState){
+	public void onScrollStateChanged(AbsListView view, int scrollState)
+	{
 
 	}
 
 	@Override
-	public Loader<ArrayList<QaData>> onCreateLoader(int id, Bundle args){
+	public Loader<ArrayList<QaData>> onCreateLoader(int id, Bundle args)
+	{
 		QaLoader loader = new QaLoader(getSherlockActivity(), getUrl());
 		loader.forceLoad();
 
@@ -141,13 +155,15 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
 	}
 
 	@Override
-	public void onLoadFinished(Loader<ArrayList<QaData>> loader, ArrayList<QaData> data){
-		if(data.isEmpty()){
+	public void onLoadFinished(Loader<ArrayList<QaData>> loader, ArrayList<QaData> data)
+	{
+		if(data.isEmpty())
+		{
 			noMoreData = true;
-			
+
 			Toast.makeText(getSherlockActivity(), R.string.no_more_pages, Toast.LENGTH_SHORT).show();
 		}
-		
+
 		questions.addAll(data);
 		adapter.notifyDataSetChanged();
 
@@ -158,7 +174,8 @@ public abstract class AbstractionQaFragment extends SherlockListFragment impleme
 	}
 
 	@Override
-	public void onLoaderReset(Loader<ArrayList<QaData>> loader){
+	public void onLoaderReset(Loader<ArrayList<QaData>> loader)
+	{
 
 	}
 

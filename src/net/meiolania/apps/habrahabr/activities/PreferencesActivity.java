@@ -31,13 +31,15 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class PreferencesActivity extends SherlockPreferenceActivity{
+public class PreferencesActivity extends SherlockPreferenceActivity
+{
 	private final static String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs7Q63tPakTKbvVItiO4w9XzwASiV/bjTd7L6yYOvJc/iN3uJDt2LgZ4c7O2r+WzBNdg1TC9hW3GfPIGX5BC8mxXUCJ4Oq05XFP4UGsuj8lP5/GaV0S2a9vlYFMa4e6RiFekanGjej4REsoGQUZIA5mwCO+zWtvQjFe8acj8zD06GfUBmPuSbnDHuXVIvfpVRCjLOXT4qJTlnaNptFKKrNO0A6nzRIhNWxsV2QRMYCY6ZgqOsRHIOc92kBZhltm+XTwMTi+BgxBRUhvhMt2rtHJz7p6dh3xkSDFMOK6yQNAYWlNllhgj2cl2EkeYZOiK/wZQud1N1cirneRgJW2A7ZwIDAQAB";
 	private final static String ANDROID_DONATE_ITEM = "donate.1dollar";
 	private AbstractBillingObserver billingObserver;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState){
+	public void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 
 		showActionBar();
@@ -48,20 +50,24 @@ public class PreferencesActivity extends SherlockPreferenceActivity{
 	}
 
 	@Override
-	protected void onDestroy(){
+	protected void onDestroy()
+	{
 		BillingController.unregisterObserver(billingObserver);
 		super.onDestroy();
 	}
 
-	private void showActionBar(){
+	private void showActionBar()
+	{
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setTitle(R.string.preferences);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
-		switch(item.getItemId()){
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch(item.getItemId())
+		{
 			case android.R.id.home:
 				Intent intent = new Intent(this, DashboardActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -71,18 +77,23 @@ public class PreferencesActivity extends SherlockPreferenceActivity{
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void donate(){
+	private void donate()
+	{
 		final Preference donate = (Preference) findPreference("donate");
 
-		billingObserver = new AbstractBillingObserver(this){
+		billingObserver = new AbstractBillingObserver(this)
+		{
 
-			public void onRequestPurchaseResponse(String itemId, ResponseCode response){
+			public void onRequestPurchaseResponse(String itemId, ResponseCode response)
+			{
 			}
 
-			public void onPurchaseStateChanged(String itemId, PurchaseState state){
+			public void onPurchaseStateChanged(String itemId, PurchaseState state)
+			{
 			}
 
-			public void onBillingChecked(boolean supported){
+			public void onBillingChecked(boolean supported)
+			{
 				if(!supported)
 					donate.setEnabled(false);
 				else if(!billingObserver.isTransactionsRestored())
@@ -91,13 +102,16 @@ public class PreferencesActivity extends SherlockPreferenceActivity{
 		};
 
 		// BillingController.setDebug(true);
-		BillingController.setConfiguration(new IConfiguration(){
+		BillingController.setConfiguration(new IConfiguration()
+		{
 
-			public String getPublicKey(){
+			public String getPublicKey()
+			{
 				return PUBLIC_KEY;
 			}
 
-			public byte[] getObfuscationSalt(){
+			public byte[] getObfuscationSalt()
+			{
 				return new byte[]{ 41, -90, -116, -41, 66, -53, 122, -110, -127, -96, -88, 77, 127, 115, 1, 73, 57, 110, 48, -116 };
 			}
 
@@ -105,15 +119,18 @@ public class PreferencesActivity extends SherlockPreferenceActivity{
 		BillingController.registerObserver(billingObserver);
 		BillingController.checkBillingSupported(this);
 
-		donate.setOnPreferenceClickListener(new OnPreferenceClickListener(){
-			public boolean onPreferenceClick(Preference preference){
+		donate.setOnPreferenceClickListener(new OnPreferenceClickListener()
+		{
+			public boolean onPreferenceClick(Preference preference)
+			{
 				BillingController.requestPurchase(PreferencesActivity.this, ANDROID_DONATE_ITEM, true);
 				return false;
 			}
 		});
 
 		boolean purchased = BillingController.isPurchased(this, ANDROID_DONATE_ITEM);
-		if(purchased){
+		if(purchased)
+		{
 			donate.setTitle(R.string.donate_thanks_preferences);
 			donate.setEnabled(false);
 		}

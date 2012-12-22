@@ -32,56 +32,66 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-public class CompaniesAdapter extends BaseAdapter{
-    private ArrayList<CompaniesData> companies;
-    private Context context;
-    private ImageLoader imageLoader = ImageLoader.getInstance();
+public class CompaniesAdapter extends BaseAdapter
+{
+	private ArrayList<CompaniesData> companies;
+	private Context context;
+	private ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public CompaniesAdapter(Context context, ArrayList<CompaniesData> companies){
-        this.context = context;
-        this.companies = companies;
-        
-        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory().cacheOnDisc().build();
-        ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.Builder(context)
-                                                     .memoryCacheSize(3000000)
-                                                     .discCacheSize(50000000)
-                                                     .httpReadTimeout(5000)
-                                                     .defaultDisplayImageOptions(options)
-                                                     .build();
-        this.imageLoader.init(configuration);
-    }
+	public CompaniesAdapter(Context context, ArrayList<CompaniesData> companies)
+	{
+		this.context = context;
+		this.companies = companies;
 
-    public int getCount(){
-        return companies.size();
-    }
+		DisplayImageOptions options = new DisplayImageOptions.Builder()
+															 .cacheInMemory()
+															 .cacheOnDisc()
+															 .build();
+		ImageLoaderConfiguration configuration = new ImageLoaderConfiguration.Builder(context)
+																			 .memoryCacheSize(3000000)
+																			 .discCacheSize(50000000)
+																			 .httpReadTimeout(5000)
+																			 .defaultDisplayImageOptions(options)
+																			 .build();
+		this.imageLoader.init(configuration);
+	}
 
-    public CompaniesData getItem(int position){
-        return companies.get(position);
-    }
+	public int getCount()
+	{
+		return companies.size();
+	}
 
-    public long getItemId(int position){
-        return position;
-    }
+	public CompaniesData getItem(int position)
+	{
+		return companies.get(position);
+	}
 
-    public View getView(int position, View convertView, ViewGroup parent){
-        CompaniesData data = getItem(position);
+	public long getItemId(int position)
+	{
+		return position;
+	}
 
-        View view = convertView;
-        if(view == null){
-            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.companies_list_row, null);
-        }
+	public View getView(int position, View convertView, ViewGroup parent)
+	{
+		CompaniesData data = getItem(position);
 
-        TextView title = (TextView) view.findViewById(R.id.company_title);
-        title.setText(data.getTitle());
-        
-        ImageView icon = (ImageView) view.findViewById(R.id.company_icon);
-        imageLoader.displayImage(data.getIcon(), icon);
-        
-        TextView index = (TextView)view.findViewById(R.id.company_index);
-        index.setText(String.format(context.getString(R.string.habraindex), data.getIndex()));
+		View view = convertView;
+		if(view == null)
+		{
+			LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			view = layoutInflater.inflate(R.layout.companies_list_row, null);
+		}
 
-        return view;
-    }
+		TextView title = (TextView) view.findViewById(R.id.company_title);
+		title.setText(data.getTitle());
+
+		ImageView icon = (ImageView) view.findViewById(R.id.company_icon);
+		imageLoader.displayImage(data.getIcon(), icon);
+
+		TextView index = (TextView) view.findViewById(R.id.company_index);
+		index.setText(String.format(context.getString(R.string.habraindex), data.getIndex()));
+
+		return view;
+	}
 
 }

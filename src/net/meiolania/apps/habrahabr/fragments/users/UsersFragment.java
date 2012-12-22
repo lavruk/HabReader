@@ -41,7 +41,8 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 
-public class UsersFragment extends SherlockListFragment implements LoaderCallbacks<ArrayList<UsersData>>{
+public class UsersFragment extends SherlockListFragment implements LoaderCallbacks<ArrayList<UsersData>>
+{
 	public final static String URL_ARGUMENT = "url";
 	public final static int LOADER_PEOPLE = 0;
 	private ArrayList<UsersData> people;
@@ -49,7 +50,8 @@ public class UsersFragment extends SherlockListFragment implements LoaderCallbac
 	private String url;
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState){
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
 		super.onActivityCreated(savedInstanceState);
 
 		if(getArguments() != null)
@@ -58,7 +60,8 @@ public class UsersFragment extends SherlockListFragment implements LoaderCallbac
 		setRetainInstance(true);
 		setHasOptionsMenu(true);
 
-		if(adapter == null){
+		if(adapter == null)
+		{
 			people = new ArrayList<UsersData>();
 			adapter = new PeopleAdapter(getSherlockActivity(), people);
 		}
@@ -71,13 +74,17 @@ public class UsersFragment extends SherlockListFragment implements LoaderCallbac
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
 		inflater.inflate(R.menu.users_fragment, menu);
 
 		final EditText searchQuery = (EditText) menu.findItem(R.id.search).getActionView().findViewById(R.id.search_query);
-		searchQuery.setOnEditorActionListener(new OnEditorActionListener(){
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
-				if(actionId == EditorInfo.IME_ACTION_SEARCH){
+		searchQuery.setOnEditorActionListener(new OnEditorActionListener()
+		{
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+			{
+				if(actionId == EditorInfo.IME_ACTION_SEARCH)
+				{
 					Intent intent = new Intent(getSherlockActivity(), UsersSearchActivity.class);
 					intent.putExtra(UsersSearchActivity.EXTRA_QUERY, searchQuery.getText().toString());
 					startActivity(intent);
@@ -91,11 +98,13 @@ public class UsersFragment extends SherlockListFragment implements LoaderCallbac
 	}
 
 	@Override
-	public void onListItemClick(ListView list, View view, int position, long id){
+	public void onListItemClick(ListView list, View view, int position, long id)
+	{
 		showUser(position);
 	}
 
-	protected void showUser(int position){
+	protected void showUser(int position)
+	{
 		UsersData data = people.get(position);
 
 		Intent intent = new Intent(getSherlockActivity(), UsersShowActivity.class);
@@ -106,7 +115,8 @@ public class UsersFragment extends SherlockListFragment implements LoaderCallbac
 	}
 
 	@Override
-	public Loader<ArrayList<UsersData>> onCreateLoader(int id, Bundle args){
+	public Loader<ArrayList<UsersData>> onCreateLoader(int id, Bundle args)
+	{
 		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
 
 		UsersLoader loader = null;
@@ -122,7 +132,8 @@ public class UsersFragment extends SherlockListFragment implements LoaderCallbac
 	}
 
 	@Override
-	public void onLoadFinished(Loader<ArrayList<UsersData>> loader, ArrayList<UsersData> data){
+	public void onLoadFinished(Loader<ArrayList<UsersData>> loader, ArrayList<UsersData> data)
+	{
 		people.addAll(data);
 		adapter.notifyDataSetChanged();
 
@@ -131,7 +142,8 @@ public class UsersFragment extends SherlockListFragment implements LoaderCallbac
 	}
 
 	@Override
-	public void onLoaderReset(Loader<ArrayList<UsersData>> loader){
+	public void onLoaderReset(Loader<ArrayList<UsersData>> loader)
+	{
 
 	}
 

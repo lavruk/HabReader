@@ -33,31 +33,35 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class CompaniesShowFragment extends SherlockFragment implements LoaderCallbacks<CompanyFullData>{
+public class CompaniesShowFragment extends SherlockFragment implements LoaderCallbacks<CompanyFullData>
+{
 	public final static String URL_ARGUMENT = "url";
 	public final static int LOADER_COMPANY = 0;
 	private String url;
 	private ProgressDialog progressDialog;
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState){
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
 		super.onActivityCreated(savedInstanceState);
 
 		url = getArguments().getString(URL_ARGUMENT);
 
 		setRetainInstance(true);
-		
+
 		if(ConnectionUtils.isConnected(getSherlockActivity()))
 			getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_COMPANY, null, this);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
 		return inflater.inflate(R.layout.companies_show_activity, container, false);
 	}
 
 	@Override
-	public Loader<CompanyFullData> onCreateLoader(int id, Bundle args){
+	public Loader<CompanyFullData> onCreateLoader(int id, Bundle args)
+	{
 		showProgressDialog();
 
 		CompaniesShowLoader loader = new CompaniesShowLoader(getSherlockActivity(), url);
@@ -67,10 +71,12 @@ public class CompaniesShowFragment extends SherlockFragment implements LoaderCal
 	}
 
 	@Override
-	public void onLoadFinished(Loader<CompanyFullData> loader, CompanyFullData data){
+	public void onLoadFinished(Loader<CompanyFullData> loader, CompanyFullData data)
+	{
 		SherlockFragmentActivity activity = getSherlockActivity();
-		
-		if(activity != null){
+
+		if(activity != null)
+		{
 			TextView date = (TextView) activity.findViewById(R.id.company_date);
 			date.setText(data.getDate());
 
@@ -103,11 +109,13 @@ public class CompaniesShowFragment extends SherlockFragment implements LoaderCal
 	}
 
 	@Override
-	public void onLoaderReset(Loader<CompanyFullData> loader){
+	public void onLoaderReset(Loader<CompanyFullData> loader)
+	{
 
 	}
 
-	private void showProgressDialog(){
+	private void showProgressDialog()
+	{
 		progressDialog = new ProgressDialog(getSherlockActivity());
 		progressDialog.setTitle(R.string.loading);
 		progressDialog.setMessage(getString(R.string.loading_company));
@@ -115,7 +123,8 @@ public class CompaniesShowFragment extends SherlockFragment implements LoaderCal
 		progressDialog.show();
 	}
 
-	private void hideProgressDialog(){
+	private void hideProgressDialog()
+	{
 		if(progressDialog != null)
 			progressDialog.dismiss();
 	}

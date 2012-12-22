@@ -36,7 +36,8 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
-public class CompaniesFragment extends SherlockListFragment implements OnScrollListener, LoaderCallbacks<ArrayList<CompaniesData>>{
+public class CompaniesFragment extends SherlockListFragment implements OnScrollListener, LoaderCallbacks<ArrayList<CompaniesData>>
+{
 	public final static int LOADER_COMPANIES = 0;
 	private ArrayList<CompaniesData> companies;
 	private CompaniesAdapter adapter;
@@ -45,12 +46,14 @@ public class CompaniesFragment extends SherlockListFragment implements OnScrollL
 	private boolean noMoreData;
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState){
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
 		super.onActivityCreated(savedInstanceState);
 
 		setRetainInstance(true);
 
-		if(adapter == null){
+		if(adapter == null)
+		{
 			companies = new ArrayList<CompaniesData>();
 			adapter = new CompaniesAdapter(getSherlockActivity(), companies);
 		}
@@ -62,11 +65,13 @@ public class CompaniesFragment extends SherlockListFragment implements OnScrollL
 	}
 
 	@Override
-	public void onListItemClick(ListView list, View view, int position, long id){
+	public void onListItemClick(ListView list, View view, int position, long id)
+	{
 		showCompany(position);
 	}
 
-	protected void showCompany(int position){
+	protected void showCompany(int position)
+	{
 		CompaniesData data = companies.get(position);
 
 		Intent intent = new Intent(getSherlockActivity(), CompaniesShowActivity.class);
@@ -76,8 +81,10 @@ public class CompaniesFragment extends SherlockListFragment implements OnScrollL
 		startActivity(intent);
 	}
 
-	protected void restartLoading(){
-		if(ConnectionUtils.isConnected(getSherlockActivity())){
+	protected void restartLoading()
+	{
+		if(ConnectionUtils.isConnected(getSherlockActivity()))
+		{
 			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
 
 			CompaniesLoader.setPage(++page);
@@ -88,17 +95,20 @@ public class CompaniesFragment extends SherlockListFragment implements OnScrollL
 		}
 	}
 
-	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
+	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+	{
 		if((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData && !noMoreData)
 			restartLoading();
 	}
 
-	public void onScrollStateChanged(AbsListView view, int scrollState){
+	public void onScrollStateChanged(AbsListView view, int scrollState)
+	{
 
 	}
 
 	@Override
-	public Loader<ArrayList<CompaniesData>> onCreateLoader(int id, Bundle args){
+	public Loader<ArrayList<CompaniesData>> onCreateLoader(int id, Bundle args)
+	{
 		CompaniesLoader loader = new CompaniesLoader(getSherlockActivity());
 		loader.forceLoad();
 
@@ -106,13 +116,15 @@ public class CompaniesFragment extends SherlockListFragment implements OnScrollL
 	}
 
 	@Override
-	public void onLoadFinished(Loader<ArrayList<CompaniesData>> loader, ArrayList<CompaniesData> data){
-		if(data.isEmpty()){
+	public void onLoadFinished(Loader<ArrayList<CompaniesData>> loader, ArrayList<CompaniesData> data)
+	{
+		if(data.isEmpty())
+		{
 			noMoreData = true;
-			
+
 			Toast.makeText(getSherlockActivity(), R.string.no_more_pages, Toast.LENGTH_SHORT).show();
 		}
-		
+
 		companies.addAll(data);
 		adapter.notifyDataSetChanged();
 
@@ -123,7 +135,8 @@ public class CompaniesFragment extends SherlockListFragment implements OnScrollL
 	}
 
 	@Override
-	public void onLoaderReset(Loader<ArrayList<CompaniesData>> loader){
+	public void onLoaderReset(Loader<ArrayList<CompaniesData>> loader)
+	{
 
 	}
 

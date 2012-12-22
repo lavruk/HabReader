@@ -26,14 +26,16 @@ import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
-public class EventsShowActivity extends AbstractionActivity{
+public class EventsShowActivity extends AbstractionActivity
+{
 	public final static String EXTRA_URL = "url";
 	public final static String EXTRA_TITLE = "title";
 	private String url;
 	private String title;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState){
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 
 		loadExtras();
@@ -42,8 +44,10 @@ public class EventsShowActivity extends AbstractionActivity{
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
-		switch(item.getItemId()){
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch(item.getItemId())
+		{
 			case android.R.id.home:
 				Intent intent = new Intent(this, EventsActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -53,18 +57,21 @@ public class EventsShowActivity extends AbstractionActivity{
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void loadExtras(){
+	private void loadExtras()
+	{
 		url = getIntent().getStringExtra(EXTRA_URL);
 		title = getIntent().getStringExtra(EXTRA_TITLE);
 	}
 
-	private void showActionBar(){
+	private void showActionBar()
+	{
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setTitle(title);
 	}
 
-	private void loadInfo(){
+	private void loadInfo()
+	{
 		EventsShowFragment fragment = new EventsShowFragment();
 
 		Bundle arguments = new Bundle();
@@ -78,10 +85,13 @@ public class EventsShowActivity extends AbstractionActivity{
 	}
 
 	@Override
-	protected OnClickListener getConnectionDialogListener(){
-		return new OnClickListener(){
+	protected OnClickListener getConnectionDialogListener()
+	{
+		return new OnClickListener()
+		{
 			@Override
-			public void onClick(DialogInterface dialog, int which){
+			public void onClick(DialogInterface dialog, int which)
+			{
 				finish();
 			}
 		};

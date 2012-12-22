@@ -27,24 +27,28 @@ import net.meiolania.apps.habrahabr.data.EventFullData;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
-public class EventShowLoader extends AsyncTaskLoader<EventFullData>{
+public class EventShowLoader extends AsyncTaskLoader<EventFullData>
+{
 	public final static int INFO_LOCATION = 0;
 	public final static int INFO_PAY = 2;
 	public final static int INFO_SITE = 3;
 	public final static int INFO_DATE = 1;
 	private String url;
 
-	public EventShowLoader(Context context, String url){
+	public EventShowLoader(Context context, String url)
+	{
 		super(context);
 
 		this.url = url;
 	}
 
 	@Override
-	public EventFullData loadInBackground(){
+	public EventFullData loadInBackground()
+	{
 		EventFullData event = new EventFullData();
 
-		try{
+		try
+		{
 			Document document = Jsoup.connect(url).get();
 
 			Element title = document.select("h1.title").first();
@@ -54,8 +58,10 @@ public class EventShowLoader extends AsyncTaskLoader<EventFullData>{
 			Element location = null, pay = null, site = null, date = null;
 			// TODO: need to test this code more
 			int i = 0;
-			for(Element info : additionalInfo){
-				switch(i){
+			for(Element info : additionalInfo)
+			{
+				switch(i)
+				{
 					case INFO_LOCATION:
 						location = info;
 						break;
@@ -80,7 +86,8 @@ public class EventShowLoader extends AsyncTaskLoader<EventFullData>{
 			event.setLocation(location.text());
 			event.setSite(site.text());
 		}
-		catch(IOException e){
+		catch(IOException e)
+		{
 		}
 
 		return event;

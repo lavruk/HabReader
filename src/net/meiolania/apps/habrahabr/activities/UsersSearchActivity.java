@@ -31,13 +31,15 @@ import android.view.Window;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
-public class UsersSearchActivity extends AbstractionActivity{
+public class UsersSearchActivity extends AbstractionActivity
+{
 	public final static String URL = "http://habrahabr.ru/search/?target_type=users&order_by=relevance&q=%query%";
 	public final static String EXTRA_QUERY = "query";
 	private String query;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState){
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -47,17 +49,20 @@ public class UsersSearchActivity extends AbstractionActivity{
 		loadSearchedPeople();
 	}
 
-	private void loadExtras(){
+	private void loadExtras()
+	{
 		query = getIntent().getStringExtra(EXTRA_QUERY);
 	}
 
-	private void showActionBar(){
+	private void showActionBar()
+	{
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setTitle(R.string.people_search);
 		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
-	private void loadSearchedPeople(){
+	private void loadSearchedPeople()
+	{
 		UsersFragment fragment = new UsersFragment();
 
 		Bundle arguments = new Bundle();
@@ -70,18 +75,23 @@ public class UsersSearchActivity extends AbstractionActivity{
 		fragmentTransaction.commit();
 	}
 
-	private String getUrl(){
-		try{
+	private String getUrl()
+	{
+		try
+		{
 			return URL.replace("%query%", URLEncoder.encode(query, "UTF-8"));
 		}
-		catch(UnsupportedEncodingException e){
+		catch(UnsupportedEncodingException e)
+		{
 			return URL.replace("%query%", query);
 		}
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
-		switch(item.getItemId()){
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch(item.getItemId())
+		{
 			case android.R.id.home:
 				Intent intent = new Intent(this, UsersActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -92,10 +102,13 @@ public class UsersSearchActivity extends AbstractionActivity{
 	}
 
 	@Override
-	protected OnClickListener getConnectionDialogListener(){
-		return new OnClickListener(){
+	protected OnClickListener getConnectionDialogListener()
+	{
+		return new OnClickListener()
+		{
 			@Override
-			public void onClick(DialogInterface dialog, int which){
+			public void onClick(DialogInterface dialog, int which)
+			{
 				finish();
 			}
 		};

@@ -35,7 +35,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class PostShowFragment extends SherlockFragment implements LoaderCallbacks<PostsFullData>{
+public class PostShowFragment extends SherlockFragment implements LoaderCallbacks<PostsFullData>
+{
 	public final static String URL_ARGUMENT = "url";
 	private final static int LOADER_POST = 0;
 	private String url;
@@ -43,33 +44,38 @@ public class PostShowFragment extends SherlockFragment implements LoaderCallback
 	private PostsFullData data;
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState){
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
 		super.onActivityCreated(savedInstanceState);
 
 		setHasOptionsMenu(true);
 		setRetainInstance(true);
 
 		url = getArguments().getString(URL_ARGUMENT);
-		
+
 		if(ConnectionUtils.isConnected(getSherlockActivity()))
 			getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_POST, null, this);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
 		return inflater.inflate(R.layout.posts_show_activity, container, false);
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
 		super.onCreateOptionsMenu(menu, inflater);
-		
+
 		inflater.inflate(R.menu.posts_show_activity, menu);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
-		switch(item.getItemId()){
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch(item.getItemId())
+		{
 			case R.id.share:
 				IntentUtils.createShareIntent(getSherlockActivity(), data.getTitle(), url);
 				break;
@@ -78,7 +84,8 @@ public class PostShowFragment extends SherlockFragment implements LoaderCallback
 	}
 
 	@Override
-	public Loader<PostsFullData> onCreateLoader(int id, Bundle args){
+	public Loader<PostsFullData> onCreateLoader(int id, Bundle args)
+	{
 		showProgressDialog();
 
 		PostShowLoader loader = new PostShowLoader(getSherlockActivity(), url);
@@ -88,8 +95,10 @@ public class PostShowFragment extends SherlockFragment implements LoaderCallback
 	}
 
 	@Override
-	public void onLoadFinished(Loader<PostsFullData> loader, PostsFullData data){
-		if(getSherlockActivity() != null){
+	public void onLoadFinished(Loader<PostsFullData> loader, PostsFullData data)
+	{
+		if(getSherlockActivity() != null)
+		{
 			WebView content = (WebView) getSherlockActivity().findViewById(R.id.post_content);
 			content.getSettings().setPluginsEnabled(true);
 			content.getSettings().setSupportZoom(true);
@@ -103,17 +112,20 @@ public class PostShowFragment extends SherlockFragment implements LoaderCallback
 	}
 
 	@Override
-	public void onLoaderReset(Loader<PostsFullData> loader){
+	public void onLoaderReset(Loader<PostsFullData> loader)
+	{
 	}
 
-	private void showProgressDialog(){
+	private void showProgressDialog()
+	{
 		progressDialog = new ProgressDialog(getSherlockActivity());
 		progressDialog.setMessage(getString(R.string.loading_post));
 		progressDialog.setCancelable(true);
 		progressDialog.show();
 	}
 
-	private void hideProgressDialog(){
+	private void hideProgressDialog()
+	{
 		if(progressDialog != null)
 			progressDialog.dismiss();
 	}

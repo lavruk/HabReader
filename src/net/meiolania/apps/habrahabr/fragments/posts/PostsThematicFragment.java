@@ -16,16 +16,19 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.fragments.posts;
 
-public class PostsThematicFragment extends AbstractionPostsFragment{
+public class PostsThematicFragment extends AbstractionPostsFragment
+{
 	public final static String URL = "http://habrahabr.ru/posts/collective/page%page%/";
 
 	@Override
-	protected String getUrl(){
+	protected String getUrl()
+	{
 		return URL;
 	}
 
 	@Override
-	protected int getLoaderId(){
+	protected int getLoaderId()
+	{
 		return 1;
 	}
 

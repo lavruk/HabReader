@@ -23,28 +23,33 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.actionbarsherlock.app.ActionBar.Tab;
 
-public class TabListener<T extends Fragment> implements com.actionbarsherlock.app.ActionBar.TabListener{
+public class TabListener<T extends Fragment> implements com.actionbarsherlock.app.ActionBar.TabListener
+{
 	private Fragment fragment;
 	private Class<T> fragmentClass;
 	private Context context;
 	private String tag;
 	private Bundle arguments;
 
-	public TabListener(Context context, String tag, Class<T> fragmentClass){
+	public TabListener(Context context, String tag, Class<T> fragmentClass)
+	{
 		this.context = context;
 		this.tag = tag;
 		this.fragmentClass = fragmentClass;
 	}
 
-	public TabListener(Context context, String tag, Class<T> fragmentClass, Bundle arguments){
+	public TabListener(Context context, String tag, Class<T> fragmentClass, Bundle arguments)
+	{
 		this(context, tag, fragmentClass);
 
 		this.arguments = arguments;
 	}
 
 	@Override
-	public void onTabSelected(Tab tab, FragmentTransaction ft){
-		if(fragment == null){
+	public void onTabSelected(Tab tab, FragmentTransaction ft)
+	{
+		if(fragment == null)
+		{
 			fragment = Fragment.instantiate(context, fragmentClass.getName());
 
 			if(arguments != null)
@@ -54,12 +59,14 @@ public class TabListener<T extends Fragment> implements com.actionbarsherlock.ap
 	}
 
 	@Override
-	public void onTabUnselected(Tab tab, FragmentTransaction ft){
+	public void onTabUnselected(Tab tab, FragmentTransaction ft)
+	{
 
 	}
 
 	@Override
-	public void onTabReselected(Tab tab, FragmentTransaction ft){
+	public void onTabReselected(Tab tab, FragmentTransaction ft)
+	{
 
 	}
 

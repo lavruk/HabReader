@@ -28,26 +28,31 @@ import android.view.WindowManager;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public abstract class AbstractionActivity extends SherlockFragmentActivity{
+public abstract class AbstractionActivity extends SherlockFragmentActivity
+{
 	protected PowerManager.WakeLock wakeLock;
 	Preferences preferences;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState){
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 
 		preferences = Preferences.getInstance(this);
-		if(preferences.getFullScreen()){
+		if(preferences.getFullScreen())
+		{
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		}
 
-		if(preferences.getKeepScreen()){
+		if(preferences.getKeepScreen())
+		{
 			PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 			wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "wakeLock");
 			wakeLock.acquire();
 		}
 
-		if(!ConnectionUtils.isConnected(this)){
+		if(!ConnectionUtils.isConnected(this))
+		{
 			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 			dialog.setTitle(R.string.error);
 			dialog.setMessage(getString(R.string.no_connection));
@@ -58,21 +63,23 @@ public abstract class AbstractionActivity extends SherlockFragmentActivity{
 	}
 
 	@Override
-	protected void onResume() {
-	    if(preferences.getFullScreen()) {
-	       getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-	    } else {
-	       getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-	    }
-	    super.onResume();
-	}
+	protected void onResume()
+	{
+		if(preferences.getFullScreen())
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		else
+			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+		super.onResume();
+	}
+	
 	@Override
-	protected void onDestroy(){
+	protected void onPause()
+	{
 		if(wakeLock != null)
 			wakeLock.release();
-
-		super.onDestroy();
+		
+		super.onPause();
 	}
 
 	protected abstract OnClickListener getConnectionDialogListener();

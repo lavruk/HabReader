@@ -31,13 +31,15 @@ import android.view.Window;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
-public class HubsSearchActivity extends AbstractionActivity{
+public class HubsSearchActivity extends AbstractionActivity
+{
 	public final static String URL = "http://habrahabr.ru/search/page%page%/?q=%query%&target_type=hubs";
 	public final static String EXTRA_QUERY = "query";
 	private String query;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState){
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -47,24 +49,29 @@ public class HubsSearchActivity extends AbstractionActivity{
 		loadSearchedHubs();
 	}
 
-	private void loadExtras(){
+	private void loadExtras()
+	{
 		query = getIntent().getStringExtra(EXTRA_QUERY);
 	}
 
-	private void showActionBar(){
+	private void showActionBar()
+	{
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setTitle(R.string.hubs_search);
 		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
-	private void loadSearchedHubs(){
+	private void loadSearchedHubs()
+	{
 		HubsFragment fragment = new HubsFragment();
 
 		Bundle arguments = new Bundle();
-		try{
+		try
+		{
 			arguments.putString(HubsFragment.URL_ARGUMENT, URL.replace("%query%", URLEncoder.encode(query, "UTF-8")));
 		}
-		catch(UnsupportedEncodingException e){
+		catch(UnsupportedEncodingException e)
+		{
 			arguments.putString(HubsFragment.URL_ARGUMENT, URL.replace("%query%", query));
 		}
 
@@ -76,8 +83,10 @@ public class HubsSearchActivity extends AbstractionActivity{
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
-		switch(item.getItemId()){
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch(item.getItemId())
+		{
 			case android.R.id.home:
 				Intent intent = new Intent(this, HubsActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -88,10 +97,13 @@ public class HubsSearchActivity extends AbstractionActivity{
 	}
 
 	@Override
-	protected OnClickListener getConnectionDialogListener(){
-		return new OnClickListener(){
+	protected OnClickListener getConnectionDialogListener()
+	{
+		return new OnClickListener()
+		{
 			@Override
-			public void onClick(DialogInterface dialog, int which){
+			public void onClick(DialogInterface dialog, int which)
+			{
 				finish();
 			}
 		};

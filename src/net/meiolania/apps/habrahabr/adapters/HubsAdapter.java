@@ -27,32 +27,39 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class HubsAdapter extends BaseAdapter{
+public class HubsAdapter extends BaseAdapter
+{
 	private ArrayList<HubsData> hubs;
 	private Context context;
 
-	public HubsAdapter(Context context, ArrayList<HubsData> hubs){
+	public HubsAdapter(Context context, ArrayList<HubsData> hubs)
+	{
 		this.context = context;
 		this.hubs = hubs;
 	}
 
-	public int getCount(){
+	public int getCount()
+	{
 		return hubs.size();
 	}
 
-	public HubsData getItem(int position){
+	public HubsData getItem(int position)
+	{
 		return hubs.get(position);
 	}
 
-	public long getItemId(int position){
+	public long getItemId(int position)
+	{
 		return position;
 	}
 
-	public View getView(int position, View convertView, ViewGroup parent){
+	public View getView(int position, View convertView, ViewGroup parent)
+	{
 		HubsData data = getItem(position);
 
 		View view = convertView;
-		if(view == null){
+		if(view == null)
+		{
 			LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = layoutInflater.inflate(R.layout.hubs_list_row, null);
 		}

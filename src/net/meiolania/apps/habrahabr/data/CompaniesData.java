@@ -16,54 +16,66 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.data;
 
-public class CompaniesData{
+public class CompaniesData
+{
 	protected String icon;
 	protected String url;
 	protected String title;
 	protected String index;
 	protected String description;
 
-	public String getIcon(){
+	public String getIcon()
+	{
 		return icon;
 	}
 
-	public void setIcon(String icon){
+	public void setIcon(String icon)
+	{
 		this.icon = icon;
 	}
 
-	public String getUrl(){
+	public String getUrl()
+	{
 		return url;
 	}
 
-	public void setUrl(String url){
+	public void setUrl(String url)
+	{
 		this.url = url;
 	}
 
-	public String getTitle(){
+	public String getTitle()
+	{
 		return title;
 	}
 
-	public void setTitle(String title){
+	public void setTitle(String title)
+	{
 		this.title = title;
 	}
 
-	public String getIndex(){
+	public String getIndex()
+	{
 		return index;
 	}
 
-	public void setIndex(String index){
+	public void setIndex(String index)
+	{
 		this.index = index;
 	}
 
-	public String getDescription(){
+	public String getDescription()
+	{
 		return description;
 	}
 
-	public void setDescription(String description){
+	public void setDescription(String description)
+	{
 		this.description = description;
 	}
-	
-	public String getProfileUrl(){
+
+	public String getProfileUrl()
+	{
 		return getUrl() + "/profile/";
 	}
 

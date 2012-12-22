@@ -30,35 +30,41 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-public class UsersLoader extends AsyncTaskLoader<ArrayList<UsersData>>{
+public class UsersLoader extends AsyncTaskLoader<ArrayList<UsersData>>
+{
 	public final static String TAG = UsersLoader.class.getName();
 	public final static String DEFAULT_URL = "http://habrahabr.ru/users/";
-	
+
 	private String url;
 
-	public UsersLoader(Context context){
+	public UsersLoader(Context context)
+	{
 		super(context);
 
 		url = DEFAULT_URL;
 	}
 
-	public UsersLoader(Context context, String url){
+	public UsersLoader(Context context, String url)
+	{
 		super(context);
 
 		this.url = url;
 	}
 
 	@Override
-	public ArrayList<UsersData> loadInBackground(){
+	public ArrayList<UsersData> loadInBackground()
+	{
 		ArrayList<UsersData> data = new ArrayList<UsersData>();
 
-		try{
+		try
+		{
 			Log.i(TAG, "Loading a page: " + url);
 
 			Document document = Jsoup.connect(url).get();
 			Elements users = document.select("div.user");
 
-			for(Element user : users){
+			for(Element user : users)
+			{
 				UsersData usersData = new UsersData();
 
 				Element rating = user.select("div.rating").first();
@@ -77,7 +83,8 @@ public class UsersLoader extends AsyncTaskLoader<ArrayList<UsersData>>{
 				data.add(usersData);
 			}
 		}
-		catch(IOException e){
+		catch(IOException e)
+		{
 		}
 
 		return data;

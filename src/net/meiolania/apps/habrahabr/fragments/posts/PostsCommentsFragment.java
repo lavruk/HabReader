@@ -35,7 +35,8 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
-public class PostsCommentsFragment extends SherlockListFragment implements LoaderCallbacks<ArrayList<CommentsData>>{
+public class PostsCommentsFragment extends SherlockListFragment implements LoaderCallbacks<ArrayList<CommentsData>>
+{
 	public final static int LOADER_COMMENTS = 1;
 	public final static int MENU_OPEN_COMMENT_IN_BROWSER = 0;
 	public final static int MENU_OPEN_AUTHOR_PROFILE = 1;
@@ -45,21 +46,23 @@ public class PostsCommentsFragment extends SherlockListFragment implements Loade
 	private String url;
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState){
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
 		super.onActivityCreated(savedInstanceState);
 
 		url = getArguments().getString(URL_ARGUMENT);
 
 		setRetainInstance(true);
 
-		if(adapter == null){
+		if(adapter == null)
+		{
 			comments = new ArrayList<CommentsData>();
 			adapter = new CommentsAdapter(getSherlockActivity(), comments);
 		}
 
 		setListAdapter(adapter);
 		setListShown(true);
-		
+
 		getListView().setDivider(null);
 		getListView().setDividerHeight(0);
 
@@ -69,7 +72,8 @@ public class PostsCommentsFragment extends SherlockListFragment implements Loade
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenuInfo menuInfo){
+	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenuInfo menuInfo)
+	{
 		super.onCreateContextMenu(menu, view, menuInfo);
 
 		menu.add(0, MENU_OPEN_COMMENT_IN_BROWSER, 0, R.string.open_comment_in_browser);
@@ -77,11 +81,13 @@ public class PostsCommentsFragment extends SherlockListFragment implements Loade
 	}
 
 	@Override
-	public boolean onContextItemSelected(MenuItem item){
+	public boolean onContextItemSelected(MenuItem item)
+	{
 		AdapterContextMenuInfo adapterContextMenuInfo = (AdapterContextMenuInfo) item.getMenuInfo();
 		CommentsData commentsData = (CommentsData) getListAdapter().getItem(adapterContextMenuInfo.position);
 
-		switch(item.getItemId()){
+		switch(item.getItemId())
+		{
 			case MENU_OPEN_COMMENT_IN_BROWSER:
 				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(commentsData.getUrl())));
 				break;
@@ -94,9 +100,10 @@ public class PostsCommentsFragment extends SherlockListFragment implements Loade
 	}
 
 	@Override
-	public Loader<ArrayList<CommentsData>> onCreateLoader(int id, Bundle args){
+	public Loader<ArrayList<CommentsData>> onCreateLoader(int id, Bundle args)
+	{
 		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-		
+
 		PostCommentsLoader loader = new PostCommentsLoader(getSherlockActivity(), url);
 		loader.forceLoad();
 
@@ -104,16 +111,18 @@ public class PostsCommentsFragment extends SherlockListFragment implements Loade
 	}
 
 	@Override
-	public void onLoadFinished(Loader<ArrayList<CommentsData>> loader, ArrayList<CommentsData> data){
+	public void onLoadFinished(Loader<ArrayList<CommentsData>> loader, ArrayList<CommentsData> data)
+	{
 		comments.addAll(data);
 		adapter.notifyDataSetChanged();
-		
+
 		if(getSherlockActivity() != null)
 			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
 	}
 
 	@Override
-	public void onLoaderReset(Loader<ArrayList<CommentsData>> loader){
+	public void onLoaderReset(Loader<ArrayList<CommentsData>> loader)
+	{
 
 	}
 

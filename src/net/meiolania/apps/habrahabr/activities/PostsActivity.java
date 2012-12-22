@@ -32,65 +32,73 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.view.MenuItem;
 
-public class PostsActivity extends AbstractionActivity{
-	
-    @Override
-    protected void onCreate(Bundle savedInstanceState){
-    	super.onCreate(savedInstanceState);
-    	
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        	
-        showActionBar();
-    }
-
-    private void showActionBar(){
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(R.string.posts);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        
-        Preferences preferences = Preferences.getInstance(this);
-        int selectedTab = preferences.getPostsDefaultTab();
-        
-        /* Best tab */
-        Tab tab = actionBar.newTab()
-        				   .setText(R.string.best)
-        				   .setTag("best")
-        				   .setTabListener(new TabListener<PostsBestFragment>(this, "best", PostsBestFragment.class));
-        actionBar.addTab(tab, (selectedTab == 0 ? true : false));
-        
-        /* Thematic tab */
-        tab = actionBar.newTab()
-        			   .setText(R.string.thematic)
-        			   .setTag("thematic")
-        			   .setTabListener(new TabListener<PostsThematicFragment>(this, "thematic", PostsThematicFragment.class));
-        actionBar.addTab(tab, (selectedTab == 1 ? true : false));
-        
-        /* Corporate tab */
-        tab = actionBar.newTab()
-        			   .setText(R.string.corporate)
-        			   .setTag("corporate")
-        			   .setTabListener(new TabListener<PostsCorporateFragment>(this, "corporate", PostsCorporateFragment.class));
-        actionBar.addTab(tab, (selectedTab == 2 ? true : false));
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch(item.getItemId()){
-            case android.R.id.home:
-                Intent intent = new Intent(this, DashboardActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+public class PostsActivity extends AbstractionActivity
+{
 
 	@Override
-	protected OnClickListener getConnectionDialogListener(){
-		return new OnClickListener(){
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
+		showActionBar();
+	}
+
+	private void showActionBar()
+	{
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setTitle(R.string.posts);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+		Preferences preferences = Preferences.getInstance(this);
+		int selectedTab = preferences.getPostsDefaultTab();
+
+		/* Best tab */
+		Tab tab = actionBar.newTab()
+						   .setText(R.string.best)
+						   .setTag("best")
+						   .setTabListener(new TabListener<PostsBestFragment>(this, "best", PostsBestFragment.class));
+		actionBar.addTab(tab, (selectedTab == 0 ? true : false));
+
+		/* Thematic tab */
+		tab = actionBar.newTab()
+					   .setText(R.string.thematic)
+					   .setTag("thematic")
+					   .setTabListener(new TabListener<PostsThematicFragment>(this, "thematic", PostsThematicFragment.class));
+		actionBar.addTab(tab, (selectedTab == 1 ? true : false));
+
+		/* Corporate tab */
+		tab = actionBar.newTab()
+					   .setText(R.string.corporate)
+					   .setTag("corporate")
+					   .setTabListener(new TabListener<PostsCorporateFragment>(this, "corporate", PostsCorporateFragment.class));
+		actionBar.addTab(tab, (selectedTab == 2 ? true : false));
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch(item.getItemId())
+		{
+			case android.R.id.home:
+				Intent intent = new Intent(this, DashboardActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected OnClickListener getConnectionDialogListener()
+	{
+		return new OnClickListener()
+		{
 			@Override
-			public void onClick(DialogInterface dialog, int which){
+			public void onClick(DialogInterface dialog, int which)
+			{
 				dialog.dismiss();
 			}
 		};

@@ -30,26 +30,31 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-public class HubsLoader extends AsyncTaskLoader<ArrayList<HubsData>>{
+public class HubsLoader extends AsyncTaskLoader<ArrayList<HubsData>>
+{
 	public final static String TAG = HubsLoader.class.getName();
 	private String url;
 	private static int page;
 
-	public HubsLoader(Context context, String url){
+	public HubsLoader(Context context, String url)
+	{
 		super(context);
 
 		this.url = url;
 	}
 
-	public static void setPage(int page){
+	public static void setPage(int page)
+	{
 		HubsLoader.page = page;
 	}
 
 	@Override
-	public ArrayList<HubsData> loadInBackground(){
+	public ArrayList<HubsData> loadInBackground()
+	{
 		ArrayList<HubsData> data = new ArrayList<HubsData>();
 
-		try{
+		try
+		{
 			String readyUrl = url.replace("%page%", String.valueOf(page));
 
 			Log.i(TAG, "Loading a page: " + readyUrl);
@@ -58,7 +63,8 @@ public class HubsLoader extends AsyncTaskLoader<ArrayList<HubsData>>{
 
 			Elements hubs = document.select("div.hub");
 
-			for(Element hub : hubs){
+			for(Element hub : hubs)
+			{
 				HubsData hubsData = new HubsData();
 
 				Element index = hub.select("div.habraindex").first();
@@ -73,7 +79,8 @@ public class HubsLoader extends AsyncTaskLoader<ArrayList<HubsData>>{
 				data.add(hubsData);
 			}
 		}
-		catch(IOException e){
+		catch(IOException e)
+		{
 		}
 
 		return data;

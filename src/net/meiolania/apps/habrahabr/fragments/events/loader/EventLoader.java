@@ -30,26 +30,31 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-public class EventLoader extends AsyncTaskLoader<ArrayList<EventsData>>{
+public class EventLoader extends AsyncTaskLoader<ArrayList<EventsData>>
+{
 	public final static String TAG = EventLoader.class.getName();
 	private String url;
 	private static int page;
 
-	public EventLoader(Context context, String url){
+	public EventLoader(Context context, String url)
+	{
 		super(context);
 
 		this.url = url;
 	}
 
-	public static void setPage(int page){
+	public static void setPage(int page)
+	{
 		EventLoader.page = page;
 	}
 
 	@Override
-	public ArrayList<EventsData> loadInBackground(){
+	public ArrayList<EventsData> loadInBackground()
+	{
 		ArrayList<EventsData> data = new ArrayList<EventsData>();
 
-		try{
+		try
+		{
 			String readyUrl = url.replace("%page%", String.valueOf(page));
 
 			Log.i(TAG, "Loading a page: " + readyUrl);
@@ -58,11 +63,12 @@ public class EventLoader extends AsyncTaskLoader<ArrayList<EventsData>>{
 
 			Elements events = document.select("div.event");
 
-			for(Element event : events){
+			for(Element event : events)
+			{
 				EventsData eventsData = new EventsData();
 
 				Element title = event.select("h1.title > a").first();
-				//Element detail = event.select("div.detail").first();
+				// Element detail = event.select("div.detail").first();
 				Element text = event.select("div.text").first();
 				Element month = event.select("div.date > div.month").first();
 				Element day = event.select("div.date > div.day").first();
@@ -70,7 +76,7 @@ public class EventLoader extends AsyncTaskLoader<ArrayList<EventsData>>{
 
 				eventsData.setTitle(title.text());
 				eventsData.setUrl(title.attr("abs:href"));
-				//eventsData.setDetail(detail.text());
+				// eventsData.setDetail(detail.text());
 				eventsData.setText(text.text());
 				eventsData.setDate(day.text() + " " + month.text());
 				eventsData.setHubs(hubs.text());
@@ -78,7 +84,8 @@ public class EventLoader extends AsyncTaskLoader<ArrayList<EventsData>>{
 				data.add(eventsData);
 			}
 		}
-		catch(IOException e){
+		catch(IOException e)
+		{
 		}
 
 		return data;

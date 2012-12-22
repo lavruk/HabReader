@@ -28,25 +28,29 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-public class QaShowLoader extends AsyncTaskLoader<QaFullData>{
+public class QaShowLoader extends AsyncTaskLoader<QaFullData>
+{
 	public final static String TAG = QaShowLoader.class.getName();
 	private String url;
 
-	public QaShowLoader(Context context, String url){
+	public QaShowLoader(Context context, String url)
+	{
 		super(context);
 
 		this.url = url;
 	}
 
 	@Override
-	public QaFullData loadInBackground(){
+	public QaFullData loadInBackground()
+	{
 		QaFullData data = new QaFullData();
 
-		try{
+		try
+		{
 			Log.i(TAG, "Loading a page: " + url);
 
 			Document document = Jsoup.connect(url).get();
-			
+
 			Element title = document.select("span.post_title").first();
 			Element hubs = document.select("div.hubs").first();
 			Element content = document.select("div.content").first();
@@ -63,7 +67,8 @@ public class QaShowLoader extends AsyncTaskLoader<QaFullData>{
 			data.setAuthor(author.text());
 			data.setAnswers(answers.text());
 		}
-		catch(IOException e){
+		catch(IOException e)
+		{
 		}
 
 		return data;

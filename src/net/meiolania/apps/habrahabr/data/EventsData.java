@@ -16,7 +16,8 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.data;
 
-public class EventsData{
+public class EventsData
+{
 	protected String title;
 	protected String detail;
 	protected String text;
@@ -24,51 +25,63 @@ public class EventsData{
 	protected String url;
 	protected String hubs;
 
-	public String getUrl(){
+	public String getUrl()
+	{
 		return url;
 	}
 
-	public void setUrl(String url){
+	public void setUrl(String url)
+	{
 		this.url = url;
 	}
 
-	public String getTitle(){
+	public String getTitle()
+	{
 		return title;
 	}
 
-	public void setTitle(String title){
+	public void setTitle(String title)
+	{
 		this.title = title;
 	}
 
-	public String getDetail(){
+	public String getDetail()
+	{
 		return detail;
 	}
 
-	public void setDetail(String detail){
+	public void setDetail(String detail)
+	{
 		this.detail = detail;
 	}
 
-	public String getText(){
+	public String getText()
+	{
 		return text;
 	}
 
-	public void setText(String text){
+	public void setText(String text)
+	{
 		this.text = text;
 	}
 
-	public String getDate(){
+	public String getDate()
+	{
 		return date;
 	}
 
-	public void setDate(String date){
+	public void setDate(String date)
+	{
 		this.date = date;
 	}
-	
-	public void setHubs(String hubs){
+
+	public void setHubs(String hubs)
+	{
 		this.hubs = hubs;
 	}
-	
-	public String getHubs(){
+
+	public String getHubs()
+	{
 		return hubs;
 	}
 

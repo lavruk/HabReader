@@ -34,10 +34,12 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class DashboardActivity extends AbstractionActivity implements OnClickListener{
+public class DashboardActivity extends AbstractionActivity implements OnClickListener
+{
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState){
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.dashboard_activity);
@@ -45,20 +47,25 @@ public class DashboardActivity extends AbstractionActivity implements OnClickLis
 		showActionBar();
 	}
 
-	private void showActionBar(){
+	private void showActionBar()
+	{
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setHomeButtonEnabled(false);
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu){
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
 		MenuInflater menuInflater = getSupportMenuInflater();
 		menuInflater.inflate(R.menu.dashboard_activity, menu);
 
 		final EditText searchQuery = (EditText) menu.findItem(R.id.search).getActionView().findViewById(R.id.search_query);
-		searchQuery.setOnEditorActionListener(new OnEditorActionListener(){
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
-				if(actionId == EditorInfo.IME_ACTION_SEARCH){
+		searchQuery.setOnEditorActionListener(new OnEditorActionListener()
+		{
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+			{
+				if(actionId == EditorInfo.IME_ACTION_SEARCH)
+				{
 					Intent intent = new Intent(DashboardActivity.this, PostsSearchActivity.class);
 					intent.putExtra(PostsSearchActivity.EXTRA_QUERY, searchQuery.getText().toString());
 					startActivity(intent);
@@ -72,8 +79,10 @@ public class DashboardActivity extends AbstractionActivity implements OnClickLis
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
-		switch(item.getItemId()){
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch(item.getItemId())
+		{
 			case R.id.preferences:
 				startActivity(new Intent(this, PreferencesActivity.class));
 				break;
@@ -86,8 +95,10 @@ public class DashboardActivity extends AbstractionActivity implements OnClickLis
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void onClick(View v){
-		switch(v.getId()){
+	public void onClick(View v)
+	{
+		switch(v.getId())
+		{
 			case R.id.posts:
 				startActivity(new Intent(this, PostsActivity.class));
 				break;
@@ -110,10 +121,13 @@ public class DashboardActivity extends AbstractionActivity implements OnClickLis
 	}
 
 	@Override
-	protected android.content.DialogInterface.OnClickListener getConnectionDialogListener(){
-		return new android.content.DialogInterface.OnClickListener(){
+	protected android.content.DialogInterface.OnClickListener getConnectionDialogListener()
+	{
+		return new android.content.DialogInterface.OnClickListener()
+		{
 			@Override
-			public void onClick(DialogInterface dialog, int which){
+			public void onClick(DialogInterface dialog, int which)
+			{
 				dialog.dismiss();
 			}
 		};

@@ -36,7 +36,9 @@ import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
-public abstract class AbstractionEventsFragment extends SherlockListFragment implements OnScrollListener, LoaderCallbacks<ArrayList<EventsData>>{
+public abstract class AbstractionEventsFragment extends SherlockListFragment implements OnScrollListener,
+		LoaderCallbacks<ArrayList<EventsData>>
+{
 	protected int page;
 	protected boolean isLoadData;
 	protected ArrayList<EventsData> events;
@@ -48,19 +50,21 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
 	protected abstract int getLoaderId();
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState){
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
 		super.onActivityCreated(savedInstanceState);
 
 		setRetainInstance(true);
 
-		if(adapter == null){
+		if(adapter == null)
+		{
 			events = new ArrayList<EventsData>();
 			adapter = new EventsAdapter(getSherlockActivity(), events);
 		}
 
 		setListAdapter(adapter);
 		setListShown(true);
-		
+
 		getListView().setDivider(null);
 		getListView().setDividerHeight(0);
 
@@ -68,11 +72,13 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
 	}
 
 	@Override
-	public void onListItemClick(ListView list, View view, int position, long id){
+	public void onListItemClick(ListView list, View view, int position, long id)
+	{
 		showEvent(position);
 	}
 
-	protected void showEvent(int position){
+	protected void showEvent(int position)
+	{
 		EventsData data = events.get(position);
 
 		Intent intent = new Intent(getSherlockActivity(), EventsShowActivity.class);
@@ -82,10 +88,12 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
 		startActivity(intent);
 	}
 
-	protected void restartLoading(){
-		if(ConnectionUtils.isConnected(getSherlockActivity())){
+	protected void restartLoading()
+	{
+		if(ConnectionUtils.isConnected(getSherlockActivity()))
+		{
 			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-			
+
 			EventLoader.setPage(++page);
 
 			getSherlockActivity().getSupportLoaderManager().restartLoader(getLoaderId(), null, this);
@@ -94,17 +102,20 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
 		}
 	}
 
-	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount){
+	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+	{
 		if((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData && !noMoreData)
 			restartLoading();
 	}
 
-	public void onScrollStateChanged(AbsListView view, int scrollState){
+	public void onScrollStateChanged(AbsListView view, int scrollState)
+	{
 
 	}
 
 	@Override
-	public Loader<ArrayList<EventsData>> onCreateLoader(int id, Bundle args){
+	public Loader<ArrayList<EventsData>> onCreateLoader(int id, Bundle args)
+	{
 		EventLoader loader = new EventLoader(getSherlockActivity(), getUrl());
 		loader.forceLoad();
 
@@ -112,13 +123,15 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
 	}
 
 	@Override
-	public void onLoadFinished(Loader<ArrayList<EventsData>> loader, ArrayList<EventsData> data){
-		if(data.isEmpty()){
+	public void onLoadFinished(Loader<ArrayList<EventsData>> loader, ArrayList<EventsData> data)
+	{
+		if(data.isEmpty())
+		{
 			noMoreData = true;
-			
+
 			Toast.makeText(getSherlockActivity(), R.string.no_more_pages, Toast.LENGTH_SHORT).show();
 		}
-		
+
 		events.addAll(data);
 		adapter.notifyDataSetChanged();
 
@@ -129,7 +142,8 @@ public abstract class AbstractionEventsFragment extends SherlockListFragment imp
 	}
 
 	@Override
-	public void onLoaderReset(Loader<ArrayList<EventsData>> loader){
+	public void onLoaderReset(Loader<ArrayList<EventsData>> loader)
+	{
 
 	}
 

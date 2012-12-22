@@ -28,7 +28,8 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-public class CompaniesShowLoader extends AsyncTaskLoader<CompanyFullData>{
+public class CompaniesShowLoader extends AsyncTaskLoader<CompanyFullData>
+{
 	public final static String TAG = CompaniesShowLoader.class.getName();
 
 	public final static int INFO_DATE = 0;
@@ -42,17 +43,20 @@ public class CompaniesShowLoader extends AsyncTaskLoader<CompanyFullData>{
 
 	private String url;
 
-	public CompaniesShowLoader(Context context, String url){
+	public CompaniesShowLoader(Context context, String url)
+	{
 		super(context);
 
 		this.url = url;
 	}
 
 	@Override
-	public CompanyFullData loadInBackground(){
+	public CompanyFullData loadInBackground()
+	{
 		CompanyFullData company = new CompanyFullData();
 
-		try{
+		try
+		{
 			Log.i(TAG, "Loading a page: " + url);
 
 			Document document = Jsoup.connect(url).get();
@@ -60,8 +64,10 @@ public class CompaniesShowLoader extends AsyncTaskLoader<CompanyFullData>{
 			Elements datas = document.select("div.company_profile > dl");
 
 			int i = 0;
-			for(Element data : datas){
-				switch(i){
+			for(Element data : datas)
+			{
+				switch(i)
+				{
 					case INFO_DATE:
 						company.setDate(data.getElementsByTag("dd").first().text());
 						break;
@@ -81,31 +87,32 @@ public class CompaniesShowLoader extends AsyncTaskLoader<CompanyFullData>{
 						company.setSummary(data.select("dd.summary").first().html());
 						break;
 					case INFO_MANAGEMENT:
-						
+
 						// TODO: think of a new algorithm
 						Elements managers = data.getElementsByTag("dd");
 						StringBuilder managerContent = new StringBuilder();
-						
+
 						for(Element manager : managers)
 							managerContent.append(manager.html());
 						company.setManagement(managerContent.toString());
-						
+
 						break;
 					case INFO_DEVELOPMENT_STAGES:
-						
+
 						Elements stages = data.getElementsByTag("dd");
 						StringBuilder stagesContent = new StringBuilder();
-						
+
 						for(Element stage : stages)
 							stagesContent.append(stage.html());
 						company.setDevelopmentStages(stagesContent.toString());
-						
-					break;
+
+						break;
 				}
 				i++;
 			}
 		}
-		catch(IOException e){
+		catch(IOException e)
+		{
 		}
 
 		return company;

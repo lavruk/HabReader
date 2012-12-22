@@ -29,25 +29,30 @@ import net.meiolania.apps.habrahabr.data.CommentsData;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
-public class QaCommentsLoader extends AsyncTaskLoader<ArrayList<CommentsData>>{
+public class QaCommentsLoader extends AsyncTaskLoader<ArrayList<CommentsData>>
+{
 	private String url;
 
-	public QaCommentsLoader(Context context, String url){
+	public QaCommentsLoader(Context context, String url)
+	{
 		super(context);
 
 		this.url = url;
 	}
 
 	@Override
-	public ArrayList<CommentsData> loadInBackground(){
+	public ArrayList<CommentsData> loadInBackground()
+	{
 		ArrayList<CommentsData> data = new ArrayList<CommentsData>();
 
-		try{
+		try
+		{
 			Document document = Jsoup.connect(url).get();
-			
+
 			Elements answers = document.select("div.answer");
-			
-			for(Element answer : answers){
+
+			for(Element answer : answers)
+			{
 				CommentsData commentsData = new CommentsData();
 
 				Element name = answer.select("a.username").first();
@@ -65,8 +70,9 @@ public class QaCommentsLoader extends AsyncTaskLoader<ArrayList<CommentsData>>{
 				data.add(commentsData);
 
 				Elements comments = answer.select("div.comment_item");
-				
-				for(Element comment : comments){
+
+				for(Element comment : comments)
+				{
 					commentsData = new CommentsData();
 
 					name = comment.select("span.info > a").first();
@@ -83,7 +89,8 @@ public class QaCommentsLoader extends AsyncTaskLoader<ArrayList<CommentsData>>{
 				}
 			}
 		}
-		catch(IOException e){
+		catch(IOException e)
+		{
 		}
 
 		return data;

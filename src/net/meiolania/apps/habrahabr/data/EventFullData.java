@@ -16,41 +16,50 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.data;
 
-public class EventFullData extends EventsData{
+public class EventFullData extends EventsData
+{
 	protected String location;
 	protected String pay;
 	protected String site;
 	protected String logo;
 
-	public String getLogo(){
+	public String getLogo()
+	{
 		return logo;
 	}
 
-	public void setLogo(String logo){
+	public void setLogo(String logo)
+	{
 		this.logo = logo;
 	}
 
-	public String getLocation(){
+	public String getLocation()
+	{
 		return location;
 	}
 
-	public void setLocation(String location){
+	public void setLocation(String location)
+	{
 		this.location = location;
 	}
 
-	public String getPay(){
+	public String getPay()
+	{
 		return pay;
 	}
 
-	public void setPay(String pay){
+	public void setPay(String pay)
+	{
 		this.pay = pay;
 	}
 
-	public String getSite(){
+	public String getSite()
+	{
 		return site;
 	}
 
-	public void setSite(String site){
+	public void setSite(String site)
+	{
 		this.site = site;
 	}
 

@@ -29,12 +29,14 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class QaAdapter extends BaseAdapter{
+public class QaAdapter extends BaseAdapter
+{
 	private ArrayList<QaData> questions;
 	private Context context;
 	private boolean additionalLayout = false;
 
-	public QaAdapter(Context context, ArrayList<QaData> questions){
+	public QaAdapter(Context context, ArrayList<QaData> questions)
+	{
 		this.context = context;
 		this.questions = questions;
 
@@ -42,23 +44,28 @@ public class QaAdapter extends BaseAdapter{
 		this.additionalLayout = preferences.getAdditionalQa();
 	}
 
-	public int getCount(){
+	public int getCount()
+	{
 		return questions.size();
 	}
 
-	public QaData getItem(int position){
+	public QaData getItem(int position)
+	{
 		return questions.get(position);
 	}
 
-	public long getItemId(int position){
+	public long getItemId(int position)
+	{
 		return position;
 	}
 
-	public View getView(int position, View convertView, ViewGroup parent){
+	public View getView(int position, View convertView, ViewGroup parent)
+	{
 		QaData data = getItem(position);
 
 		View view = convertView;
-		if(view == null){
+		if(view == null)
+		{
 			LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = layoutInflater.inflate(R.layout.qa_list_row, null);
 		}
@@ -73,13 +80,15 @@ public class QaAdapter extends BaseAdapter{
 
 		LinearLayout qaInfo = (LinearLayout) view.findViewById(R.id.qa_info);
 
-		if(additionalLayout){
+		if(additionalLayout)
+		{
 			hubs.setText(data.getHubs());
 			author.setText(data.getAuthor());
 			date.setText(data.getDate());
 			answers.setText(data.getAnswers());
 		}
-		else{
+		else
+		{
 			hubs.setVisibility(View.GONE);
 			qaInfo.setVisibility(View.GONE);
 		}

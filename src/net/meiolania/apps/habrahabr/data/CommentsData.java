@@ -16,7 +16,8 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.data;
 
-public class CommentsData{
+public class CommentsData
+{
 	public final static int MAX_LEVEL = 7;
 	protected String url;
 	protected String author;
@@ -25,51 +26,63 @@ public class CommentsData{
 	protected String score;
 	protected int level;
 
-	public String getAuthorUrl(){
+	public String getAuthorUrl()
+	{
 		return authorUrl;
 	}
 
-	public void setAuthorUrl(String url){
+	public void setAuthorUrl(String url)
+	{
 		this.authorUrl = url;
 	}
 
-	public String getUrl(){
+	public String getUrl()
+	{
 		return url;
 	}
 
-	public void setUrl(String url){
+	public void setUrl(String url)
+	{
 		this.url = url;
 	}
 
-	public String getAuthor(){
+	public String getAuthor()
+	{
 		return author;
 	}
 
-	public void setAuthor(String author){
+	public void setAuthor(String author)
+	{
 		this.author = author;
 	}
 
-	public String getComment(){
+	public String getComment()
+	{
 		return comment;
 	}
 
-	public void setComment(String comment){
+	public void setComment(String comment)
+	{
 		this.comment = comment;
 	}
 
-	public String getScore(){
+	public String getScore()
+	{
 		return score;
 	}
 
-	public void setScore(String score){
+	public void setScore(String score)
+	{
 		this.score = score;
 	}
 
-	public int getLevel(){
+	public int getLevel()
+	{
 		return level;
 	}
 
-	public void setLevel(int level){
+	public void setLevel(int level)
+	{
 		this.level = level;
 	}
 

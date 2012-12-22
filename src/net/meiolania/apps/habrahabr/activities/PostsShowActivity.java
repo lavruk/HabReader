@@ -29,77 +29,85 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.view.MenuItem;
 
-public class PostsShowActivity extends AbstractionActivity{
-    public final static String EXTRA_URL = "url";
-    public final static String EXTRA_TITLE = "title";
-    private String url;
-    private String title;
-    
-    @Override
-    protected void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        
-        loadExtras();
-        showActionBar();
-    }
-    
-    private void loadExtras(){
-        url = getIntent().getStringExtra(EXTRA_URL);
-        title = getIntent().getStringExtra(EXTRA_TITLE);
-    }
-    
-    private void showActionBar(){
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(title);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        
-        /*
-         * Post tab
-         */
-        Bundle arguments = new Bundle();
-        arguments.putString(PostShowFragment.URL_ARGUMENT, url);
-        
-        Tab tab = actionBar.newTab().setText(R.string.post).setTag("post").setTabListener(new TabListener<PostShowFragment>(this, 
-        																													"post", 
-        																													PostShowFragment.class, 
-        																													arguments));
-        actionBar.addTab(tab);
-        
-        
-        /*
-         * Comments tab
-         */
-        arguments = new Bundle();
-        arguments.putString(PostsCommentsFragment.URL_ARGUMENT, url);
-        
-        tab = actionBar.newTab().setText(R.string.comments).setTag("comments").setTabListener(new TabListener<PostsCommentsFragment>(this, 
-        																												"comments", 
-        																												PostsCommentsFragment.class, 
-        																												arguments));
-        actionBar.addTab(tab);
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch(item.getItemId()){
-            case android.R.id.home:
-                Intent intent = new Intent(this, PostsActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+public class PostsShowActivity extends AbstractionActivity
+{
+	public final static String EXTRA_URL = "url";
+	public final static String EXTRA_TITLE = "title";
+	private String url;
+	private String title;
 
 	@Override
-	protected OnClickListener getConnectionDialogListener(){
-		return new OnClickListener(){
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+
+		loadExtras();
+		showActionBar();
+	}
+
+	private void loadExtras()
+	{
+		url = getIntent().getStringExtra(EXTRA_URL);
+		title = getIntent().getStringExtra(EXTRA_TITLE);
+	}
+
+	private void showActionBar()
+	{
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setTitle(title);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+		/*
+		 * Post tab
+		 */
+		Bundle arguments = new Bundle();
+		arguments.putString(PostShowFragment.URL_ARGUMENT, url);
+
+		Tab tab = actionBar.newTab()
+						   .setText(R.string.post)
+						   .setTag("post")
+						   .setTabListener(new TabListener<PostShowFragment>(this, "post", PostShowFragment.class, arguments));
+		actionBar.addTab(tab);
+
+		/*
+		 * Comments tab
+		 */
+		arguments = new Bundle();
+		arguments.putString(PostsCommentsFragment.URL_ARGUMENT, url);
+
+		tab = actionBar.newTab()
+					   .setText(R.string.comments)
+					   .setTag("comments")
+					   .setTabListener(new TabListener<PostsCommentsFragment>(this, "comments", PostsCommentsFragment.class, arguments));
+		actionBar.addTab(tab);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch(item.getItemId())
+		{
+			case android.R.id.home:
+				Intent intent = new Intent(this, PostsActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected OnClickListener getConnectionDialogListener()
+	{
+		return new OnClickListener()
+		{
 			@Override
-			public void onClick(DialogInterface dialog, int which){
+			public void onClick(DialogInterface dialog, int which)
+			{
 				finish();
 			}
 		};
 	}
-    
+
 }

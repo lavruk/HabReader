@@ -29,12 +29,14 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class EventsAdapter extends BaseAdapter{
+public class EventsAdapter extends BaseAdapter
+{
 	private ArrayList<EventsData> events;
 	private Context context;
 	private boolean additionalLayout = false;
 
-	public EventsAdapter(Context context, ArrayList<EventsData> events){
+	public EventsAdapter(Context context, ArrayList<EventsData> events)
+	{
 		this.context = context;
 		this.events = events;
 
@@ -42,23 +44,28 @@ public class EventsAdapter extends BaseAdapter{
 		this.additionalLayout = preferences.getAdditionalEvents();
 	}
 
-	public int getCount(){
+	public int getCount()
+	{
 		return events.size();
 	}
 
-	public EventsData getItem(int position){
+	public EventsData getItem(int position)
+	{
 		return events.get(position);
 	}
 
-	public long getItemId(int position){
+	public long getItemId(int position)
+	{
 		return position;
 	}
 
-	public View getView(int position, View convertView, ViewGroup parent){
+	public View getView(int position, View convertView, ViewGroup parent)
+	{
 		EventsData data = getItem(position);
 
 		View view = convertView;
-		if(view == null){
+		if(view == null)
+		{
 			LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = layoutInflater.inflate(R.layout.events_list_row, null);
 		}
@@ -69,17 +76,20 @@ public class EventsAdapter extends BaseAdapter{
 		TextView text = (TextView) view.findViewById(R.id.event_text);
 		TextView date = (TextView) view.findViewById(R.id.event_date);
 		TextView hubs = (TextView) view.findViewById(R.id.event_hubs);
-		
+
 		LinearLayout info = (LinearLayout) view.findViewById(R.id.event_info);
-		
-		if(additionalLayout){
+
+		if(additionalLayout)
+		{
 			text.setText(data.getText());
 			date.setText(data.getDate());
 			hubs.setText(data.getHubs());
-		}else{
+		}
+		else
+		{
 			text.setVisibility(View.GONE);
 			info.setVisibility(View.GONE);
-		}	
+		}
 
 		return view;
 	}

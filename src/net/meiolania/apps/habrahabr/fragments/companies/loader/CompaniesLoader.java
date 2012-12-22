@@ -30,33 +30,39 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-public class CompaniesLoader extends AsyncTaskLoader<ArrayList<CompaniesData>>{
+public class CompaniesLoader extends AsyncTaskLoader<ArrayList<CompaniesData>>
+{
 	public final static String TAG = CompaniesLoader.class.getName();
 	public final static String URL = "http://habrahabr.ru/companies/page%d/";
 	private static int page;
 
-	public CompaniesLoader(Context context){
+	public CompaniesLoader(Context context)
+	{
 		super(context);
 	}
 
-	public static void setPage(int page){
+	public static void setPage(int page)
+	{
 		CompaniesLoader.page = page;
 	}
 
 	@Override
-	public ArrayList<CompaniesData> loadInBackground(){
+	public ArrayList<CompaniesData> loadInBackground()
+	{
 		ArrayList<CompaniesData> data = new ArrayList<CompaniesData>();
 
-		try{
+		try
+		{
 			String readyUrl = String.format(URL, page);
 
 			Log.i(TAG, "Loading a page: " + readyUrl);
 
 			Document document = Jsoup.connect(readyUrl).get();
-			
+
 			Elements companies = document.select("div.company");
 
-			for(Element company : companies){
+			for(Element company : companies)
+			{
 				CompaniesData companiesData = new CompaniesData();
 
 				Element icon = company.select("div.icon > img").first();
@@ -74,7 +80,8 @@ public class CompaniesLoader extends AsyncTaskLoader<ArrayList<CompaniesData>>{
 				data.add(companiesData);
 			}
 		}
-		catch(IOException e){
+		catch(IOException e)
+		{
 		}
 
 		return data;

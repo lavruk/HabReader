@@ -30,35 +30,41 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-public class PostsLoader extends AsyncTaskLoader<ArrayList<PostsData>>{
+public class PostsLoader extends AsyncTaskLoader<ArrayList<PostsData>>
+{
 	public final static String TAG = PostsLoader.class.getName();
 	private String url;
 	private static int page;
 
-	public PostsLoader(Context context, String url){
+	public PostsLoader(Context context, String url)
+	{
 		super(context);
 
 		this.url = url;
 	}
 
-	public static void setPage(int page){
+	public static void setPage(int page)
+	{
 		PostsLoader.page = page;
 	}
 
 	@Override
-	public ArrayList<PostsData> loadInBackground(){
+	public ArrayList<PostsData> loadInBackground()
+	{
 		ArrayList<PostsData> data = new ArrayList<PostsData>();
 
-		try{
+		try
+		{
 			String readyUrl = url.replace("%page%", String.valueOf(page));
 
 			Log.i(TAG, "Loading a page: " + readyUrl);
 
 			Document document = Jsoup.connect(readyUrl).get();
-			
+
 			Elements posts = document.select("div.post");
 
-			for(Element post : posts){
+			for(Element post : posts)
+			{
 				PostsData postsData = new PostsData();
 
 				Element postTitle = post.select("a.post_title").first();
@@ -79,7 +85,8 @@ public class PostsLoader extends AsyncTaskLoader<ArrayList<PostsData>>{
 				data.add(postsData);
 			}
 		}
-		catch(IOException e){
+		catch(IOException e)
+		{
 		}
 
 		return data;

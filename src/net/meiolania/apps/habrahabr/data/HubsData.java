@@ -16,41 +16,50 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.data;
 
-public class HubsData{
+public class HubsData
+{
 	protected String title;
 	protected String url;
 	protected String index;
 	protected String stat;
 
-	public String getTitle(){
+	public String getTitle()
+	{
 		return title;
 	}
 
-	public void setTitle(String title){
+	public void setTitle(String title)
+	{
 		this.title = title;
 	}
 
-	public String getUrl(){
+	public String getUrl()
+	{
 		return url;
 	}
 
-	public void setUrl(String url){
+	public void setUrl(String url)
+	{
 		this.url = url;
 	}
 
-	public String getIndex(){
+	public String getIndex()
+	{
 		return index;
 	}
 
-	public void setIndex(String index){
+	public void setIndex(String index)
+	{
 		this.index = index;
 	}
 
-	public String getStat(){
+	public String getStat()
+	{
 		return stat;
 	}
 
-	public void setStat(String stat){
+	public void setStat(String stat)
+	{
 		this.stat = stat;
 	}
 

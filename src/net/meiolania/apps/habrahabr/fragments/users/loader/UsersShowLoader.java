@@ -27,21 +27,25 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-public class UsersShowLoader extends AsyncTaskLoader<UsersFullData>{
+public class UsersShowLoader extends AsyncTaskLoader<UsersFullData>
+{
 	public final static String TAG = UsersShowLoader.class.getName();
 	private String url;
 
-	public UsersShowLoader(Context context, String url){
+	public UsersShowLoader(Context context, String url)
+	{
 		super(context);
 
 		this.url = url;
 	}
 
 	@Override
-	public UsersFullData loadInBackground(){
+	public UsersFullData loadInBackground()
+	{
 		UsersFullData data = new UsersFullData();
 
-		try{
+		try
+		{
 			Log.i(TAG, "Loading a page: " + url);
 
 			Document document = Jsoup.connect(url).get();
@@ -62,7 +66,8 @@ public class UsersShowLoader extends AsyncTaskLoader<UsersFullData>{
 			data.setSummary(summary != null ? summary.text() : "");
 			data.setInterests(interests != null ? interests.text() : "");
 		}
-		catch(IOException e){
+		catch(IOException e)
+		{
 		}
 
 		return data;

@@ -29,8 +29,9 @@ import android.support.v4.content.AsyncTaskLoader;
 
 public class EventShowLoader extends AsyncTaskLoader<EventFullData>{
 	public final static int INFO_LOCATION = 0;
-	public final static int INFO_PAY = 1;
-	public final static int INFO_SITE = 2;
+	public final static int INFO_PAY = 2;
+	public final static int INFO_SITE = 3;
+	public final static int INFO_DATE = 1;
 	private String url;
 
 	public EventShowLoader(Context context, String url){
@@ -46,22 +47,20 @@ public class EventShowLoader extends AsyncTaskLoader<EventFullData>{
 		try{
 			Document document = Jsoup.connect(url).get();
 
-			Element day = document.select("div.date > div.day").first();
-			Element month = document.select("div.date > div.month").first();
-			// TODO: add logo
-			Element logo = document.select("div.logo > img").first();
-			Element title = document.select("div.info_block > h1.title").first();
-			Element detail = document.select("div.info_block > div.detail").first();
-			Element description = document.select("div.info_block > div.description").first();
+			Element title = document.select("h1.title").first();
+			Element description = document.select("div.description").first();
 			Elements additionalInfo = document.select("div.info_block").first().getElementsByTag("dd");
 
-			Element location = null, pay = null, site = null;
+			Element location = null, pay = null, site = null, date = null;
 			// TODO: need to test this code more
 			int i = 0;
 			for(Element info : additionalInfo){
 				switch(i){
 					case INFO_LOCATION:
 						location = info;
+						break;
+					case INFO_DATE:
+						date = info;
 						break;
 					case INFO_PAY:
 						pay = info;
@@ -75,9 +74,7 @@ public class EventShowLoader extends AsyncTaskLoader<EventFullData>{
 
 			event.setTitle(title.text());
 			event.setUrl(url);
-			event.setDate(day.text() + " " + month.text());
-			// eventsFullData.setLogo(logo.attr("src"));
-			event.setDetail(detail.text());
+			event.setDate(date.text());
 			event.setText(description.text());
 			event.setPay(pay.text());
 			event.setLocation(location.text());

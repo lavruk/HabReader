@@ -18,31 +18,35 @@ package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.slidemenu.MenuFragment;
 import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.view.Window;
 import android.view.WindowManager;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
+import com.slidingmenu.lib.SlidingMenu;
 
 public abstract class AbstractionActivity extends SherlockFragmentActivity
 {
+	protected SlidingMenu slidingMenu;
 	protected PowerManager.WakeLock wakeLock;
-	Preferences preferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-		preferences = Preferences.getInstance(this);
+		Preferences preferences = Preferences.getInstance(this);
 		if(preferences.getFullScreen())
-		{
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		}
 
 		if(preferences.getKeepScreen())
 		{
@@ -60,11 +64,17 @@ public abstract class AbstractionActivity extends SherlockFragmentActivity
 			dialog.setCancelable(false);
 			dialog.show();
 		}
+		
+		showSlideMenu();
+		
+		getSupportActionBar().setHomeButtonEnabled(true);
+		setSupportProgressBarIndeterminateVisibility(false);
 	}
 
 	@Override
 	protected void onResume()
 	{
+		Preferences preferences = Preferences.getInstance(this);
 		if(preferences.getFullScreen())
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		else
@@ -80,6 +90,39 @@ public abstract class AbstractionActivity extends SherlockFragmentActivity
 			wakeLock.release();
 		
 		super.onPause();
+	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		if(slidingMenu.isMenuShowing())
+			slidingMenu.showContent();
+		else
+			super.onBackPressed();
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch(item.getItemId())
+		{
+			case android.R.id.home:
+				slidingMenu.showContent();
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	protected void showSlideMenu()
+	{
+		slidingMenu = new SlidingMenu(this);
+		slidingMenu.setMode(SlidingMenu.LEFT);
+		slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		slidingMenu.setFadeDegree(0.35f);
+		slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW | SlidingMenu.SLIDING_CONTENT);
+		slidingMenu.setMenu(R.layout.slide_menu);
+        
+        getSupportFragmentManager().beginTransaction().replace(R.id.slide_menu, new MenuFragment()).commit();
 	}
 
 	protected abstract OnClickListener getConnectionDialogListener();

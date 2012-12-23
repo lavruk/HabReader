@@ -18,17 +18,14 @@ package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.hubs.HubsFragment;
-import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
-import com.actionbarsherlock.view.MenuItem;
 
 public class HubsActivity extends AbstractionActivity implements OnNavigationListener
 {
@@ -53,23 +50,7 @@ public class HubsActivity extends AbstractionActivity implements OnNavigationLis
 	{
 		super.onCreate(savedInstanceState);
 
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-
 		showActionBar();
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		switch(item.getItemId())
-		{
-			case android.R.id.home:
-				Intent intent = new Intent(this, DashboardActivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(intent);
-				break;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	private void showActionBar()

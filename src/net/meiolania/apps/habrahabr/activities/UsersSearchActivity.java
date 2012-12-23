@@ -21,12 +21,11 @@ import java.net.URLEncoder;
 
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.users.UsersFragment;
-import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Window;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
@@ -41,8 +40,6 @@ public class UsersSearchActivity extends AbstractionActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
 		loadExtras();
 		showActionBar();

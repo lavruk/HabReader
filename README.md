@@ -18,7 +18,7 @@ HabReader это open source клиент для сайта [Habrahabr.ru](http:
 Разработчик
 ===========
 
-- Андрей Зайцев - <a.einsam@gmail.com>
+- [Андрей Зайцев](http://habrahabr.ru/users/aeinsam/)
 
 
 Используемые библиотеки
@@ -33,7 +33,8 @@ HabReader это open source клиент для сайта [Habrahabr.ru](http:
 Благодарность
 =============
 
-- Огромное спасибо [INCWADRA](http://habrahabr.ru/users/INCWADRA/) за его [HabraPack](https://github.com/Incwadra/HabraPack). В приложение используется именно его иконка :)
+- Выражаю огромную признательность [Сергею Иванову](http://habrahabr.ru/users/Falcon5F/) за его вклад в развитие приложения.
+- Огромное спасибо [Илье Черничкину](http://habrahabr.ru/users/INCWADRA/) за его [HabraPack](https://github.com/Incwadra/HabraPack).
 
 
 Лицензия

@@ -24,6 +24,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -53,9 +55,13 @@ public class QaShowActivity extends AbstractionActivity
 		{
 			case android.R.id.home:
 				Intent intent = new Intent(this, QaActivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(intent);
-				break;
+				if(NavUtils.shouldUpRecreateTask(this, intent))
+				{
+					TaskStackBuilder.create(this).addNextIntent(intent).startActivities();
+					finish();
+				}else
+					NavUtils.navigateUpTo(this, intent);
+				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}

@@ -26,6 +26,8 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
@@ -86,9 +88,13 @@ public class HubsSearchActivity extends AbstractionActivity
 		{
 			case android.R.id.home:
 				Intent intent = new Intent(this, HubsActivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(intent);
-				break;
+				if(NavUtils.shouldUpRecreateTask(this, intent))
+				{
+					TaskStackBuilder.create(this).addNextIntent(intent).startActivities();
+					finish();
+				}else
+					NavUtils.navigateUpTo(this, intent);
+				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}

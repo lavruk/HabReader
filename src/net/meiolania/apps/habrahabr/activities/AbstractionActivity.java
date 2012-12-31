@@ -28,17 +28,17 @@ import android.os.PowerManager;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.slidingmenu.lib.SlidingMenu;
+import com.slidingmenu.lib.app.SlidingFragmentActivity;
 
-public abstract class AbstractionActivity extends SherlockFragmentActivity
+public abstract class AbstractionActivity extends SlidingFragmentActivity
 {
 	protected SlidingMenu slidingMenu;
 	protected PowerManager.WakeLock wakeLock;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		
@@ -64,6 +64,11 @@ public abstract class AbstractionActivity extends SherlockFragmentActivity
 			dialog.setCancelable(false);
 			dialog.show();
 		}
+		
+		/*
+		 * Workaround for "java.lang.IllegalStateException: Both setBehindContentView must be called in onCreate in addition to setContentView."
+		 */
+		setContentView(R.layout.empty_for_slidemenu);
 		
 		showSlideMenu();
 		
@@ -96,7 +101,7 @@ public abstract class AbstractionActivity extends SherlockFragmentActivity
 	public void onBackPressed()
 	{
 		if(slidingMenu.isMenuShowing())
-			slidingMenu.showContent();
+			toggle();
 		else
 			super.onBackPressed();
 	}
@@ -107,7 +112,7 @@ public abstract class AbstractionActivity extends SherlockFragmentActivity
 		switch(item.getItemId())
 		{
 			case android.R.id.home:
-				slidingMenu.showContent();
+				toggle();
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -115,14 +120,16 @@ public abstract class AbstractionActivity extends SherlockFragmentActivity
 	
 	protected void showSlideMenu()
 	{
-		slidingMenu = new SlidingMenu(this);
+		setBehindContentView(R.layout.slide_menu);
+		
+		getSupportFragmentManager().beginTransaction().replace(R.id.slide_menu, new MenuFragment()).commit();
+		
+		slidingMenu = getSlidingMenu();
 		slidingMenu.setMode(SlidingMenu.LEFT);
 		slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 		slidingMenu.setFadeDegree(0.35f);
-		slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW | SlidingMenu.SLIDING_CONTENT);
+		slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		slidingMenu.setMenu(R.layout.slide_menu);
-        
-        getSupportFragmentManager().beginTransaction().replace(R.id.slide_menu, new MenuFragment()).commit();
 	}
 
 	protected abstract OnClickListener getConnectionDialogListener();

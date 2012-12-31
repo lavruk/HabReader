@@ -33,7 +33,7 @@ public class QaSearchActivity extends AbstractionActivity
 	private String query;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 

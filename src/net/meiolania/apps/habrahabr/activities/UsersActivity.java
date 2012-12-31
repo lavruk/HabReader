@@ -29,7 +29,7 @@ public class UsersActivity extends AbstractionActivity
 {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 

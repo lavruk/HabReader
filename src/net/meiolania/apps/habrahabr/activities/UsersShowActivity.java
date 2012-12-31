@@ -34,7 +34,7 @@ public class UsersShowActivity extends AbstractionActivity
 	private String url;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 

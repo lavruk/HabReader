@@ -46,7 +46,7 @@ public class HubsActivity extends AbstractionActivity implements OnNavigationLis
 	public final static int LIST_OTHERS = 14;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 

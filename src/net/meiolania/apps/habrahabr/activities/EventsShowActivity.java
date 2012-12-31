@@ -34,7 +34,7 @@ public class EventsShowActivity extends AbstractionActivity
 	private String title;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 

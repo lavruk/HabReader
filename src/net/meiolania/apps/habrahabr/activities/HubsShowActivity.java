@@ -35,7 +35,7 @@ public class HubsShowActivity extends AbstractionActivity
 	protected String title;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 

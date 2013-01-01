@@ -16,11 +16,13 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.fragments.posts;
 
+import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.PostsFullData;
 import net.meiolania.apps.habrahabr.fragments.posts.loader.PostShowLoader;
 import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import net.meiolania.apps.habrahabr.utils.IntentUtils;
+import net.meiolania.apps.habrahabr.utils.HabrWebClient;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -29,23 +31,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebSettings.ZoomDensity;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class PostShowFragment extends SherlockFragment implements LoaderCallbacks<PostsFullData>
-{
+public class PostShowFragment extends SherlockFragment implements
+		LoaderCallbacks<PostsFullData> {
 	public final static String URL_ARGUMENT = "url";
 	private final static int LOADER_POST = 0;
 	private String url;
 	private ProgressDialog progressDialog;
 	private PostsFullData data;
+	static final String Stylesheet = "<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />";
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState)
-	{
+	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
 		setHasOptionsMenu(true);
@@ -53,39 +57,37 @@ public class PostShowFragment extends SherlockFragment implements LoaderCallback
 
 		url = getArguments().getString(URL_ARGUMENT);
 
-		if(ConnectionUtils.isConnected(getSherlockActivity()))
-			getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_POST, null, this);
+		if (ConnectionUtils.isConnected(getSherlockActivity()))
+			getSherlockActivity().getSupportLoaderManager().initLoader(
+					LOADER_POST, null, this);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-	{
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.posts_show_activity, container, false);
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-	{
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 
 		inflater.inflate(R.menu.posts_show_activity, menu);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		switch(item.getItemId())
-		{
-			case R.id.share:
-				IntentUtils.createShareIntent(getSherlockActivity(), data.getTitle(), url);
-				break;
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.share:
+			IntentUtils.createShareIntent(getSherlockActivity(),
+					data.getTitle(), url);
+			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
-	public Loader<PostsFullData> onCreateLoader(int id, Bundle args)
-	{
+	public Loader<PostsFullData> onCreateLoader(int id, Bundle args) {
 		showProgressDialog();
 
 		PostShowLoader loader = new PostShowLoader(getSherlockActivity(), url);
@@ -95,15 +97,24 @@ public class PostShowFragment extends SherlockFragment implements LoaderCallback
 	}
 
 	@Override
-	public void onLoadFinished(Loader<PostsFullData> loader, PostsFullData data)
-	{
-		if(getSherlockActivity() != null)
-		{
-			WebView content = (WebView) getSherlockActivity().findViewById(R.id.post_content);
-			content.getSettings().setPluginsEnabled(true);
+	public void onLoadFinished(Loader<PostsFullData> loader, PostsFullData data) {
+		if (getSherlockActivity() != null) {
+			ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+			actionBar.setTitle(data.getTitle());
+
+			WebView content = (WebView) getSherlockActivity().findViewById(
+					R.id.post_content);
+
+			content.setWebViewClient(new HabrWebClient(getSherlockActivity()));
 			content.getSettings().setSupportZoom(true);
 			content.getSettings().setBuiltInZoomControls(true);
-			content.loadDataWithBaseURL("", data.getContent(), "text/html", "UTF-8", null);
+			content.getSettings().setJavaScriptEnabled(true);
+			content.setInitialScale(Preferences
+					.getViewScale(getSherlockActivity()));
+			content.getSettings().setDefaultZoom(ZoomDensity.FAR);
+
+			content.loadDataWithBaseURL("", Stylesheet + data.getContent(),
+					"text/html", "UTF-8", null);
 		}
 
 		this.data = data;
@@ -112,21 +123,18 @@ public class PostShowFragment extends SherlockFragment implements LoaderCallback
 	}
 
 	@Override
-	public void onLoaderReset(Loader<PostsFullData> loader)
-	{
+	public void onLoaderReset(Loader<PostsFullData> loader) {
 	}
 
-	private void showProgressDialog()
-	{
+	private void showProgressDialog() {
 		progressDialog = new ProgressDialog(getSherlockActivity());
 		progressDialog.setMessage(getString(R.string.loading_post));
 		progressDialog.setCancelable(true);
 		progressDialog.show();
 	}
 
-	private void hideProgressDialog()
-	{
-		if(progressDialog != null)
+	private void hideProgressDialog() {
+		if (progressDialog != null)
 			progressDialog.dismiss();
 	}
 

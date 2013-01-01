@@ -28,45 +28,40 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class CommentsAdapter extends BaseAdapter
-{
+public class CommentsAdapter extends BaseAdapter {
 	public final static int MARGIN = 15;
 	private ArrayList<CommentsData> comments;
 	private Context context;
 
-	public CommentsAdapter(Context context, ArrayList<CommentsData> comments)
-	{
+	public CommentsAdapter(Context context, ArrayList<CommentsData> comments) {
 		this.comments = comments;
 		this.context = context;
 	}
 
-	public int getCount()
-	{
+	public int getCount() {
 		return comments.size();
 	}
 
-	public CommentsData getItem(int position)
-	{
+	public CommentsData getItem(int position) {
 		return comments.get(position);
 	}
 
-	public long getItemId(int position)
-	{
+	public long getItemId(int position) {
 		return position;
 	}
 
-	public View getView(int position, View convertView, ViewGroup parent)
-	{
+	public View getView(int position, View convertView, ViewGroup parent) {
 		CommentsData data = getItem(position);
 
 		View view = convertView;
-		if(view == null)
-		{
-			LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		if (view == null) {
+			LayoutInflater layoutInflater = (LayoutInflater) context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = layoutInflater.inflate(R.layout.comments_list_row, null);
 		}
 
-		LinearLayout commentBox = (LinearLayout) view.findViewById(R.id.comment_box);
+		LinearLayout commentBox = (LinearLayout) view
+				.findViewById(R.id.comment_box);
 
 		TextView comment = (TextView) view.findViewById(R.id.comment_text);
 		comment.setText(data.getComment());
@@ -75,19 +70,29 @@ public class CommentsAdapter extends BaseAdapter
 		author.setText(data.getAuthor());
 
 		TextView score = (TextView) view.findViewById(R.id.comment_score);
+
+		String rate = data.getScore().replace("+", "").replace("–", "-");
+		if (Integer.parseInt(rate) > 0)
+			score.setTextColor(context.getResources().getColor(
+					R.color.rating_positive));
+		else if (Integer.parseInt(rate) < 0)
+			score.setTextColor(context.getResources().getColor(
+					R.color.rating_negative));
+		else if (Integer.parseInt(rate) == 0)
+			score.setTextColor(context.getResources().getColor(R.color.black));
+
 		score.setText(data.getScore());
 
-		if(data.getLevel() > 0)
-		{
-			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-																				   LinearLayout.LayoutParams.FILL_PARENT);
+		if (data.getLevel() > 0) {
+			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.WRAP_CONTENT,
+					LinearLayout.LayoutParams.FILL_PARENT);
 			layoutParams.setMargins(10 + data.getLevel() * MARGIN, 10, 10, 10);
 			commentBox.setLayoutParams(layoutParams);
-		}
-		else
-		{
-			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-																				   LinearLayout.LayoutParams.FILL_PARENT);
+		} else {
+			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.WRAP_CONTENT,
+					LinearLayout.LayoutParams.FILL_PARENT);
 			layoutParams.setMargins(10, 10, 10, 10);
 			commentBox.setLayoutParams(layoutParams);
 		}

@@ -1,90 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    
+
     <PreferenceCategory android:title="@string/base_preferences" >
-        
         <CheckBoxPreference
+            android:defaultValue="false"
             android:key="fullscreen"
             android:summary="@string/fullscreen_summary_preferences"
-            android:title="@string/fullscreen_preferences"	  	
-            android:defaultValue="false" />	  	        
-	  	
+            android:title="@string/fullscreen_preferences" />
         <CheckBoxPreference
+            android:defaultValue="false"
             android:key="keepscreen"
-            android:title="@string/keepscreen_preferences"
-            android:defaultValue="false" />
-        
+            android:title="@string/keepscreen_preferences" />
     </PreferenceCategory>
-    
     <PreferenceCategory android:title="@string/posts" >
-        
         <ListPreference
             android:defaultValue="1"
             android:entries="@array/posts_tabs"
             android:entryValues="@array/posts_tabs_values"
             android:key="posts_default_tab"
             android:title="@string/default_tab_preferences" />
-        
+
         <CheckBoxPreference
+            android:defaultValue="true"
             android:key="posts_additional_layout"
-            android:title="@string/additional_layout_preferences"
             android:summary="@string/posts_additional_layout_summary_preferences"
-            android:defaultValue="true" />
-        
+            android:title="@string/additional_layout_preferences" />
     </PreferenceCategory>
-    
     <PreferenceCategory android:title="@string/qa" >
-        
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/qa_tabs"
             android:entryValues="@array/qa_tabs_values"
             android:key="qa_default_tab"
             android:title="@string/default_tab_preferences" />
-        
+
         <CheckBoxPreference
+            android:defaultValue="true"
             android:key="qa_additional_layout"
-            android:title="@string/additional_layout_preferences"
             android:summary="@string/qa_additional_layout_summary_preferences"
-            android:defaultValue="true" />
-        
+            android:title="@string/additional_layout_preferences" />
     </PreferenceCategory>
-    
     <PreferenceCategory android:title="@string/events" >
-        
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/events_tabs"
             android:entryValues="@array/events_tabs_values"
             android:key="events_default_tab"
             android:title="@string/default_tab_preferences" />
-        
+
         <CheckBoxPreference
+            android:defaultValue="true"
             android:key="events_additional_layout"
-            android:title="@string/additional_layout_preferences"
             android:summary="@string/events_additional_layout_summary_preferences"
-            android:defaultValue="true" />
-        
+            android:title="@string/additional_layout_preferences" />
     </PreferenceCategory>
-    
+    <PreferenceCategory android:title="@string/favorites" >
+        <EditTextPreference
+            android:dialogTitle="Введите ник пользователя"
+            android:key="favorites_user"
+            android:negativeButtonText="Отмена"
+            android:positiveButtonText="Ок"
+            android:summary="Избранное пользователя"
+            android:title="Пользователь" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/additional_preferences" >
-        
         <Preference
             android:key="donate"
             android:title="@string/donate_preferences" />
-        
-        <Preference android:title="@string/review_preferences">
+        <Preference android:title="@string/review_preferences" >
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://play.google.com/store/apps/details?id=net.meiolania.apps.habrahabr" />
         </Preference>
-        
-        <Preference android:title="@string/source_code_preferences">
+        <Preference android:title="@string/source_code_preferences" >
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://github.com/AEinsam/HabReader" />
         </Preference>
-        
     </PreferenceCategory>
 
 </PreferenceScreen>

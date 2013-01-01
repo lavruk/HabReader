@@ -7,5 +7,6 @@
     <dimen name="title_in_list">16sp</dimen>
     <dimen name="dashboard_buttons">16sp</dimen>
     <dimen name="slidingmenu_offset">60dp</dimen>
+    <dimen name="comment_text">15sp</dimen>
     
 </resources>

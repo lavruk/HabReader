@@ -16,7 +16,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:textSize="@dimen/title_in_list" />
+            android:textSize="@dimen/comment_text" />
 
         <RelativeLayout
             android:id="@+id/comment_info"
@@ -28,6 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:textColor="@color/comment_author"
                 android:textSize="@dimen/text_size_small" />
 
             <TextView

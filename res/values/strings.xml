@@ -30,6 +30,7 @@
 	<string name="people">Пользователи</string>
 	
 	<!-- Dashboard menus -->
+	<string name="favorites">Избранное</string>
 	<string name="preferences">Настройки</string>
 	<string name="more_applications">Другие приложения</string>
 	
@@ -79,5 +80,7 @@
 	<string name="additional_layout_preferences">Отображать дополнительную информацию</string>
 	<string name="events_additional_layout_summary_preferences">Отображать дополнительную информацию при просмотре списка событий</string>
 	<string name="posts_additional_layout_summary_preferences">Отображать дополнительную информацию при просмотре списка постов</string>
-	<string name="qa_additional_layout_summary_preferences">Отображать дополнительную информауию при просмотре списка вопросов</string>
+	<string name="qa_additional_layout_summary_preferences">Отображать дополнительную информацию при просмотре списка вопросов</string>
+
+	<string name="saved_user_scale">UserScale</string>
 </resources>

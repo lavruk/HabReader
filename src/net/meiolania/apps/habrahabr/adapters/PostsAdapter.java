@@ -26,17 +26,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class PostsAdapter extends BaseAdapter
-{
+public class PostsAdapter extends BaseAdapter {
 	private ArrayList<PostsData> posts;
 	private Context context;
 	private boolean additionalLayout = false;
 
-	public PostsAdapter(Context context, ArrayList<PostsData> posts)
-	{
+	public PostsAdapter(Context context, ArrayList<PostsData> posts) {
 		this.context = context;
 		this.posts = posts;
 
@@ -44,29 +42,25 @@ public class PostsAdapter extends BaseAdapter
 		this.additionalLayout = preferences.getAdditionalPosts();
 	}
 
-	public int getCount()
-	{
+	public int getCount() {
 		return posts.size();
 	}
 
-	public PostsData getItem(int position)
-	{
+	public PostsData getItem(int position) {
 		return posts.get(position);
 	}
 
-	public long getItemId(int position)
-	{
+	public long getItemId(int position) {
 		return position;
 	}
 
-	public View getView(int position, View convertView, ViewGroup parent)
-	{
+	public View getView(int position, View convertView, ViewGroup parent) {
 		PostsData data = getItem(position);
 
 		View view = convertView;
-		if(view == null)
-		{
-			LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		if (view == null) {
+			LayoutInflater layoutInflater = (LayoutInflater) context
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = layoutInflater.inflate(R.layout.posts_list_row, null);
 		}
 
@@ -78,17 +72,31 @@ public class PostsAdapter extends BaseAdapter
 		TextView date = (TextView) view.findViewById(R.id.post_date);
 		TextView score = (TextView) view.findViewById(R.id.post_score);
 
-		LinearLayout postInfo = (LinearLayout) view.findViewById(R.id.post_info);
+		RelativeLayout postInfo = (RelativeLayout) view
+				.findViewById(R.id.post_info);
 
-		if(additionalLayout)
-		{
+		if (additionalLayout) {
 			hubs.setText(data.getHubs());
 			author.setText(data.getAuthor());
 			date.setText(data.getDate());
-			score.setText(context.getString(R.string.rating_count).replace("%d", data.getScore()));
-		}
-		else
-		{
+			if (data.getScore().trim().equals("—")) {
+				score.setVisibility(View.GONE);
+				// score.setText(data.getScore());
+			} else {
+				score.setVisibility(View.VISIBLE);
+				String rate = data.getScore().replace("+", "")
+						.replace("–", "-");
+
+				if (Integer.parseInt(rate) > 0)
+					score.setTextColor(context.getResources().getColor(
+							R.color.rating_positive));
+				else if (Integer.parseInt(rate) < 0)
+					score.setTextColor(context.getResources().getColor(
+							R.color.rating_negative));
+
+				score.setText(data.getScore());
+			}
+		} else {
 			hubs.setVisibility(View.GONE);
 			postInfo.setVisibility(View.GONE);
 		}

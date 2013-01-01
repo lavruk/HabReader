@@ -23,6 +23,7 @@ import net.meiolania.apps.habrahabr.ui.TabListener;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
@@ -31,30 +32,30 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.view.MenuItem;
 
-public class PostsShowActivity extends AbstractionActivity
-{
+public class PostsShowActivity extends AbstractionActivity {
 	public final static String EXTRA_URL = "url";
 	public final static String EXTRA_TITLE = "title";
 	private String url;
 	private String title;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		loadExtras();
 		showActionBar();
 	}
 
-	private void loadExtras()
-	{
-		url = getIntent().getStringExtra(EXTRA_URL);
+	private void loadExtras() {
+		Uri habraUrl = getIntent().getData();
+		if (habraUrl != null) 
+			url = habraUrl.toString();
+		else
+			url = getIntent().getStringExtra(EXTRA_URL);
 		title = getIntent().getStringExtra(EXTRA_TITLE);
 	}
 
-	private void showActionBar()
-	{
+	private void showActionBar() {
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setTitle(title);
@@ -66,10 +67,13 @@ public class PostsShowActivity extends AbstractionActivity
 		Bundle arguments = new Bundle();
 		arguments.putString(PostShowFragment.URL_ARGUMENT, url);
 
-		Tab tab = actionBar.newTab()
-						   .setText(R.string.post)
-						   .setTag("post")
-						   .setTabListener(new TabListener<PostShowFragment>(this, "post", PostShowFragment.class, arguments));
+		Tab tab = actionBar
+				.newTab()
+				.setText(R.string.post)
+				.setTag("post")
+				.setTabListener(
+						new TabListener<PostShowFragment>(this, "post",
+								PostShowFragment.class, arguments));
 		actionBar.addTab(tab);
 
 		/*
@@ -78,39 +82,38 @@ public class PostsShowActivity extends AbstractionActivity
 		arguments = new Bundle();
 		arguments.putString(PostsCommentsFragment.URL_ARGUMENT, url);
 
-		tab = actionBar.newTab()
-					   .setText(R.string.comments)
-					   .setTag("comments")
-					   .setTabListener(new TabListener<PostsCommentsFragment>(this, "comments", PostsCommentsFragment.class, arguments));
+		tab = actionBar
+				.newTab()
+				.setText(R.string.comments)
+				.setTag("comments")
+				.setTabListener(
+						new TabListener<PostsCommentsFragment>(this,
+								"comments", PostsCommentsFragment.class,
+								arguments));
 		actionBar.addTab(tab);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		switch(item.getItemId())
-		{
-			case android.R.id.home:
-				Intent intent = new Intent(this, PostsActivity.class);
-				if(NavUtils.shouldUpRecreateTask(this, intent))
-				{
-					TaskStackBuilder.create(this).addNextIntent(intent).startActivities();
-					finish();
-				}else
-					NavUtils.navigateUpTo(this, intent);
-				return true;
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			Intent intent = new Intent(this, PostsActivity.class);
+			if (NavUtils.shouldUpRecreateTask(this, intent)) {
+				TaskStackBuilder.create(this).addNextIntent(intent)
+						.startActivities();
+				finish();
+			} else
+				NavUtils.navigateUpTo(this, intent);
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
-	protected OnClickListener getConnectionDialogListener()
-	{
-		return new OnClickListener()
-		{
+	protected OnClickListener getConnectionDialogListener() {
+		return new OnClickListener() {
 			@Override
-			public void onClick(DialogInterface dialog, int which)
-			{
+			public void onClick(DialogInterface dialog, int which) {
 				finish();
 			}
 		};

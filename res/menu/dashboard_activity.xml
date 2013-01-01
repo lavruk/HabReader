@@ -9,6 +9,10 @@
         android:actionLayout="@layout/search" />
     
     <item
+        android:id="@+id/favorites"
+        android:title="@string/favorites" />
+    
+    <item
         android:id="@+id/preferences"
         android:title="@string/preferences" />
 

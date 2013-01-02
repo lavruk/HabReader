@@ -66,8 +66,9 @@ public class CompaniesLoader extends AsyncTaskLoader<ArrayList<CompaniesData>> {
 
 		companiesData.setTitle(title.text());
 		companiesData.setUrl(title.attr("abs:href"));
-		// TODO: rewrite the code below
-		companiesData.setIcon("http://habrahabr.ru" + icon.attr("src"));
+		// Habr stop changing html code :3
+		// companiesData.setIcon("http://habrahabr.ru" + icon.attr("src"));
+		companiesData.setIcon(icon.attr("src"));
 		companiesData.setIndex(index.text());
 		companiesData.setDescription(description.text());
 

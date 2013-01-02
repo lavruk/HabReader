@@ -2,35 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="10dp" >
+
+    <ImageView
+        android:id="@+id/company_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginRight="10dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:id="@+id/company_icon"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_gravity="left|center_vertical"
-            android:layout_marginRight="10dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop" />
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/company_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/title_in_list" />
-    </LinearLayout>
 
-    <TextView
-        android:id="@+id/company_index"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_small" />
+        <TextView
+            android:id="@+id/company_index"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_small" />
+    </LinearLayout>
 
 </LinearLayout>

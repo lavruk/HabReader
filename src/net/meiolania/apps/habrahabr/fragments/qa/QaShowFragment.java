@@ -39,100 +39,93 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class QaShowFragment extends SherlockFragment implements
-		LoaderCallbacks<QaFullData> {
-	public final static String URL_ARGUMENT = "url";
-	public final static int LOADER_QA = 0;
-	private String url;
-	private QaFullData data;
-	private ProgressDialog progressDialog;
-	static final String Stylesheet = "<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />";
+public class QaShowFragment extends SherlockFragment implements LoaderCallbacks<QaFullData> {
+    public final static String URL_ARGUMENT = "url";
+    public final static int LOADER_QA = 0;
+    private String url;
+    private QaFullData data;
+    private ProgressDialog progressDialog;
+    static final String Stylesheet = "<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />";
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+	super.onActivityCreated(savedInstanceState);
 
-		setHasOptionsMenu(true);
-		setRetainInstance(true);
+	setHasOptionsMenu(true);
+	setRetainInstance(true);
 
-		url = getArguments().getString(URL_ARGUMENT);
+	url = getArguments().getString(URL_ARGUMENT);
 
-		if (ConnectionUtils.isConnected(getSherlockActivity()))
-			getSherlockActivity().getSupportLoaderManager().initLoader(
-					LOADER_QA, null, this);
+	if (ConnectionUtils.isConnected(getSherlockActivity()))
+	    getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_QA, null, this);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	return inflater.inflate(R.layout.qa_show_activity, container, false);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	super.onCreateOptionsMenu(menu, inflater);
+
+	inflater.inflate(R.menu.qa_show_activity, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+	switch (item.getItemId()) {
+	case R.id.share:
+	    IntentUtils.createShareIntent(getSherlockActivity(), data.getTitle(), url);
+	    break;
+	}
+	return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public Loader<QaFullData> onCreateLoader(int id, Bundle args) {
+	showProgressDialog();
+
+	QaShowLoader loader = new QaShowLoader(getSherlockActivity(), url);
+	loader.forceLoad();
+
+	return loader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<QaFullData> loader, QaFullData data) {
+	if (getSherlockActivity() != null) {
+	    ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+	    actionBar.setTitle(data.getTitle());
+	    WebView content = (WebView) getSherlockActivity().findViewById(R.id.qa_content);
+	    content.setWebViewClient(new HabrWebClient(getSherlockActivity()));
+	    content.getSettings().setBuiltInZoomControls(true);
+	    content.getSettings().setSupportZoom(true);
+	    content.setInitialScale(Preferences.getViewScale(getSherlockActivity()));
+	    content.getSettings().setDefaultZoom(ZoomDensity.FAR);
+	    content.loadDataWithBaseURL("", Stylesheet + data.getContent(), "text/html", "UTF-8", null);
 	}
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.qa_show_activity, container, false);
-	}
+	this.data = data;
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
+	hideProgressDialog();
+    }
 
-		inflater.inflate(R.menu.qa_show_activity, menu);
-	}
+    @Override
+    public void onLoaderReset(Loader<QaFullData> loader) {
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.share:
-			IntentUtils.createShareIntent(getSherlockActivity(),
-					data.getTitle(), url);
-			break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+    }
 
-	@Override
-	public Loader<QaFullData> onCreateLoader(int id, Bundle args) {
-		showProgressDialog();
+    private void showProgressDialog() {
+	progressDialog = new ProgressDialog(getSherlockActivity());
+	progressDialog.setMessage(getString(R.string.loading_question));
+	progressDialog.setCancelable(true);
+	progressDialog.show();
+    }
 
-		QaShowLoader loader = new QaShowLoader(getSherlockActivity(), url);
-		loader.forceLoad();
-
-		return loader;
-	}
-
-	@Override
-	public void onLoadFinished(Loader<QaFullData> loader, QaFullData data) {
-		if (getSherlockActivity() != null) {
-			ActionBar actionBar = getSherlockActivity().getSupportActionBar();
-			actionBar.setTitle(data.getTitle());
-			WebView content = (WebView) getSherlockActivity().findViewById(
-					R.id.qa_content);
-			content.setWebViewClient(new HabrWebClient(getSherlockActivity()));
-			content.getSettings().setBuiltInZoomControls(true);
-			content.getSettings().setSupportZoom(true);
-			content.setInitialScale(Preferences
-					.getViewScale(getSherlockActivity()));
-			content.getSettings().setDefaultZoom(ZoomDensity.FAR);
-			content.loadDataWithBaseURL("", Stylesheet + data.getContent(),
-					"text/html", "UTF-8", null);
-		}
-
-		this.data = data;
-
-		hideProgressDialog();
-	}
-
-	@Override
-	public void onLoaderReset(Loader<QaFullData> loader) {
-
-	}
-
-	private void showProgressDialog() {
-		progressDialog = new ProgressDialog(getSherlockActivity());
-		progressDialog.setMessage(getString(R.string.loading_question));
-		progressDialog.setCancelable(true);
-		progressDialog.show();
-	}
-
-	private void hideProgressDialog() {
-		if (progressDialog != null)
-			progressDialog.dismiss();
-	}
+    private void hideProgressDialog() {
+	if (progressDialog != null)
+	    progressDialog.dismiss();
+    }
 
 }

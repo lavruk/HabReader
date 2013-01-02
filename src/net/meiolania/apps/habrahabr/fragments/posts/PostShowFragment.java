@@ -39,103 +39,96 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class PostShowFragment extends SherlockFragment implements
-		LoaderCallbacks<PostsFullData> {
-	public final static String URL_ARGUMENT = "url";
-	private final static int LOADER_POST = 0;
-	private String url;
-	private ProgressDialog progressDialog;
-	private PostsFullData data;
-	static final String Stylesheet = "<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />";
+public class PostShowFragment extends SherlockFragment implements LoaderCallbacks<PostsFullData> {
+    public final static String URL_ARGUMENT = "url";
+    private final static int LOADER_POST = 0;
+    private String url;
+    private ProgressDialog progressDialog;
+    private PostsFullData data;
+    static final String Stylesheet = "<link rel=\"stylesheet\" type=\"text/css\" href=\"file:///android_asset/style.css\" />";
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+	super.onActivityCreated(savedInstanceState);
 
-		setHasOptionsMenu(true);
-		setRetainInstance(true);
+	setHasOptionsMenu(true);
+	setRetainInstance(true);
 
-		url = getArguments().getString(URL_ARGUMENT);
+	url = getArguments().getString(URL_ARGUMENT);
 
-		if (ConnectionUtils.isConnected(getSherlockActivity()))
-			getSherlockActivity().getSupportLoaderManager().initLoader(
-					LOADER_POST, null, this);
+	if (ConnectionUtils.isConnected(getSherlockActivity()))
+	    getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_POST, null, this);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	return inflater.inflate(R.layout.posts_show_activity, container, false);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	super.onCreateOptionsMenu(menu, inflater);
+
+	inflater.inflate(R.menu.posts_show_activity, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+	switch (item.getItemId()) {
+	case R.id.share:
+	    IntentUtils.createShareIntent(getSherlockActivity(), data.getTitle(), url);
+	    break;
+	}
+	return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public Loader<PostsFullData> onCreateLoader(int id, Bundle args) {
+	showProgressDialog();
+
+	PostShowLoader loader = new PostShowLoader(getSherlockActivity(), url);
+	loader.forceLoad();
+
+	return loader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<PostsFullData> loader, PostsFullData data) {
+	if (getSherlockActivity() != null) {
+	    ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+	    actionBar.setTitle(data.getTitle());
+
+	    WebView content = (WebView) getSherlockActivity().findViewById(R.id.post_content);
+
+	    content.setWebViewClient(new HabrWebClient(getSherlockActivity()));
+	    content.getSettings().setSupportZoom(true);
+	    content.getSettings().setBuiltInZoomControls(true);
+	    content.getSettings().setJavaScriptEnabled(true);
+	    content.setInitialScale(Preferences.getViewScale(getSherlockActivity()));
+	    content.getSettings().setDefaultZoom(ZoomDensity.FAR);
+
+	    content.loadDataWithBaseURL("", Stylesheet + data.getContent(), "text/html", "UTF-8", null);
 	}
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.posts_show_activity, container, false);
-	}
+	this.data = data;
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
+	hideProgressDialog();
+    }
 
-		inflater.inflate(R.menu.posts_show_activity, menu);
-	}
+    @Override
+    public void onLoaderReset(Loader<PostsFullData> loader) {
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.share:
-			IntentUtils.createShareIntent(getSherlockActivity(),
-					data.getTitle(), url);
-			break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+    private void showProgressDialog() {
+	progressDialog = new ProgressDialog(getSherlockActivity());
+	progressDialog.setMessage(getString(R.string.loading_post));
+	progressDialog.setCancelable(true);
+	progressDialog.show();
+    }
 
-	@Override
-	public Loader<PostsFullData> onCreateLoader(int id, Bundle args) {
-		showProgressDialog();
-
-		PostShowLoader loader = new PostShowLoader(getSherlockActivity(), url);
-		loader.forceLoad();
-
-		return loader;
-	}
-
-	@Override
-	public void onLoadFinished(Loader<PostsFullData> loader, PostsFullData data) {
-		if (getSherlockActivity() != null) {
-			ActionBar actionBar = getSherlockActivity().getSupportActionBar();
-			actionBar.setTitle(data.getTitle());
-
-			WebView content = (WebView) getSherlockActivity().findViewById(
-					R.id.post_content);
-
-			content.setWebViewClient(new HabrWebClient(getSherlockActivity()));
-			content.getSettings().setSupportZoom(true);
-			content.getSettings().setBuiltInZoomControls(true);
-			content.getSettings().setJavaScriptEnabled(true);
-			content.setInitialScale(Preferences
-					.getViewScale(getSherlockActivity()));
-			content.getSettings().setDefaultZoom(ZoomDensity.FAR);
-
-			content.loadDataWithBaseURL("", Stylesheet + data.getContent(),
-					"text/html", "UTF-8", null);
-		}
-
-		this.data = data;
-
-		hideProgressDialog();
-	}
-
-	@Override
-	public void onLoaderReset(Loader<PostsFullData> loader) {
-	}
-
-	private void showProgressDialog() {
-		progressDialog = new ProgressDialog(getSherlockActivity());
-		progressDialog.setMessage(getString(R.string.loading_post));
-		progressDialog.setCancelable(true);
-		progressDialog.show();
-	}
-
-	private void hideProgressDialog() {
-		if (progressDialog != null)
-			progressDialog.dismiss();
-	}
+    private void hideProgressDialog() {
+	if (progressDialog != null)
+	    progressDialog.dismiss();
+    }
 
 }

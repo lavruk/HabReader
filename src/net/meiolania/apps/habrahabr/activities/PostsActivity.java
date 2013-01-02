@@ -29,60 +29,54 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 
-public class PostsActivity extends AbstractionActivity
-{
+public class PostsActivity extends AbstractionActivity {
 
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
 
-		showActionBar();
-	}
+	showActionBar();
+    }
 
-	private void showActionBar()
-	{
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setTitle(R.string.posts);
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    private void showActionBar() {
+	ActionBar actionBar = getSupportActionBar();
+	actionBar.setDisplayHomeAsUpEnabled(true);
+	actionBar.setTitle(R.string.posts);
+	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		Preferences preferences = Preferences.getInstance(this);
-		int selectedTab = preferences.getPostsDefaultTab();
+	Preferences preferences = Preferences.getInstance(this);
+	int selectedTab = preferences.getPostsDefaultTab();
 
-		/* Best tab */
-		Tab tab = actionBar.newTab()
-						   .setText(R.string.best)
-						   .setTag("best")
-						   .setTabListener(new TabListener<PostsBestFragment>(this, "best", PostsBestFragment.class));
-		actionBar.addTab(tab, (selectedTab == 0 ? true : false));
+	/* Best tab */
+	Tab tab = actionBar.newTab();
+	tab.setText(R.string.best);
+	tab.setTag("best");
+	tab.setTabListener(new TabListener<PostsBestFragment>(this, "best", PostsBestFragment.class));
+	actionBar.addTab(tab, (selectedTab == 0 ? true : false));
 
-		/* Thematic tab */
-		tab = actionBar.newTab()
-					   .setText(R.string.thematic)
-					   .setTag("thematic")
-					   .setTabListener(new TabListener<PostsThematicFragment>(this, "thematic", PostsThematicFragment.class));
-		actionBar.addTab(tab, (selectedTab == 1 ? true : false));
+	/* Thematic tab */
+	tab = actionBar.newTab();
+	tab.setText(R.string.thematic);
+	tab.setTag("thematic");
+	tab.setTabListener(new TabListener<PostsThematicFragment>(this, "thematic", PostsThematicFragment.class));
+	actionBar.addTab(tab, (selectedTab == 1 ? true : false));
 
-		/* Corporate tab */
-		tab = actionBar.newTab()
-					   .setText(R.string.corporate)
-					   .setTag("corporate")
-					   .setTabListener(new TabListener<PostsCorporateFragment>(this, "corporate", PostsCorporateFragment.class));
-		actionBar.addTab(tab, (selectedTab == 2 ? true : false));
-	}
+	/* Corporate tab */
+	tab = actionBar.newTab();
+	tab.setText(R.string.corporate);
+	tab.setTag("corporate");
+	tab.setTabListener(new TabListener<PostsCorporateFragment>(this, "corporate", PostsCorporateFragment.class));
+	actionBar.addTab(tab, (selectedTab == 2 ? true : false));
+    }
 
-	@Override
-	protected OnClickListener getConnectionDialogListener()
-	{
-		return new OnClickListener()
-		{
-			@Override
-			public void onClick(DialogInterface dialog, int which)
-			{
-				dialog.dismiss();
-			}
-		};
-	}
+    @Override
+    protected OnClickListener getConnectionDialogListener() {
+	return new OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+		dialog.dismiss();
+	    }
+	};
+    }
 
 }

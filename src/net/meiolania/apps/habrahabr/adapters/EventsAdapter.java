@@ -29,69 +29,59 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class EventsAdapter extends BaseAdapter
-{
-	private ArrayList<EventsData> events;
-	private Context context;
-	private boolean additionalLayout = false;
+public class EventsAdapter extends BaseAdapter {
+    private ArrayList<EventsData> events;
+    private Context context;
+    private boolean additionalLayout = false;
 
-	public EventsAdapter(Context context, ArrayList<EventsData> events)
-	{
-		this.context = context;
-		this.events = events;
+    public EventsAdapter(Context context, ArrayList<EventsData> events) {
+	this.context = context;
+	this.events = events;
 
-		Preferences preferences = Preferences.getInstance(context);
-		this.additionalLayout = preferences.getAdditionalEvents();
+	Preferences preferences = Preferences.getInstance(context);
+	this.additionalLayout = preferences.getAdditionalEvents();
+    }
+
+    public int getCount() {
+	return events.size();
+    }
+
+    public EventsData getItem(int position) {
+	return events.get(position);
+    }
+
+    public long getItemId(int position) {
+	return position;
+    }
+
+    public View getView(int position, View convertView, ViewGroup parent) {
+	EventsData data = getItem(position);
+
+	View view = convertView;
+	if (view == null) {
+	    LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	    view = layoutInflater.inflate(R.layout.events_list_row, null);
 	}
 
-	public int getCount()
-	{
-		return events.size();
+	TextView title = (TextView) view.findViewById(R.id.event_title);
+	title.setText(data.getTitle());
+
+	TextView text = (TextView) view.findViewById(R.id.event_text);
+	TextView date = (TextView) view.findViewById(R.id.event_date);
+	TextView hubs = (TextView) view.findViewById(R.id.event_hubs);
+
+	LinearLayout info = (LinearLayout) view.findViewById(R.id.event_info);
+
+	if (additionalLayout) {
+	    text.setText(data.getText());
+	    date.setText(data.getDate());
+	    hubs.setText(data.getHubs());
+	} else {
+	    text.setVisibility(View.GONE);
+	    info.setVisibility(View.GONE);
 	}
 
-	public EventsData getItem(int position)
-	{
-		return events.get(position);
-	}
-
-	public long getItemId(int position)
-	{
-		return position;
-	}
-
-	public View getView(int position, View convertView, ViewGroup parent)
-	{
-		EventsData data = getItem(position);
-
-		View view = convertView;
-		if(view == null)
-		{
-			LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = layoutInflater.inflate(R.layout.events_list_row, null);
-		}
-
-		TextView title = (TextView) view.findViewById(R.id.event_title);
-		title.setText(data.getTitle());
-
-		TextView text = (TextView) view.findViewById(R.id.event_text);
-		TextView date = (TextView) view.findViewById(R.id.event_date);
-		TextView hubs = (TextView) view.findViewById(R.id.event_hubs);
-
-		LinearLayout info = (LinearLayout) view.findViewById(R.id.event_info);
-
-		if(additionalLayout)
-		{
-			text.setText(data.getText());
-			date.setText(data.getDate());
-			hubs.setText(data.getHubs());
-		}
-		else
-		{
-			text.setVisibility(View.GONE);
-			info.setVisibility(View.GONE);
-		}
-
-		return view;
-	}
+	return view;
+    }
 
 }

@@ -28,64 +28,62 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
 public class HubsShowActivity extends AbstractionActivity {
-	public final static String EXTRA_URL = "url";
-	public final static String EXTRA_TITLE = "title";
-	protected String url;
-	protected String title;
+    public final static String EXTRA_URL = "url";
+    public final static String EXTRA_TITLE = "title";
+    protected String url;
+    protected String title;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
 
-		loadExtras();
-		showActionBar();
-		loadHubsPosts();
+	loadExtras();
+	showActionBar();
+	loadHubsPosts();
+    }
+
+    private void loadExtras() {
+	url = getIntent().getStringExtra(EXTRA_URL);
+	title = getIntent().getStringExtra(EXTRA_TITLE);
+    }
+
+    private void showActionBar() {
+	ActionBar actionBar = getSupportActionBar();
+	actionBar.setDisplayHomeAsUpEnabled(true);
+	actionBar.setTitle(title);
+    }
+
+    private void loadHubsPosts() {
+	HubsPostsFragment fragment = new HubsPostsFragment(url);
+
+	FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+	fragmentTransaction.replace(android.R.id.content, fragment);
+	fragmentTransaction.commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+	switch (item.getItemId()) {
+	case android.R.id.home:
+	    Intent intent = new Intent(this, HubsActivity.class);
+	    if (NavUtils.shouldUpRecreateTask(this, intent)) {
+		TaskStackBuilder.create(this).addNextIntent(intent).startActivities();
+		finish();
+	    } else
+		NavUtils.navigateUpTo(this, intent);
+	    return true;
 	}
+	return super.onOptionsItemSelected(item);
+    }
 
-	private void loadExtras() {
-		url = getIntent().getStringExtra(EXTRA_URL);
-		title = getIntent().getStringExtra(EXTRA_TITLE);
-	}
-
-	private void showActionBar() {
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setTitle(title);
-	}
-
-	private void loadHubsPosts() {
-		HubsPostsFragment fragment = new HubsPostsFragment(url);
-
-		FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-				.beginTransaction();
-		fragmentTransaction.replace(android.R.id.content, fragment);
-		fragmentTransaction.commit();
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			Intent intent = new Intent(this, HubsActivity.class);
-			if (NavUtils.shouldUpRecreateTask(this, intent)) {
-				TaskStackBuilder.create(this).addNextIntent(intent)
-						.startActivities();
-				finish();
-			} else
-				NavUtils.navigateUpTo(this, intent);
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	protected OnClickListener getConnectionDialogListener() {
-		return new OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				finish();
-			}
-		};
-	}
+    @Override
+    protected OnClickListener getConnectionDialogListener() {
+	return new OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+		finish();
+	    }
+	};
+    }
 
 }

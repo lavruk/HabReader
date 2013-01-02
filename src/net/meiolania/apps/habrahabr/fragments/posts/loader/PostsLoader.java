@@ -30,66 +30,58 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-public class PostsLoader extends AsyncTaskLoader<ArrayList<PostsData>>
-{
-	public final static String TAG = PostsLoader.class.getName();
-	private String url;
-	private static int page;
+public class PostsLoader extends AsyncTaskLoader<ArrayList<PostsData>> {
+    public final static String TAG = PostsLoader.class.getName();
+    private String url;
+    private static int page;
 
-	public PostsLoader(Context context, String url)
-	{
-		super(context);
+    public PostsLoader(Context context, String url) {
+	super(context);
 
-		this.url = url;
+	this.url = url;
+    }
+
+    public static void setPage(int page) {
+	PostsLoader.page = page;
+    }
+
+    @Override
+    public ArrayList<PostsData> loadInBackground() {
+	ArrayList<PostsData> data = new ArrayList<PostsData>();
+
+	try {
+	    String readyUrl = url.replace("%page%", String.valueOf(page));
+
+	    Log.i(TAG, "Loading a page: " + readyUrl);
+
+	    Document document = Jsoup.connect(readyUrl).get();
+
+	    Elements posts = document.select("div.post");
+
+	    for (Element post : posts) {
+		PostsData postsData = new PostsData();
+
+		Element postTitle = post.select("a.post_title").first();
+		Element hubs = post.select("div.hubs").first();
+		Element date = post.select("div.published").first();
+		Element author = post.select("div.author > a").first();
+		Element comments = post.select("div.comments > span.all").first();
+		Element score = post.select("span.score").first();
+
+		postsData.setTitle(postTitle.text());
+		postsData.setUrl(postTitle.attr("abs:href"));
+		postsData.setHubs(hubs.text());
+		postsData.setDate(date.text());
+		postsData.setAuthor(author != null ? author.text() : "");
+		postsData.setComments(comments != null ? comments.text() : "0");
+		postsData.setScore(score.text());
+
+		data.add(postsData);
+	    }
+	} catch (IOException e) {
 	}
 
-	public static void setPage(int page)
-	{
-		PostsLoader.page = page;
-	}
-
-	@Override
-	public ArrayList<PostsData> loadInBackground()
-	{
-		ArrayList<PostsData> data = new ArrayList<PostsData>();
-
-		try
-		{
-			String readyUrl = url.replace("%page%", String.valueOf(page));
-
-			Log.i(TAG, "Loading a page: " + readyUrl);
-
-			Document document = Jsoup.connect(readyUrl).get();
-
-			Elements posts = document.select("div.post");
-
-			for(Element post : posts)
-			{
-				PostsData postsData = new PostsData();
-
-				Element postTitle = post.select("a.post_title").first();
-				Element hubs = post.select("div.hubs").first();
-				Element date = post.select("div.published").first();
-				Element author = post.select("div.author > a").first();
-				Element comments = post.select("div.comments > span.all").first();
-				Element score = post.select("span.score").first();
-
-				postsData.setTitle(postTitle.text());
-				postsData.setUrl(postTitle.attr("abs:href"));
-				postsData.setHubs(hubs.text());
-				postsData.setDate(date.text());
-				postsData.setAuthor(author != null ? author.text() : "");
-				postsData.setComments(comments != null ? comments.text() : "0");
-				postsData.setScore(score.text());
-
-				data.add(postsData);
-			}
-		}
-		catch(IOException e)
-		{
-		}
-
-		return data;
-	}
+	return data;
+    }
 
 }

@@ -28,79 +28,68 @@ import android.support.v4.app.TaskStackBuilder;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
-public class UsersShowActivity extends AbstractionActivity
-{
-	public final static String EXTRA_NAME = "name";
-	public final static String EXTRA_URL = "url";
-	private String name;
-	private String url;
+public class UsersShowActivity extends AbstractionActivity {
+    public final static String EXTRA_NAME = "name";
+    public final static String EXTRA_URL = "url";
+    private String name;
+    private String url;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
 
-		loadExtras();
-		showActionBar();
-		loadInfo();
+	loadExtras();
+	showActionBar();
+	loadInfo();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+	switch (item.getItemId()) {
+	case android.R.id.home:
+	    Intent intent = new Intent(this, UsersActivity.class);
+	    if (NavUtils.shouldUpRecreateTask(this, intent)) {
+		TaskStackBuilder.create(this).addNextIntent(intent).startActivities();
+		finish();
+	    } else
+		NavUtils.navigateUpTo(this, intent);
+	    return true;
 	}
+	return super.onOptionsItemSelected(item);
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		switch(item.getItemId())
-		{
-			case android.R.id.home:
-				Intent intent = new Intent(this, UsersActivity.class);
-				if(NavUtils.shouldUpRecreateTask(this, intent))
-				{
-					TaskStackBuilder.create(this).addNextIntent(intent).startActivities();
-					finish();
-				}else
-					NavUtils.navigateUpTo(this, intent);
-				return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+    private void loadExtras() {
+	name = getIntent().getStringExtra(EXTRA_NAME);
+	url = getIntent().getStringExtra(EXTRA_URL);
+    }
 
-	private void loadExtras()
-	{
-		name = getIntent().getStringExtra(EXTRA_NAME);
-		url = getIntent().getStringExtra(EXTRA_URL);
-	}
+    private void showActionBar() {
+	ActionBar actionBar = getSupportActionBar();
+	actionBar.setDisplayHomeAsUpEnabled(true);
+	actionBar.setTitle(name);
+    }
 
-	private void showActionBar()
-	{
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setTitle(name);
-	}
+    private void loadInfo() {
+	UsersShowFragment fragment = new UsersShowFragment();
 
-	private void loadInfo()
-	{
-		UsersShowFragment fragment = new UsersShowFragment();
+	Bundle arguments = new Bundle();
+	arguments.putString(UsersShowFragment.URL_ARGUMENT, url);
 
-		Bundle arguments = new Bundle();
-		arguments.putString(UsersShowFragment.URL_ARGUMENT, url);
+	fragment.setArguments(arguments);
 
-		fragment.setArguments(arguments);
+	FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+	fragmentTransaction.replace(android.R.id.content, fragment);
+	fragmentTransaction.commit();
+    }
 
-		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-		fragmentTransaction.replace(android.R.id.content, fragment);
-		fragmentTransaction.commit();
-	}
-
-	@Override
-	protected OnClickListener getConnectionDialogListener()
-	{
-		return new OnClickListener()
-		{
-			@Override
-			public void onClick(DialogInterface dialog, int which)
-			{
-				finish();
-			}
-		};
-	}
+    @Override
+    protected OnClickListener getConnectionDialogListener() {
+	return new OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+		finish();
+	    }
+	};
+    }
 
 }

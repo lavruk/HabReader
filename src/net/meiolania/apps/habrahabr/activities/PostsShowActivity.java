@@ -33,90 +33,78 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.view.MenuItem;
 
 public class PostsShowActivity extends AbstractionActivity {
-	public final static String EXTRA_URL = "url";
-	public final static String EXTRA_TITLE = "title";
-	private String url;
-	private String title;
+    public final static String EXTRA_URL = "url";
+    public final static String EXTRA_TITLE = "title";
+    private String url;
+    private String title;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
 
-		loadExtras();
-		showActionBar();
+	loadExtras();
+	showActionBar();
+    }
+
+    private void loadExtras() {
+	Uri habraUrl = getIntent().getData();
+	if (habraUrl != null)
+	    url = habraUrl.toString();
+	else
+	    url = getIntent().getStringExtra(EXTRA_URL);
+	title = getIntent().getStringExtra(EXTRA_TITLE);
+    }
+
+    private void showActionBar() {
+	ActionBar actionBar = getSupportActionBar();
+	actionBar.setDisplayHomeAsUpEnabled(true);
+	actionBar.setTitle(title);
+	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+	/*
+	 * Post tab
+	 */
+	Bundle arguments = new Bundle();
+	arguments.putString(PostShowFragment.URL_ARGUMENT, url);
+
+	Tab tab = actionBar.newTab().setText(R.string.post).setTag("post")
+		.setTabListener(new TabListener<PostShowFragment>(this, "post", PostShowFragment.class, arguments));
+	actionBar.addTab(tab);
+
+	/*
+	 * Comments tab
+	 */
+	arguments = new Bundle();
+	arguments.putString(PostsCommentsFragment.URL_ARGUMENT, url);
+
+	tab = actionBar.newTab().setText(R.string.comments).setTag("comments")
+		.setTabListener(new TabListener<PostsCommentsFragment>(this, "comments", PostsCommentsFragment.class, arguments));
+	actionBar.addTab(tab);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+	switch (item.getItemId()) {
+	case android.R.id.home:
+	    Intent intent = new Intent(this, PostsActivity.class);
+	    if (NavUtils.shouldUpRecreateTask(this, intent)) {
+		TaskStackBuilder.create(this).addNextIntent(intent).startActivities();
+		finish();
+	    } else
+		NavUtils.navigateUpTo(this, intent);
+	    return true;
 	}
+	return super.onOptionsItemSelected(item);
+    }
 
-	private void loadExtras() {
-		Uri habraUrl = getIntent().getData();
-		if (habraUrl != null) 
-			url = habraUrl.toString();
-		else
-			url = getIntent().getStringExtra(EXTRA_URL);
-		title = getIntent().getStringExtra(EXTRA_TITLE);
-	}
-
-	private void showActionBar() {
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setTitle(title);
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-		/*
-		 * Post tab
-		 */
-		Bundle arguments = new Bundle();
-		arguments.putString(PostShowFragment.URL_ARGUMENT, url);
-
-		Tab tab = actionBar
-				.newTab()
-				.setText(R.string.post)
-				.setTag("post")
-				.setTabListener(
-						new TabListener<PostShowFragment>(this, "post",
-								PostShowFragment.class, arguments));
-		actionBar.addTab(tab);
-
-		/*
-		 * Comments tab
-		 */
-		arguments = new Bundle();
-		arguments.putString(PostsCommentsFragment.URL_ARGUMENT, url);
-
-		tab = actionBar
-				.newTab()
-				.setText(R.string.comments)
-				.setTag("comments")
-				.setTabListener(
-						new TabListener<PostsCommentsFragment>(this,
-								"comments", PostsCommentsFragment.class,
-								arguments));
-		actionBar.addTab(tab);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			Intent intent = new Intent(this, PostsActivity.class);
-			if (NavUtils.shouldUpRecreateTask(this, intent)) {
-				TaskStackBuilder.create(this).addNextIntent(intent)
-						.startActivities();
-				finish();
-			} else
-				NavUtils.navigateUpTo(this, intent);
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	protected OnClickListener getConnectionDialogListener() {
-		return new OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				finish();
-			}
-		};
-	}
+    @Override
+    protected OnClickListener getConnectionDialogListener() {
+	return new OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+		finish();
+	    }
+	};
+    }
 
 }

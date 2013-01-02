@@ -3,7 +3,7 @@
     package="net.meiolania.apps.habrahabr"
     android:installLocation="auto"
     android:versionCode="10"
-    android:versionName="2.0" >
+    android:versionName="2.0">
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -117,7 +117,7 @@
         <activity
             android:name=".activities.UsersSearchActivity"
             android:configChanges="orientation|keyboardHidden" />
-        
+
         <!-- Favorites -->
         <activity
             android:name=".activities.FavoritesActivity"

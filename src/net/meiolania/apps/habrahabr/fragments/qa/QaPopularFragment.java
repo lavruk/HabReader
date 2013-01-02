@@ -16,20 +16,17 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.fragments.qa;
 
-public class QaPopularFragment extends AbstractionQaFragment
-{
-	public final static String URL = "http://habrahabr.ru/qa/popular/page%page%/";
+public class QaPopularFragment extends AbstractionQaFragment {
+    public final static String URL = "http://habrahabr.ru/qa/popular/page%page%/";
 
-	@Override
-	public String getUrl()
-	{
-		return URL;
-	}
+    @Override
+    public String getUrl() {
+	return URL;
+    }
 
-	@Override
-	protected int getLoaderId()
-	{
-		return 2;
-	}
+    @Override
+    protected int getLoaderId() {
+	return 2;
+    }
 
 }

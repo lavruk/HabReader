@@ -41,110 +41,98 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 
-public class UsersFragment extends SherlockListFragment implements LoaderCallbacks<ArrayList<UsersData>>
-{
-	public final static String URL_ARGUMENT = "url";
-	public final static int LOADER_PEOPLE = 0;
-	private ArrayList<UsersData> people;
-	private PeopleAdapter adapter;
-	private String url;
+public class UsersFragment extends SherlockListFragment implements LoaderCallbacks<ArrayList<UsersData>> {
+    public final static String URL_ARGUMENT = "url";
+    public final static int LOADER_PEOPLE = 0;
+    private ArrayList<UsersData> people;
+    private PeopleAdapter adapter;
+    private String url;
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState)
-	{
-		super.onActivityCreated(savedInstanceState);
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+	super.onActivityCreated(savedInstanceState);
 
-		if(getArguments() != null)
-			url = getArguments().getString(URL_ARGUMENT);
+	if (getArguments() != null)
+	    url = getArguments().getString(URL_ARGUMENT);
 
-		setRetainInstance(true);
-		setHasOptionsMenu(true);
+	setRetainInstance(true);
+	setHasOptionsMenu(true);
 
-		if(adapter == null)
-		{
-			people = new ArrayList<UsersData>();
-			adapter = new PeopleAdapter(getSherlockActivity(), people);
+	if (adapter == null) {
+	    people = new ArrayList<UsersData>();
+	    adapter = new PeopleAdapter(getSherlockActivity(), people);
+	}
+
+	setListAdapter(adapter);
+	setListShown(true);
+
+	if (ConnectionUtils.isConnected(getSherlockActivity()))
+	    getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_PEOPLE, null, this);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	inflater.inflate(R.menu.users_fragment, menu);
+
+	final EditText searchQuery = (EditText) menu.findItem(R.id.search).getActionView().findViewById(R.id.search_query);
+	searchQuery.setOnEditorActionListener(new OnEditorActionListener() {
+	    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+		if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+		    Intent intent = new Intent(getSherlockActivity(), UsersSearchActivity.class);
+		    intent.putExtra(UsersSearchActivity.EXTRA_QUERY, searchQuery.getText().toString());
+		    startActivity(intent);
+		    return true;
 		}
+		return false;
+	    }
+	});
 
-		setListAdapter(adapter);
-		setListShown(true);
+	super.onCreateOptionsMenu(menu, inflater);
+    }
 
-		if(ConnectionUtils.isConnected(getSherlockActivity()))
-			getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_PEOPLE, null, this);
-	}
+    @Override
+    public void onListItemClick(ListView list, View view, int position, long id) {
+	showUser(position);
+    }
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-	{
-		inflater.inflate(R.menu.users_fragment, menu);
+    protected void showUser(int position) {
+	UsersData data = people.get(position);
 
-		final EditText searchQuery = (EditText) menu.findItem(R.id.search).getActionView().findViewById(R.id.search_query);
-		searchQuery.setOnEditorActionListener(new OnEditorActionListener()
-		{
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
-			{
-				if(actionId == EditorInfo.IME_ACTION_SEARCH)
-				{
-					Intent intent = new Intent(getSherlockActivity(), UsersSearchActivity.class);
-					intent.putExtra(UsersSearchActivity.EXTRA_QUERY, searchQuery.getText().toString());
-					startActivity(intent);
-					return true;
-				}
-				return false;
-			}
-		});
+	Intent intent = new Intent(getSherlockActivity(), UsersShowActivity.class);
+	intent.putExtra(UsersShowActivity.EXTRA_NAME, data.getName());
+	intent.putExtra(UsersShowActivity.EXTRA_URL, data.getUrl());
 
-		super.onCreateOptionsMenu(menu, inflater);
-	}
+	startActivity(intent);
+    }
 
-	@Override
-	public void onListItemClick(ListView list, View view, int position, long id)
-	{
-		showUser(position);
-	}
+    @Override
+    public Loader<ArrayList<UsersData>> onCreateLoader(int id, Bundle args) {
+	getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
 
-	protected void showUser(int position)
-	{
-		UsersData data = people.get(position);
+	UsersLoader loader = null;
 
-		Intent intent = new Intent(getSherlockActivity(), UsersShowActivity.class);
-		intent.putExtra(UsersShowActivity.EXTRA_NAME, data.getName());
-		intent.putExtra(UsersShowActivity.EXTRA_URL, data.getUrl());
+	if (url == null)
+	    loader = new UsersLoader(getSherlockActivity());
+	else
+	    loader = new UsersLoader(getSherlockActivity(), url);
 
-		startActivity(intent);
-	}
+	loader.forceLoad();
 
-	@Override
-	public Loader<ArrayList<UsersData>> onCreateLoader(int id, Bundle args)
-	{
-		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+	return loader;
+    }
 
-		UsersLoader loader = null;
+    @Override
+    public void onLoadFinished(Loader<ArrayList<UsersData>> loader, ArrayList<UsersData> data) {
+	people.addAll(data);
+	adapter.notifyDataSetChanged();
 
-		if(url == null)
-			loader = new UsersLoader(getSherlockActivity());
-		else
-			loader = new UsersLoader(getSherlockActivity(), url);
+	if (getSherlockActivity() != null)
+	    getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
+    }
 
-		loader.forceLoad();
+    @Override
+    public void onLoaderReset(Loader<ArrayList<UsersData>> loader) {
 
-		return loader;
-	}
-
-	@Override
-	public void onLoadFinished(Loader<ArrayList<UsersData>> loader, ArrayList<UsersData> data)
-	{
-		people.addAll(data);
-		adapter.notifyDataSetChanged();
-
-		if(getSherlockActivity() != null)
-			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
-	}
-
-	@Override
-	public void onLoaderReset(Loader<ArrayList<UsersData>> loader)
-	{
-
-	}
+    }
 
 }

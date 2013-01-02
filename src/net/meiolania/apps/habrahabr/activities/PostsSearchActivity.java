@@ -29,71 +29,60 @@ import android.support.v4.app.TaskStackBuilder;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
-public class PostsSearchActivity extends AbstractionActivity
-{
-	public final static String EXTRA_QUERY = "query";
-	private String query;
+public class PostsSearchActivity extends AbstractionActivity {
+    public final static String EXTRA_QUERY = "query";
+    private String query;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
 
-		loadExtras();
-		showActionBar();
-		loadSearchedPosts();
+	loadExtras();
+	showActionBar();
+	loadSearchedPosts();
+    }
+
+    private void loadExtras() {
+	query = getIntent().getStringExtra(EXTRA_QUERY);
+    }
+
+    private void showActionBar() {
+	ActionBar actionBar = getSupportActionBar();
+	actionBar.setTitle(R.string.post_search);
+	actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void loadSearchedPosts() {
+	PostsSearchFragment fragment = new PostsSearchFragment(query);
+
+	FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+	fragmentTransaction.replace(android.R.id.content, fragment);
+	fragmentTransaction.commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+	switch (item.getItemId()) {
+	case android.R.id.home:
+	    Intent intent = new Intent(this, PostsActivity.class);
+	    if (NavUtils.shouldUpRecreateTask(this, intent)) {
+		TaskStackBuilder.create(this).addNextIntent(intent).startActivities();
+		finish();
+	    } else
+		NavUtils.navigateUpTo(this, intent);
+	    return true;
 	}
+	return super.onOptionsItemSelected(item);
+    }
 
-	private void loadExtras()
-	{
-		query = getIntent().getStringExtra(EXTRA_QUERY);
-	}
-
-	private void showActionBar()
-	{
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.setTitle(R.string.post_search);
-		actionBar.setDisplayHomeAsUpEnabled(true);
-	}
-
-	private void loadSearchedPosts()
-	{
-		PostsSearchFragment fragment = new PostsSearchFragment(query);
-
-		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-		fragmentTransaction.replace(android.R.id.content, fragment);
-		fragmentTransaction.commit();
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		switch(item.getItemId())
-		{
-			case android.R.id.home:
-				Intent intent = new Intent(this, PostsActivity.class);
-				if(NavUtils.shouldUpRecreateTask(this, intent))
-				{
-					TaskStackBuilder.create(this).addNextIntent(intent).startActivities();
-					finish();
-				}else
-					NavUtils.navigateUpTo(this, intent);
-				return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	protected OnClickListener getConnectionDialogListener()
-	{
-		return new OnClickListener()
-		{
-			@Override
-			public void onClick(DialogInterface dialog, int which)
-			{
-				finish();
-			}
-		};
-	}
+    @Override
+    protected OnClickListener getConnectionDialogListener() {
+	return new OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+		finish();
+	    }
+	};
+    }
 
 }

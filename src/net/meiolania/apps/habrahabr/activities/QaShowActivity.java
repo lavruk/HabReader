@@ -33,89 +33,78 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.view.MenuItem;
 
 public class QaShowActivity extends AbstractionActivity {
-	public final static String EXTRA_URL = "url";
-	public final static String EXTRA_TITLE = "title";
-	private String title;
-	private String url;
+    public final static String EXTRA_URL = "url";
+    public final static String EXTRA_TITLE = "title";
+    private String title;
+    private String url;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
 
-		loadExtras();
+	loadExtras();
 
-		showActionBar();
+	showActionBar();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+	switch (item.getItemId()) {
+	case android.R.id.home:
+	    Intent intent = new Intent(this, QaActivity.class);
+	    if (NavUtils.shouldUpRecreateTask(this, intent)) {
+		TaskStackBuilder.create(this).addNextIntent(intent).startActivities();
+		finish();
+	    } else
+		NavUtils.navigateUpTo(this, intent);
+	    return true;
 	}
+	return super.onOptionsItemSelected(item);
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			Intent intent = new Intent(this, QaActivity.class);
-			if (NavUtils.shouldUpRecreateTask(this, intent)) {
-				TaskStackBuilder.create(this).addNextIntent(intent)
-						.startActivities();
-				finish();
-			} else
-				NavUtils.navigateUpTo(this, intent);
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+    private void loadExtras() {
+	Uri data = getIntent().getData();
+	if (data != null)
+	    url = data.toString();
+	else
+	    url = getIntent().getStringExtra(EXTRA_URL);
+    }
 
-	private void loadExtras() {
-		Uri data = getIntent().getData();
-		if (data != null)
-			url = data.toString();
-		else
-			url = getIntent().getStringExtra(EXTRA_URL);
-	}
+    private void showActionBar() {
+	ActionBar actionBar = getSupportActionBar();
+	actionBar.setDisplayHomeAsUpEnabled(true);
+	actionBar.setTitle(title);
+	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-	private void showActionBar() {
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setTitle(title);
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+	/*
+	 * Question tab
+	 */
+	Bundle arguments = new Bundle();
+	arguments.putString(QaShowFragment.URL_ARGUMENT, url);
 
-		/*
-		 * Question tab
-		 */
-		Bundle arguments = new Bundle();
-		arguments.putString(QaShowFragment.URL_ARGUMENT, url);
+	Tab tab = actionBar.newTab().setText(R.string.question).setTag("question")
+		.setTabListener(new TabListener<QaShowFragment>(this, "question", QaShowFragment.class, arguments));
+	actionBar.addTab(tab);
 
-		Tab tab = actionBar
-				.newTab()
-				.setText(R.string.question)
-				.setTag("question")
-				.setTabListener(
-						new TabListener<QaShowFragment>(this, "question",
-								QaShowFragment.class, arguments));
-		actionBar.addTab(tab);
+	/*
+	 * Comments tab
+	 */
+	arguments = new Bundle();
+	arguments.putString(QaCommentsFragment.URL_ARGUMENT, url);
 
-		/*
-		 * Comments tab
-		 */
-		arguments = new Bundle();
-		arguments.putString(QaCommentsFragment.URL_ARGUMENT, url);
+	tab = actionBar.newTab().setText(R.string.comments).setTag("comments")
+		.setTabListener(new TabListener<QaCommentsFragment>(this, "comments", QaCommentsFragment.class, arguments));
+	actionBar.addTab(tab);
+    }
 
-		tab = actionBar
-				.newTab()
-				.setText(R.string.comments)
-				.setTag("comments")
-				.setTabListener(
-						new TabListener<QaCommentsFragment>(this, "comments",
-								QaCommentsFragment.class, arguments));
-		actionBar.addTab(tab);
-	}
-
-	@Override
-	protected OnClickListener getConnectionDialogListener() {
-		return new OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				finish();
-			}
-		};
-	}
+    @Override
+    protected OnClickListener getConnectionDialogListener() {
+	return new OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+		finish();
+	    }
+	};
+    }
 
 }

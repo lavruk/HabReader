@@ -29,60 +29,54 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 
-public class EventsActivity extends AbstractionActivity
-{
+public class EventsActivity extends AbstractionActivity {
 
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
 
-		showActionBar();
-	}
+	showActionBar();
+    }
 
-	private void showActionBar()
-	{
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setTitle(R.string.events);
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    private void showActionBar() {
+	ActionBar actionBar = getSupportActionBar();
+	actionBar.setDisplayHomeAsUpEnabled(true);
+	actionBar.setTitle(R.string.events);
+	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		Preferences preferences = Preferences.getInstance(this);
-		int selectedTab = preferences.getEventsDefaultTab();
+	Preferences preferences = Preferences.getInstance(this);
+	int selectedTab = preferences.getEventsDefaultTab();
 
-		/* Coming tab */
-		Tab tab = actionBar.newTab()
-						   .setText(R.string.coming)
-						   .setTag("coming")
-						   .setTabListener(new TabListener<EventComingFragment>(this, "coming", EventComingFragment.class));
-		actionBar.addTab(tab, (selectedTab == 0 ? true : false));
+	/* Coming tab */
+	Tab tab = actionBar.newTab();
+	tab.setText(R.string.coming);
+	tab.setTag("coming");
+	tab.setTabListener(new TabListener<EventComingFragment>(this, "coming", EventComingFragment.class));
+	actionBar.addTab(tab, (selectedTab == 0 ? true : false));
 
-		/* Current tab */
-		tab = actionBar.newTab()
-					   .setText(R.string.current)
-					   .setTag("current")
-					   .setTabListener(new TabListener<EventCurrentFragment>(this, "current", EventCurrentFragment.class));
-		actionBar.addTab(tab, (selectedTab == 1 ? true : false));
+	/* Current tab */
+	tab = actionBar.newTab();
+	tab.setText(R.string.current);
+	tab.setTag("current");
+	tab.setTabListener(new TabListener<EventCurrentFragment>(this, "current", EventCurrentFragment.class));
+	actionBar.addTab(tab, (selectedTab == 1 ? true : false));
 
-		/* Past tab */
-		tab = actionBar.newTab()
-					   .setText(R.string.past)
-					   .setTag("past")
-					   .setTabListener(new TabListener<EventPastFragment>(this, "past", EventPastFragment.class));
-		actionBar.addTab(tab, (selectedTab == 2 ? true : false));
-	}
+	/* Past tab */
+	tab = actionBar.newTab();
+	tab.setText(R.string.past);
+	tab.setTag("past");
+	tab.setTabListener(new TabListener<EventPastFragment>(this, "past", EventPastFragment.class));
+	actionBar.addTab(tab, (selectedTab == 2 ? true : false));
+    }
 
-	@Override
-	protected OnClickListener getConnectionDialogListener()
-	{
-		return new OnClickListener()
-		{
-			@Override
-			public void onClick(DialogInterface dialog, int which)
-			{
-				finish();
-			}
-		};
-	}
+    @Override
+    protected OnClickListener getConnectionDialogListener() {
+	return new OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+		finish();
+	    }
+	};
+    }
 
 }

@@ -21,109 +21,101 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public final class Preferences {
-	/* Default tab for posts */
-	public final static String POSTS_DEFAULT_TAB_KEY = "posts_default_tab";
-	public final static String POSTS_DEFAULT_TAB_DEFAULT = "1";
-	/* Default tab for q&a */
-	public final static String QA_DEFAULT_TAB_KEY = "qa_default_tab";
-	public final static String QA_DEFAULT_TAB_DEFAULT = "0";
-	/* Default tab for events */
-	public final static String EVENTS_DEFAULT_TAB_KEY = "events_default_tab";
-	public final static String EVENTS_DEFAULT_TAB_DEFAULT = "0";
-	/* Additional layout for posts */
-	public final static String ADDITIONAL_LAYOUT_POSTS_KEY = "posts_additional_layout";
-	public final static boolean ADDITIONAL_LAYOUT_POSTS_DEFAULT = true;
-	/* Additional layout for hubs */
-	public final static String ADDITIONAL_LAYOUT_HUBS_KEY = "hubs_additional_layout";
-	public final static boolean ADDITIONAL_LAYOUT_HUBS_DEFAULT = true;
-	/* Additional layout for Q&A */
-	public final static String ADDITIONAL_LAYOUT_QA_KEY = "qa_additional_layout";
-	public final static boolean ADDITIONAL_LAYOUT_QA_DEFAULT = true;
-	/* Additional layout for events */
-	public final static String ADDITIONAL_LAYOUT_EVENTS_KEY = "events_additional_layout";
-	public final static boolean ADDITIONAL_LAYOUT_EVENTS_DEFAULT = true;
-	/* Fullscreen */
-	public final static String FULLSCREEN_KEY = "fullscreen";
-	public final static boolean FULLSCREEN_DEFAULT = false;
-	/* Keepscreen */
-	public final static String KEEPSCREEN_KEY = "keepscreen";
-	public final static boolean KEEPSCREEN_DEFAULT = false;
+    // Default tab for posts
+    public final static String POSTS_DEFAULT_TAB_KEY = "posts_default_tab";
+    public final static String POSTS_DEFAULT_TAB_DEFAULT = "1";
+    // Default tab for Q&A
+    public final static String QA_DEFAULT_TAB_KEY = "qa_default_tab";
+    public final static String QA_DEFAULT_TAB_DEFAULT = "0";
+    // Default tab for events
+    public final static String EVENTS_DEFAULT_TAB_KEY = "events_default_tab";
+    public final static String EVENTS_DEFAULT_TAB_DEFAULT = "0";
+    // Additional layout for posts
+    public final static String ADDITIONAL_LAYOUT_POSTS_KEY = "posts_additional_layout";
+    public final static boolean ADDITIONAL_LAYOUT_POSTS_DEFAULT = true;
+    // Additional layout for hubs
+    public final static String ADDITIONAL_LAYOUT_HUBS_KEY = "hubs_additional_layout";
+    public final static boolean ADDITIONAL_LAYOUT_HUBS_DEFAULT = true;
+    // Additional layout for Q&A
+    public final static String ADDITIONAL_LAYOUT_QA_KEY = "qa_additional_layout";
+    public final static boolean ADDITIONAL_LAYOUT_QA_DEFAULT = true;
+    // Additional layout for events
+    public final static String ADDITIONAL_LAYOUT_EVENTS_KEY = "events_additional_layout";
+    public final static boolean ADDITIONAL_LAYOUT_EVENTS_DEFAULT = true;
+    // Fullscreen
+    public final static String FULLSCREEN_KEY = "fullscreen";
+    public final static boolean FULLSCREEN_DEFAULT = false;
+    // Keepscreen
+    public final static String KEEPSCREEN_KEY = "keepscreen";
+    public final static boolean KEEPSCREEN_DEFAULT = false;
+    // Favorites
+    // TODO: remove. We will implement an authorization.
+    public static final String FAVS_USER_NAME = "favorites_user";
 
-	public static final String FAVS_USER_NAME = "favorites_user";
+    private static Preferences preferences = null;
+    private static SharedPreferences sharedPreferences;
 
-	private static Preferences preferences = null;
-	private static SharedPreferences sharedPreferences;
-
-	private Preferences(Context context) {
-		sharedPreferences = PreferenceManager
-				.getDefaultSharedPreferences(context);
-	}
-
-	public static Preferences getInstance(Context context) {
-		return preferences != null ? preferences
-				: (preferences = new Preferences(context));
-	}
-
-	public SharedPreferences getSharedPreferences() {
-		return sharedPreferences;
-	}
-
-	public boolean getFullScreen() {
-		return sharedPreferences.getBoolean(FULLSCREEN_KEY, FULLSCREEN_DEFAULT);
-	}
-
-	public boolean getKeepScreen() {
-		return sharedPreferences.getBoolean(KEEPSCREEN_KEY, KEEPSCREEN_DEFAULT);
-	}
-
-	public int getPostsDefaultTab() {
-		return Integer.parseInt(sharedPreferences.getString(
-				POSTS_DEFAULT_TAB_KEY, POSTS_DEFAULT_TAB_DEFAULT));
-	}
-
-	public int getEventsDefaultTab() {
-		return Integer.parseInt(sharedPreferences.getString(
-				EVENTS_DEFAULT_TAB_KEY, EVENTS_DEFAULT_TAB_DEFAULT));
-	}
-
-	public int getQaDefaultTab() {
-		return Integer.parseInt(sharedPreferences.getString(QA_DEFAULT_TAB_KEY,
-				QA_DEFAULT_TAB_DEFAULT));
-	}
-
-	public boolean getAdditionalEvents() {
-		return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_EVENTS_KEY,
-				ADDITIONAL_LAYOUT_EVENTS_DEFAULT);
-	}
-
-	public boolean getAdditionalPosts() {
-		return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_POSTS_KEY,
-				ADDITIONAL_LAYOUT_POSTS_DEFAULT);
-	}
-
-	public boolean getAdditionalHubs() {
-		return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_HUBS_KEY,
-				ADDITIONAL_LAYOUT_HUBS_DEFAULT);
-	}
-
-	public boolean getAdditionalQa() {
-		return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_QA_KEY,
-				ADDITIONAL_LAYOUT_QA_DEFAULT);
-	}
-	
-	public static String getUserName() {
-		return sharedPreferences.getString(FAVS_USER_NAME, "");
+    private Preferences(Context context) {
+	sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
-    
+
+    public static Preferences getInstance(Context context) {
+	return preferences != null ? preferences : (preferences = new Preferences(context));
+    }
+
+    public SharedPreferences getSharedPreferences() {
+	return sharedPreferences;
+    }
+
+    public boolean getFullScreen() {
+	return sharedPreferences.getBoolean(FULLSCREEN_KEY, FULLSCREEN_DEFAULT);
+    }
+
+    public boolean getKeepScreen() {
+	return sharedPreferences.getBoolean(KEEPSCREEN_KEY, KEEPSCREEN_DEFAULT);
+    }
+
+    public int getPostsDefaultTab() {
+	return Integer.parseInt(sharedPreferences.getString(POSTS_DEFAULT_TAB_KEY, POSTS_DEFAULT_TAB_DEFAULT));
+    }
+
+    public int getEventsDefaultTab() {
+	return Integer.parseInt(sharedPreferences.getString(EVENTS_DEFAULT_TAB_KEY, EVENTS_DEFAULT_TAB_DEFAULT));
+    }
+
+    public int getQaDefaultTab() {
+	return Integer.parseInt(sharedPreferences.getString(QA_DEFAULT_TAB_KEY, QA_DEFAULT_TAB_DEFAULT));
+    }
+
+    public boolean getAdditionalEvents() {
+	return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_EVENTS_KEY, ADDITIONAL_LAYOUT_EVENTS_DEFAULT);
+    }
+
+    public boolean getAdditionalPosts() {
+	return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_POSTS_KEY, ADDITIONAL_LAYOUT_POSTS_DEFAULT);
+    }
+
+    public boolean getAdditionalHubs() {
+	return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_HUBS_KEY, ADDITIONAL_LAYOUT_HUBS_DEFAULT);
+    }
+
+    public boolean getAdditionalQa() {
+	return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_QA_KEY, ADDITIONAL_LAYOUT_QA_DEFAULT);
+    }
+
+    public static String getUserName() {
+	return sharedPreferences.getString(FAVS_USER_NAME, "");
+    }
+
     public static void saveViewScale(Context context, float scale) {
-		SharedPreferences.Editor editor = sharedPreferences.edit();
-		editor.putFloat(context.getString(R.string.saved_user_scale), scale);
-		editor.commit();
+	SharedPreferences.Editor editor = sharedPreferences.edit();
+	editor.putFloat(context.getString(R.string.saved_user_scale), scale);
+	editor.commit();
     }
-    
-    public static int getViewScale(Context context){
-		float userScale = sharedPreferences.getFloat(context.getString(R.string.saved_user_scale), 0.0f);
-		return (int) (100 * userScale);
-	}
+
+    public static int getViewScale(Context context) {
+	float userScale = sharedPreferences.getFloat(context.getString(R.string.saved_user_scale), 0.0f);
+	return (int) (100 * userScale);
+    }
 
 }

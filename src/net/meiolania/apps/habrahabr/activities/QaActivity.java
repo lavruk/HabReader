@@ -30,67 +30,61 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 
-public class QaActivity extends AbstractionActivity
-{
+public class QaActivity extends AbstractionActivity {
 
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
 
-		showActionBar();
-	}
+	showActionBar();
+    }
 
-	private void showActionBar()
-	{
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setTitle(R.string.qa);
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    private void showActionBar() {
+	ActionBar actionBar = getSupportActionBar();
+	actionBar.setDisplayHomeAsUpEnabled(true);
+	actionBar.setTitle(R.string.qa);
+	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		Preferences preferences = Preferences.getInstance(this);
-		int selectedTab = preferences.getQaDefaultTab();
+	Preferences preferences = Preferences.getInstance(this);
+	int selectedTab = preferences.getQaDefaultTab();
 
-		/* Inbox tab */
-		Tab tab = actionBar.newTab()
-						   .setText(R.string.inbox)
-						   .setTag("inbox")
-						   .setTabListener(new TabListener<QaInboxFragment>(this, "inbox", QaInboxFragment.class));
-		actionBar.addTab(tab, (selectedTab == 0 ? true : false));
+	/* Inbox tab */
+	Tab tab = actionBar.newTab();
+	tab.setText(R.string.inbox);
+	tab.setTag("inbox");
+	tab.setTabListener(new TabListener<QaInboxFragment>(this, "inbox", QaInboxFragment.class));
+	actionBar.addTab(tab, (selectedTab == 0 ? true : false));
 
-		/* Hot tab */
-		tab = actionBar.newTab()
-					   .setText(R.string.hot)
-					   .setTag("hot")
-					   .setTabListener(new TabListener<QaHotFragment>(this, "hot", QaHotFragment.class));
-		actionBar.addTab(tab, (selectedTab == 1 ? true : false));
+	/* Hot tab */
+	tab = actionBar.newTab();
+	tab.setText(R.string.hot);
+	tab.setTag("hot");
+	tab.setTabListener(new TabListener<QaHotFragment>(this, "hot", QaHotFragment.class));
+	actionBar.addTab(tab, (selectedTab == 1 ? true : false));
 
-		/* Popular tab */
-		tab = actionBar.newTab()
-					   .setText(R.string.popular)
-					   .setTag("popular")
-					   .setTabListener(new TabListener<QaPopularFragment>(this, "popular", QaPopularFragment.class));
-		actionBar.addTab(tab, (selectedTab == 2 ? true : false));
+	/* Popular tab */
+	tab = actionBar.newTab();
+	tab.setText(R.string.popular);
+	tab.setTag("popular");
+	tab.setTabListener(new TabListener<QaPopularFragment>(this, "popular", QaPopularFragment.class));
+	actionBar.addTab(tab, (selectedTab == 2 ? true : false));
 
-		/* Unanswered tab */
-		tab = actionBar.newTab()
-					   .setText(R.string.unanswered)
-					   .setTag("unanswered")
-					   .setTabListener(new TabListener<QaUnansweredFragment>(this, "unanswered", QaUnansweredFragment.class));
-		actionBar.addTab(tab, (selectedTab == 3 ? true : false));
-	}
+	/* Unanswered tab */
+	tab = actionBar.newTab();
+	tab.setText(R.string.unanswered);
+	tab.setTag("unanswered");
+	tab.setTabListener(new TabListener<QaUnansweredFragment>(this, "unanswered", QaUnansweredFragment.class));
+	actionBar.addTab(tab, (selectedTab == 3 ? true : false));
+    }
 
-	@Override
-	protected OnClickListener getConnectionDialogListener()
-	{
-		return new OnClickListener()
-		{
-			@Override
-			public void onClick(DialogInterface dialog, int which)
-			{
-				finish();
-			}
-		};
-	}
+    @Override
+    protected OnClickListener getConnectionDialogListener() {
+	return new OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+		finish();
+	    }
+	};
+    }
 
 }

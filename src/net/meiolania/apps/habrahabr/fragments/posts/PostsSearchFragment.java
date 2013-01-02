@@ -19,33 +19,26 @@ package net.meiolania.apps.habrahabr.fragments.posts;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-public class PostsSearchFragment extends AbstractionPostsFragment
-{
-	public final static String URL = "http://habrahabr.ru/search/page%page%/?target_type=posts&order_by=relevance&q=%query%";
-	private String query;
+public class PostsSearchFragment extends AbstractionPostsFragment {
+    public final static String URL = "http://habrahabr.ru/search/page%page%/?target_type=posts&order_by=relevance&q=%query%";
+    private String query;
 
-	public PostsSearchFragment(String query)
-	{
-		this.query = query;
-	}
+    public PostsSearchFragment(String query) {
+	this.query = query;
+    }
 
-	@Override
-	protected String getUrl()
-	{
-		try
-		{
-			return URL.replace("%query%", URLEncoder.encode(query, "UTF-8"));
-		}
-		catch(UnsupportedEncodingException e)
-		{
-			return URL.replace("%query%", query);
-		}
+    @Override
+    protected String getUrl() {
+	try {
+	    return URL.replace("%query%", URLEncoder.encode(query, "UTF-8"));
+	} catch (UnsupportedEncodingException e) {
+	    return URL.replace("%query%", query);
 	}
+    }
 
-	@Override
-	protected int getLoaderId()
-	{
-		return 0;
-	}
+    @Override
+    protected int getLoaderId() {
+	return 0;
+    }
 
 }

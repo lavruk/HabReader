@@ -32,84 +32,70 @@ import android.support.v4.app.TaskStackBuilder;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
-public class HubsSearchActivity extends AbstractionActivity
-{
-	public final static String URL = "http://habrahabr.ru/search/page%page%/?q=%query%&target_type=hubs";
-	public final static String EXTRA_QUERY = "query";
-	private String query;
+public class HubsSearchActivity extends AbstractionActivity {
+    public final static String URL = "http://habrahabr.ru/search/page%page%/?q=%query%&target_type=hubs";
+    public final static String EXTRA_QUERY = "query";
+    private String query;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
 
-		loadExtras();
-		showActionBar();
-		loadSearchedHubs();
+	loadExtras();
+	showActionBar();
+	loadSearchedHubs();
+    }
+
+    private void loadExtras() {
+	query = getIntent().getStringExtra(EXTRA_QUERY);
+    }
+
+    private void showActionBar() {
+	ActionBar actionBar = getSupportActionBar();
+	actionBar.setTitle(R.string.hubs_search);
+	actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void loadSearchedHubs() {
+	HubsFragment fragment = new HubsFragment();
+
+	Bundle arguments = new Bundle();
+	try {
+	    arguments.putString(HubsFragment.URL_ARGUMENT, URL.replace("%query%", URLEncoder.encode(query, "UTF-8")));
+	} catch (UnsupportedEncodingException e) {
+	    arguments.putString(HubsFragment.URL_ARGUMENT, URL.replace("%query%", query));
 	}
 
-	private void loadExtras()
-	{
-		query = getIntent().getStringExtra(EXTRA_QUERY);
+	fragment.setArguments(arguments);
+
+	FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+	fragmentTransaction.replace(android.R.id.content, fragment);
+	fragmentTransaction.commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+	switch (item.getItemId()) {
+	case android.R.id.home:
+	    Intent intent = new Intent(this, HubsActivity.class);
+	    if (NavUtils.shouldUpRecreateTask(this, intent)) {
+		TaskStackBuilder.create(this).addNextIntent(intent).startActivities();
+		finish();
+	    } else
+		NavUtils.navigateUpTo(this, intent);
+	    return true;
 	}
+	return super.onOptionsItemSelected(item);
+    }
 
-	private void showActionBar()
-	{
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.setTitle(R.string.hubs_search);
-		actionBar.setDisplayHomeAsUpEnabled(true);
-	}
-
-	private void loadSearchedHubs()
-	{
-		HubsFragment fragment = new HubsFragment();
-
-		Bundle arguments = new Bundle();
-		try
-		{
-			arguments.putString(HubsFragment.URL_ARGUMENT, URL.replace("%query%", URLEncoder.encode(query, "UTF-8")));
-		}
-		catch(UnsupportedEncodingException e)
-		{
-			arguments.putString(HubsFragment.URL_ARGUMENT, URL.replace("%query%", query));
-		}
-
-		fragment.setArguments(arguments);
-
-		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-		fragmentTransaction.replace(android.R.id.content, fragment);
-		fragmentTransaction.commit();
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		switch(item.getItemId())
-		{
-			case android.R.id.home:
-				Intent intent = new Intent(this, HubsActivity.class);
-				if(NavUtils.shouldUpRecreateTask(this, intent))
-				{
-					TaskStackBuilder.create(this).addNextIntent(intent).startActivities();
-					finish();
-				}else
-					NavUtils.navigateUpTo(this, intent);
-				return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	protected OnClickListener getConnectionDialogListener()
-	{
-		return new OnClickListener()
-		{
-			@Override
-			public void onClick(DialogInterface dialog, int which)
-			{
-				finish();
-			}
-		};
-	}
+    @Override
+    protected OnClickListener getConnectionDialogListener() {
+	return new OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+		finish();
+	    }
+	};
+    }
 
 }

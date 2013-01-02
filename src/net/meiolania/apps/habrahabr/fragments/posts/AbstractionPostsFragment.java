@@ -45,140 +45,123 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 
 public abstract class AbstractionPostsFragment extends SherlockListFragment implements OnScrollListener,
-		LoaderCallbacks<ArrayList<PostsData>>
-{
-	protected boolean isLoadData;
-	protected int page;
-	protected ArrayList<PostsData> posts;
-	protected PostsAdapter adapter;
-	protected boolean noMoreData;
+	LoaderCallbacks<ArrayList<PostsData>> {
+    protected boolean isLoadData;
+    protected int page;
+    protected ArrayList<PostsData> posts;
+    protected PostsAdapter adapter;
+    protected boolean noMoreData;
 
-	protected abstract String getUrl();
+    protected abstract String getUrl();
 
-	protected abstract int getLoaderId();
+    protected abstract int getLoaderId();
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState)
-	{
-		super.onActivityCreated(savedInstanceState);
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+	super.onActivityCreated(savedInstanceState);
 
-		setRetainInstance(true);
-		setHasOptionsMenu(true);
+	setRetainInstance(true);
+	setHasOptionsMenu(true);
 
-		if(adapter == null)
-		{
-			posts = new ArrayList<PostsData>();
-			adapter = new PostsAdapter(getActivity(), posts);
+	if (adapter == null) {
+	    posts = new ArrayList<PostsData>();
+	    adapter = new PostsAdapter(getActivity(), posts);
+	}
+
+	setListAdapter(adapter);
+	setListShown(true);
+
+	getListView().setDivider(null);
+	getListView().setDividerHeight(0);
+
+	getListView().setOnScrollListener(this);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	inflater.inflate(R.menu.posts_fragment, menu);
+
+	final EditText searchQuery = (EditText) menu.findItem(R.id.search).getActionView().findViewById(R.id.search_query);
+	searchQuery.setOnEditorActionListener(new OnEditorActionListener() {
+	    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+		if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+		    Intent intent = new Intent(getSherlockActivity(), PostsSearchActivity.class);
+		    intent.putExtra(PostsSearchActivity.EXTRA_QUERY, searchQuery.getText().toString());
+		    startActivity(intent);
+		    return true;
 		}
+		return false;
+	    }
+	});
 
-		setListAdapter(adapter);
-		setListShown(true);
+	super.onCreateOptionsMenu(menu, inflater);
+    }
 
-		getListView().setDivider(null);
-		getListView().setDividerHeight(0);
+    @Override
+    public void onListItemClick(ListView list, View view, int position, long id) {
+	showPost(position);
+    }
 
-		getListView().setOnScrollListener(this);
+    protected void showPost(int position) {
+	PostsData data = posts.get(position);
+
+	Intent intent = new Intent(getSherlockActivity(), PostsShowActivity.class);
+	intent.putExtra(PostsShowActivity.EXTRA_URL, data.getUrl());
+	intent.putExtra(PostsShowActivity.EXTRA_TITLE, data.getTitle());
+
+	startActivity(intent);
+    }
+
+    protected void restartLoading() {
+	if (ConnectionUtils.isConnected(getSherlockActivity())) {
+	    getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+
+	    PostsLoader.setPage(++page);
+
+	    getSherlockActivity().getSupportLoaderManager().restartLoader(getLoaderId(), null, this);
+
+	    isLoadData = true;
+	}
+    }
+
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+	if ((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData)
+	    restartLoading();
+    }
+
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+    }
+
+    @Override
+    public Loader<ArrayList<PostsData>> onCreateLoader(int id, Bundle args) {
+	PostsLoader loader = new PostsLoader(getSherlockActivity(), getUrl());
+	loader.forceLoad();
+
+	return loader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<ArrayList<PostsData>> loader, ArrayList<PostsData> data) {
+	if (data.isEmpty()) {
+	    noMoreData = true;
+
+	    // Have some problem with NullPointerException
+	    if (getSherlockActivity() != null)
+		Toast.makeText(getSherlockActivity(), R.string.no_more_pages, Toast.LENGTH_SHORT).show();
 	}
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-	{
-		inflater.inflate(R.menu.posts_fragment, menu);
+	posts.addAll(data);
+	adapter.notifyDataSetChanged();
 
-		final EditText searchQuery = (EditText) menu.findItem(R.id.search).getActionView().findViewById(R.id.search_query);
-		searchQuery.setOnEditorActionListener(new OnEditorActionListener()
-		{
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
-			{
-				if(actionId == EditorInfo.IME_ACTION_SEARCH)
-				{
-					Intent intent = new Intent(getSherlockActivity(), PostsSearchActivity.class);
-					intent.putExtra(PostsSearchActivity.EXTRA_QUERY, searchQuery.getText().toString());
-					startActivity(intent);
-					return true;
-				}
-				return false;
-			}
-		});
+	if (getSherlockActivity() != null)
+	    getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
 
-		super.onCreateOptionsMenu(menu, inflater);
-	}
+	isLoadData = false;
+    }
 
-	@Override
-	public void onListItemClick(ListView list, View view, int position, long id)
-	{
-		showPost(position);
-	}
+    @Override
+    public void onLoaderReset(Loader<ArrayList<PostsData>> loader) {
 
-	protected void showPost(int position)
-	{
-		PostsData data = posts.get(position);
-
-		Intent intent = new Intent(getSherlockActivity(), PostsShowActivity.class);
-		intent.putExtra(PostsShowActivity.EXTRA_URL, data.getUrl());
-		intent.putExtra(PostsShowActivity.EXTRA_TITLE, data.getTitle());
-
-		startActivity(intent);
-	}
-
-	protected void restartLoading()
-	{
-		if(ConnectionUtils.isConnected(getSherlockActivity()))
-		{
-			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
-
-			PostsLoader.setPage(++page);
-
-			getSherlockActivity().getSupportLoaderManager().restartLoader(getLoaderId(), null, this);
-
-			isLoadData = true;
-		}
-	}
-
-	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
-	{
-		if((firstVisibleItem + visibleItemCount) == totalItemCount && !isLoadData)
-			restartLoading();
-	}
-
-	public void onScrollStateChanged(AbsListView view, int scrollState)
-	{
-	}
-
-	@Override
-	public Loader<ArrayList<PostsData>> onCreateLoader(int id, Bundle args)
-	{
-		PostsLoader loader = new PostsLoader(getSherlockActivity(), getUrl());
-		loader.forceLoad();
-
-		return loader;
-	}
-
-	@Override
-	public void onLoadFinished(Loader<ArrayList<PostsData>> loader, ArrayList<PostsData> data)
-	{
-		if(data.isEmpty())
-		{
-			noMoreData = true;
-
-			// Have some problem with NullPointerException
-			if(getSherlockActivity() != null)
-				Toast.makeText(getSherlockActivity(), R.string.no_more_pages, Toast.LENGTH_SHORT).show();
-		}
-
-		posts.addAll(data);
-		adapter.notifyDataSetChanged();
-
-		if(getSherlockActivity() != null)
-			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
-
-		isLoadData = false;
-	}
-
-	@Override
-	public void onLoaderReset(Loader<ArrayList<PostsData>> loader)
-	{
-
-	}
+    }
 
 }

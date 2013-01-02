@@ -18,30 +18,25 @@ package net.meiolania.apps.habrahabr.fragments.hubs;
 
 import net.meiolania.apps.habrahabr.fragments.posts.AbstractionPostsFragment;
 
-public class HubsPostsFragment extends AbstractionPostsFragment
-{
-	private String url;
+public class HubsPostsFragment extends AbstractionPostsFragment {
+    private String url;
 
-	public HubsPostsFragment(String url)
-	{
-		this.url = url;
-	}
+    public HubsPostsFragment(String url) {
+	this.url = url;
+    }
 
-	public void setUrl(String url)
-	{
-		this.url = url;
-	}
+    public void setUrl(String url) {
+	this.url = url;
+    }
 
-	@Override
-	protected String getUrl()
-	{
-		return url + "posts/page%page%/";
-	}
+    @Override
+    protected String getUrl() {
+	return url + "posts/page%page%/";
+    }
 
-	@Override
-	protected int getLoaderId()
-	{
-		return 0;
-	}
+    @Override
+    protected int getLoaderId() {
+	return 0;
+    }
 
 }

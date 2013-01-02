@@ -30,68 +30,60 @@ import org.jsoup.select.Elements;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
-public class PostCommentsLoader extends AsyncTaskLoader<ArrayList<CommentsData>>
-{
-	private String url;
-	private ArrayList<CommentsData> commentsDatas = new ArrayList<CommentsData>();
-	private HashSet<String> containedComments = new HashSet<String>();
+public class PostCommentsLoader extends AsyncTaskLoader<ArrayList<CommentsData>> {
+    private String url;
+    private ArrayList<CommentsData> commentsDatas = new ArrayList<CommentsData>();
+    private HashSet<String> containedComments = new HashSet<String>();
 
-	public PostCommentsLoader(Context context, String url)
-	{
-		super(context);
+    public PostCommentsLoader(Context context, String url) {
+	super(context);
 
-		this.url = url;
+	this.url = url;
+    }
+
+    @Override
+    public ArrayList<CommentsData> loadInBackground() {
+	try {
+	    Document document = Jsoup.connect(url).get();
+	    Elements comments = document.select("div.comment_item");
+	    parseComments(comments, 0);
+	} catch (IOException e) {
 	}
 
-	@Override
-	public ArrayList<CommentsData> loadInBackground()
-	{
-		try
-		{
-			Document document = Jsoup.connect(url).get();
-			Elements comments = document.select("div.comment_item");
-			parseComments(comments, 0);
-		}
-		catch(IOException e)
-		{
-		}
+	return commentsDatas;
+    }
 
-		return commentsDatas;
+    private void parseComments(Elements comments, int level) {
+	for (Element comment : comments) {
+	    CommentsData commentsData = new CommentsData();
+
+	    /*
+	     * TODO: Really awful. Need to rewrite this.
+	     */
+	    String commentId = comment.attr("id");
+	    if (containedComments.contains(commentId))
+		continue;
+
+	    containedComments.add(commentId);
+
+	    Element name = comment.select("a.username").first();
+	    Element message = comment.select("div.message").first();
+	    Element linkToComment = comment.select("a.link_to_comment").first();
+	    Element score = comment.select("span.score").first();
+
+	    commentsData.setScore(score.text());
+	    commentsData.setUrl(linkToComment.attr("abs:href"));
+	    commentsData.setAuthorUrl(name.attr("abs:href"));
+	    commentsData.setAuthor(name.text());
+	    commentsData.setComment(message.text());
+	    commentsData.setLevel(level);
+
+	    commentsDatas.add(commentsData);
+
+	    Elements replyComments = comment.select("div.reply_comments > div.comment_item");
+
+	    parseComments(replyComments, level + 1);
 	}
-
-	private void parseComments(Elements comments, int level)
-	{
-		for(Element comment : comments)
-		{
-			CommentsData commentsData = new CommentsData();
-
-			/*
-			 * TODO: Really awful. Need to rewrite this.
-			 */
-			String commentId = comment.attr("id");
-			if(containedComments.contains(commentId))
-				continue;
-
-			containedComments.add(commentId);
-
-			Element name = comment.select("a.username").first();
-			Element message = comment.select("div.message").first();
-			Element linkToComment = comment.select("a.link_to_comment").first();
-			Element score = comment.select("span.score").first();
-
-			commentsData.setScore(score.text());
-			commentsData.setUrl(linkToComment.attr("abs:href"));
-			commentsData.setAuthorUrl(name.attr("abs:href"));
-			commentsData.setAuthor(name.text());
-			commentsData.setComment(message.text());
-			commentsData.setLevel(level);
-
-			commentsDatas.add(commentsData);
-
-			Elements replyComments = comment.select("div.reply_comments > div.comment_item");
-
-			parseComments(replyComments, level + 1);
-		}
-	}
+    }
 
 }

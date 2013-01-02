@@ -29,71 +29,61 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class QaAdapter extends BaseAdapter
-{
-	private ArrayList<QaData> questions;
-	private Context context;
-	private boolean additionalLayout = false;
+public class QaAdapter extends BaseAdapter {
+    private ArrayList<QaData> questions;
+    private Context context;
+    private boolean additionalLayout = false;
 
-	public QaAdapter(Context context, ArrayList<QaData> questions)
-	{
-		this.context = context;
-		this.questions = questions;
+    public QaAdapter(Context context, ArrayList<QaData> questions) {
+	this.context = context;
+	this.questions = questions;
 
-		Preferences preferences = Preferences.getInstance(context);
-		this.additionalLayout = preferences.getAdditionalQa();
+	Preferences preferences = Preferences.getInstance(context);
+	this.additionalLayout = preferences.getAdditionalQa();
+    }
+
+    public int getCount() {
+	return questions.size();
+    }
+
+    public QaData getItem(int position) {
+	return questions.get(position);
+    }
+
+    public long getItemId(int position) {
+	return position;
+    }
+
+    public View getView(int position, View convertView, ViewGroup parent) {
+	QaData data = getItem(position);
+
+	View view = convertView;
+	if (view == null) {
+	    LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	    view = layoutInflater.inflate(R.layout.qa_list_row, null);
 	}
 
-	public int getCount()
-	{
-		return questions.size();
+	TextView title = (TextView) view.findViewById(R.id.qa_title);
+	title.setText(data.getTitle());
+
+	TextView hubs = (TextView) view.findViewById(R.id.qa_hubs);
+	TextView author = (TextView) view.findViewById(R.id.qa_author);
+	TextView date = (TextView) view.findViewById(R.id.qa_date);
+	TextView answers = (TextView) view.findViewById(R.id.qa_answers);
+
+	LinearLayout qaInfo = (LinearLayout) view.findViewById(R.id.qa_info);
+
+	if (additionalLayout) {
+	    hubs.setText(data.getHubs());
+	    author.setText(data.getAuthor());
+	    date.setText(data.getDate());
+	    answers.setText(data.getAnswers());
+	} else {
+	    hubs.setVisibility(View.GONE);
+	    qaInfo.setVisibility(View.GONE);
 	}
 
-	public QaData getItem(int position)
-	{
-		return questions.get(position);
-	}
-
-	public long getItemId(int position)
-	{
-		return position;
-	}
-
-	public View getView(int position, View convertView, ViewGroup parent)
-	{
-		QaData data = getItem(position);
-
-		View view = convertView;
-		if(view == null)
-		{
-			LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = layoutInflater.inflate(R.layout.qa_list_row, null);
-		}
-
-		TextView title = (TextView) view.findViewById(R.id.qa_title);
-		title.setText(data.getTitle());
-
-		TextView hubs = (TextView) view.findViewById(R.id.qa_hubs);
-		TextView author = (TextView) view.findViewById(R.id.qa_author);
-		TextView date = (TextView) view.findViewById(R.id.qa_date);
-		TextView answers = (TextView) view.findViewById(R.id.qa_answers);
-
-		LinearLayout qaInfo = (LinearLayout) view.findViewById(R.id.qa_info);
-
-		if(additionalLayout)
-		{
-			hubs.setText(data.getHubs());
-			author.setText(data.getAuthor());
-			date.setText(data.getDate());
-			answers.setText(data.getAnswers());
-		}
-		else
-		{
-			hubs.setVisibility(View.GONE);
-			qaInfo.setVisibility(View.GONE);
-		}
-
-		return view;
-	}
+	return view;
+    }
 
 }

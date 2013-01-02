@@ -32,89 +32,74 @@ import android.support.v4.app.TaskStackBuilder;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
-public class UsersSearchActivity extends AbstractionActivity
-{
-	public final static String URL = "http://habrahabr.ru/search/?target_type=users&order_by=relevance&q=%query%";
-	public final static String EXTRA_QUERY = "query";
-	private String query;
+public class UsersSearchActivity extends AbstractionActivity {
+    public final static String URL = "http://habrahabr.ru/search/?target_type=users&order_by=relevance&q=%query%";
+    public final static String EXTRA_QUERY = "query";
+    private String query;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
 
-		loadExtras();
-		showActionBar();
-		loadSearchedPeople();
+	loadExtras();
+	showActionBar();
+	loadSearchedPeople();
+    }
+
+    private void loadExtras() {
+	query = getIntent().getStringExtra(EXTRA_QUERY);
+    }
+
+    private void showActionBar() {
+	ActionBar actionBar = getSupportActionBar();
+	actionBar.setTitle(R.string.people_search);
+	actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void loadSearchedPeople() {
+	UsersFragment fragment = new UsersFragment();
+
+	Bundle arguments = new Bundle();
+	arguments.putString(UsersFragment.URL_ARGUMENT, getUrl());
+
+	fragment.setArguments(arguments);
+
+	FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+	fragmentTransaction.replace(android.R.id.content, fragment);
+	fragmentTransaction.commit();
+    }
+
+    private String getUrl() {
+	try {
+	    return URL.replace("%query%", URLEncoder.encode(query, "UTF-8"));
+	} catch (UnsupportedEncodingException e) {
+	    return URL.replace("%query%", query);
 	}
+    }
 
-	private void loadExtras()
-	{
-		query = getIntent().getStringExtra(EXTRA_QUERY);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+	switch (item.getItemId()) {
+	case android.R.id.home:
+	    Intent intent = new Intent(this, UsersActivity.class);
+	    if (NavUtils.shouldUpRecreateTask(this, intent)) {
+		TaskStackBuilder.create(this).addNextIntent(intent).startActivities();
+		finish();
+	    } else
+		NavUtils.navigateUpTo(this, intent);
+	    return true;
 	}
+	return super.onOptionsItemSelected(item);
+    }
 
-	private void showActionBar()
-	{
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.setTitle(R.string.people_search);
-		actionBar.setDisplayHomeAsUpEnabled(true);
-	}
-
-	private void loadSearchedPeople()
-	{
-		UsersFragment fragment = new UsersFragment();
-
-		Bundle arguments = new Bundle();
-		arguments.putString(UsersFragment.URL_ARGUMENT, getUrl());
-
-		fragment.setArguments(arguments);
-
-		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-		fragmentTransaction.replace(android.R.id.content, fragment);
-		fragmentTransaction.commit();
-	}
-
-	private String getUrl()
-	{
-		try
-		{
-			return URL.replace("%query%", URLEncoder.encode(query, "UTF-8"));
-		}
-		catch(UnsupportedEncodingException e)
-		{
-			return URL.replace("%query%", query);
-		}
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		switch(item.getItemId())
-		{
-			case android.R.id.home:
-				Intent intent = new Intent(this, UsersActivity.class);
-				if(NavUtils.shouldUpRecreateTask(this, intent))
-				{
-					TaskStackBuilder.create(this).addNextIntent(intent).startActivities();
-					finish();
-				}else
-					NavUtils.navigateUpTo(this, intent);
-				return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	protected OnClickListener getConnectionDialogListener()
-	{
-		return new OnClickListener()
-		{
-			@Override
-			public void onClick(DialogInterface dialog, int which)
-			{
-				finish();
-			}
-		};
-	}
+    @Override
+    protected OnClickListener getConnectionDialogListener() {
+	return new OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+		finish();
+	    }
+	};
+    }
 
 }

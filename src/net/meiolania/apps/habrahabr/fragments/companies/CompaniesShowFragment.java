@@ -33,100 +33,91 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class CompaniesShowFragment extends SherlockFragment implements LoaderCallbacks<CompanyFullData>
-{
-	public final static String URL_ARGUMENT = "url";
-	public final static int LOADER_COMPANY = 0;
-	private String url;
-	private ProgressDialog progressDialog;
+public class CompaniesShowFragment extends SherlockFragment implements LoaderCallbacks<CompanyFullData> {
+    public final static String URL_ARGUMENT = "url";
+    public final static int LOADER_COMPANY = 0;
+    private String url;
+    private ProgressDialog progressDialog;
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState)
-	{
-		super.onActivityCreated(savedInstanceState);
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+	super.onActivityCreated(savedInstanceState);
 
-		url = getArguments().getString(URL_ARGUMENT);
+	url = getArguments().getString(URL_ARGUMENT);
 
-		setRetainInstance(true);
+	setRetainInstance(true);
 
-		if(ConnectionUtils.isConnected(getSherlockActivity()))
-			getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_COMPANY, null, this);
+	if (ConnectionUtils.isConnected(getSherlockActivity()))
+	    getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_COMPANY, null, this);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	return inflater.inflate(R.layout.companies_show_activity, container, false);
+    }
+
+    @Override
+    public Loader<CompanyFullData> onCreateLoader(int id, Bundle args) {
+	showProgressDialog();
+
+	CompaniesShowLoader loader = new CompaniesShowLoader(getSherlockActivity(), url);
+	loader.forceLoad();
+
+	return loader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<CompanyFullData> loader, CompanyFullData data) {
+	SherlockFragmentActivity activity = getSherlockActivity();
+
+	if (activity != null) {
+	    TextView date = (TextView) activity.findViewById(R.id.company_date);
+	    date.setText(data.getDate());
+
+	    TextView site = (TextView) activity.findViewById(R.id.company_site);
+	    site.setText(data.getCompanyUrl());
+
+	    TextView industries = (TextView) activity.findViewById(R.id.company_industries);
+	    industries.setText(data.getIndustries());
+
+	    TextView location = (TextView) activity.findViewById(R.id.company_location);
+	    location.setText(data.getLocation());
+
+	    TextView quantity = (TextView) activity.findViewById(R.id.company_quantity);
+	    quantity.setText(data.getQuantity());
+
+	    WebView summary = (WebView) activity.findViewById(R.id.company_summary);
+	    summary.getSettings().setSupportZoom(true);
+	    summary.loadDataWithBaseURL("", data.getSummary(), "text/html", "UTF-8", null);
+
+	    WebView management = (WebView) activity.findViewById(R.id.company_management);
+	    management.getSettings().setSupportZoom(true);
+	    management.loadDataWithBaseURL("", data.getManagement(), "text/html", "UTF-8", null);
+
+	    WebView developmentStages = (WebView) activity.findViewById(R.id.company_development_stages);
+	    developmentStages.getSettings().setSupportZoom(true);
+	    developmentStages.loadDataWithBaseURL("", data.getDevelopmentStages(), "text/html", "UTF-8", null);
 	}
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-	{
-		return inflater.inflate(R.layout.companies_show_activity, container, false);
-	}
+	hideProgressDialog();
+    }
 
-	@Override
-	public Loader<CompanyFullData> onCreateLoader(int id, Bundle args)
-	{
-		showProgressDialog();
+    @Override
+    public void onLoaderReset(Loader<CompanyFullData> loader) {
 
-		CompaniesShowLoader loader = new CompaniesShowLoader(getSherlockActivity(), url);
-		loader.forceLoad();
+    }
 
-		return loader;
-	}
+    private void showProgressDialog() {
+	progressDialog = new ProgressDialog(getSherlockActivity());
+	progressDialog.setTitle(R.string.loading);
+	progressDialog.setMessage(getString(R.string.loading_company));
+	progressDialog.setCancelable(true);
+	progressDialog.show();
+    }
 
-	@Override
-	public void onLoadFinished(Loader<CompanyFullData> loader, CompanyFullData data)
-	{
-		SherlockFragmentActivity activity = getSherlockActivity();
-
-		if(activity != null)
-		{
-			TextView date = (TextView) activity.findViewById(R.id.company_date);
-			date.setText(data.getDate());
-
-			TextView site = (TextView) activity.findViewById(R.id.company_site);
-			site.setText(data.getCompanyUrl());
-
-			TextView industries = (TextView) activity.findViewById(R.id.company_industries);
-			industries.setText(data.getIndustries());
-
-			TextView location = (TextView) activity.findViewById(R.id.company_location);
-			location.setText(data.getLocation());
-
-			TextView quantity = (TextView) activity.findViewById(R.id.company_quantity);
-			quantity.setText(data.getQuantity());
-
-			WebView summary = (WebView) activity.findViewById(R.id.company_summary);
-			summary.getSettings().setSupportZoom(true);
-			summary.loadDataWithBaseURL("", data.getSummary(), "text/html", "UTF-8", null);
-
-			WebView management = (WebView) activity.findViewById(R.id.company_management);
-			management.getSettings().setSupportZoom(true);
-			management.loadDataWithBaseURL("", data.getManagement(), "text/html", "UTF-8", null);
-
-			WebView developmentStages = (WebView) activity.findViewById(R.id.company_development_stages);
-			developmentStages.getSettings().setSupportZoom(true);
-			developmentStages.loadDataWithBaseURL("", data.getDevelopmentStages(), "text/html", "UTF-8", null);
-		}
-
-		hideProgressDialog();
-	}
-
-	@Override
-	public void onLoaderReset(Loader<CompanyFullData> loader)
-	{
-
-	}
-
-	private void showProgressDialog()
-	{
-		progressDialog = new ProgressDialog(getSherlockActivity());
-		progressDialog.setTitle(R.string.loading);
-		progressDialog.setMessage(getString(R.string.loading_company));
-		progressDialog.setCancelable(true);
-		progressDialog.show();
-	}
-
-	private void hideProgressDialog()
-	{
-		if(progressDialog != null)
-			progressDialog.dismiss();
-	}
+    private void hideProgressDialog() {
+	if (progressDialog != null)
+	    progressDialog.dismiss();
+    }
 
 }

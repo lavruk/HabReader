@@ -38,104 +38,92 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
-public class MenuFragment extends SherlockListFragment
-{
-	private ArrayList<MenuData> menu;
-	private MenuAdapter menuAdapter;
-	
+public class MenuFragment extends SherlockListFragment {
+    private ArrayList<MenuData> menu;
+    private MenuAdapter menuAdapter;
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+	super.onActivityCreated(savedInstanceState);
+
+	menu = new ArrayList<MenuData>();
+
+	menu.add(new MenuData(getString(R.string.posts), R.drawable.ic_db_posts, PostsActivity.class));
+	menu.add(new MenuData(getString(R.string.hubs), R.drawable.ic_db_hubs, HubsActivity.class));
+	menu.add(new MenuData(getString(R.string.qa), R.drawable.ic_db_qa, QaActivity.class));
+	menu.add(new MenuData(getString(R.string.events), R.drawable.ic_db_events, EventsActivity.class));
+	menu.add(new MenuData(getString(R.string.companies), R.drawable.ic_db_companies, CompaniesActivity.class));
+	menu.add(new MenuData(getString(R.string.people), R.drawable.ic_db_people, UsersActivity.class));
+
+	menuAdapter = new MenuAdapter(getSherlockActivity(), menu);
+	setListAdapter(menuAdapter);
+	setListShown(true);
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+	MenuData data = menu.get(position);
+
+	Intent intent = new Intent(getSherlockActivity(), data.cls);
+	startActivity(intent);
+    }
+
+    private class MenuData {
+	public String title;
+	public int icon;
+	public Class<?> cls;
+
+	public MenuData(String title, int icon, Class<?> cls) {
+	    this.title = title;
+	    this.icon = icon;
+	    this.cls = cls;
+	}
+
+    }
+
+    private class MenuAdapter extends BaseAdapter {
+	private ArrayList<MenuData> data;
+	private Context context;
+
+	public MenuAdapter(Context context, ArrayList<MenuData> data) {
+	    this.data = data;
+	    this.context = context;
+	}
+
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState)
-	{
-		super.onActivityCreated(savedInstanceState);
-		
-		menu = new ArrayList<MenuData>();
-		
-		menu.add(new MenuData(getString(R.string.posts), R.drawable.ic_db_posts, PostsActivity.class));
-		menu.add(new MenuData(getString(R.string.hubs), R.drawable.ic_db_hubs, HubsActivity.class));
-		menu.add(new MenuData(getString(R.string.qa), R.drawable.ic_db_qa, QaActivity.class));
-		menu.add(new MenuData(getString(R.string.events), R.drawable.ic_db_events, EventsActivity.class));
-		menu.add(new MenuData(getString(R.string.companies), R.drawable.ic_db_companies, CompaniesActivity.class));
-		menu.add(new MenuData(getString(R.string.people), R.drawable.ic_db_people, UsersActivity.class));
-		
-		menuAdapter = new MenuAdapter(getSherlockActivity(), menu);
-		setListAdapter(menuAdapter);
-		setListShown(true);
+	public int getCount() {
+	    return data.size();
 	}
-	
+
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id)
-	{
-		MenuData data = menu.get(position);
-		
-		Intent intent = new Intent(getSherlockActivity(), data.cls);
-		startActivity(intent);
+	public MenuData getItem(int position) {
+	    return data.get(position);
 	}
-	
-	private class MenuData
-	{
-		public String title;
-		public int icon;
-		public Class<?> cls;
-		
-		public MenuData(String title, int icon, Class<?> cls)
-		{
-			this.title = title;
-			this.icon = icon;
-			this.cls = cls;
-		}
-		
+
+	@Override
+	public long getItemId(int position) {
+	    return position;
 	}
-	
-	private class MenuAdapter extends BaseAdapter
-	{
-		private ArrayList<MenuData> data;
-		private Context context;
-		
-		public MenuAdapter(Context context, ArrayList<MenuData> data)
-		{
-			this.data = data;
-			this.context = context;
-		}
 
-		@Override
-		public int getCount()
-		{
-			return data.size();
-		}
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+	    MenuData data = getItem(position);
 
-		@Override
-		public MenuData getItem(int position)
-		{
-			return data.get(position);
-		}
+	    View view = convertView;
+	    if (view == null) {
+		LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		view = layoutInflater.inflate(R.layout.slide_menu_row, null);
+	    }
 
-		@Override
-		public long getItemId(int position)
-		{
-			return position;
-		}
+	    TextView title = (TextView) view.findViewById(R.id.slide_menu_title);
+	    ImageView icon = (ImageView) view.findViewById(R.id.slide_menu_icon);
 
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent)
-		{
-			MenuData data = getItem(position);
-			
-			View view = convertView;
-			if(view == null)
-			{
-				LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				view = layoutInflater.inflate(R.layout.slide_menu_row, null);
-			}
-			
-			TextView title = (TextView) view.findViewById(R.id.slide_menu_title);
-			ImageView icon = (ImageView) view.findViewById(R.id.slide_menu_icon);
-			
-			title.setText(data.title);
-			icon.setImageResource(data.icon);
-			
-			return view;
-		}
-		
+	    title.setText(data.title);
+	    icon.setImageResource(data.icon);
+
+	    return view;
 	}
-	
+
+    }
+
 }

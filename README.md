@@ -15,10 +15,11 @@ HabReader это open source клиент для сайта [Habrahabr.ru](http:
 - Люди
 
 
-Разработчик
+Разработчики
 ===========
 
 - [Андрей Зайцев](http://habrahabr.ru/users/aeinsam/)
+- [Сергей Иванов](http://habrahabr.ru/users/Falcon5F/)
 
 
 Используемые библиотеки
@@ -26,6 +27,7 @@ HabReader это open source клиент для сайта [Habrahabr.ru](http:
 
 - [ActionBarSherlock](https://github.com/JakeWharton/ActionBarSherlock)
 - [Android Billing Library](https://github.com/robotmedia/AndroidBillingLibrary)
+- [SlidingMenu](https://github.com/AEinsam/SlidingMenu)
 - [Android Universal Image Loader](https://github.com/nostra13/Android-Universal-Image-Loader)
 - [jsoup](https://github.com/jhy/jsoup)
 
@@ -33,7 +35,6 @@ HabReader это open source клиент для сайта [Habrahabr.ru](http:
 Благодарность
 =============
 
-- Выражаю огромную признательность [Сергею Иванову](http://habrahabr.ru/users/Falcon5F/) за его вклад в развитие приложения.
 - Огромное спасибо [Илье Черничкину](http://habrahabr.ru/users/INCWADRA/) за его [HabraPack](https://github.com/Incwadra/HabraPack).
 
 

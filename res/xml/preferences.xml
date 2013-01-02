@@ -54,6 +54,7 @@
             android:summary="@string/events_additional_layout_summary_preferences"
             android:title="@string/additional_layout_preferences" />
     </PreferenceCategory>
+    <!--
     <PreferenceCategory android:title="@string/favorites" >
         <EditTextPreference
             android:dialogTitle="Введите ник пользователя"
@@ -63,6 +64,7 @@
             android:summary="Избранное пользователя"
             android:title="Пользователь" />
     </PreferenceCategory>
+    -->
     <PreferenceCategory android:title="@string/additional_preferences" >
         <Preference
             android:key="donate"
@@ -77,6 +79,9 @@
                 android:action="android.intent.action.VIEW"
                 android:data="https://github.com/AEinsam/HabReader" />
         </Preference>
+        <Preference
+            android:summary="2.0"
+            android:title="@string/version_preferences" />
     </PreferenceCategory>
 
 </PreferenceScreen>

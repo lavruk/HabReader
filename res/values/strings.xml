@@ -37,7 +37,7 @@
 	<!-- Posts -->
 	<string name="best">Лучшие</string>
 	<string name="thematic">Тематические</string>
-	<string name="corporate">Корпоратив…</string>
+	<string name="corporate">Корпоративные</string>
 	<string name="post">Пост</string>
 	<string name="comments">Комментарии</string>
 	<string name="loading_post">Загрузка поста</string>
@@ -74,7 +74,6 @@
 	<string name="donate_thanks_preferences">Спасибо за поддержку приложения!</string>
 	<string name="fullscreen_preferences">Полноэкранный режим</string>
 	<string name="version_preferences">Версия</string>
-	<string name="fullscreen_summary_preferences">Потребуется перезапуск приложения</string>
 	<string name="keepscreen_preferences">Не выключать экран</string>
 	<string name="source_code_preferences">Исходный код</string>
 	<string name="default_tab_preferences">Вкладка по умолчанию</string>

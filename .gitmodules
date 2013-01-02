@@ -4,3 +4,6 @@
 [submodule "AndroidBillingLibrary"]
 	path = AndroidBillingLibrary
 	url = git://github.com/robotmedia/AndroidBillingLibrary.git
+[submodule "SlidingMenu"]
+	path = SlidingMenu
+	url = git://github.com/AEinsam/SlidingMenu.git

@@ -71,7 +71,7 @@ public class CommentsAdapter extends BaseAdapter {
 
 		TextView score = (TextView) view.findViewById(R.id.comment_score);
 
-		String rate = data.getScore().replace("+", "").replace("–", "-");
+		String rate = data.getScore().replace("+", "").replace("â€“", "-");
 		if (Integer.parseInt(rate) > 0)
 			score.setTextColor(context.getResources().getColor(
 					R.color.rating_positive));

@@ -94,8 +94,7 @@ public class PreferencesActivity extends SherlockPreferenceActivity {
 
 			@Override
 			public void onSubscriptionChecked(boolean supported) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		};
 

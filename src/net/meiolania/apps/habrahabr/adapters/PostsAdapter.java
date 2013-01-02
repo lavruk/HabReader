@@ -79,13 +79,13 @@ public class PostsAdapter extends BaseAdapter {
 			hubs.setText(data.getHubs());
 			author.setText(data.getAuthor());
 			date.setText(data.getDate());
-			if (data.getScore().trim().equals("—")) {
+			if (data.getScore().trim().equals("â€”")) {
 				score.setVisibility(View.GONE);
 				// score.setText(data.getScore());
 			} else {
 				score.setVisibility(View.VISIBLE);
 				String rate = data.getScore().replace("+", "")
-						.replace("–", "-");
+						.replace("â€“", "-");
 
 				if (Integer.parseInt(rate) > 0)
 					score.setTextColor(context.getResources().getColor(

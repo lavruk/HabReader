@@ -49,8 +49,6 @@ public final class Preferences {
     public final static String KEEPSCREEN_KEY = "keepscreen";
     public final static boolean KEEPSCREEN_DEFAULT = false;
     // Favorites
-    // TODO: remove. We will implement an authorization.
-    public static final String FAVS_USER_NAME = "favorites_user";
 
     private static Preferences preferences = null;
     private static SharedPreferences sharedPreferences;
@@ -101,10 +99,6 @@ public final class Preferences {
 
     public boolean getAdditionalQa() {
 	return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_QA_KEY, ADDITIONAL_LAYOUT_QA_DEFAULT);
-    }
-
-    public static String getUserName() {
-	return sharedPreferences.getString(FAVS_USER_NAME, "");
     }
 
     public static void saveViewScale(Context context, float scale) {

@@ -37,110 +37,112 @@ import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
 
 public abstract class AbstractionActivity extends SlidingFragmentActivity {
-    protected PowerManager.WakeLock wakeLock;
+	protected PowerManager.WakeLock wakeLock;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-	requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-	Preferences preferences = Preferences.getInstance(this);
-	if (preferences.getFullScreen())
-	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		Preferences preferences = Preferences.getInstance(this);
+		if (preferences.getFullScreen())
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-	if (preferences.getKeepScreen()) {
-	    PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-	    wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "wakeLock");
-	    wakeLock.acquire();
+		if (preferences.getKeepScreen()) {
+			PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+			wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "wakeLock");
+			wakeLock.acquire();
+		}
+
+		if (!ConnectionUtils.isConnected(this)) {
+			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+			dialog.setTitle(R.string.error);
+			dialog.setMessage(getString(R.string.no_connection));
+			dialog.setPositiveButton(R.string.close, getConnectionDialogListener());
+			dialog.setCancelable(false);
+			dialog.show();
+		}
+
+		/*
+		 * Workaround for
+		 * "java.lang.IllegalStateException: Both setBehindContentView must be called in onCreate in addition to setContentView."
+		 */
+		setContentView(R.layout.empty_for_slidemenu);
+
+		showSlideMenu();
+
+		getSupportActionBar().setHomeButtonEnabled(true);
+		setSupportProgressBarIndeterminateVisibility(false);
 	}
 
-	if (!ConnectionUtils.isConnected(this)) {
-	    AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-	    dialog.setTitle(R.string.error);
-	    dialog.setMessage(getString(R.string.no_connection));
-	    dialog.setPositiveButton(R.string.close, getConnectionDialogListener());
-	    dialog.setCancelable(false);
-	    dialog.show();
+	@Override
+	protected void onResume() {
+		Preferences preferences = Preferences.getInstance(this);
+		if (preferences.getFullScreen())
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		else
+			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+		super.onResume();
 	}
 
-	/*
-	 * Workaround for
-	 * "java.lang.IllegalStateException: Both setBehindContentView must be called in onCreate in addition to setContentView."
-	 */
-	setContentView(R.layout.empty_for_slidemenu);
+	@Override
+	protected void onPause() {
+		if (wakeLock != null)
+			wakeLock.release();
 
-	showSlideMenu();
-
-	getSupportActionBar().setHomeButtonEnabled(true);
-	setSupportProgressBarIndeterminateVisibility(false);
-    }
-
-    @Override
-    protected void onResume() {
-	Preferences preferences = Preferences.getInstance(this);
-	if (preferences.getFullScreen())
-	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-	else
-	    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-	super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-	if (wakeLock != null)
-	    wakeLock.release();
-
-	super.onPause();
-    }
-
-    @Override
-    public void onBackPressed() {
-	if (getSlidingMenu().isMenuShowing())
-	    toggle();
-	else
-	    super.onBackPressed();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-	MenuInflater menuInflater = getSupportMenuInflater();
-	menuInflater.inflate(R.menu.global_activity, menu);
-	return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-	switch (item.getItemId()) {
-	case android.R.id.home:
-	    toggle();
-	    return true;
-	case R.id.preferences:
-	    startActivity(new Intent(this, PreferencesActivity.class));
-	    return true;
-	case R.id.more_applications:
-	    Uri uri = Uri.parse("https://play.google.com/store/apps/developer?id=Andrey+Zaytsev");
-	    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-	    startActivity(intent);
-	    return true;
+		super.onPause();
 	}
-	return super.onOptionsItemSelected(item);
-    }
 
-    protected void showSlideMenu() {
-	setBehindContentView(R.layout.slide_menu);
+	@Override
+	public void onBackPressed() {
+		if (getSlidingMenu().isMenuShowing())
+			toggle();
+		else
+			super.onBackPressed();
+	}
 
-	getSupportFragmentManager().beginTransaction().replace(R.id.slide_menu, new MenuFragment()).commit();
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater menuInflater = getSupportMenuInflater();
+		menuInflater.inflate(R.menu.global_activity, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
 
-	SlidingMenu slidingMenu = getSlidingMenu();
-	slidingMenu.setMode(SlidingMenu.LEFT);
-	slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-	slidingMenu.setFadeDegree(0.35f);
-	slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-	slidingMenu.setMenu(R.layout.slide_menu);
-    }
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			toggle();
+			return true;
+		case R.id.preferences:
+			startActivity(new Intent(this, PreferencesActivity.class));
+			return true;
+		case R.id.more_applications:
+			Uri uri = Uri.parse("https://play.google.com/store/apps/developer?id=Andrey+Zaytsev");
+			Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+			startActivity(intent);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
-    protected abstract OnClickListener getConnectionDialogListener();
+	protected void showSlideMenu() {
+		setBehindContentView(R.layout.slide_menu);
+
+		getSupportFragmentManager().beginTransaction().replace(R.id.slide_menu, new MenuFragment()).commit();
+
+		SlidingMenu slidingMenu = getSlidingMenu();
+		slidingMenu.setMode(SlidingMenu.LEFT);
+		slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		slidingMenu.setShadowDrawable(R.drawable.sm_shadow);
+		slidingMenu.setShadowWidth(80);
+		slidingMenu.setFadeDegree(0.2f);
+		slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		slidingMenu.setMenu(R.layout.slide_menu);
+	}
+
+	protected abstract OnClickListener getConnectionDialogListener();
 
 }

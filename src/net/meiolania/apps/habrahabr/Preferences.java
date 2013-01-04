@@ -48,6 +48,9 @@ public final class Preferences {
     // Keepscreen
     public final static String KEEPSCREEN_KEY = "keepscreen";
     public final static boolean KEEPSCREEN_DEFAULT = false;
+    // Share text
+    public final static String SHARE_TEXT_KEY = "share_text";
+    public final static String SHARE_TEXT_DEFAULT = "$link$ - $title$ #HabReader";
 
     private static Preferences preferences = null;
     private static SharedPreferences sharedPreferences;
@@ -98,6 +101,10 @@ public final class Preferences {
 
     public boolean getAdditionalQa() {
 	return sharedPreferences.getBoolean(ADDITIONAL_LAYOUT_QA_KEY, ADDITIONAL_LAYOUT_QA_DEFAULT);
+    }
+    
+    public String getShareText() {
+	return sharedPreferences.getString(SHARE_TEXT_KEY, SHARE_TEXT_DEFAULT);
     }
 
     public static void saveViewScale(Context context, float scale) {

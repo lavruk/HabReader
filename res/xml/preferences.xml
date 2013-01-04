@@ -10,6 +10,11 @@
             android:defaultValue="false"
             android:key="keepscreen"
             android:title="@string/keepscreen_preferences" />
+
+        <EditTextPreference
+            android:defaultValue="@string/share_text_default_preferences"
+            android:key="share_text"
+            android:title="@string/share_text_preferences" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/posts" >
         <ListPreference

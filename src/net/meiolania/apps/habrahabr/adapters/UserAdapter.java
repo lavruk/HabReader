@@ -32,12 +32,12 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-public class PeopleAdapter extends BaseAdapter {
+public class UserAdapter extends BaseAdapter {
     private ArrayList<UsersData> people;
     private Context context;
     private ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public PeopleAdapter(Context context, ArrayList<UsersData> people) {
+    public UserAdapter(Context context, ArrayList<UsersData> people) {
 	this.context = context;
 	this.people = people;
 

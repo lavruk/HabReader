@@ -48,12 +48,12 @@ public class MenuFragment extends SherlockListFragment {
 
 	menu = new ArrayList<MenuData>();
 
-	menu.add(new MenuData(getString(R.string.posts), R.drawable.ic_db_posts, PostsActivity.class));
-	menu.add(new MenuData(getString(R.string.hubs), R.drawable.ic_db_hubs, HubsActivity.class));
-	menu.add(new MenuData(getString(R.string.qa), R.drawable.ic_db_qa, QaActivity.class));
-	menu.add(new MenuData(getString(R.string.events), R.drawable.ic_db_events, EventsActivity.class));
-	menu.add(new MenuData(getString(R.string.companies), R.drawable.ic_db_companies, CompaniesActivity.class));
-	menu.add(new MenuData(getString(R.string.people), R.drawable.ic_db_people, UsersActivity.class));
+	menu.add(new MenuData(getString(R.string.posts), R.drawable.ic_menu_posts, PostsActivity.class));
+	menu.add(new MenuData(getString(R.string.hubs), R.drawable.ic_menu_hubs, HubsActivity.class));
+	menu.add(new MenuData(getString(R.string.qa), R.drawable.ic_menu_qa, QaActivity.class));
+	menu.add(new MenuData(getString(R.string.events), R.drawable.ic_menu_events, EventsActivity.class));
+	menu.add(new MenuData(getString(R.string.companies), R.drawable.ic_menu_companies, CompaniesActivity.class));
+	menu.add(new MenuData(getString(R.string.people), R.drawable.ic_menu_user, UsersActivity.class));
 
 	menuAdapter = new MenuAdapter(getSherlockActivity(), menu);
 	setListAdapter(menuAdapter);

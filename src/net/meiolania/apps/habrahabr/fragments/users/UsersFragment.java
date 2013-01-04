@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.UsersSearchActivity;
 import net.meiolania.apps.habrahabr.activities.UsersShowActivity;
-import net.meiolania.apps.habrahabr.adapters.PeopleAdapter;
+import net.meiolania.apps.habrahabr.adapters.UserAdapter;
 import net.meiolania.apps.habrahabr.data.UsersData;
 import net.meiolania.apps.habrahabr.fragments.users.loader.UsersLoader;
 import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
@@ -43,9 +43,9 @@ import com.actionbarsherlock.view.MenuInflater;
 
 public class UsersFragment extends SherlockListFragment implements LoaderCallbacks<ArrayList<UsersData>> {
     public final static String URL_ARGUMENT = "url";
-    public final static int LOADER_PEOPLE = 0;
-    private ArrayList<UsersData> people;
-    private PeopleAdapter adapter;
+    public final static int LOADER_USER = 0;
+    private ArrayList<UsersData> users;
+    private UserAdapter adapter;
     private String url;
 
     @Override
@@ -59,15 +59,15 @@ public class UsersFragment extends SherlockListFragment implements LoaderCallbac
 	setHasOptionsMenu(true);
 
 	if (adapter == null) {
-	    people = new ArrayList<UsersData>();
-	    adapter = new PeopleAdapter(getSherlockActivity(), people);
+	    users = new ArrayList<UsersData>();
+	    adapter = new UserAdapter(getSherlockActivity(), users);
 	}
 
 	setListAdapter(adapter);
 	setListShown(true);
 
 	if (ConnectionUtils.isConnected(getSherlockActivity()))
-	    getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_PEOPLE, null, this);
+	    getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_USER, null, this);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class UsersFragment extends SherlockListFragment implements LoaderCallbac
     }
 
     protected void showUser(int position) {
-	UsersData data = people.get(position);
+	UsersData data = users.get(position);
 
 	Intent intent = new Intent(getSherlockActivity(), UsersShowActivity.class);
 	intent.putExtra(UsersShowActivity.EXTRA_NAME, data.getName());
@@ -123,7 +123,7 @@ public class UsersFragment extends SherlockListFragment implements LoaderCallbac
 
     @Override
     public void onLoadFinished(Loader<ArrayList<UsersData>> loader, ArrayList<UsersData> data) {
-	people.addAll(data);
+	users.addAll(data);
 	adapter.notifyDataSetChanged();
 
 	if (getSherlockActivity() != null)

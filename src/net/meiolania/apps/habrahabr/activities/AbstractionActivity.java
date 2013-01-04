@@ -21,12 +21,10 @@ import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.slidemenu.MenuFragment;
 import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -37,7 +35,7 @@ import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
 
 public abstract class AbstractionActivity extends SlidingFragmentActivity {
-	protected PowerManager.WakeLock wakeLock;
+	Preferences preferences;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,21 +43,19 @@ public abstract class AbstractionActivity extends SlidingFragmentActivity {
 
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-		Preferences preferences = Preferences.getInstance(this);
+		preferences = Preferences.getInstance(this);
 		if (preferences.getFullScreen())
-			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+					WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		if (preferences.getKeepScreen()) {
-			PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-			wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "wakeLock");
-			wakeLock.acquire();
-		}
+		getScreenPref();
 
 		if (!ConnectionUtils.isConnected(this)) {
 			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 			dialog.setTitle(R.string.error);
 			dialog.setMessage(getString(R.string.no_connection));
-			dialog.setPositiveButton(R.string.close, getConnectionDialogListener());
+			dialog.setPositiveButton(R.string.close,
+					getConnectionDialogListener());
 			dialog.setCancelable(false);
 			dialog.show();
 		}
@@ -78,20 +74,28 @@ public abstract class AbstractionActivity extends SlidingFragmentActivity {
 
 	@Override
 	protected void onResume() {
-		Preferences preferences = Preferences.getInstance(this);
 		if (preferences.getFullScreen())
-			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+					WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		else
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+		getScreenPref();
 		super.onResume();
+	}
+
+	private void getScreenPref() {
+		if (preferences.getKeepScreen()) {
+			getWindow()
+					.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		} else {
+			getWindow().clearFlags(
+					WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		}
 	}
 
 	@Override
 	protected void onPause() {
-		if (wakeLock != null)
-			wakeLock.release();
-
 		super.onPause();
 	}
 
@@ -120,7 +124,8 @@ public abstract class AbstractionActivity extends SlidingFragmentActivity {
 			startActivity(new Intent(this, PreferencesActivity.class));
 			return true;
 		case R.id.more_applications:
-			Uri uri = Uri.parse("https://play.google.com/store/apps/developer?id=Andrey+Zaytsev");
+			Uri uri = Uri
+					.parse("https://play.google.com/store/apps/developer?id=Andrey+Zaytsev");
 			Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 			startActivity(intent);
 			return true;
@@ -131,13 +136,14 @@ public abstract class AbstractionActivity extends SlidingFragmentActivity {
 	protected void showSlideMenu() {
 		setBehindContentView(R.layout.slide_menu);
 
-		getSupportFragmentManager().beginTransaction().replace(R.id.slide_menu, new MenuFragment()).commit();
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.slide_menu, new MenuFragment()).commit();
 
 		SlidingMenu slidingMenu = getSlidingMenu();
 		slidingMenu.setMode(SlidingMenu.LEFT);
-		slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 		slidingMenu.setShadowDrawable(R.drawable.sm_shadow);
-		slidingMenu.setShadowWidth(80);
+		slidingMenu.setShadowWidth(50);
 		slidingMenu.setFadeDegree(0.2f);
 		slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		slidingMenu.setMenu(R.layout.slide_menu);

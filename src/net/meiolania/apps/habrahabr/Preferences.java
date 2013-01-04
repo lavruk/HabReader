@@ -48,7 +48,6 @@ public final class Preferences {
     // Keepscreen
     public final static String KEEPSCREEN_KEY = "keepscreen";
     public final static boolean KEEPSCREEN_DEFAULT = false;
-    // Favorites
 
     private static Preferences preferences = null;
     private static SharedPreferences sharedPreferences;

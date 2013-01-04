@@ -32,10 +32,11 @@ HabReader это open source клиент для сайта [Habrahabr.ru](http:
 - [jsoup](https://github.com/jhy/jsoup)
 
 
-Благодарность
-=============
+Иконки
+======
 
-- Огромное спасибо [Илье Черничкину](http://habrahabr.ru/users/INCWADRA/) за его [HabraPack](https://github.com/Incwadra/HabraPack).
+- Иконка приложения взята из [HabraPack](https://github.com/Incwadra/HabraPack) [Ильи Черничкина](http://habrahabr.ru/users/INCWADRA/).
+- Иконки бокового меню взяты [здесь](http://www.visualpharm.com/must_have_icon_set/).
 
 
 Лицензия

@@ -75,7 +75,7 @@ public class PostCommentsLoader extends AsyncTaskLoader<ArrayList<CommentsData>>
 	    commentsData.setUrl(linkToComment.attr("abs:href"));
 	    commentsData.setAuthorUrl(name.attr("abs:href"));
 	    commentsData.setAuthor(name.text());
-	    commentsData.setComment(message.text());
+	    commentsData.setComment(message.html());
 	    commentsData.setLevel(level);
 
 	    commentsDatas.add(commentsData);

@@ -22,6 +22,7 @@ import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.data.CommentsData;
 import net.meiolania.apps.habrahabr.utils.UIUtils;
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +66,8 @@ public class CommentsAdapter extends BaseAdapter {
 				.findViewById(R.id.comment_box);
 
 		TextView comment = (TextView) view.findViewById(R.id.comment_text);
-		comment.setText(data.getComment());
+		// TODO: Handle images; Html.fromHtml(source, imageGetter, tagHandler)
+		comment.setText(Html.fromHtml(data.getComment()));
 
 		TextView author = (TextView) view.findViewById(R.id.comment_author);
 		author.setText(data.getAuthor());

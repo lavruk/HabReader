@@ -107,13 +107,13 @@ public final class Preferences {
 	return sharedPreferences.getString(SHARE_TEXT_KEY, SHARE_TEXT_DEFAULT);
     }
 
-    public static void saveViewScale(Context context, float scale) {
+    public void setViewScale(Context context, float scale) {
 	SharedPreferences.Editor editor = sharedPreferences.edit();
 	editor.putFloat(context.getString(R.string.saved_user_scale), scale);
 	editor.commit();
     }
 
-    public static int getViewScale(Context context) {
+    public int getViewScale(Context context) {
 	float userScale = sharedPreferences.getFloat(context.getString(R.string.saved_user_scale), 0.0f);
 	return (int) (100 * userScale);
     }

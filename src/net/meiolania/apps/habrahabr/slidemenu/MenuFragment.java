@@ -19,6 +19,7 @@ package net.meiolania.apps.habrahabr.slidemenu;
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.activities.AuthActivity;
 import net.meiolania.apps.habrahabr.activities.CompaniesActivity;
 import net.meiolania.apps.habrahabr.activities.EventsActivity;
 import net.meiolania.apps.habrahabr.activities.HubsActivity;
@@ -47,7 +48,11 @@ public class MenuFragment extends SherlockListFragment {
 	super.onActivityCreated(savedInstanceState);
 
 	menu = new ArrayList<MenuData>();
-
+	
+	// TODO: need to make a new design of slide menu
+	// Auth
+	menu.add(new MenuData(getString(R.string.auth), R.drawable.ic_menu_user, AuthActivity.class));
+	
 	menu.add(new MenuData(getString(R.string.posts), R.drawable.ic_menu_posts, PostsActivity.class));
 	menu.add(new MenuData(getString(R.string.hubs), R.drawable.ic_menu_hubs, HubsActivity.class));
 	menu.add(new MenuData(getString(R.string.qa), R.drawable.ic_menu_qa, QaActivity.class));

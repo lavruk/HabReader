@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Theme" parent="Theme.Sherlock.Light"></style>
+    <style name="Theme" parent="Theme.Sherlock.Light">
+        <item name="actionBarTabTextStyle">@style/Widget.HabReader.ActionBar.TabText</item>
+        <item name="android:actionBarTabTextStyle">@style/Widget.HabReader.ActionBar.TabText</item>
+        <item name="actionBarTabBarStyle">@style/Widget.HabReader.ActionBar.TabBar</item>
+        <item name="android:actionBarTabBarStyle">@style/Widget.HabReader.ActionBar.TabBar</item>
+    </style>
 
     <style name="DashboardButton">
         <item name="android:layout_width">wrap_content</item>
@@ -13,13 +18,23 @@
         <item name="android:textSize">@dimen/dashboard_buttons</item>
         <item name="android:textColor">@color/black</item>
     </style>
-    
+
     <style name="DataFields">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">15dp</item>
         <item name="android:layout_marginBottom">10dp</item>
         <item name="android:background">@drawable/data_fields</item>
+    </style>
+
+    <style name="Widget.HabReader.ActionBar.TabBar" parent="Widget.Sherlock.ActionBar.TabBar">
+        <item name="android:dividerPadding">7dip</item>
+    </style>
+
+    <style name="Widget.HabReader.ActionBar.TabText" parent="Widget.Sherlock.ActionBar.TabText">
+        <item name="android:maxLength">13</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:maxLines">1</item>
     </style>
 
 </resources>

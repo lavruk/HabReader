@@ -25,6 +25,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.text.Html;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,6 +100,9 @@ public class EventsShowFragment extends SherlockFragment implements LoaderCallba
 
 	    TextView location = (TextView) activity.findViewById(R.id.event_location);
 	    location.setText(data.getLocation());
+	    
+	    TextView date = (TextView) activity.findViewById(R.id.event_date);
+	    date.setText(data.getDate());
 
 	    TextView pay = (TextView) activity.findViewById(R.id.event_pay);
 	    pay.setText(data.getPay());
@@ -108,7 +112,7 @@ public class EventsShowFragment extends SherlockFragment implements LoaderCallba
 	    Linkify.addLinks(site, Linkify.ALL);
 
 	    TextView description = (TextView) activity.findViewById(R.id.event_description);
-	    description.setText(data.getText());
+	    description.setText(Html.fromHtml(data.getText()));
 	}
 
 	event = data;

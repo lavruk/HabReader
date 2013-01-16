@@ -75,7 +75,7 @@ public class EventShowLoader extends AsyncTaskLoader<EventFullData> {
 	    event.setTitle(title.text());
 	    event.setUrl(url);
 	    event.setDate(date.text());
-	    event.setText(description.text());
+	    event.setText(description.html());
 	    event.setPay(pay.text());
 	    event.setLocation(location.text());
 	    event.setSite(site.text());

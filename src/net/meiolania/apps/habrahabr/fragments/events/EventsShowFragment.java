@@ -25,6 +25,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,6 +105,7 @@ public class EventsShowFragment extends SherlockFragment implements LoaderCallba
 
 	    TextView site = (TextView) activity.findViewById(R.id.event_site);
 	    site.setText(data.getSite());
+	    Linkify.addLinks(site, Linkify.ALL);
 
 	    TextView description = (TextView) activity.findViewById(R.id.event_description);
 	    description.setText(data.getText());

@@ -17,6 +17,7 @@ limitations under the License.
 package net.meiolania.apps.habrahabr.data;
 
 public class CompanyFullData extends CompaniesData {
+    protected String companyName;
     protected String companyUrl;
     protected String date;
     protected String industries;
@@ -25,7 +26,16 @@ public class CompanyFullData extends CompaniesData {
     protected String quantity;
     protected String management;
     protected String developmentStages;
+    
+    /** @return Company name */
+    public String getCompanyName() {
+	return companyName;
+    }
 
+    public void setCompanyName(String companyName) {
+	this.companyName = companyName;
+    }
+    
     public String getQuantity() {
 	return quantity;
     }

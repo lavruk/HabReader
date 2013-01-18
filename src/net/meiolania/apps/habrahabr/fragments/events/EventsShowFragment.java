@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -95,12 +96,15 @@ public class EventsShowFragment extends SherlockFragment implements LoaderCallba
 	SherlockFragmentActivity activity = getSherlockActivity();
 
 	if (activity != null) {
+	    ActionBar actionBar = activity.getSupportActionBar();
+	    actionBar.setTitle(data.getTitle());
+
 	    TextView title = (TextView) activity.findViewById(R.id.event_title);
 	    title.setText(data.getTitle());
 
 	    TextView location = (TextView) activity.findViewById(R.id.event_location);
 	    location.setText(data.getLocation());
-	    
+
 	    TextView date = (TextView) activity.findViewById(R.id.event_date);
 	    date.setText(data.getDate());
 
@@ -111,6 +115,7 @@ public class EventsShowFragment extends SherlockFragment implements LoaderCallba
 	    site.setText(data.getSite());
 	    Linkify.addLinks(site, Linkify.ALL);
 
+	    // TODO: need more work, can't click on links.
 	    TextView description = (TextView) activity.findViewById(R.id.event_description);
 	    description.setText(Html.fromHtml(data.getText()));
 	}

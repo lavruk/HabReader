@@ -24,12 +24,14 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -71,6 +73,9 @@ public class UsersShowFragment extends SherlockFragment implements LoaderCallbac
 	SherlockFragmentActivity activity = getSherlockActivity();
 
 	if (activity != null) {
+	    ActionBar actionBar = activity.getSupportActionBar();
+	    actionBar.setTitle(data.getUsername());
+
 	    ImageView avatar = (ImageView) activity.findViewById(R.id.avatar);
 	    ImageLoader imageLoader = ImageLoader.getInstance();
 	    imageLoader.init(ImageLoaderConfiguration.createDefault(getSherlockActivity()));
@@ -97,8 +102,9 @@ public class UsersShowFragment extends SherlockFragment implements LoaderCallbac
 	    if (data.getInterests().length() <= 0)
 		interests.setVisibility(View.GONE);
 
+	    // TODO: need more work, can't click on links. Awful formatting.
 	    TextView summary = (TextView) activity.findViewById(R.id.summary);
-	    summary.setText(data.getSummary());
+	    summary.setText(Html.fromHtml(data.getSummary()));
 	    if (data.getSummary().length() <= 0)
 		summary.setVisibility(View.GONE);
 	}

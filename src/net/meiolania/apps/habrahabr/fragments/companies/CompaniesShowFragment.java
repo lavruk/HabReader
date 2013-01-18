@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
@@ -71,6 +72,9 @@ public class CompaniesShowFragment extends SherlockFragment implements LoaderCal
 	SherlockFragmentActivity activity = getSherlockActivity();
 
 	if (activity != null) {
+	    ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+	    actionBar.setTitle(data.getCompanyName());
+	    
 	    TextView date = (TextView) activity.findViewById(R.id.company_date);
 	    date.setText(data.getDate());
 

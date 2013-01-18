@@ -48,6 +48,7 @@ public class UsersShowLoader extends AsyncTaskLoader<UsersFullData> {
 
 	    Element avatar = document.select("a.avatar > img").first();
 	    Element karma = document.select("div.karma > div.score > div.num").first();
+	    Element username = document.select("h2.username > a").first();
 	    Element rating = document.select("div.rating > div.num").first();
 	    Element birthday = document.select("dd.bday").first();
 	    Element fullname = document.select("div.fullname").first();
@@ -56,10 +57,11 @@ public class UsersShowLoader extends AsyncTaskLoader<UsersFullData> {
 
 	    data.setAvatar(avatar.attr("src"));
 	    data.setKarma(karma.text());
+	    data.setUsername(username.text());
 	    data.setRating(rating.text());
 	    data.setBirthday(birthday != null ? birthday.text() : "");
 	    data.setFullname(fullname != null ? fullname.text() : "");
-	    data.setSummary(summary != null ? summary.text() : "");
+	    data.setSummary(summary != null ? summary.html() : "");
 	    data.setInterests(interests != null ? interests.text() : "");
 	} catch (IOException e) {
 	}

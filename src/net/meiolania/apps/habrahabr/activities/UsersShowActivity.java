@@ -20,6 +20,7 @@ import net.meiolania.apps.habrahabr.fragments.users.UsersShowFragment;
 import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
@@ -59,8 +60,12 @@ public class UsersShowActivity extends AbstractionActivity {
     }
 
     private void loadExtras() {
+	Uri habraUrl = getIntent().getData();
+	if (habraUrl != null)
+	    url = habraUrl.toString();
+	else
+	    url = getIntent().getStringExtra(EXTRA_URL);
 	name = getIntent().getStringExtra(EXTRA_NAME);
-	url = getIntent().getStringExtra(EXTRA_URL);
     }
 
     private void showActionBar() {

@@ -64,7 +64,7 @@ public class CompaniesData {
     }
 
     public String getProfileUrl() {
-	return getUrl() + "/profile/";
+	return getUrl() + "profile/";
     }
 
 }

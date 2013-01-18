@@ -58,9 +58,8 @@ public class CompaniesShowLoader extends AsyncTaskLoader<CompanyFullData> {
 	    Document document = Jsoup.connect(url).get();
 
 	    Elements datas = document.select("div.company_profile > dl");
-	    Element companyname = document.select("div.name > a").first();
-	    
-	    company.setCompanyName(companyname != null ? companyname.text() : "");
+	    Element companyname = document.select("head > title").first();
+	    company.setCompanyName(companyname.text().replace(" / Хабрахабр", ""));
 
 	    int i = 0;
 	    for (Element data : datas) {

@@ -60,7 +60,7 @@ public class CompaniesShowLoader extends AsyncTaskLoader<CompanyFullData> {
 	    Elements datas = document.select("div.company_profile > dl");
 	    Element companyname = document.select("div.name > a").first();
 	    
-	    company.setCompanyName(companyname.text());
+	    company.setCompanyName(companyname != null ? companyname.text() : "");
 
 	    int i = 0;
 	    for (Element data : datas) {

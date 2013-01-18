@@ -72,7 +72,7 @@ public class CompaniesShowFragment extends SherlockFragment implements LoaderCal
 	SherlockFragmentActivity activity = getSherlockActivity();
 
 	if (activity != null) {
-	    ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+	    ActionBar actionBar = activity.getSupportActionBar();
 	    actionBar.setTitle(data.getCompanyName());
 	    
 	    TextView date = (TextView) activity.findViewById(R.id.company_date);

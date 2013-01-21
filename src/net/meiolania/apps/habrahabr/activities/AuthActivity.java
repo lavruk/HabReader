@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.auth.User;
 import net.meiolania.apps.habrahabr.utils.ToastUtils;
 
 import org.jsoup.Jsoup;
@@ -46,8 +47,8 @@ public class AuthActivity extends AbstractionActivity {
 		Preferences preferences = Preferences.getInstance(AuthActivity.this);
 		
 		Document document = Jsoup.connect(MAIN_URL)
-					 .cookie("PHPSESSID", preferences.getPHPSessionId())
-					 .cookie("hsec_id", preferences.getHSecId())
+					 .cookie(User.PHPSESSION_ID, preferences.getPHPSessionId())
+					 .cookie(User.HSEC_ID, preferences.getHSecId())
 					 .get();
 
 		Element usernameElement = document.select("a.username").first();
@@ -99,9 +100,9 @@ public class AuthActivity extends AbstractionActivity {
 			String cookieName = cookieNameAndValue[0].trim();
 			String cookieValue = cookieNameAndValue[1].trim();
 			
-			if (cookieName.equals("PHPSESSID"))
+			if (cookieName.equals(User.PHPSESSION_ID))
 			    preferences.setPHPSessionId(cookieValue);
-			if (cookieName.equals("hsec_id"))
+			if (cookieName.equals(User.HSEC_ID))
 			    preferences.setHSecId(cookieValue);
 		    }
 		}

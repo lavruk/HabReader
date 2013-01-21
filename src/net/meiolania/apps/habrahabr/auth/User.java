@@ -4,6 +4,8 @@ import net.meiolania.apps.habrahabr.Preferences;
 import android.content.Context;
 
 public class User {
+    public static final String PHPSESSION_ID = "PHPSESSID";
+    public static final String HSEC_ID = "hsec_id";
     private static User instance = null;
     private String login;
     private String phpsessid;

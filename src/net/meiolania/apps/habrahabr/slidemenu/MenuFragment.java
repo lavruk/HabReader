@@ -22,6 +22,7 @@ import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.activities.AuthActivity;
 import net.meiolania.apps.habrahabr.activities.CompaniesActivity;
 import net.meiolania.apps.habrahabr.activities.EventsActivity;
+import net.meiolania.apps.habrahabr.activities.FeedActivity;
 import net.meiolania.apps.habrahabr.activities.HubsActivity;
 import net.meiolania.apps.habrahabr.activities.PostsActivity;
 import net.meiolania.apps.habrahabr.activities.QaActivity;
@@ -57,6 +58,7 @@ public class MenuFragment extends SherlockListFragment {
 	else{
 	    menu.add(new MenuData(User.getInstance().getLogin(), R.drawable.ic_menu_user, null));
 	    menu.add(new MenuData(getString(R.string.sign_out), R.drawable.ic_menu_user, SignOutActivity.class));
+	    menu.add(new MenuData(getString(R.string.feed), R.drawable.ic_menu_posts, FeedActivity.class));
 	}
 	
 	menu.add(new MenuData(getString(R.string.posts), R.drawable.ic_menu_posts, PostsActivity.class));

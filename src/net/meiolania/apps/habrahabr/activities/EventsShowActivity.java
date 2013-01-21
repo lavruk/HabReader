@@ -16,7 +16,7 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.activities;
 
-import net.meiolania.apps.habrahabr.AbstractionSlidingActivity;
+import net.meiolania.apps.habrahabr.AbstractionFragmentActivity;
 import net.meiolania.apps.habrahabr.fragments.events.EventsShowFragment;
 import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface;
@@ -30,7 +30,7 @@ import android.support.v4.app.TaskStackBuilder;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 
-public class EventsShowActivity extends AbstractionSlidingActivity {
+public class EventsShowActivity extends AbstractionFragmentActivity {
     public final static String EXTRA_URL = "url";
     public final static String EXTRA_TITLE = "title";
     private String url;

@@ -16,21 +16,14 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.activities;
 
-import net.meiolania.apps.habrahabr.AbstractionSlidingActivity;
-import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.AbstractionFragmentActivity;
 import net.meiolania.apps.habrahabr.fragments.posts.PostsSearchFragment;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
-
-public class PostsSearchActivity extends AbstractionSlidingActivity {
+public class PostsSearchActivity extends AbstractionFragmentActivity {
     public final static String EXTRA_QUERY = "query";
     private String query;
 

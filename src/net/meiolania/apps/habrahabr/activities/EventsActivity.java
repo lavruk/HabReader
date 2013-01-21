@@ -16,7 +16,7 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.activities;
 
-import net.meiolania.apps.habrahabr.AbstractionSlidingActivity;
+import net.meiolania.apps.habrahabr.AbstractionFragmentActivity;
 import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.events.EventComingFragment;
@@ -30,7 +30,7 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 
-public class EventsActivity extends AbstractionSlidingActivity {
+public class EventsActivity extends AbstractionFragmentActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

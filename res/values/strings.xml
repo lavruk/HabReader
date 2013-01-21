@@ -26,6 +26,9 @@
 	<string name="auth_success">Авторизация выполнена</string>
 	<string name="sign_out">Выход</string>
 	
+	<!-- Feed -->
+	<string name="feed">Лента</string>
+	
 	<!-- Slide menu -->
 	<string name="posts">Посты</string>
 	<string name="qa">Q&amp;A</string>

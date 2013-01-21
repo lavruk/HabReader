@@ -4,27 +4,27 @@ import net.meiolania.apps.habrahabr.Preferences;
 import android.content.Context;
 
 public class User {
-    private static User instance = null;
+    private static User instance = new User();
     private String login;
     private String phpsessid;
     private String hsecid;
     private boolean isLogin = false;
 
-    private User(Context context) {
+    public static User getInstance() {
+	if (instance == null)
+	    instance = new User();
+	return instance;
+    }
+
+    public void init(Context context) {
 	Preferences preferences = Preferences.getInstance(context);
 	login = preferences.getLogin();
 	phpsessid = preferences.getPHPSessionId();
 	hsecid = preferences.getHSecId();
-	
-	//TOOD: think more about this?
-	if(login != null && phpsessid != null && hsecid != null)
-	    isLogin = true;
-    }
 
-    public static User getInstance(Context context) {
-	if (instance == null)
-	    instance = new User(context);
-	return instance;
+	// TOOD: think more about this?
+	if (login != null && phpsessid != null && hsecid != null)
+	    isLogin = true;
     }
 
     public String getLogin() {

@@ -18,6 +18,7 @@ package net.meiolania.apps.habrahabr.activities;
 
 import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
+import net.meiolania.apps.habrahabr.auth.User;
 import net.meiolania.apps.habrahabr.slidemenu.MenuFragment;
 import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
 import android.app.AlertDialog;
@@ -35,120 +36,115 @@ import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
 
 public abstract class AbstractionActivity extends SlidingFragmentActivity {
-	Preferences preferences;
+    public final static String DEVELOPER_PLAY_LINK = "https://play.google.com/store/apps/developer?id=Andrey+Zaytsev";
+    private Preferences preferences;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
 
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+	requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-		preferences = Preferences.getInstance(this);
-		if (preferences.getFullScreen())
-			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-					WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	preferences = Preferences.getInstance(this);
+	if (preferences.getFullScreen())
+	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		getScreenPref();
+	getScreenPref();
 
-		if (!ConnectionUtils.isConnected(this)) {
-			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-			dialog.setTitle(R.string.error);
-			dialog.setMessage(getString(R.string.no_connection));
-			dialog.setPositiveButton(R.string.close,
-					getConnectionDialogListener());
-			dialog.setCancelable(false);
-			dialog.show();
-		}
-
-		/*
-		 * Workaround for
-		 * "java.lang.IllegalStateException: Both setBehindContentView must be called in onCreate in addition to setContentView."
-		 */
-		setContentView(R.layout.empty_for_slidemenu);
-
-		showSlideMenu();
-
-		getSupportActionBar().setHomeButtonEnabled(true);
-		setSupportProgressBarIndeterminateVisibility(false);
+	if (!ConnectionUtils.isConnected(this)) {
+	    AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+	    dialog.setTitle(R.string.error);
+	    dialog.setMessage(getString(R.string.no_connection));
+	    dialog.setPositiveButton(R.string.close, getConnectionDialogListener());
+	    dialog.setCancelable(false);
+	    dialog.show();
 	}
+	
+	User.getInstance().init(this);
 
-	@Override
-	protected void onResume() {
-		if (preferences.getFullScreen())
-			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-					WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		else
-			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	/*
+	 * Workaround for
+	 * "java.lang.IllegalStateException: Both setBehindContentView must be called in onCreate in addition to setContentView."
+	 */
+	setContentView(R.layout.empty_for_slidemenu);
 
-		getScreenPref();
-		super.onResume();
+	showSlideMenu();
+
+	getSupportActionBar().setHomeButtonEnabled(true);
+	setSupportProgressBarIndeterminateVisibility(false);
+    }
+
+    @Override
+    protected void onResume() {
+	if (preferences.getFullScreen())
+	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	else
+	    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+	getScreenPref();
+	super.onResume();
+    }
+
+    private void getScreenPref() {
+	if (preferences.getKeepScreen())
+	    getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+	else
+	    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    @Override
+    protected void onPause() {
+	super.onPause();
+    }
+
+    @Override
+    public void onBackPressed() {
+	if (getSlidingMenu().isMenuShowing())
+	    toggle();
+	else
+	    super.onBackPressed();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+	MenuInflater menuInflater = getSupportMenuInflater();
+	menuInflater.inflate(R.menu.global_activity, menu);
+	return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+	switch (item.getItemId()) {
+	    case android.R.id.home:
+		toggle();
+		return true;
+	    case R.id.preferences:
+		startActivity(new Intent(this, PreferencesActivity.class));
+		return true;
+	    case R.id.more_applications:
+		Uri uri = Uri.parse(DEVELOPER_PLAY_LINK);
+		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+		startActivity(intent);
+		return true;
 	}
+	return super.onOptionsItemSelected(item);
+    }
 
-	private void getScreenPref() {
-		if (preferences.getKeepScreen()) {
-			getWindow()
-					.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		} else {
-			getWindow().clearFlags(
-					WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		}
-	}
+    protected void showSlideMenu() {
+	setBehindContentView(R.layout.slide_menu);
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-	}
+	getSupportFragmentManager().beginTransaction().replace(R.id.slide_menu, new MenuFragment()).commit();
 
-	@Override
-	public void onBackPressed() {
-		if (getSlidingMenu().isMenuShowing())
-			toggle();
-		else
-			super.onBackPressed();
-	}
+	SlidingMenu slidingMenu = getSlidingMenu();
+	slidingMenu.setMode(SlidingMenu.LEFT);
+	slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+	slidingMenu.setShadowDrawable(R.drawable.sm_shadow);
+	slidingMenu.setShadowWidth(50);
+	slidingMenu.setFadeDegree(0.2f);
+	slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+	slidingMenu.setMenu(R.layout.slide_menu);
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater menuInflater = getSupportMenuInflater();
-		menuInflater.inflate(R.menu.global_activity, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			toggle();
-			return true;
-		case R.id.preferences:
-			startActivity(new Intent(this, PreferencesActivity.class));
-			return true;
-		case R.id.more_applications:
-			Uri uri = Uri
-					.parse("https://play.google.com/store/apps/developer?id=Andrey+Zaytsev");
-			Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-			startActivity(intent);
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	protected void showSlideMenu() {
-		setBehindContentView(R.layout.slide_menu);
-
-		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.slide_menu, new MenuFragment()).commit();
-
-		SlidingMenu slidingMenu = getSlidingMenu();
-		slidingMenu.setMode(SlidingMenu.LEFT);
-		slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-		slidingMenu.setShadowDrawable(R.drawable.sm_shadow);
-		slidingMenu.setShadowWidth(50);
-		slidingMenu.setFadeDegree(0.2f);
-		slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-		slidingMenu.setMenu(R.layout.slide_menu);
-	}
-
-	protected abstract OnClickListener getConnectionDialogListener();
+    protected abstract OnClickListener getConnectionDialogListener();
 
 }

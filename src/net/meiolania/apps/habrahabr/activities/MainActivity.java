@@ -57,11 +57,11 @@ public class MainActivity extends SlidingFragmentActivity {
 	getSupportFragmentManager().beginTransaction().replace(R.id.menu_frame, new MenuFragment()).commit();
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-	super.onSaveInstanceState(outState);
-	getSupportFragmentManager().putFragment(outState, "mContent", mContent);
-    }
+    // @Override
+    // public void onSaveInstanceState(Bundle outState) {
+    // super.onSaveInstanceState(outState);
+    // getSupportFragmentManager().putFragment(outState, "mContent", mContent);
+    // }
 
     public void switchContent(Fragment fragment) {
 	mContent = fragment;

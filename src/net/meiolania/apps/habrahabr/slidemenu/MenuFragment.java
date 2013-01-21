@@ -52,7 +52,7 @@ public class MenuFragment extends SherlockListFragment {
 	menu = new ArrayList<MenuData>();
 	
 	// Auth
-	if(!User.getInstance().isLogin())
+	if(!User.getInstance().isLogged())
 	    menu.add(new MenuData(getString(R.string.auth), R.drawable.ic_menu_user, AuthActivity.class));
 	else{
 	    menu.add(new MenuData(User.getInstance().getLogin(), R.drawable.ic_menu_user, null));

@@ -38,7 +38,7 @@ public class AuthActivity extends AbstractionActivity {
 
 	@Override
 	protected Void doInBackground(Void... params) {
-	    // TODO: handle the html from webview?
+	    // TODO: handle html from webview?
 	    try {
 		Preferences preferences = Preferences.getInstance(AuthActivity.this);
 		
@@ -54,7 +54,7 @@ public class AuthActivity extends AbstractionActivity {
 	    }
 
 	    Intent intent = new Intent(AuthActivity.this, PostsActivity.class);
-	    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 	    startActivity(intent);
 	    return null;
 	}

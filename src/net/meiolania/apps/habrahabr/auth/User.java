@@ -4,11 +4,11 @@ import net.meiolania.apps.habrahabr.Preferences;
 import android.content.Context;
 
 public class User {
-    private static User instance = new User();
+    private static User instance = null;
     private String login;
     private String phpsessid;
     private String hsecid;
-    private boolean isLogin = false;
+    private boolean isLogged = false;
 
     public static User getInstance() {
 	if (instance == null)
@@ -24,7 +24,9 @@ public class User {
 
 	// TOOD: think more about this?
 	if (login != null && phpsessid != null && hsecid != null)
-	    isLogin = true;
+	    isLogged = true;
+	else
+	    isLogged = false;
     }
 
     public String getLogin() {
@@ -51,12 +53,8 @@ public class User {
 	this.hsecid = hsecid;
     }
 
-    public boolean isLogin() {
-	return isLogin;
-    }
-
-    public void setLogin(boolean isLogin) {
-	this.isLogin = isLogin;
+    public boolean isLogged() {
+	return isLogged;
     }
 
 }

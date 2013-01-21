@@ -34,6 +34,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockListFragment;
 
 public class CompaniesFragment extends SherlockListFragment implements OnScrollListener, LoaderCallbacks<ArrayList<CompaniesData>> {
@@ -43,6 +44,12 @@ public class CompaniesFragment extends SherlockListFragment implements OnScrollL
     private int page;
     private boolean isLoadData;
     private boolean noMoreData;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	showActionBar();
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -64,6 +71,13 @@ public class CompaniesFragment extends SherlockListFragment implements OnScrollL
     @Override
     public void onListItemClick(ListView list, View view, int position, long id) {
 	showCompany(position);
+    }
+
+    private void showActionBar() {
+	ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+	actionBar.setDisplayHomeAsUpEnabled(true);
+	actionBar.setTitle(R.string.companies);
+	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
     }
 
     protected void showCompany(int position) {

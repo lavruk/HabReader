@@ -37,16 +37,23 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 
 public class UsersFragment extends SherlockListFragment implements LoaderCallbacks<ArrayList<UsersData>> {
     public final static String URL_ARGUMENT = "url";
-    public final static int LOADER_USER = 0;
+    public final static int LOADER_USER = 25;
     private ArrayList<UsersData> users;
     private UserAdapter adapter;
     private String url;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	showActionBar();
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -68,6 +75,13 @@ public class UsersFragment extends SherlockListFragment implements LoaderCallbac
 
 	if (ConnectionUtils.isConnected(getSherlockActivity()))
 	    getSherlockActivity().getSupportLoaderManager().initLoader(LOADER_USER, null, this);
+    }
+    
+    private void showActionBar() {
+	ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+	actionBar.setDisplayHomeAsUpEnabled(true);
+	actionBar.setTitle(R.string.people);
+	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
     }
 
     @Override

@@ -14,27 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package net.meiolania.apps.habrahabr.activities;
+package net.meiolania.apps.habrahabr;
 
-import net.meiolania.apps.habrahabr.Preferences;
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.slidemenu.MenuFragment;
-import net.meiolania.apps.habrahabr.utils.ConnectionUtils;
-import android.app.AlertDialog;
+import net.meiolania.apps.habrahabr.activities.PreferencesActivity;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Window;
-import android.view.WindowManager;
-
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
 
-public abstract class AbstractionActivity extends SlidingFragmentActivity {
+public abstract class AbstractionSlidingActivity extends SlidingFragmentActivity {
     Preferences preferences;
 
     @Override
@@ -43,50 +38,20 @@ public abstract class AbstractionActivity extends SlidingFragmentActivity {
 
 	requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
-	preferences = Preferences.getInstance(this);
-	if (preferences.getFullScreen())
-	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	setContentView(R.layout.menu_frame);
+	setBehindContentView(R.layout.menu_frame);
 
-	getScreenPref();
-
-	if (!ConnectionUtils.isConnected(this)) {
-	    AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-	    dialog.setTitle(R.string.error);
-	    dialog.setMessage(getString(R.string.no_connection));
-	    dialog.setPositiveButton(R.string.close, getConnectionDialogListener());
-	    dialog.setCancelable(false);
-	    dialog.show();
-	}
-
-	/*
-	 * Workaround for
-	 * "java.lang.IllegalStateException: Both setBehindContentView must be called in onCreate in addition to setContentView."
-	 */
-	setContentView(R.layout.empty_for_slidemenu);
-
-	showSlideMenu();
+	SlidingMenu slidingMenu = getSlidingMenu();
+	slidingMenu.setMode(SlidingMenu.LEFT);
+	slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+	slidingMenu.setShadowDrawable(R.drawable.sm_shadow);
+	slidingMenu.setShadowWidth(50);
+	slidingMenu.setFadeDegree(0.2f);
+	slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+	slidingMenu.setMenu(R.layout.slide_menu);
 
 	getSupportActionBar().setHomeButtonEnabled(true);
 	setSupportProgressBarIndeterminateVisibility(false);
-    }
-
-    @Override
-    protected void onResume() {
-	if (preferences.getFullScreen())
-	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-	else
-	    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-	getScreenPref();
-	super.onResume();
-    }
-
-    private void getScreenPref() {
-	if (preferences.getKeepScreen()) {
-	    getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-	} else {
-	    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-	}
     }
 
     @Override
@@ -125,21 +90,6 @@ public abstract class AbstractionActivity extends SlidingFragmentActivity {
 	    return true;
 	}
 	return super.onOptionsItemSelected(item);
-    }
-
-    protected void showSlideMenu() {
-	setBehindContentView(R.layout.slide_menu);
-
-	getSupportFragmentManager().beginTransaction().replace(R.id.slide_menu, new MenuFragment()).commit();
-
-	SlidingMenu slidingMenu = getSlidingMenu();
-	slidingMenu.setMode(SlidingMenu.LEFT);
-	slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-	slidingMenu.setShadowDrawable(R.drawable.sm_shadow);
-	slidingMenu.setShadowWidth(50);
-	slidingMenu.setFadeDegree(0.2f);
-	slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-	slidingMenu.setMenu(R.layout.slide_menu);
     }
 
     protected abstract OnClickListener getConnectionDialogListener();

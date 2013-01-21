@@ -16,6 +16,7 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.activities;
 
+import net.meiolania.apps.habrahabr.AbstractionSlidingActivity;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.hubs.HubsFragment;
 import android.content.DialogInterface;
@@ -27,7 +28,7 @@ import android.widget.ArrayAdapter;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 
-public class HubsActivity extends AbstractionActivity implements OnNavigationListener {
+public class HubsActivity extends AbstractionSlidingActivity implements OnNavigationListener {
     public final static int LIST_ALL_HUBS = 0;
     public final static int LIST_API = 1;
     public final static int LIST_ADMIN = 2;

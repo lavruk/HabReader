@@ -1,84 +1,98 @@
-/*
-Copyright 2012 Andrey Zaytsev
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
- */
-
 package net.meiolania.apps.habrahabr.slidemenu;
 
 import java.util.ArrayList;
 
 import net.meiolania.apps.habrahabr.R;
-import net.meiolania.apps.habrahabr.activities.CompaniesActivity;
-import net.meiolania.apps.habrahabr.activities.EventsActivity;
-import net.meiolania.apps.habrahabr.activities.HubsActivity;
-import net.meiolania.apps.habrahabr.activities.PostsActivity;
-import net.meiolania.apps.habrahabr.activities.QaActivity;
-import net.meiolania.apps.habrahabr.activities.UsersActivity;
+import net.meiolania.apps.habrahabr.activities.MainActivity;
+import net.meiolania.apps.habrahabr.fragments.companies.CompaniesFragment;
+import net.meiolania.apps.habrahabr.fragments.events.EventComingFragment;
+import net.meiolania.apps.habrahabr.fragments.hubs.HubsFragment;
+import net.meiolania.apps.habrahabr.fragments.posts.PostsMainFragment;
+import net.meiolania.apps.habrahabr.fragments.qa.QaMainFragment;
+import net.meiolania.apps.habrahabr.fragments.users.UsersFragment;
+
+import com.actionbarsherlock.app.SherlockListFragment;
+
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.actionbarsherlock.app.SherlockListFragment;
 
 public class MenuFragment extends SherlockListFragment {
     private ArrayList<MenuData> menu;
     private MenuAdapter menuAdapter;
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-	super.onActivityCreated(savedInstanceState);
-
-	menu = new ArrayList<MenuData>();
-
-	menu.add(new MenuData(getString(R.string.posts), R.drawable.ic_menu_posts, PostsActivity.class));
-	menu.add(new MenuData(getString(R.string.hubs), R.drawable.ic_menu_hubs, HubsActivity.class));
-	menu.add(new MenuData(getString(R.string.qa), R.drawable.ic_menu_qa, QaActivity.class));
-	menu.add(new MenuData(getString(R.string.events), R.drawable.ic_menu_events, EventsActivity.class));
-	menu.add(new MenuData(getString(R.string.companies), R.drawable.ic_menu_companies, CompaniesActivity.class));
-	menu.add(new MenuData(getString(R.string.people), R.drawable.ic_menu_user, UsersActivity.class));
-
-	menuAdapter = new MenuAdapter(getSherlockActivity(), menu);
-	setListAdapter(menuAdapter);
-	setListShown(true);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	return inflater.inflate(R.layout.list, null);
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-	MenuData data = menu.get(position);
+    public void onActivityCreated(Bundle savedInstanceState) {
+	super.onActivityCreated(savedInstanceState);
+	menu = new ArrayList<MenuData>();
 
-	Intent intent = new Intent(getSherlockActivity(), data.cls);
-	startActivity(intent);
+	menu.add(new MenuData(R.string.posts, R.drawable.ic_menu_posts));
+	menu.add(new MenuData(R.string.hubs, R.drawable.ic_menu_hubs));
+	menu.add(new MenuData(R.string.qa, R.drawable.ic_menu_qa));
+	menu.add(new MenuData(R.string.events, R.drawable.ic_menu_events));
+	menu.add(new MenuData(R.string.companies, R.drawable.ic_menu_companies));
+	menu.add(new MenuData(R.string.people, R.drawable.ic_menu_user));
+
+	menuAdapter = new MenuAdapter(getSherlockActivity(), menu);
+	setListAdapter(menuAdapter);
+    }
+
+    @Override
+    public void onListItemClick(ListView lv, View v, int position, long id) {
+	Fragment newContent = null;
+	switch (position) {
+	case 0:
+	    newContent = new PostsMainFragment();
+	    break;
+	case 1:
+	    newContent = new HubsFragment();
+	    break;
+	case 2:
+	    newContent = new QaMainFragment();
+	    break;
+	case 3:
+	    newContent = new EventComingFragment();
+	    break;
+	case 4:
+	    newContent = new CompaniesFragment();
+	    break;
+	case 5:
+	    newContent = new UsersFragment();
+	    break;
+	}
+	if (newContent != null)
+	    switchFragment(newContent);
+    }
+
+    // the meat of switching the above fragment
+    private void switchFragment(Fragment fragment) {
+	if (getSherlockActivity() == null)
+	    return;
+
+	MainActivity fca = (MainActivity) getSherlockActivity();
+	fca.switchContent(fragment);
     }
 
     private class MenuData {
-	public String title;
+	public int title;
 	public int icon;
-	public Class<?> cls;
 
-	public MenuData(String title, int icon, Class<?> cls) {
+	public MenuData(int title, int icon) {
 	    this.title = title;
 	    this.icon = icon;
-	    this.cls = cls;
 	}
-
     }
 
     private class MenuAdapter extends BaseAdapter {
@@ -116,14 +130,13 @@ public class MenuFragment extends SherlockListFragment {
 	    }
 
 	    TextView title = (TextView) view.findViewById(R.id.slide_menu_title);
-	    ImageView icon = (ImageView) view.findViewById(R.id.slide_menu_icon);
 
-	    title.setText(data.title);
-	    icon.setImageResource(data.icon);
+	    Drawable img = context.getResources().getDrawable(data.icon);
+	    title.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+	    title.setText(context.getResources().getString(data.title));
 
 	    return view;
 	}
 
     }
-
 }

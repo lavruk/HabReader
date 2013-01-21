@@ -16,20 +16,16 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.activities;
 
+import net.meiolania.apps.habrahabr.AbstractionSlidingActivity;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.qa.QaSearchFragment;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
-
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
 
-public class QaSearchActivity extends AbstractionActivity {
+public class QaSearchActivity extends AbstractionSlidingActivity {
     public final static String EXTRA_QUERY = "query";
     private String query;
 
@@ -58,21 +54,6 @@ public class QaSearchActivity extends AbstractionActivity {
 	FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 	fragmentTransaction.replace(android.R.id.content, fragment);
 	fragmentTransaction.commit();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-	switch (item.getItemId()) {
-	case android.R.id.home:
-	    Intent intent = new Intent(this, QaActivity.class);
-	    if (NavUtils.shouldUpRecreateTask(this, intent)) {
-		TaskStackBuilder.create(this).addNextIntent(intent).startActivities();
-		finish();
-	    } else
-		NavUtils.navigateUpTo(this, intent);
-	    return true;
-	}
-	return super.onOptionsItemSelected(item);
     }
 
     @Override

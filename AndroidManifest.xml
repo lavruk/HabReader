@@ -28,6 +28,9 @@
         <activity
             android:name=".activities.AuthActivity"
             android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".activities.SignOutActivity"
+            android:configChanges="orientation|keyboardHidden" />
 
         <!-- Posts -->
         <!-- The main entry point of application -->

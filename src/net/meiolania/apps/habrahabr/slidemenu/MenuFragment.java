@@ -25,7 +25,9 @@ import net.meiolania.apps.habrahabr.activities.EventsActivity;
 import net.meiolania.apps.habrahabr.activities.HubsActivity;
 import net.meiolania.apps.habrahabr.activities.PostsActivity;
 import net.meiolania.apps.habrahabr.activities.QaActivity;
+import net.meiolania.apps.habrahabr.activities.SignOutActivity;
 import net.meiolania.apps.habrahabr.activities.UsersActivity;
+import net.meiolania.apps.habrahabr.auth.User;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,9 +51,13 @@ public class MenuFragment extends SherlockListFragment {
 
 	menu = new ArrayList<MenuData>();
 	
-	// TODO: need to make a new design of slide menu
 	// Auth
-	menu.add(new MenuData(getString(R.string.auth), R.drawable.ic_menu_user, AuthActivity.class));
+	if(!User.getInstance().isLogin())
+	    menu.add(new MenuData(getString(R.string.auth), R.drawable.ic_menu_user, AuthActivity.class));
+	else{
+	    menu.add(new MenuData(User.getInstance().getLogin(), R.drawable.ic_menu_user, null));
+	    menu.add(new MenuData(getString(R.string.sign_out), R.drawable.ic_menu_user, SignOutActivity.class));
+	}
 	
 	menu.add(new MenuData(getString(R.string.posts), R.drawable.ic_menu_posts, PostsActivity.class));
 	menu.add(new MenuData(getString(R.string.hubs), R.drawable.ic_menu_hubs, HubsActivity.class));

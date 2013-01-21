@@ -24,6 +24,7 @@
 	<!-- Auth -->
 	<string name="auth">Авторизация</string>
 	<string name="auth_success">Авторизация выполнена</string>
+	<string name="sign_out">Выход</string>
 	
 	<!-- Slide menu -->
 	<string name="posts">Посты</string>

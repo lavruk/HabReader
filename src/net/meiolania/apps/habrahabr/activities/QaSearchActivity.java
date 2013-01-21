@@ -16,7 +16,7 @@ limitations under the License.
 
 package net.meiolania.apps.habrahabr.activities;
 
-import net.meiolania.apps.habrahabr.AbstractionSlidingActivity;
+import net.meiolania.apps.habrahabr.AbstractionFragmentActivity;
 import net.meiolania.apps.habrahabr.R;
 import net.meiolania.apps.habrahabr.fragments.qa.QaSearchFragment;
 import android.content.DialogInterface;
@@ -25,7 +25,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.ActionBar;
 
-public class QaSearchActivity extends AbstractionSlidingActivity {
+public class QaSearchActivity extends AbstractionFragmentActivity {
     public final static String EXTRA_QUERY = "query";
     private String query;
 

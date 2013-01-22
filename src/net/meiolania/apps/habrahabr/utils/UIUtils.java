@@ -20,12 +20,13 @@ import android.os.Build;
 
 public class UIUtils {
 
-	public static Integer parseRating(String rating) {
-		if (rating.trim().equals("â€”"))
-			return null;
-		else
-			return Integer.parseInt(rating.replace("+", "").replace("â€“", "-"));
-	}
+    public static Integer parseRating(String rating) {
+        if (rating.trim().equals("Ñ")) {
+            return null;
+        } else {
+            return Integer.parseInt(rating.replace("+", "").replace("Ñ", "-"));
+        }
+    }
 
 	public static boolean isHoneycomb() {
 		return (isHoneycombOrHigher() && !isIceCreamOrHigher());
